@@ -81,6 +81,11 @@ function initTabs() {
                 renderChart(currentData);
             }
 
+            // Re-draw detailed table when tab becomes visible (Tabulator sizing issue)
+            if (targetTab === 'details' && detailTable) {
+                detailTable.redraw();
+            }
+
         });
     });
 }
@@ -123,7 +128,7 @@ function populateRunSelector(runs) {
  */
 async function loadRun(filename) {
     try {
-        const response = await fetch(`data/runs/${filename}`);
+        const response = await fetch(`data/runs/${filename}?t=${new Date().getTime()}`);
         if (!response.ok) {
             throw new Error(`Failed to load run: ${response.status}`);
         }
@@ -400,7 +405,10 @@ function renderSummaryTable(data) {
                     hozAlign: 'right',
                     sorter: 'number',
                     headerTooltip: 'Tokens',
-                    formatter: (cell) => `<span class="tokens-cell">${cell.getValue().toLocaleString()}</span>`
+                    formatter: (cell) => {
+                        const val = cell.getValue();
+                        return `<span class="tokens-cell">${(val || 0).toLocaleString()}</span>`;
+                    }
                 },
                 {
                     title: '💵',
@@ -409,7 +417,10 @@ function renderSummaryTable(data) {
                     hozAlign: 'right',
                     sorter: 'number',
                     headerTooltip: 'Cost',
-                    formatter: (cell) => `<span class="cost-cell">$${cell.getValue().toFixed(2)}</span>`
+                    formatter: (cell) => {
+                        const val = cell.getValue();
+                        return `<span class="cost-cell">$${(val || 0).toFixed(2)}</span>`;
+                    }
                 },
                 {
                     title: '🧠',
@@ -567,7 +578,10 @@ function renderDetailTable(data) {
                     width: 90,
                     hozAlign: 'right',
                     headerSort: false,
-                    formatter: (cell) => `<span class="tokens-cell">${cell.getValue().toLocaleString()}</span>`
+                    formatter: (cell) => {
+                        const val = cell.getValue();
+                        return `<span class="tokens-cell">${(val || 0).toLocaleString()}</span>`;
+                    }
                 },
                 {
                     title: 'Cost',
@@ -575,7 +589,10 @@ function renderDetailTable(data) {
                     width: 80,
                     hozAlign: 'right',
                     headerSort: false,
-                    formatter: (cell) => `<span class="cost-cell">$${cell.getValue().toFixed(2)}</span>`
+                    formatter: (cell) => {
+                        const val = cell.getValue();
+                        return `<span class="cost-cell">$${(val || 0).toFixed(2)}</span>`;
+                    }
                 }
             ]
         });
@@ -872,6 +889,8 @@ function adjustColorBrightness(color, amount) {
  */
 function scoreFormatter(cell) {
     const row = cell.getRow().getData();
+    if (!row) return '';
+
     const field = cell.getField();
     const modelName = field.replace('_score', '');
     const rawValue = row[`${modelName}_scoreRaw`];
