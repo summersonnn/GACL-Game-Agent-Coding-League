@@ -26,96 +26,116 @@
     gtag('config', 'G-5Q9WND7R6K');
 </script>
 
-<body class="bg-gray-50 min-h-screen">
-    <!-- Header -->
-    <header class="bg-white shadow-sm border-b border-gray-200">
-        <div class="max-w-7xl mx-auto px-4 py-6">
-            <h1 class="text-3xl font-bold text-gray-900">Kubi's Benchmark Leaderboard (Mock Results for now)</h1>
-            <p class="text-gray-500 mt-1">Comparing LLM performance across coding, reasoning, and knowledge tasks</p>
-        </div>
-    </header>
-
-    <!-- Controls -->
-    <div class="max-w-7xl mx-auto px-4 py-4">
-        <div class="flex flex-wrap items-center gap-4 bg-white rounded-lg shadow-sm p-4 border border-gray-200">
-            <div class="flex items-center gap-2">
-                <label for="run-selector" class="text-sm font-medium text-gray-700">Benchmark Run:</label>
-                <select id="run-selector"
-                    class="rounded-md border-gray-300 shadow-sm focus:border-indigo-500 focus:ring-indigo-500 text-sm px-3 py-2 border">
-                    <option value="">Loading runs...</option>
-                </select>
-            </div>
-            <div class="text-sm text-gray-500" id="run-date"></div>
-        </div>
-    </div>
-
-    <!-- Main content -->
-    <main class="max-w-7xl mx-auto px-4 py-6">
-        <!-- Tab Navigation -->
-        <div class="border-b border-gray-200 mb-6">
-            <nav class="flex space-x-8" aria-label="Tabs">
-                <button class="tab-btn active" data-tab="rankings">
-                    Model Rankings
-                </button>
-                <button class="tab-btn" data-tab="details">
-                    Detailed Results
-                </button>
-                <button class="tab-btn" data-tab="chart">
-                    Chart
-                </button>
-            </nav>
+<div class="flex h-screen overflow-hidden">
+    <!-- Sidebar -->
+    <aside class="w-72 bg-white border-r border-gray-200 flex flex-col z-10">
+        <!-- Sidebar Header -->
+        <div class="px-6 py-6 border-b border-gray-100">
+            <h1 class="text-xl font-bold text-gray-900 leading-tight">Kubi's Benchmark</h1>
+            <p class="text-xs text-gray-500 mt-2 font-medium">LLM Performance Leaderboard</p>
         </div>
 
-        <!-- Tab: Model Rankings -->
-        <section id="tab-rankings" class="tab-content active">
-            <div class="bg-white rounded-lg shadow-sm border border-gray-200 overflow-hidden">
-                <div id="summary-table"></div>
+        <!-- Run Selection -->
+        <div class="flex-1 overflow-y-auto py-4">
+            <div class="px-6 mb-3">
+                <h2 class="text-xs font-semibold text-gray-400 uppercase tracking-wider">Benchmark Runs</h2>
             </div>
-        </section>
-
-        <!-- Tab: Detailed Results -->
-        <section id="tab-details" class="tab-content hidden">
-            <div class="bg-white rounded-lg shadow-sm border border-gray-200 overflow-hidden">
-                <div id="detail-table"></div>
+            <div id="run-list" class="space-y-1 px-3">
+                <!-- Run items will be injected here -->
+                <div class="px-3 py-2 text-sm text-gray-500 animate-pulse">Loading runs...</div>
             </div>
-        </section>
+        </div>
 
-        <!-- Tab: Chart -->
-        <section id="tab-chart" class="tab-content hidden">
-            <div class="bg-white rounded-lg shadow-sm border border-gray-200 p-6">
-                <div class="flex items-center gap-4 mb-4">
-                    <label for="chart-category" class="text-sm font-medium text-gray-700">Category:</label>
-                    <select id="chart-category"
-                        class="rounded-md border-gray-300 shadow-sm focus:border-indigo-500 focus:ring-indigo-500 text-sm px-3 py-2 border">
-                        <option value="General" selected>General (Total)</option>
-                        <option value="Reasoning">Reasoning</option>
-                        <option value="General Knowledge">General Knowledge</option>
-                        <option value="Math">Math</option>
-                        <option value="Basic Mix">Basic Mix</option>
-                    </select>
+        <!-- Sidebar Footer -->
+        <div class="p-4 border-t border-gray-200 bg-gray-50">
+            <div class="text-xs text-gray-400 text-center">
+                &copy; 2026 Kubi's Benchmark
+            </div>
+        </div>
+    </aside>
+
+    <!-- Main Content Wrapper -->
+    <main class="flex-1 flex flex-col min-w-0 bg-gray-50 overflow-hidden">
+        <!-- Top Bar / Header for Mobile or Context -->
+        <header class="bg-white shadow-sm border-b border-gray-200 px-8 py-4 flex justify-between items-center z-10">
+            <div>
+                <h2 class="text-lg font-semibold text-gray-800" id="current-run-title">Select a Run</h2>
+                <p class="text-sm text-gray-500" id="run-date">Loading...</p>
+            </div>
+            <!-- Additional controls could go here -->
+        </header>
+
+        <!-- Scrollable Content Area -->
+        <div class="flex-1 overflow-auto p-8">
+            <div class="max-w-7xl mx-auto">
+                <!-- Tab Navigation -->
+                <div class="border-b border-gray-200 mb-6">
+                    <nav class="flex space-x-8" aria-label="Tabs">
+                        <button class="tab-btn active" data-tab="rankings">
+                            Model Rankings
+                        </button>
+                        <button class="tab-btn" data-tab="details">
+                            Detailed Results
+                        </button>
+                        <button class="tab-btn" data-tab="chart">
+                            Chart
+                        </button>
+                    </nav>
                 </div>
-                <div style="height: 400px; position: relative;">
-                    <canvas id="score-chart"></canvas>
-                </div>
+
+                <!-- Tab: Model Rankings -->
+                <section id="tab-rankings" class="tab-content active">
+                    <div class="bg-white rounded-xl shadow-sm border border-gray-200 overflow-hidden">
+                        <div id="summary-table"></div>
+                    </div>
+                </section>
+
+                <!-- Tab: Detailed Results -->
+                <section id="tab-details" class="tab-content hidden">
+                    <div class="bg-white rounded-xl shadow-sm border border-gray-200 overflow-hidden">
+                        <div id="detail-table"></div>
+                    </div>
+                </section>
+
+                <!-- Tab: Chart -->
+                <section id="tab-chart" class="tab-content hidden">
+                    <div class="bg-white rounded-xl shadow-sm border border-gray-200 p-6">
+                        <div class="flex items-center gap-4 mb-4">
+                            <label for="chart-category" class="text-sm font-medium text-gray-700">Category:</label>
+                            <select id="chart-category"
+                                class="rounded-md border-gray-300 shadow-sm focus:border-indigo-500 focus:ring-indigo-500 text-sm px-3 py-2 border">
+                                <option value="General" selected>General (Total)</option>
+                                <option value="Reasoning">Reasoning</option>
+                                <option value="General Knowledge">General Knowledge</option>
+                                <option value="Math">Math</option>
+                                <option value="Basic Mix">Basic Mix</option>
+                            </select>
+                        </div>
+                        <div style="height: 400px; position: relative;">
+                            <canvas id="score-chart"></canvas>
+                        </div>
+                    </div>
+                </section>
             </div>
-        </section>
+        </div>
     </main>
+</div>
 
-    <!-- Footer -->
-    <footer class="bg-white border-t border-gray-200 mt-12">
-        <div class="max-w-7xl mx-auto px-4 py-6 text-center text-gray-500 text-sm">
-            <p>Kubi's Benchmark - Evaluating LLM capabilities</p>
-        </div>
-    </footer>
+<!-- Footer -->
+<footer class="bg-white border-t border-gray-200 mt-12">
+    <div class="max-w-7xl mx-auto px-4 py-6 text-center text-gray-500 text-sm">
+        <p>Kubi's Benchmark - Evaluating LLM capabilities</p>
+    </div>
+</footer>
 
-    <!-- Tabulator JS -->
-    <script type="text/javascript" src="https://unpkg.com/tabulator-tables@6.3.0/dist/js/tabulator.min.js"></script>
+<!-- Tabulator JS -->
+<script type="text/javascript" src="https://unpkg.com/tabulator-tables@6.3.0/dist/js/tabulator.min.js"></script>
 
-    <!-- Chart.js -->
-    <script src="https://cdn.jsdelivr.net/npm/chart.js@4.4.1/dist/chart.umd.min.js"></script>
+<!-- Chart.js -->
+<script src="https://cdn.jsdelivr.net/npm/chart.js@4.4.1/dist/chart.umd.min.js"></script>
 
-    <!-- Main application JS -->
-    <script src="js/main.js?v=12"></script>
+<!-- Main application JS -->
+<script src="js/main.js?v=12"></script>
 </body>
 
 </html>
