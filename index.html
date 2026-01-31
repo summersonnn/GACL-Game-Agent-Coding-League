@@ -7,7 +7,7 @@
     <title>Kubi's Benchmark Leaderboard</title>
 
     <!-- Tailwind CSS -->
-    <script src="https://cdn.tailwindcss.com"></script>
+    <script src="https://cdn.tailwindcss.com?plugins=typography"></script>
 
     <!-- Tabulator CSS -->
     <link href="https://unpkg.com/tabulator-tables@6.3.0/dist/css/tabulator_simple.min.css" rel="stylesheet">
@@ -20,7 +20,10 @@
 <script async src="https://www.googletagmanager.com/gtag/js?id=G-5Q9WND7R6K"></script>
 <script>
     window.dataLayer = window.dataLayer || [];
-    function gtag() { dataLayer.push(arguments); }
+
+    function gtag() {
+        dataLayer.push(arguments);
+    }
     gtag('js', new Date());
 
     gtag('config', 'G-5Q9WND7R6K');
@@ -34,6 +37,8 @@
             <h1 class="text-xl font-bold text-gray-900 leading-tight">Kubi's Benchmark</h1>
             <p class="text-xs text-gray-500 mt-2 font-medium">LLM Performance Leaderboard</p>
         </div>
+
+
 
         <!-- Run Selection -->
         <div class="flex-1 overflow-y-auto py-4">
@@ -56,66 +61,98 @@
 
     <!-- Main Content Wrapper -->
     <main class="flex-1 flex flex-col min-w-0 bg-gray-50 overflow-hidden">
-        <!-- Top Bar / Header for Mobile or Context -->
-        <header class="bg-white shadow-sm border-b border-gray-200 px-8 py-4 flex justify-between items-center z-10">
-            <div>
-                <h2 class="text-lg font-semibold text-gray-800" id="current-run-title">Select a Run</h2>
-                <p class="text-sm text-gray-500" id="run-date">Loading...</p>
-            </div>
-            <!-- Additional controls could go here -->
-        </header>
 
-        <!-- Scrollable Content Area -->
-        <div class="flex-1 overflow-auto p-8">
-            <div class="max-w-7xl mx-auto">
-                <!-- Tab Navigation -->
-                <div class="border-b border-gray-200 mb-6">
-                    <nav class="flex space-x-8" aria-label="Tabs">
-                        <button class="tab-btn active" data-tab="rankings">
-                            Model Rankings
-                        </button>
-                        <button class="tab-btn" data-tab="details">
-                            Detailed Results
-                        </button>
-                        <button class="tab-btn" data-tab="chart">
-                            Chart
-                        </button>
-                    </nav>
+        <!-- Page: Results -->
+        <div id="page-results" class="flex-1 flex flex-col min-h-0">
+            <!-- Top Bar / Header for Mobile or Context -->
+            <header
+                class="bg-white shadow-sm border-b border-gray-200 px-8 py-4 flex justify-between items-center z-10">
+                <div>
+                    <h2 class="text-lg font-semibold text-gray-800" id="current-run-title">Select a Run</h2>
+                    <p class="text-sm text-gray-500" id="run-date">Loading...</p>
                 </div>
+                <!-- Additional controls could go here -->
+            </header>
 
-                <!-- Tab: Model Rankings -->
-                <section id="tab-rankings" class="tab-content active">
-                    <div class="bg-white rounded-xl shadow-sm border border-gray-200 overflow-hidden">
-                        <div id="summary-table"></div>
+            <!-- Scrollable Content Area -->
+            <div class="flex-1 overflow-auto p-8">
+                <div class="max-w-7xl mx-auto">
+                    <!-- Tab Navigation -->
+                    <div class="border-b border-gray-200 mb-6">
+                        <nav class="flex space-x-8" aria-label="Tabs">
+                            <button class="tab-btn active" data-tab="rankings">
+                                Model Rankings
+                            </button>
+                            <button class="tab-btn" data-tab="details">
+                                Detailed Results
+                            </button>
+                            <button class="tab-btn" data-tab="chart">
+                                Chart
+                            </button>
+                        </nav>
                     </div>
-                </section>
 
-                <!-- Tab: Detailed Results -->
-                <section id="tab-details" class="tab-content hidden">
-                    <div class="bg-white rounded-xl shadow-sm border border-gray-200 overflow-hidden">
-                        <div id="detail-table"></div>
-                    </div>
-                </section>
-
-                <!-- Tab: Chart -->
-                <section id="tab-chart" class="tab-content hidden">
-                    <div class="bg-white rounded-xl shadow-sm border border-gray-200 p-6">
-                        <div class="flex items-center gap-4 mb-4">
-                            <label for="chart-category" class="text-sm font-medium text-gray-700">Category:</label>
-                            <select id="chart-category"
-                                class="rounded-md border-gray-300 shadow-sm focus:border-indigo-500 focus:ring-indigo-500 text-sm px-3 py-2 border">
-                                <option value="General" selected>General (Total)</option>
-                                <option value="Reasoning">Reasoning</option>
-                                <option value="General Knowledge">General Knowledge</option>
-                                <option value="Math">Math</option>
-                                <option value="Basic Mix">Basic Mix</option>
-                            </select>
+                    <!-- Tab: Model Rankings -->
+                    <section id="tab-rankings" class="tab-content active">
+                        <div class="bg-white rounded-xl shadow-sm border border-gray-200 overflow-hidden">
+                            <div id="summary-table"></div>
                         </div>
-                        <div style="height: 400px; position: relative;">
-                            <canvas id="score-chart"></canvas>
+                    </section>
+
+                    <!-- Tab: Detailed Results -->
+                    <section id="tab-details" class="tab-content hidden">
+                        <div class="bg-white rounded-xl shadow-sm border border-gray-200 overflow-hidden">
+                            <div id="detail-table"></div>
+                        </div>
+                    </section>
+
+                    <!-- Tab: Chart -->
+                    <section id="tab-chart" class="tab-content hidden">
+                        <div class="bg-white rounded-xl shadow-sm border border-gray-200 p-6">
+                            <div class="flex items-center gap-4 mb-4">
+                                <label for="chart-category" class="text-sm font-medium text-gray-700">Category:</label>
+                                <select id="chart-category"
+                                    class="rounded-md border-gray-300 shadow-sm focus:border-indigo-500 focus:ring-indigo-500 text-sm px-3 py-2 border">
+                                    <option value="General" selected>General (Total)</option>
+                                    <option value="Reasoning">Reasoning</option>
+                                    <option value="General Knowledge">General Knowledge</option>
+                                    <option value="Math">Math</option>
+                                    <option value="Basic Mix">Basic Mix</option>
+                                </select>
+                            </div>
+                            <div style="height: 400px; position: relative;">
+                                <canvas id="score-chart"></canvas>
+                            </div>
+                        </div>
+                    </section>
+                </div>
+            </div>
+        </div><!-- End page-results -->
+
+        <!-- Page: Published Questions -->
+        <div id="page-published" class="hidden flex-1 flex flex-col min-h-0">
+            <header
+                class="bg-white shadow-sm border-b border-gray-200 px-8 py-4 flex justify-between items-center z-10">
+                <div>
+                    <h2 class="text-lg font-semibold text-gray-800">Published Questions</h2>
+                    <p class="text-sm text-gray-500">View the library of benchmark questions</p>
+                </div>
+            </header>
+
+            <div class="flex-1 overflow-auto p-8">
+                <div class="max-w-7xl mx-auto">
+                    <div id="questions-content" class="bg-white rounded-xl shadow-sm border border-gray-200 p-12">
+                        <div class="text-center">
+                            <div class="text-6xl mb-4">📚</div>
+                            <h3 class="text-xl font-medium text-gray-900 mb-2">Question Library</h3>
+                            <p class="text-gray-500 max-w-lg mx-auto">
+                                This page will contain the full list of questions used in the benchmark, including
+                                prompt
+                                details, reference answers, and judging criteria.
+                            </p>
                         </div>
                     </div>
-                </section>
+                </div>
             </div>
         </div>
     </main>
@@ -133,6 +170,9 @@
 
 <!-- Chart.js -->
 <script src="https://cdn.jsdelivr.net/npm/chart.js@4.4.1/dist/chart.umd.min.js"></script>
+
+<!-- Marked.js for Markdown parsing -->
+<script src="https://cdn.jsdelivr.net/npm/marked/marked.min.js"></script>
 
 <!-- Main application JS -->
 <script src="js/main.js?v=12"></script>

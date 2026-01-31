@@ -3,11 +3,11 @@
  * Handles HTML parsing, table initialization, and run selection
  */
 
-// Global state
 let summaryTable = null;
 let detailTable = null;
 let scoreChart = null;
 let currentData = null;
+let currentRunFile = null;
 
 // Category display order
 const CATEGORY_ORDER = [
@@ -32,8 +32,174 @@ async function init() {
         }
     } catch (error) {
         console.error('Failed to initialize:', error);
-        showError('Failed to load benchmark data. Please check the console for details.');
+        // Assuming showError is defined globally or we fallback to console
+        if (typeof showError === 'function') {
+            showError('Failed to load benchmark data. Please check the console for details.');
+        }
     }
+}
+
+/**
+ * Populate the run selector list in the sidebar with nested navigation
+ */
+function populateRunSelector(runs) {
+    const listContainer = document.getElementById('run-list');
+    if (!listContainer) return;
+
+    listContainer.innerHTML = '';
+
+    runs.forEach((run, index) => {
+        // Container for the run item and its sub-navigation
+        const container = document.createElement('div');
+        container.className = 'mb-1';
+
+        // Run Header (The click target for the run)
+        const header = document.createElement('div');
+        header.className = 'run-item px-3 py-2 cursor-pointer hover:bg-gray-100 rounded transition-colors flex justify-between items-center';
+        header.dataset.value = run.file;
+
+        // Sub-navigation container
+        const subNav = document.createElement('div');
+        subNav.className = 'run-subnav hidden ml-2 mt-1 space-y-1 pl-2 border-l-2 border-gray-100';
+
+        let displayTitle = run.name || 'Benchmark Run';
+        let dateObj = null;
+
+        // Extract date logic (same as before)
+        if (run.file.match(/(\d{4})(\d{2})(\d{2})_(\d{2})(\d{2})(\d{2})/)) {
+            const match = run.file.match(/(\d{4})(\d{2})(\d{2})_(\d{2})(\d{2})(\d{2})/);
+            const [, year, month, day, hour, min] = match;
+            dateObj = new Date(year, month - 1, day, hour, min);
+        }
+
+        let dateDisplay = '';
+        if (dateObj) {
+            const day = dateObj.getDate();
+            const suffix = (day % 10 === 1 && day !== 11) ? 'st' :
+                (day % 10 === 2 && day !== 12) ? 'nd' :
+                    (day % 10 === 3 && day !== 13) ? 'rd' : 'th';
+
+            const monthNames = ["January", "February", "March", "April", "May", "June",
+                "July", "August", "September", "October", "November", "December"];
+            dateDisplay = `${monthNames[dateObj.getMonth()]} ${day}${suffix}, ${dateObj.getFullYear()}`;
+        } else {
+            dateDisplay = run.date;
+        }
+
+        if (displayTitle.indexOf('2026-') !== -1 || displayTitle === run.date) {
+            displayTitle = dateDisplay;
+            dateDisplay = '';
+        }
+
+        header.innerHTML = `
+            <div class="overflow-hidden">
+                <div class="run-name truncate font-medium text-gray-700">${displayTitle}</div>
+                ${dateDisplay ? `<div class="run-date truncate text-xs text-gray-400">${dateDisplay}</div>` : ''}
+            </div>
+            <div class="transform transition-transform duration-200 text-gray-400 text-xs">▼</div>
+        `;
+
+        // Sub-navigation buttons
+        const btnResults = document.createElement('button');
+        btnResults.className = 'w-full flex items-center px-3 py-1.5 text-xs font-medium rounded-md hover:bg-indigo-50 hover:text-indigo-700 text-gray-600';
+        btnResults.innerHTML = '<span class="mr-2">📊</span> Results';
+
+        const btnPublished = document.createElement('button');
+        btnPublished.className = 'w-full flex items-center px-3 py-1.5 text-xs font-medium rounded-md hover:bg-indigo-50 hover:text-indigo-700 text-gray-600';
+        btnPublished.innerHTML = '<span class="mr-2">📝</span> Questions';
+
+        // Append buttons to subnav
+        subNav.appendChild(btnResults);
+        subNav.appendChild(btnPublished);
+
+        // Helper to set UI active state
+        const setActiveState = () => {
+            // Remove active state from all items
+            document.querySelectorAll('.run-item').forEach(el => el.classList.remove('bg-gray-100', 'active-run-header'));
+            document.querySelectorAll('.run-subnav button').forEach(el => el.classList.remove('bg-indigo-50', 'text-indigo-700'));
+
+            // Set active state for this run
+            header.classList.add('bg-gray-100', 'active-run-header');
+
+            // Ensure expanded
+            subNav.classList.remove('hidden');
+            const arrow = header.querySelector('.transform');
+            if (arrow) arrow.classList.add('rotate-180');
+        };
+
+        const pageResults = document.getElementById('page-results');
+        const pagePublished = document.getElementById('page-published');
+
+        // Click handler for Run Header (Accordion behavior only)
+        header.onclick = () => {
+            const isHidden = subNav.classList.contains('hidden');
+
+            // Collapse others (maintained behavior)
+            document.querySelectorAll('.run-subnav').forEach(el => el.classList.add('hidden'));
+            document.querySelectorAll('.run-item .transform').forEach(el => el.classList.remove('rotate-180'));
+
+            if (isHidden) {
+                subNav.classList.remove('hidden');
+                const arrow = header.querySelector('.transform');
+                if (arrow) arrow.classList.add('rotate-180');
+            }
+        };
+
+        // Click handler for Sub-Nav "Results"
+        btnResults.onclick = async (e) => {
+            e.stopPropagation();
+
+            setActiveState();
+            btnResults.classList.add('bg-indigo-50', 'text-indigo-700');
+
+            // Load data if needed
+            if (currentRunFile !== run.file) {
+                updateHeaderTitle(displayTitle);
+                await loadRun(run.file);
+            }
+
+            if (pageResults && pagePublished) {
+                pageResults.classList.remove('hidden');
+                pagePublished.classList.add('hidden');
+
+                if (summaryTable) summaryTable.redraw();
+                if (detailTable) detailTable.redraw();
+            }
+        };
+
+        // Click handler for Sub-Nav "Published Questions"
+        btnPublished.onclick = async (e) => {
+            e.stopPropagation();
+
+            setActiveState();
+            btnPublished.classList.add('bg-indigo-50', 'text-indigo-700');
+
+            // Load data if needed
+            if (currentRunFile !== run.file) {
+                updateHeaderTitle(displayTitle);
+                await loadRun(run.file);
+            }
+
+            if (pageResults && pagePublished) {
+                pageResults.classList.add('hidden');
+                pagePublished.classList.remove('hidden');
+            }
+        };
+
+        // Initial Selection logic
+        if (index === 0) {
+            header.onclick(); // Expand this one
+            // Simulate click on results to load and set active
+            // We can't click programmatically easily with the events passed, so just call logic
+            header.classList.add('bg-gray-100', 'active-run-header');
+            btnResults.classList.add('bg-indigo-50', 'text-indigo-700');
+            // Data loading is handled by init() calling loadRun explicitly for first item
+        }
+
+        container.appendChild(header);
+        container.appendChild(subNav);
+        listContainer.appendChild(container);
+    });
 }
 
 /**
@@ -102,88 +268,6 @@ async function loadManifest() {
 }
 
 /**
- * Populate the run selector dropdown
- */
-/**
- * Populate the run selector list in the sidebar
- */
-function populateRunSelector(runs) {
-    const listContainer = document.getElementById('run-list');
-    if (!listContainer) return;
-
-    listContainer.innerHTML = '';
-
-    runs.forEach((run, index) => {
-        const item = document.createElement('div');
-        // Added cursor-pointer and hover:bg-gray-100 for visual feedback
-        item.className = 'run-item px-3 py-2 mb-1 cursor-pointer hover:bg-gray-100 rounded transition-colors';
-        item.dataset.value = run.file;
-
-        let displayTitle = run.name || 'Benchmark Run';
-        let dateObj = null;
-
-        // Extract date from filename if available for better formatting
-        if (run.file.match(/(\d{4})(\d{2})(\d{2})_(\d{2})(\d{2})(\d{2})/)) {
-            const match = run.file.match(/(\d{4})(\d{2})(\d{2})_(\d{2})(\d{2})(\d{2})/);
-            const [, year, month, day, hour, min] = match;
-            dateObj = new Date(year, month - 1, day, hour, min);
-        }
-
-        // Format date nicely: "January 31st"
-        let dateDisplay = '';
-        if (dateObj) {
-            const day = dateObj.getDate();
-            const suffix = (day % 10 === 1 && day !== 11) ? 'st' :
-                (day % 10 === 2 && day !== 12) ? 'nd' :
-                    (day % 10 === 3 && day !== 13) ? 'rd' : 'th';
-
-            const monthNames = ["January", "February", "March", "April", "May", "June",
-                "July", "August", "September", "October", "November", "December"];
-            dateDisplay = `${monthNames[dateObj.getMonth()]} ${day}${suffix}, ${dateObj.getFullYear()}`;
-
-            // Add time if needed (e.g. valid date but maybe same day runs)
-            // User requested to remove time from sidebar
-            // const h = dateObj.getHours();
-            // const m = dateObj.getMinutes();
-            // dateDisplay += ` ${String(h).padStart(2, '0')}:${String(m).padStart(2, '0')}`;
-        } else {
-            // Fallback if no date parsing
-            dateDisplay = run.date;
-        }
-
-        // If title looks like the raw date string from earlier, just show the nicer date
-        // Logic: if title contains "2026-", it's likely just the raw date.
-        if (displayTitle.indexOf('2026-') !== -1 || displayTitle === run.date) {
-            displayTitle = dateDisplay;
-            dateDisplay = ''; // Don't show subtitle if main title is the date
-        }
-
-        item.innerHTML = `
-            <div class="run-name truncate font-medium text-gray-700">${displayTitle}</div>
-            ${dateDisplay ? `<div class="run-date truncate text-xs text-gray-400">${dateDisplay}</div>` : ''}
-        `;
-
-        // Set initial selection
-        if (index === 0) {
-            item.classList.add('active');
-            updateHeaderTitle(displayTitle);
-        }
-
-        // Use direct onclick assignment to ensure no event delegation issues
-        item.onclick = async () => {
-            // Update active state
-            document.querySelectorAll('.run-item').forEach(el => el.classList.remove('active'));
-            item.classList.add('active');
-
-            updateHeaderTitle(displayTitle);
-            await loadRun(run.file);
-        };
-
-        listContainer.appendChild(item);
-    });
-}
-
-/**
  * Update the header title with current run
  */
 function updateHeaderTitle(title) {
@@ -216,11 +300,16 @@ async function loadRun(filename) {
 
         const html = await response.text();
         currentData = parseHTML(html);
+        currentRunFile = filename;
 
         updateRunDate(filename);
         renderSummaryTable(currentData);
         renderDetailTable(currentData);
         renderChart(currentData);
+
+        // Load questions/markdown
+        const mdFilename = filename.replace('.html', '.md');
+        loadQuestions(mdFilename);
     } catch (error) {
         console.error('Failed to load run:', error);
         // showError might also be missing or I haven't seen it, but I'll assume it's global or I'll implement a simple one if needed.
@@ -230,6 +319,52 @@ async function loadRun(filename) {
         // Step 7 showed up to line 800.
         // Let's assume it's fine for now or simpler: console.error is enough.
         console.error(`Failed to load benchmark run: ${filename}`);
+    }
+}
+
+/**
+ * Load and render the markdown questions for a run
+ */
+async function loadQuestions(filename) {
+    const container = document.getElementById('questions-content');
+    if (!container) return;
+
+    // Reset/Loading state
+    container.innerHTML = '<div class="text-center text-gray-500 py-12">Loading questions...</div>';
+
+    try {
+        const response = await fetch(`data/runs/${filename}?t=${new Date().getTime()}`);
+
+        if (response.ok) {
+            const text = await response.text();
+            // Configure marked (optional, but good for security if we were worried about raw HTML, though we trust this content)
+            // marked.parse is available from the CDN script
+            const html = marked.parse(text);
+
+            // Render with Tailwind Typography (prose)
+            // Removed p-12 from parent in HTML logic if we want, but here we can just use the inner content.
+            // The parent has p-12. We can reset it or keep it.
+            container.innerHTML = `<div class="prose prose-indigo max-w-none text-left">${html}</div>`;
+        } else {
+            // Revert to placeholder/empty state
+            container.innerHTML = `
+                <div class="text-center">
+                    <div class="text-6xl mb-4">📚</div>
+                    <h3 class="text-xl font-medium text-gray-900 mb-2">Question Library</h3>
+                    <p class="text-gray-500 max-w-lg mx-auto">
+                        No questions documentation found for this run.
+                    </p>
+                    <p class="text-xs text-gray-400 mt-2">Expected file: ${filename}</p>
+                </div>
+            `;
+        }
+    } catch (error) {
+        console.error('Failed to load questions:', error);
+        container.innerHTML = `
+            <div class="text-center py-12">
+                <p class="text-red-500">Failed to load questions.</p>
+            </div>
+        `;
     }
 }
 
