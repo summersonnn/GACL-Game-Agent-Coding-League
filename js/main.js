@@ -4,6 +4,7 @@
  */
 
 let summaryTable = null;
+let summaryTableV2 = null;
 let detailTable = null;
 let scoreChart = null;
 let currentData = null;
@@ -385,6 +386,11 @@ function initTabs() {
                 detailTable.redraw();
             }
 
+            // Re-draw V2 table when tab becomes visible
+            if (targetTab === 'rankings_v2' && summaryTableV2) {
+                summaryTableV2.redraw();
+            }
+
         });
     });
 }
@@ -436,9 +442,28 @@ async function loadRun(filename) {
         currentRunFile = filename;
 
         updateRunDate(filename);
-        renderSummaryTable(currentData);
+        renderSummaryTable(currentData, '#summary-table');
         renderDetailTable(currentData);
         renderChart(currentData);
+
+        // Try to load V2 data if this is a V1 run
+        if (filename.startsWith('performance_table_') && !filename.includes('_V2_')) {
+            const v2Filename = filename.replace('performance_table_', 'performance_table_V2_');
+            try {
+                const v2Response = await fetch(`data/runs/${v2Filename}?t=${new Date().getTime()}`);
+                if (v2Response.ok) {
+                    const v2Html = await v2Response.text();
+                    const v2Data = parseHTML(v2Html);
+                    renderSummaryTable(v2Data, '#summary-table-v2');
+                } else {
+                    // If no V2 file, clear or hide V2 table instance data
+                    if (summaryTableV2) summaryTableV2.setData([]);
+                }
+            } catch (v2Error) {
+                console.warn('V2 data not available for this run:', v2Error);
+                if (summaryTableV2) summaryTableV2.setData([]);
+            }
+        }
 
         // Load questions/markdown
         const mdFilename = filename.replace('.html', '.md');
@@ -825,7 +850,9 @@ function parseCost(str) {
 /**
  * Render the summary/leaderboard table
  */
-function renderSummaryTable(data) {
+function renderSummaryTable(data, tableSelector = '#summary-table') {
+    const isV1 = tableSelector === '#summary-table';
+
     // Calculate category scores for each model
     const categoryScores = {};
     const categoryMaxScores = {};
@@ -878,7 +905,7 @@ function renderSummaryTable(data) {
         return {
             rank: index + 1,
             model: model,
-            score: `${formatScore(scoreNum)}/${totalMaxScore}`,
+            score: `${formatScore(scoreNum)}/${formatScore(totalMaxScore)}`,
             scoreNum: scoreNum,
             tokens: tokens,
             cost: cost,
@@ -901,10 +928,12 @@ function renderSummaryTable(data) {
         row.rank = index + 1;
     });
 
-    if (summaryTable) {
-        summaryTable.replaceData(tableData);
+    let currentTable = isV1 ? summaryTable : summaryTableV2;
+
+    if (currentTable) {
+        currentTable.replaceData(tableData);
     } else {
-        summaryTable = new Tabulator('#summary-table', {
+        const newTable = new Tabulator(tableSelector, {
             data: tableData,
             layout: 'fitColumns',
             responsiveLayout: 'collapse',
@@ -913,20 +942,20 @@ function renderSummaryTable(data) {
                 {
                     title: 'Rank',
                     field: 'rank',
-                    width: 90,
+                    width: 93,
                     hozAlign: 'center',
                     formatter: rankFormatter
                 },
                 {
                     title: 'Model',
                     field: 'model',
-                    minWidth: 120,
+                    minWidth: 67,
                     formatter: modelFormatter
                 },
                 {
                     title: 'Score',
                     field: 'score',
-                    width: 90,
+                    width: 112,
                     hozAlign: 'center',
                     sorter: 'number',
                     sorterParams: { alignEmptyValues: 'bottom' },
@@ -935,7 +964,7 @@ function renderSummaryTable(data) {
                 {
                     title: '🪙',
                     field: 'tokens',
-                    width: 90,
+                    width: 93,
                     hozAlign: 'right',
                     sorter: 'number',
                     headerTooltip: 'Tokens',
@@ -947,7 +976,7 @@ function renderSummaryTable(data) {
                 {
                     title: '💵',
                     field: 'cost',
-                    width: 90,
+                    width: 93,
                     hozAlign: 'right',
                     sorter: 'number',
                     headerTooltip: 'Cost',
@@ -959,54 +988,57 @@ function renderSummaryTable(data) {
                 {
                     title: '🧠',
                     field: 'reasoningScore',
-                    width: 90,
+                    width: 93,
                     hozAlign: 'center',
                     sorter: 'number',
                     headerTooltip: 'Reasoning',
                     formatter: (cell) => {
                         const row = cell.getRow().getData();
-                        return `<span class="score-partial">${formatScore(row.reasoningScore)}/${row.reasoningMax}</span>`;
+                        return `<span class="score-partial">${formatScore(row.reasoningScore)}/${formatScore(row.reasoningMax)}</span>`;
                     }
                 },
                 {
                     title: '🌍',
                     field: 'generalKnowledgeScore',
-                    width: 90,
+                    width: 93,
                     hozAlign: 'center',
                     sorter: 'number',
                     headerTooltip: 'General Knowledge',
                     formatter: (cell) => {
                         const row = cell.getRow().getData();
-                        return `<span class="score-partial">${formatScore(row.generalKnowledgeScore)}/${row.generalKnowledgeMax}</span>`;
+                        return `<span class="score-partial">${formatScore(row.generalKnowledgeScore)}/${formatScore(row.generalKnowledgeMax)}</span>`;
                     }
                 },
                 {
                     title: '🧮',
                     field: 'mathScore',
-                    width: 90,
+                    width: 93,
                     hozAlign: 'center',
                     sorter: 'number',
                     headerTooltip: 'Math',
                     formatter: (cell) => {
                         const row = cell.getRow().getData();
-                        return `<span class="score-partial">${formatScore(row.mathScore)}/${row.mathMax}</span>`;
+                        return `<span class="score-partial">${formatScore(row.mathScore)}/${formatScore(row.mathMax)}</span>`;
                     }
                 },
                 {
                     title: '🧩',
                     field: 'basicMixScore',
-                    width: 90,
+                    width: 93,
                     hozAlign: 'center',
                     sorter: 'number',
                     headerTooltip: 'Basic Mix',
                     formatter: (cell) => {
                         const row = cell.getRow().getData();
-                        return `<span class="score-partial">${formatScore(row.basicMixScore)}/${row.basicMixMax}</span>`;
+                        return `<span class="score-partial">${formatScore(row.basicMixScore)}/${formatScore(row.basicMixMax)}</span>`;
                     }
                 }
             ],
             initialSort: [{ column: 'scoreNum', dir: 'desc' }]
         });
+
+        if (isV1) summaryTable = newTable;
+        else summaryTableV2 = newTable;
     }
 }
 

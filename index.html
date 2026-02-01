@@ -422,13 +422,16 @@
                     <div class="border-b border-gray-200 mb-6">
                         <nav class="flex space-x-8" aria-label="Tabs">
                             <button class="tab-btn active" data-tab="rankings">
-                                Model Rankings
+                                Model Rankings v1
                             </button>
                             <button class="tab-btn" data-tab="details">
                                 Detailed Results
                             </button>
                             <button class="tab-btn" data-tab="chart">
                                 Chart
+                            </button>
+                            <button class="tab-btn" data-tab="rankings_v2">
+                                Rankings v2
                             </button>
                         </nav>
                     </div>
@@ -467,6 +470,27 @@
                             <div style="height: 400px; position: relative;">
                                 <canvas id="score-chart"></canvas>
                             </div>
+                        </div>
+                    </section>
+
+                    <!-- Tab: Rankings v2 -->
+                    <section id="tab-rankings_v2" class="tab-content hidden">
+                        <div class="bg-white rounded-xl shadow-sm border border-gray-200 p-8 mb-6">
+                            <div class="prose prose-indigo max-w-none text-gray-600">
+                                <h3 class="text-xl font-bold text-gray-900 mb-4">Dynamic Point Adjustment</h3>
+                                <p>
+                                    Initial evaluations revealed that certain questions were inconsistently weighted. To
+                                    minimize subjective bias,
+                                    I implemented an automated adjustment mechanism: point values are dynamically
+                                    reduced if a question is solved
+                                    by all models, and increased if none succeed. Intermediate results are adjusted
+                                    proportionally. This tab presents
+                                    a secondary leaderboard based on this dynamic scoring system.
+                                </p>
+                            </div>
+                        </div>
+                        <div class="bg-white rounded-xl shadow-sm border border-gray-200 overflow-hidden">
+                            <div id="summary-table-v2"></div>
                         </div>
                     </section>
                 </div>
