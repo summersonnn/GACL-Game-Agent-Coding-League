@@ -775,6 +775,7 @@ function renderSummaryTable(data) {
             data: tableData,
             layout: 'fitColumns',
             responsiveLayout: 'collapse',
+            nestedFieldSeparator: false,
             columns: [
                 {
                     title: 'Rank',
@@ -1131,6 +1132,7 @@ function renderDetailTable(data) {
     detailTable = new Tabulator('#detail-table', {
         data: tableData,
         layout: 'fitDataFill',
+        nestedFieldSeparator: false,
         groupBy: ['category', 'subcategory'],
         groupStartOpen: [true, true],
         groupHeader: (value, count, data, group) => {
