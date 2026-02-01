@@ -48,6 +48,11 @@
                 <span class="mr-3 text-lg">🏠</span>
                 Home
             </button>
+            <button id="nav-configs"
+                class="w-full flex items-center px-3 py-2 text-sm font-medium rounded-md text-gray-700 hover:bg-gray-100 hover:text-gray-900 transition-colors group mt-1">
+                <span class="mr-3 text-lg">⚙️</span>
+                Configs
+            </button>
         </div>
 
         <!-- Run Selection -->
@@ -303,6 +308,95 @@
                         <p class="text-lg font-medium text-indigo-600 animate-pulse">
                             Lastly, wait for the more exciting competitive game agent coding benchmark league that will
                             be published by me soon!
+                        </p>
+                    </div>
+                </div>
+            </div>
+        </div>
+
+        <!-- Page: Configs -->
+        <div id="page-configs" class="hidden flex-1 flex flex-col min-h-0 overflow-auto">
+            <div class="p-8 max-w-4xl mx-auto">
+                <div class="bg-white rounded-xl shadow-sm border border-gray-200 p-8 mb-8">
+                    <h1 class="text-3xl font-bold text-gray-900 mb-6">Configuration</h1>
+
+                    <h1 class="text-3xl font-bold text-gray-900 mb-6">Configuration</h1>
+
+                    <p class="text-gray-600 mb-8">These are OpenRouter settings, used for the benchmark.</p>
+
+                    <div class="prose prose-indigo max-w-none text-gray-600 mb-8">
+                        <h2 class="text-xl font-bold text-gray-800 mb-4">Models Used</h2>
+                        <ul
+                            class="list-none space-y-2 font-mono text-sm bg-gray-50 p-4 rounded-lg border border-gray-100">
+                            <li>google/gemini-3-flash-preview</li>
+                            <li>google/gemini-3-pro-preview</li>
+                            <li>deepseek/deepseek-v3.2@preset/fp8</li>
+                            <li>openai/gpt-5.2</li>
+                            <li>qwen/qwen3-max</li>
+                            <li>openai/gpt-5-mini</li>
+                            <li>anthropic/claude-opus-4.5</li>
+                            <li>anthropic/claude-sonnet-4.5</li>
+                            <li>anthropic/claude-haiku-4.5</li>
+                            <li>x-ai/grok-4</li>
+                            <li>x-ai/grok-4.1-fast</li>
+                            <li>openai/gpt-oss-120b@preset/fp8</li>
+                            <li>z-ai/glm-4.7@preset/fp8-speedy</li>
+                            <li>z-ai/glm-4.7-flash@preset/fp8-speedy</li>
+                            <li>moonshotai/kimi-k2.5</li>
+                            <li>moonshotai/kimi-k2-thinking</li>
+                            <li>nvidia/nemotron-3-nano-30b-a3b@preset/fp8</li>
+                            <li>meta-llama/llama-4-scout@preset/fp8</li>
+                            <li>minimax/minimax-m2.1@preset/fp8</li>
+                            <li>qwen/qwen3-235b-a22b-thinking-2507@preset/fp8</li>
+                            <li>qwen/qwen3-next-80b-a3b-thinking@preset/fp8</li>
+                            <li>qwen/qwen3-32b@preset/fp8</li>
+                            <li>xiaomi/mimo-v2-flash</li>
+                            <li>google/gemma-3-27b-it@preset/fp8</li>
+                            <li>mistralai/mistral-large-2512</li>
+                        </ul>
+                    </div>
+
+                    <div class="prose prose-indigo max-w-none text-gray-600 mb-8">
+                        <h2 class="text-xl font-bold text-gray-800 mb-4">Preset Configs</h2>
+
+                        <h3 class="font-semibold text-gray-700">Provider Preferences</h3>
+                        <pre class="bg-gray-900 text-gray-100 rounded-lg p-4 font-mono text-xs overflow-x-auto">
+{
+  "sort": {
+    "by": "price",
+    "partition": null
+  },
+  "quantizations": [
+    "fp8",
+    "fp16",
+    "bf16"
+  ],
+  "allow_fallbacks": true,
+  "data_collection": "allow"
+}</pre>
+
+                        <h3 class="font-semibold text-gray-700 mt-6">Parameters</h3>
+                        <pre class="bg-gray-900 text-gray-100 rounded-lg p-4 font-mono text-xs overflow-x-auto">
+{
+  "reasoning": {
+    "effort": "high",
+    "enabled": true
+  }
+}</pre>
+
+                        <div class="mt-4 p-4 bg-indigo-50 border border-indigo-100 rounded-lg text-sm text-indigo-800">
+                            <strong>Note:</strong> fp8+speedy is exactly same as fp8 with only difference is most
+                            fastest provider is selected instead of the cheapest. (So, "by": "throughput")
+                        </div>
+                    </div>
+
+                    <div class="prose prose-indigo max-w-none text-gray-600">
+                        <h2 class="text-xl font-bold text-gray-800 mb-4">Provider Selection Settings</h2>
+                        <img src="/data/media/openrouter_global_settings.png" alt="Provider Restrictions Settings"
+                            class="rounded-lg border border-gray-200 shadow-sm mb-4">
+                        <p class="text-sm italic">
+                            Justification: Some providers are known to be less performant than others, so I excluded
+                            them.
                         </p>
                     </div>
                 </div>

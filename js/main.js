@@ -27,6 +27,7 @@ async function init() {
     try {
         initTabs();
         initHomeNav();
+        initConfigNav();
         initCountdown();
         initChartCategorySelector();
         const manifest = await loadManifest();
@@ -127,6 +128,10 @@ function populateRunSelector(runs) {
             const btnHome = document.getElementById('nav-home');
             if (btnHome) btnHome.classList.remove('bg-gray-100', 'text-gray-900');
 
+            // Remove active state from Configs
+            const btnConfigs = document.getElementById('nav-configs');
+            if (btnConfigs) btnConfigs.classList.remove('bg-gray-100', 'text-gray-900');
+
             // Set active state for this run
             header.classList.add('bg-gray-100', 'active-run-header');
 
@@ -171,6 +176,7 @@ function populateRunSelector(runs) {
                 pageResults.classList.remove('hidden');
                 pagePublished.classList.add('hidden');
                 document.getElementById('page-home')?.classList.add('hidden');
+                document.getElementById('page-configs')?.classList.add('hidden');
 
                 if (summaryTable) summaryTable.redraw();
                 if (detailTable) detailTable.redraw();
@@ -194,6 +200,7 @@ function populateRunSelector(runs) {
                 pageResults.classList.add('hidden');
                 pagePublished.classList.remove('hidden');
                 document.getElementById('page-home')?.classList.add('hidden');
+                document.getElementById('page-configs')?.classList.add('hidden');
             }
         };
 
@@ -234,10 +241,50 @@ function initHomeNav() {
         const pageHome = document.getElementById('page-home');
         const pageResults = document.getElementById('page-results');
         const pagePublished = document.getElementById('page-published');
+        const pageConfigs = document.getElementById('page-configs');
 
         if (pageHome) pageHome.classList.remove('hidden');
         if (pageResults) pageResults.classList.add('hidden');
         if (pagePublished) pagePublished.classList.add('hidden');
+        if (pageConfigs) pageConfigs.classList.add('hidden');
+
+        // Remove active state from Configs
+        const btnConfigs = document.getElementById('nav-configs');
+        if (btnConfigs) btnConfigs.classList.remove('bg-gray-100', 'text-gray-900');
+    };
+}
+
+/**
+ * Initialize Configs navigation
+ */
+function initConfigNav() {
+    const btnConfigs = document.getElementById('nav-configs');
+    if (!btnConfigs) return;
+
+    btnConfigs.onclick = () => {
+        // Clear run active states
+        document.querySelectorAll('.run-item').forEach(el => el.classList.remove('bg-gray-100', 'active-run-header'));
+        document.querySelectorAll('.run-subnav button').forEach(el => el.classList.remove('bg-indigo-50', 'text-indigo-700'));
+        document.querySelectorAll('.run-subnav').forEach(el => el.classList.add('hidden'));
+        document.querySelectorAll('.run-item .transform').forEach(el => el.classList.remove('rotate-180'));
+
+        // Remove active state from Home
+        const btnHome = document.getElementById('nav-home');
+        if (btnHome) btnHome.classList.remove('bg-gray-100', 'text-gray-900');
+
+        // Set Configs active
+        btnConfigs.classList.add('bg-gray-100', 'text-gray-900');
+
+        // Show Configs page
+        const pageHome = document.getElementById('page-home');
+        const pageResults = document.getElementById('page-results');
+        const pagePublished = document.getElementById('page-published');
+        const pageConfigs = document.getElementById('page-configs');
+
+        if (pageHome) pageHome.classList.add('hidden');
+        if (pageResults) pageResults.classList.add('hidden');
+        if (pagePublished) pagePublished.classList.add('hidden');
+        if (pageConfigs) pageConfigs.classList.remove('hidden');
     };
 }
 
@@ -522,6 +569,16 @@ async function loadQuestions(filename) {
 
             // 3. Inject the log sections
             logContents.forEach(item => {
+                // Create and inject the model success table
+                const successTable = createModelSuccessTable(item.id);
+                if (successTable) {
+                    if (item.insertionPoint) {
+                        item.parent.insertBefore(successTable, item.insertionPoint);
+                    } else {
+                        item.parent.appendChild(successTable);
+                    }
+                }
+
                 const section = createLogsSection(item.content, item.id);
                 if (item.insertionPoint) {
                     // standard case: before <hr>
@@ -555,6 +612,82 @@ async function loadQuestions(filename) {
             </div>
         `;
     }
+}
+
+/**
+ * Create a table showing model success for a specific question
+ */
+function createModelSuccessTable(questionId) {
+    if (!currentData || !currentData.models || !currentData.questions) return null;
+
+    // Find the question data
+    const question = currentData.questions.find(q => q.index === questionId);
+    if (!question) return null;
+
+    // Container
+    const container = document.createElement('div');
+    container.className = 'w-full overflow-hidden rounded-lg border border-gray-200 mb-8 mt-4';
+
+    // Wrapper for horizontal scroll
+    const scrollWrapper = document.createElement('div');
+    scrollWrapper.className = 'overflow-x-auto';
+    container.appendChild(scrollWrapper);
+
+    const table = document.createElement('table');
+    table.className = 'w-full text-sm text-left';
+    scrollWrapper.appendChild(table);
+
+    // Header
+    const thead = document.createElement('thead');
+    thead.className = 'bg-gray-50 text-gray-500 font-medium border-b border-gray-200';
+    thead.innerHTML = `
+        <tr>
+            <th class="px-4 py-3 w-1/3 truncate">Model</th>
+            <th class="px-4 py-3">${question.index} (${question.points} points)</th>
+        </tr>
+    `;
+    table.appendChild(thead);
+
+    // Body
+    const tbody = document.createElement('tbody');
+    tbody.className = 'divide-y divide-gray-100 bg-white';
+
+    currentData.models.forEach(model => {
+        const result = question.results[model];
+        if (!result) return;
+
+        const row = document.createElement('tr');
+        row.className = 'hover:bg-gray-50/50 transition-colors';
+
+        // Badge styling based on score
+        let badgeClass = 'bg-gray-100 text-gray-600';
+        let displayText = result.scoreRaw;
+
+        if (result.scoreClass === 'pass') {
+            badgeClass = 'bg-green-100 text-green-700 ring-1 ring-green-600/20';
+            displayText = 'PASS';
+        } else if (result.scoreClass === 'fail') {
+            badgeClass = 'bg-red-100 text-red-700 ring-1 ring-red-600/20';
+            displayText = 'FAIL';
+        } else {
+            // Partial
+            badgeClass = 'bg-yellow-100 text-yellow-700 ring-1 ring-yellow-600/20';
+        }
+
+        row.innerHTML = `
+            <td class="px-4 py-2 font-medium text-gray-900 border-r border-gray-50">${model}</td>
+            <td class="px-4 py-2">
+                <span class="inline-flex items-center px-2.5 py-0.5 rounded-full text-xs font-medium ${badgeClass}">
+                    ${displayText}
+                </span>
+                 <span class="ml-2 text-xs text-gray-400 font-mono">${result.tokens} tokens • $${result.cost.toFixed(5)}</span>
+            </td>
+        `;
+        tbody.appendChild(row);
+    });
+
+    table.appendChild(tbody);
+    return container;
 }
 
 
