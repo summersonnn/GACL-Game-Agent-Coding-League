@@ -301,3 +301,36 @@
     background-color: #fff9c4 !important;
     /* Slightly more visible yellow */
 }
+
+/* Top scrollbar styling */
+.top-scrollbar-container {
+    width: 100%;
+    overflow-x: auto;
+    overflow-y: hidden;
+    height: 16px;
+    background: #f9fafb;
+    border-bottom: 1px solid #e5e7eb;
+    transition: opacity 0.3s ease, height 0.3s ease;
+}
+
+.top-scrollbar-dummy {
+    height: 1px;
+}
+
+/* Hide top scrollbar when table is not scrolling */
+.top-scrollbar-container::-webkit-scrollbar {
+    height: 8px;
+}
+
+.top-scrollbar-container::-webkit-scrollbar-track {
+    background: #f1f1f1;
+}
+
+.top-scrollbar-container::-webkit-scrollbar-thumb {
+    background: #d1d5db;
+    border-radius: 10px;
+}
+
+.top-scrollbar-container::-webkit-scrollbar-thumb:hover {
+    background: #9ca3af;
+}

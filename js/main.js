@@ -1289,6 +1289,91 @@ function renderDetailTable(data) {
             headerHozAlign: 'center'
         }
     });
+
+    // Initialize dual scrollbar sync for industrial-grade UI
+    initDetailTableScrollSync();
+}
+
+/**
+ * Initialize synchronization between the top dummy scrollbar and the detail table
+ */
+function initDetailTableScrollSync() {
+    const topScrollContainer = document.getElementById('detail-table-top-scrollbar');
+    if (!topScrollContainer) return;
+
+    const topScrollDummy = topScrollContainer.querySelector('.top-scrollbar-dummy');
+
+    // Robustly find and bind to the table holder
+    const bindToTable = () => {
+        const tableHolder = document.querySelector('#detail-table .tabulator-tableholder');
+        if (!tableHolder || !topScrollDummy) return false;
+
+        const updateWidth = () => {
+            const scrollWidth = tableHolder.scrollWidth;
+            const clientWidth = tableHolder.clientWidth;
+
+            // Ensure we have actual values before making decisions
+            if (scrollWidth === 0 && clientWidth === 0) return;
+
+            // Set dummy width to match table's scrollable width
+            topScrollDummy.style.width = scrollWidth + 'px';
+
+            // Toggle visibility based on scroll necessity
+            if (scrollWidth <= clientWidth + 5) { // Adding a small buffer
+                topScrollContainer.style.opacity = '0';
+                topScrollContainer.style.pointerEvents = 'none';
+                topScrollContainer.style.height = '0';
+            } else {
+                topScrollContainer.style.opacity = '1';
+                topScrollContainer.style.pointerEvents = 'auto';
+                topScrollContainer.style.height = '16px';
+            }
+
+            // Sync current position
+            topScrollContainer.scrollLeft = tableHolder.scrollLeft;
+        };
+
+        // Sync from top dummy to table
+        topScrollContainer.onscroll = () => {
+            if (Math.abs(tableHolder.scrollLeft - topScrollContainer.scrollLeft) > 1) {
+                tableHolder.scrollLeft = topScrollContainer.scrollLeft;
+            }
+        };
+
+        // Sync from table to top dummy
+        tableHolder.onscroll = () => {
+            if (Math.abs(topScrollContainer.scrollLeft - tableHolder.scrollLeft) > 1) {
+                topScrollContainer.scrollLeft = tableHolder.scrollLeft;
+            }
+        };
+
+        // Use ResizeObserver for robust layout tracking
+        const resizeObserver = new ResizeObserver(() => {
+            updateWidth();
+        });
+        resizeObserver.observe(tableHolder);
+
+        // Tabulator events that affect layout
+        if (detailTable) {
+            detailTable.on("renderComplete", updateWidth);
+            detailTable.on("columnVisibilityChanged", updateWidth);
+            detailTable.on("tableRedrawn", updateWidth);
+            detailTable.on("dataLoaded", updateWidth);
+        }
+
+        // Initial update
+        updateWidth();
+        return true;
+    };
+
+    // Try multiple times to ensure we catch the table after Tabulator finishes creation
+    let attempts = 0;
+    const interval = setInterval(() => {
+        if (bindToTable() || attempts > 20) {
+            clearInterval(interval);
+        }
+        attempts++;
+    }, 200);
 }
 
 /**
