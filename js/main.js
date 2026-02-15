@@ -1,25 +1,24 @@
 /**
- * Main application logic for Kubi's Benchmark Leaderboard
- * Handles HTML parsing, table initialization, and run selection
+ * Game Agent Coding League - Main Application Logic
+ * Handles TXT parsing, chart rendering, and run selection
  */
 
-let summaryTable = null;
-let summaryTableV2 = null;
-let detailTable = null;
-let scoreChart = null;
+let gameCharts = {};
 let currentData = null;
 let currentRunFile = null;
+let gameConfig = null;
+let leaderboardData = null;
+let gameWeights = null;
 
-// Category display order
-const CATEGORY_ORDER = [
-    'Reasoning',
-    'General Knowledge',
-    'Math',
-    'Basic Mix'
-];
-
-// Questions to be marked with a star and highlighted
-const STARRED_QUESTIONS = ['A3', 'A9', 'A17', 'A20', 'A26.1', 'A27'];
+/**
+ * Clean model name by removing fp8 variants and agent suffixes
+ */
+function cleanModelName(modelName) {
+    return modelName
+        .replace(/-fp8-speedy/g, '')
+        .replace(/-fp8/g, '')
+        .replace(/:1$|:2$/, '');
+}
 
 /**
  * Initialize the application
@@ -28,371 +27,70 @@ async function init() {
     try {
         initTabs();
         initHomeNav();
-        initConfigNav();
-        initCountdown();
-        initChartCategorySelector();
+        await loadAllPrompts();
+
+        gameConfig = await loadConfig();
+        gameWeights = await loadGameWeights();
         const manifest = await loadManifest();
         populateRunSelector(manifest.runs);
 
         if (manifest.runs.length > 0) {
-            await loadRun(manifest.runs[0].file);
+            await loadRun(manifest.runs[0]);
         }
     } catch (error) {
         console.error('Failed to initialize:', error);
-        // Assuming showError is defined globally or we fallback to console
-        if (typeof showError === 'function') {
-            showError('Failed to load benchmark data. Please check the console for details.');
-        }
+        showError('Failed to load game data. Please check the console for details.');
     }
 }
 
 /**
- * Populate the run selector list in the sidebar with nested navigation
+ * Load game configuration with weights
  */
-function populateRunSelector(runs) {
-    const listContainer = document.getElementById('run-list');
-    if (!listContainer) return;
-
-    listContainer.innerHTML = '';
-
-    runs.forEach((run, index) => {
-        // Container for the run item and its sub-navigation
-        const container = document.createElement('div');
-        container.className = 'mb-1';
-
-        // Run Header (The click target for the run)
-        const header = document.createElement('div');
-        header.className = 'run-item px-3 py-2 cursor-pointer hover:bg-gray-100 rounded transition-colors flex justify-between items-center';
-        header.dataset.value = run.file;
-
-        // Sub-navigation container
-        const subNav = document.createElement('div');
-        subNav.className = 'run-subnav hidden ml-2 mt-1 space-y-1 pl-2 border-l-2 border-gray-100';
-
-        let displayTitle = run.name || 'Benchmark Run';
-        let dateObj = null;
-
-        // Extract date logic (same as before)
-        if (run.file.match(/(\d{4})(\d{2})(\d{2})_(\d{2})(\d{2})(\d{2})/)) {
-            const match = run.file.match(/(\d{4})(\d{2})(\d{2})_(\d{2})(\d{2})(\d{2})/);
-            const [, year, month, day, hour, min] = match;
-            dateObj = new Date(year, month - 1, day, hour, min);
-        }
-
-        let dateDisplay = '';
-        if (dateObj) {
-            const day = dateObj.getDate();
-            const suffix = (day % 10 === 1 && day !== 11) ? 'st' :
-                (day % 10 === 2 && day !== 12) ? 'nd' :
-                    (day % 10 === 3 && day !== 13) ? 'rd' : 'th';
-
-            const monthNames = ["January", "February", "March", "April", "May", "June",
-                "July", "August", "September", "October", "November", "December"];
-            dateDisplay = `${monthNames[dateObj.getMonth()]} ${day}${suffix}, ${dateObj.getFullYear()}`;
-        } else {
-            dateDisplay = run.date;
-        }
-
-        if (displayTitle.indexOf('2026-') !== -1 || displayTitle === run.date) {
-            displayTitle = dateDisplay;
-            dateDisplay = '';
-        }
-
-        header.innerHTML = `
-            <div class="overflow-hidden">
-                <div class="run-name truncate font-medium text-gray-700">${displayTitle}</div>
-                ${dateDisplay ? `<div class="run-date truncate text-xs text-gray-400">${dateDisplay}</div>` : ''}
-            </div>
-            <div class="transform transition-transform duration-200 text-gray-400 text-xs">▼</div>
-        `;
-
-        // Sub-navigation buttons
-        const btnResults = document.createElement('button');
-        btnResults.className = 'w-full flex items-center px-3 py-1.5 text-xs font-medium rounded-md hover:bg-indigo-50 hover:text-indigo-700 text-gray-600';
-        btnResults.textContent = 'Results';
-
-        const btnPublished = document.createElement('button');
-        btnPublished.className = 'w-full flex items-center px-3 py-1.5 text-xs font-medium rounded-md hover:bg-indigo-50 hover:text-indigo-700 text-gray-600';
-        btnPublished.textContent = 'Questions';
-
-        // Append buttons to subnav
-        subNav.appendChild(btnResults);
-        subNav.appendChild(btnPublished);
-
-        // Helper to set UI active state
-        const setActiveState = () => {
-            // Remove active state from all items
-            document.querySelectorAll('.run-item').forEach(el => el.classList.remove('bg-gray-100', 'active-run-header'));
-            document.querySelectorAll('.run-subnav button').forEach(el => el.classList.remove('bg-indigo-50', 'text-indigo-700'));
-
-            // Remove active state from Home
-            const btnHome = document.getElementById('nav-home');
-            if (btnHome) btnHome.classList.remove('bg-gray-100', 'text-gray-900');
-
-            // Remove active state from Configs
-            const btnConfigs = document.getElementById('nav-configs');
-            if (btnConfigs) btnConfigs.classList.remove('bg-gray-100', 'text-gray-900');
-
-            // Set active state for this run
-            header.classList.add('bg-gray-100', 'active-run-header');
-
-            // Ensure expanded
-            subNav.classList.remove('hidden');
-            const arrow = header.querySelector('.transform');
-            if (arrow) arrow.classList.add('rotate-180');
-        };
-
-        const pageResults = document.getElementById('page-results');
-        const pagePublished = document.getElementById('page-published');
-
-        // Click handler for Run Header (Accordion behavior only)
-        header.onclick = () => {
-            const isHidden = subNav.classList.contains('hidden');
-
-            // Collapse others (maintained behavior)
-            document.querySelectorAll('.run-subnav').forEach(el => el.classList.add('hidden'));
-            document.querySelectorAll('.run-item .transform').forEach(el => el.classList.remove('rotate-180'));
-
-            if (isHidden) {
-                subNav.classList.remove('hidden');
-                const arrow = header.querySelector('.transform');
-                if (arrow) arrow.classList.add('rotate-180');
-            }
-        };
-
-        // Click handler for Sub-Nav "Results"
-        btnResults.onclick = async (e) => {
-            e.stopPropagation();
-
-            setActiveState();
-            btnResults.classList.add('bg-indigo-50', 'text-indigo-700');
-
-            // Load data if needed
-            if (currentRunFile !== run.file) {
-                updateHeaderTitle(displayTitle);
-                await loadRun(run.file);
-            }
-
-            if (pageResults && pagePublished) {
-                pageResults.classList.remove('hidden');
-                pagePublished.classList.add('hidden');
-                document.getElementById('page-home')?.classList.add('hidden');
-                document.getElementById('page-configs')?.classList.add('hidden');
-
-                if (summaryTable) summaryTable.redraw();
-                if (detailTable) detailTable.redraw();
-            }
-        };
-
-        // Click handler for Sub-Nav "Published Questions"
-        btnPublished.onclick = async (e) => {
-            e.stopPropagation();
-
-            setActiveState();
-            btnPublished.classList.add('bg-indigo-50', 'text-indigo-700');
-
-            // Load data if needed
-            if (currentRunFile !== run.file) {
-                updateHeaderTitle(displayTitle);
-                await loadRun(run.file);
-            }
-
-            if (pageResults && pagePublished) {
-                pageResults.classList.add('hidden');
-                pagePublished.classList.remove('hidden');
-                document.getElementById('page-home')?.classList.add('hidden');
-                document.getElementById('page-configs')?.classList.add('hidden');
-            }
-        };
-
-        // Initial Selection logic
-        if (index === 0) {
-            header.onclick(); // Expand this one
-            // Simulate click on results to load and set active
-            // We can't click programmatically easily with the events passed, so just call logic
-            header.classList.add('bg-gray-100', 'active-run-header');
-            btnResults.classList.add('bg-indigo-50', 'text-indigo-700');
-            // Data loading is handled by init() calling loadRun explicitly for first item
-        }
-
-        container.appendChild(header);
-        container.appendChild(subNav);
-        listContainer.appendChild(container);
-    });
+async function loadConfig() {
+    const response = await fetch(`data/config.json?t=${new Date().getTime()}`);
+    if (!response.ok) {
+        throw new Error(`Failed to load config: ${response.status}`);
+    }
+    return response.json();
 }
 
 /**
- * Initialize Home navigation
+ * Load game weights from config file
  */
-function initHomeNav() {
-    const btnHome = document.getElementById('nav-home');
-    if (!btnHome) return;
-
-    btnHome.onclick = () => {
-        // Clear run active states
-        document.querySelectorAll('.run-item').forEach(el => el.classList.remove('bg-gray-100', 'active-run-header'));
-        document.querySelectorAll('.run-subnav button').forEach(el => el.classList.remove('bg-indigo-50', 'text-indigo-700'));
-        document.querySelectorAll('.run-subnav').forEach(el => el.classList.add('hidden'));
-        document.querySelectorAll('.run-item .transform').forEach(el => el.classList.remove('rotate-180'));
-
-        // Set Home active
-        btnHome.classList.add('bg-gray-100', 'text-gray-900');
-
-        // Show Home page
-        const pageHome = document.getElementById('page-home');
-        const pageResults = document.getElementById('page-results');
-        const pagePublished = document.getElementById('page-published');
-        const pageConfigs = document.getElementById('page-configs');
-
-        if (pageHome) pageHome.classList.remove('hidden');
-        if (pageResults) pageResults.classList.add('hidden');
-        if (pagePublished) pagePublished.classList.add('hidden');
-        if (pageConfigs) pageConfigs.classList.add('hidden');
-
-        // Remove active state from Configs
-        const btnConfigs = document.getElementById('nav-configs');
-        if (btnConfigs) btnConfigs.classList.remove('bg-gray-100', 'text-gray-900');
-    };
-}
-
-/**
- * Initialize Configs navigation
- */
-function initConfigNav() {
-    const btnConfigs = document.getElementById('nav-configs');
-    if (!btnConfigs) return;
-
-    btnConfigs.onclick = () => {
-        // Clear run active states
-        document.querySelectorAll('.run-item').forEach(el => el.classList.remove('bg-gray-100', 'active-run-header'));
-        document.querySelectorAll('.run-subnav button').forEach(el => el.classList.remove('bg-indigo-50', 'text-indigo-700'));
-        document.querySelectorAll('.run-subnav').forEach(el => el.classList.add('hidden'));
-        document.querySelectorAll('.run-item .transform').forEach(el => el.classList.remove('rotate-180'));
-
-        // Remove active state from Home
-        const btnHome = document.getElementById('nav-home');
-        if (btnHome) btnHome.classList.remove('bg-gray-100', 'text-gray-900');
-
-        // Set Configs active
-        btnConfigs.classList.add('bg-gray-100', 'text-gray-900');
-
-        // Show Configs page
-        const pageHome = document.getElementById('page-home');
-        const pageResults = document.getElementById('page-results');
-        const pagePublished = document.getElementById('page-published');
-        const pageConfigs = document.getElementById('page-configs');
-
-        if (pageHome) pageHome.classList.add('hidden');
-        if (pageResults) pageResults.classList.add('hidden');
-        if (pagePublished) pagePublished.classList.add('hidden');
-        if (pageConfigs) pageConfigs.classList.remove('hidden');
-    };
-}
-
-
-/**
- * Initialize Countdown Timer
- */
-function initCountdown() {
-    const timerEl = document.getElementById('countdown-timer');
-    if (!timerEl) return;
-
-    // Set target date to the 1st of the next month at midnight
-    // Set target date to the 1st of the next month at midnight
-    const now = new Date();
-    // constructor(year, monthIndex, day) defaults to 00:00:00
-    // getMonth() is 0-indexed. +1 moves to next month.
-    // Date constructor handles overflow (e.g. month 12 becomes Jan next year) automatically.
-    let targetDateObj = new Date(now.getFullYear(), now.getMonth() + 1, 1);
-
-    // SKIP FEB 1, 2026 -> Go to March 1, 2026
-    if (targetDateObj.getFullYear() === 2026 && targetDateObj.getMonth() === 1) {
-        targetDateObj = new Date(2026, 2, 1);
+async function loadGameWeights() {
+    const response = await fetch(`config/game_weights.txt?t=${new Date().getTime()}`);
+    if (!response.ok) {
+        console.warn('Failed to load game weights, using defaults');
+        return { game1: 1, game2: 1, game3: 1, game4: 1, game5: 1 };
     }
 
-    const targetDate = targetDateObj.getTime();
-
-    const updateTimer = () => {
-        const now = new Date().getTime();
-        const distance = targetDate - now;
-
-        if (distance < 0) {
-            timerEl.textContent = "00:00:00:00";
-            return;
-        }
-
-        const days = Math.floor(distance / (1000 * 60 * 60 * 24));
-        const hours = Math.floor((distance % (1000 * 60 * 60 * 24)) / (1000 * 60 * 60));
-        const minutes = Math.floor((distance % (1000 * 60 * 60)) / (1000 * 60));
-        const seconds = Math.floor((distance % (1000 * 60)) / 1000);
-
-        const pad = (n) => n.toString().padStart(2, '0');
-
-        // Format: 02d 14h 33m 10s
-        timerEl.textContent = `${pad(days)}d ${pad(hours)}h ${pad(minutes)}m ${pad(seconds)}s`;
+    const text = await response.text();
+    const weights = {};
+    const mapping = {
+        'A1': 'game1',
+        'A2': 'game2',
+        'A4': 'game3',
+        'A5': 'game4',
+        'A8': 'game5'
     };
 
-    updateTimer();
-    setInterval(updateTimer, 1000);
-}
+    const lines = text.trim().split('\n');
+    for (const line of lines) {
+        const trimmed = line.trim();
+        if (!trimmed) continue;
 
-/**
- * Initialize chart category selector
- */
-function initChartCategorySelector() {
-    const selector = document.getElementById('chart-category');
-    if (selector) {
-        selector.addEventListener('change', () => {
-            if (currentData) {
-                renderChart(currentData);
+        const match = trimmed.match(/^(A\d+)\s*-\s*(\d+)$/);
+        if (match) {
+            const gameCode = match[1];
+            const weight = parseInt(match[2]);
+            const gameId = mapping[gameCode];
+            if (gameId) {
+                weights[gameId] = weight;
             }
-        });
+        }
     }
-}
 
-/**
- * Initialize tab navigation
- */
-function initTabs() {
-    const tabButtons = document.querySelectorAll('.tab-btn');
-    const tabContents = document.querySelectorAll('.tab-content');
-
-    tabButtons.forEach(btn => {
-        btn.addEventListener('click', () => {
-            const targetTab = btn.dataset.tab;
-
-            // Update button states
-            tabButtons.forEach(b => b.classList.remove('active'));
-            btn.classList.add('active');
-
-            // Update content visibility
-            tabContents.forEach(content => {
-                if (content.id === `tab-${targetTab}`) {
-                    content.classList.remove('hidden');
-                    content.classList.add('active');
-                } else {
-                    content.classList.add('hidden');
-                    content.classList.remove('active');
-                }
-            });
-
-            // Re-render chart when tab becomes visible (Chart.js sizing issue)
-            if (targetTab === 'chart' && currentData) {
-                renderChart(currentData);
-            }
-
-            // Re-draw detailed table when tab becomes visible (Tabulator sizing issue)
-            if (targetTab === 'details' && detailTable) {
-                detailTable.redraw();
-            }
-
-            // Re-draw V2 table when tab becomes visible
-            if (targetTab === 'rankings_v2' && summaryTableV2) {
-                summaryTableV2.redraw();
-            }
-
-        });
-    });
+    return weights;
 }
 
 /**
@@ -407,6 +105,111 @@ async function loadManifest() {
 }
 
 /**
+ * Populate the run selector list in the sidebar
+ */
+function populateRunSelector(runs) {
+    const listContainer = document.getElementById('run-list');
+    if (!listContainer) return;
+
+    listContainer.innerHTML = '';
+
+    runs.forEach((run, index) => {
+        const item = document.createElement('div');
+        item.className = 'run-item px-3 py-2 cursor-pointer hover:bg-gray-100 rounded transition-colors';
+        item.dataset.index = index;
+
+        const displayTitle = run.name || 'Game Run';
+        const dateDisplay = run.date || '';
+
+        item.innerHTML = `
+            <div class="run-name truncate font-medium text-gray-700">${displayTitle}</div>
+            ${dateDisplay ? `<div class="run-date truncate text-xs text-gray-400">${dateDisplay}</div>` : ''}
+        `;
+
+        item.onclick = async () => {
+            document.querySelectorAll('.run-item').forEach(el => el.classList.remove('bg-gray-100'));
+            item.classList.add('bg-gray-100');
+
+            const btnHome = document.getElementById('nav-home');
+            if (btnHome) btnHome.classList.remove('bg-gray-100', 'text-gray-900');
+
+            updateHeaderTitle(displayTitle);
+            await loadRun(runs[index]);
+
+            const pageResults = document.getElementById('page-results');
+            const pageHome = document.getElementById('page-home');
+
+            if (pageResults && pageHome) {
+                pageResults.classList.remove('hidden');
+                pageHome.classList.add('hidden');
+            }
+        };
+
+        if (index === 0) {
+            item.classList.add('bg-gray-100');
+        }
+
+        listContainer.appendChild(item);
+    });
+}
+
+/**
+ * Navigate to Home page
+ */
+function navigateToHome() {
+    const btnHome = document.getElementById('nav-home');
+    document.querySelectorAll('.run-item').forEach(el => el.classList.remove('bg-gray-100'));
+    if (btnHome) btnHome.classList.add('bg-gray-100', 'text-gray-900');
+
+    const pageHome = document.getElementById('page-home');
+    const pageResults = document.getElementById('page-results');
+
+    if (pageHome) pageHome.classList.remove('hidden');
+    if (pageResults) pageResults.classList.add('hidden');
+}
+
+/**
+ * Initialize Home navigation
+ */
+function initHomeNav() {
+    const btnHome = document.getElementById('nav-home');
+    if (!btnHome) return;
+
+    btnHome.onclick = navigateToHome;
+}
+
+/**
+ * Initialize tab navigation
+ */
+function initTabs() {
+    const tabButtons = document.querySelectorAll('.tab-btn');
+    const tabContents = document.querySelectorAll('.tab-content');
+
+    tabButtons.forEach(btn => {
+        btn.addEventListener('click', () => {
+            const targetTab = btn.dataset.tab;
+
+            tabButtons.forEach(b => b.classList.remove('active'));
+            btn.classList.add('active');
+
+            tabContents.forEach(content => {
+                if (content.id === `tab-${targetTab}`) {
+                    content.classList.remove('hidden');
+                    content.classList.add('active');
+                } else {
+                    content.classList.add('hidden');
+                    content.classList.remove('active');
+                }
+            });
+
+            if (currentData && gameCharts[targetTab]) {
+                gameCharts[targetTab].resize();
+            }
+        });
+    });
+}
+
+/**
  * Update the header title with current run
  */
 function updateHeaderTitle(title) {
@@ -415,1053 +218,132 @@ function updateHeaderTitle(title) {
 }
 
 /**
- * Update the displayed run date
+ * Load and parse a game run
  */
-function updateRunDate(filename) {
-    const match = filename.match(/(\d{4})(\d{2})(\d{2})_(\d{2})(\d{2})(\d{2})/);
-    if (match) {
-        const [, year, month, day, hour, min, sec] = match;
-        const dateStr = `${year}-${month}-${day} ${hour}:${min}:${sec}`;
-        const dateEl = document.getElementById('run-date');
-        if (dateEl) dateEl.textContent = `Run ID: ${dateStr}`;
-    }
-}
-
-/**
- * Load and parse a benchmark run HTML file
- */
-async function loadRun(filename) {
+async function loadRun(run) {
     try {
-        const response = await fetch(`data/runs/${filename}?t=${new Date().getTime()}`);
-        if (!response.ok) {
-            throw new Error(`Failed to load run: ${response.status}`);
-        }
+        currentRunFile = run.name;
 
-        const html = await response.text();
-        currentData = parseHTML(html);
-        currentRunFile = filename;
+        const gameData = {};
 
-        updateRunDate(filename);
-        renderSummaryTable(currentData, '#summary-table');
-        renderDetailTable(currentData);
-        renderChart(currentData);
+        for (const game of gameConfig.games) {
+            const filename = run.files[game.id];
+            if (!filename) continue;
 
-        // Try to load V2 data if this is a V1 run
-        if (filename.startsWith('performance_table_') && !filename.includes('_V2_')) {
-            const v2Filename = filename.replace('performance_table_', 'performance_table_V2_');
-            try {
-                const v2Response = await fetch(`data/runs/${v2Filename}?t=${new Date().getTime()}`);
-                if (v2Response.ok) {
-                    const v2Html = await v2Response.text();
-                    const v2Data = parseHTML(v2Html);
-                    renderSummaryTable(v2Data, '#summary-table-v2');
-                } else {
-                    // If no V2 file, clear or hide V2 table instance data
-                    if (summaryTableV2) summaryTableV2.setData([]);
-                }
-            } catch (v2Error) {
-                console.warn('V2 data not available for this run:', v2Error);
-                if (summaryTableV2) summaryTableV2.setData([]);
+            const response = await fetch(`data/runs/${filename}?t=${new Date().getTime()}`);
+            if (!response.ok) {
+                console.warn(`Failed to load ${game.id}: ${response.status}`);
+                continue;
             }
+
+            const text = await response.text();
+            gameData[game.id] = parseTXT(text);
         }
 
-        // Load questions/markdown
-        const mdFilename = filename.replace('.html', '.md');
-        loadQuestions(mdFilename);
+        currentData = gameData;
+
+        updateHeaderTitle(run.name || 'Game Run');
+        const dateEl = document.getElementById('run-date');
+        if (dateEl) dateEl.textContent = `Date: ${run.date}`;
+
+        await loadLeaderboards();
+        renderAllCharts(gameData);
+        renderAllLeaderboards();
     } catch (error) {
         console.error('Failed to load run:', error);
-        // showError might also be missing or I haven't seen it, but I'll assume it's global or I'll implement a simple one if needed.
-        // Checking earlier file view, showError was called in init catch block (line 35).
-        // Wait, where is showError defined? I didn't see it in Step 7 view (lines 1-800).
-        // It might be further down or missing too?
-        // Step 7 showed up to line 800.
-        // Let's assume it's fine for now or simpler: console.error is enough.
-        console.error(`Failed to load benchmark run: ${filename}`);
+        showError(`Failed to load game run: ${run.name}`);
     }
 }
 
 /**
- * Load and render the markdown questions for a run
+ * Parse TXT file format: "Model Name - Points"
  */
-async function loadQuestions(filename) {
-    const container = document.getElementById('questions-content');
-    if (!container) return;
+function parseTXT(text) {
+    const lines = text.trim().split('\n');
+    const results = [];
 
-    // Reset/Loading state
-    container.innerHTML = '<div class="text-center text-gray-500 py-12">Loading questions...</div>';
+    for (const line of lines) {
+        const trimmed = line.trim();
+        if (!trimmed) continue;
 
-    try {
-        const response = await fetch(`data/runs/${filename}?t=${new Date().getTime()}`);
-
-        if (response.ok) {
-            const text = await response.text();
-            // Configure marked
-            const html = marked.parse(text);
-
-            // Create a temporary container to manipulate the DOM
-            const tempDiv = document.createElement('div');
-            tempDiv.innerHTML = html;
-
-            // Define the Logs HTML structure builder
-            const createLogsSection = (logContent, questionId) => {
-                const details = document.createElement('details');
-                details.className = 'group mb-12 rounded-lg bg-gray-900 border border-gray-700 overflow-hidden';
-
-                // If no logs found, maybe styled differently or just text
-                // formatting the generic/missing msg
-                const isGeneric = !logContent || logContent.startsWith("No logs found");
-
-                details.innerHTML = `
-                    <summary class="flex items-center justify-between p-4 cursor-pointer bg-gray-800 hover:bg-gray-750 transition-colors list-none">
-                        <div class="flex items-center text-gray-200 font-medium select-none">
-                            Execution Logs${questionId ? ` (${questionId})` : ''}
-                        </div>
-                        <div class="transform group-open:rotate-180 transition-transform duration-200 text-gray-400">
-                            ▼
-                        </div>
-                    </summary>
-                    <div class="p-4 bg-gray-950 text-gray-400 font-mono text-xs overflow-y-auto max-h-96 whitespace-pre-wrap custom-scrollbar border-t border-gray-800">${logContent || 'No logs available.'}</div>
-                `;
-                return details;
-            };
-
-            // 1. Identify all questions and their associated logs
-            //    We assume each question starts with an <h3> containing the ID (e.g. "A3: ...")
-            //    And the logs should be inserted before the next <hr> (or end of section)
-
-            const headers = tempDiv.querySelectorAll('h3');
-            const logFetches = [];
-
-            // Helper to fetch log
-            const fetchLog = async (id) => {
-                try {
-                    const res = await fetch(`data/logs/${id}_logs.txt`);
-                    if (res.ok) {
-                        return await res.text();
-                    }
-                } catch (e) {
-                    console.warn(`Could not fetch logs for ${id}`, e);
-                }
-                return `No logs found for ${id}`;
-            };
-
-            // Using a loop to find insertion points matches and start fetches
-            for (let i = 0; i < headers.length; i++) {
-                const header = headers[i];
-                const text = header.textContent.trim();
-                const match = text.match(/^(A\d+(?:\.\d+)?)/); // e.g., A3, A26.1
-
-                if (match) {
-                    const questionId = match[1];
-
-                    // Find the insertion point (the <hr> following this header, but before the next header)
-                    // We iterate siblings until we find HR or the next H3
-                    let currentNode = header.nextElementSibling;
-                    let insertionPoint = null;
-
-                    while (currentNode) {
-                        if (currentNode.tagName === 'HR') {
-                            insertionPoint = currentNode;
-                            break;
-                        }
-                        if (currentNode.tagName === 'H3') {
-                            // Hit the next question without seeing an HR, insert before this new header
-                            // (Though usually markdown structure has HRs)
-                            insertionPoint = currentNode;
-                            break;
-                        }
-                        currentNode = currentNode.nextElementSibling;
-                    }
-
-                    // If we reached the end without HR or H3, append to end (handled by insertBefore(node, null))
-
-                    logFetches.push({
-                        id: questionId,
-                        insertionPoint: insertionPoint,
-                        parent: header.parentNode, // Should be tempDiv usually
-                        limitNode: currentNode // For "end of container" check logic if needed
-                    });
-                }
-            }
-
-            // 2. Fetch all logs in parallel
-            const logContents = await Promise.all(
-                logFetches.map(async (item) => {
-                    const content = await fetchLog(item.id);
-                    return { ...item, content };
-                })
-            );
-
-            // 3. Inject the log sections
-            logContents.forEach(item => {
-                // Create and inject the model success table
-                const successTable = createModelSuccessTable(item.id);
-                if (successTable) {
-                    if (item.insertionPoint) {
-                        item.parent.insertBefore(successTable, item.insertionPoint);
-                    } else {
-                        item.parent.appendChild(successTable);
-                    }
-                }
-
-                const section = createLogsSection(item.content, item.id);
-                if (item.insertionPoint) {
-                    // standard case: before <hr>
-                    item.parent.insertBefore(section, item.insertionPoint);
-                } else {
-                    // end of container case
-                    item.parent.appendChild(section);
-                }
+        const match = trimmed.match(/^(.+?)\s*-\s*(\d+(?:\.\d+)?)$/);
+        if (match) {
+            results.push({
+                model: match[1].trim(),
+                points: parseFloat(match[2])
             });
-
-            // Render with Tailwind Typography (prose)
-            container.innerHTML = `<div class="prose prose-indigo max-w-none text-left">${tempDiv.innerHTML}</div>`;
-        } else {
-            // Revert to placeholder/empty state
-            container.innerHTML = `
-                <div class="text-center">
-                    <div class="text-6xl mb-4"></div>
-                    <h3 class="text-xl font-medium text-gray-900 mb-2">Question Library</h3>
-                    <p class="text-gray-500 max-w-lg mx-auto">
-                        No questions documentation found for this run.
-                    </p>
-                    <p class="text-xs text-gray-400 mt-2">Expected file: ${filename}</p>
-                </div>
-            `;
         }
-    } catch (error) {
-        console.error('Failed to load questions:', error);
-        container.innerHTML = `
-            <div class="text-center py-12">
-                <p class="text-red-500">Failed to load questions.</p>
-            </div>
-        `;
-    }
-}
-
-/**
- * Create a table showing model success for a specific question
- */
-function createModelSuccessTable(questionId) {
-    if (!currentData || !currentData.models || !currentData.questions) return null;
-
-    // Find the question data
-    const question = currentData.questions.find(q => q.index === questionId);
-    if (!question) return null;
-
-    // Container
-    const container = document.createElement('div');
-    container.className = 'w-full overflow-hidden rounded-lg border border-gray-200 mb-8 mt-4';
-
-    // Wrapper for horizontal scroll
-    const scrollWrapper = document.createElement('div');
-    scrollWrapper.className = 'overflow-x-auto';
-    container.appendChild(scrollWrapper);
-
-    const table = document.createElement('table');
-    table.className = 'w-full text-sm text-left';
-    scrollWrapper.appendChild(table);
-
-    // Header
-    const thead = document.createElement('thead');
-    thead.className = 'bg-gray-50 text-gray-500 font-medium border-b border-gray-200';
-    thead.innerHTML = `
-        <tr>
-            <th class="px-4 py-3 w-1/3 truncate">Model</th>
-            <th class="px-4 py-3">${question.index} (${question.points} points)</th>
-        </tr>
-    `;
-    table.appendChild(thead);
-
-    // Body
-    const tbody = document.createElement('tbody');
-    tbody.className = 'divide-y divide-gray-100 bg-white';
-
-    currentData.models.forEach(model => {
-        const result = question.results[model];
-        if (!result) return;
-
-        const row = document.createElement('tr');
-        row.className = 'hover:bg-gray-50/50 transition-colors';
-
-        // Badge styling based on score
-        let badgeClass = 'bg-gray-100 text-gray-600';
-        let displayText = result.scoreRaw;
-
-        if (result.scoreClass === 'pass') {
-            badgeClass = 'bg-green-100 text-green-700 ring-1 ring-green-600/20';
-            displayText = 'PASS';
-        } else if (result.scoreClass === 'fail') {
-            badgeClass = 'bg-red-100 text-red-700 ring-1 ring-red-600/20';
-            displayText = 'FAIL';
-        } else {
-            // Partial
-            badgeClass = 'bg-yellow-100 text-yellow-700 ring-1 ring-yellow-600/20';
-        }
-
-        row.innerHTML = `
-            <td class="px-4 py-2 font-medium text-gray-900 border-r border-gray-50">${model}</td>
-            <td class="px-4 py-2">
-                <span class="inline-flex items-center px-2.5 py-0.5 rounded-full text-xs font-medium ${badgeClass}">
-                    ${displayText}
-                </span>
-                 <span class="ml-2 text-xs text-gray-400 font-mono">${result.tokens} tokens • $${result.cost.toFixed(5)}</span>
-            </td>
-        `;
-        tbody.appendChild(row);
-    });
-
-    table.appendChild(tbody);
-    return container;
-}
-
-
-/**
- * Parse benchmark HTML and extract data
- */
-function parseHTML(html) {
-    const parser = new DOMParser();
-    const doc = parser.parseFromString(html, 'text/html');
-
-    // Extract model names from header
-    const modelHeaders = doc.querySelectorAll('th.model-header, th[class*="model-header"]');
-    const models = Array.from(modelHeaders).map(th => th.textContent.trim());
-
-    // If no model-header class, try to find headers with colspan="3"
-    if (models.length === 0) {
-        const colspanHeaders = doc.querySelectorAll('thead tr:first-child th[colspan="3"]');
-        colspanHeaders.forEach(th => models.push(th.textContent.trim()));
     }
 
-    // Extract question data from tbody rows
-    const questions = [];
-    const rows = doc.querySelectorAll('tbody tr');
+    return results;
+}
 
-    rows.forEach(row => {
-        const category = row.dataset.category || 'Uncategorized';
-        const subcategory = row.dataset.subcategory || '';
+/**
+ * Render all charts (Overall + individual games)
+ */
+function renderAllCharts(gameData) {
+    renderOverallChart(gameData);
 
-        const cells = row.querySelectorAll('td');
-        if (cells.length < 2) return;
-
-        // First cell is question index (e.g., "A5-V-terminal-unzip")
-        const questionFull = cells[0].textContent.trim();
-        const questionIndex = extractQuestionIndex(questionFull);
-
-        // Second cell is points
-        const points = parseFloat(cells[1].textContent.trim()) || 0;
-
-        // Remaining cells are model results (3 per model: score, tokens, cost)
-        const modelResults = {};
-        let cellIndex = 2;
-
-        models.forEach(model => {
-            if (cellIndex + 2 < cells.length) {
-                const scoreCell = cells[cellIndex];
-                const tokensCell = cells[cellIndex + 1];
-                const costCell = cells[cellIndex + 2];
-
-                modelResults[model] = {
-                    score: parseScore(scoreCell),
-                    scoreRaw: scoreCell.textContent.trim(),
-                    scoreClass: getScoreClass(scoreCell),
-                    tokens: parseTokens(tokensCell.textContent.trim()),
-                    cost: parseCost(costCell.textContent.trim())
-                };
-
-                cellIndex += 3;
-            }
-        });
-
-        questions.push({
-            index: questionIndex,
-            fullName: questionFull,
-            points,
-            category,
-            subcategory,
-            results: modelResults
-        });
+    gameConfig.games.forEach(game => {
+        renderGameChart(game.id, game.name, gameData[game.id] || []);
     });
+}
 
-    // Extract totals from tfoot
-    const totals = {};
-    const tfootCells = doc.querySelectorAll('tfoot td');
+/**
+ * Render overall weighted chart
+ */
+function renderOverallChart(gameData) {
+    const overallScores = calculateOverallScores();
 
-    if (tfootCells.length > 2) {
-        let cellIndex = 1; // Skip first cell (colspan="2" label)
-        models.forEach(model => {
-            if (cellIndex + 2 < tfootCells.length) {
-                totals[model] = {
-                    score: tfootCells[cellIndex].textContent.trim(),
-                    tokens: parseTokens(tfootCells[cellIndex + 1].textContent.trim()),
-                    cost: parseCost(tfootCells[cellIndex + 2].textContent.trim())
-                };
-                cellIndex += 3;
-            }
-        });
+    if (overallScores.length === 0) {
+        console.warn('No overall score data available');
+        return;
     }
 
-    return { models, questions, totals };
+    const labels = overallScores.map(entry => entry.model);
+    const scores = overallScores.map(entry => entry.overallScore);
+
+    renderChart('chart-overall', 'Overall Score', labels, scores);
 }
 
 /**
- * Extract question index (e.g., "A5" from "A5-V-terminal-unzip")
+ * Render individual game chart
  */
-function extractQuestionIndex(fullName) {
-    const match = fullName.match(/^(A\d+(?:\.\d+)?)/i);
-    return match ? match[1] : fullName;
-}
-
-/**
- * Parse score value from cell
- */
-function parseScore(cell) {
-    const text = cell.textContent.trim().toUpperCase();
-    if (text === 'PASS') return 1;
-    if (text === 'FAIL') return 0;
-    return parseFloat(text) || 0;
-}
-
-/**
- * Get score class for styling
- */
-function getScoreClass(cell) {
-    const text = cell.textContent.trim().toUpperCase();
-    if (text === 'PASS' || cell.classList.contains('pass')) return 'pass';
-    if (text === 'FAIL' || cell.classList.contains('fail')) return 'fail';
-    return 'partial';
-}
-
-/**
- * Parse tokens string to number
- */
-function parseTokens(str) {
-    return parseInt(str.replace(/[^0-9]/g, ''), 10) || 0;
-}
-
-/**
- * Parse cost string to number
- */
-function parseCost(str) {
-    const match = str.match(/[\d.]+/);
-    return match ? parseFloat(match[0]) : 0;
-}
-
-/**
- * Render the summary/leaderboard table
- */
-function renderSummaryTable(data, tableSelector = '#summary-table') {
-    const isV1 = tableSelector === '#summary-table';
-
-    // Calculate category scores for each model
-    const categoryScores = {};
-    const categoryMaxScores = {};
-
-    // Calculate max score for all questions
-    const totalMaxScore = data.questions.reduce((sum, q) => sum + q.points, 0);
-
-    const summaryCategories = ['Basic Mix', 'General Knowledge', 'Math', 'Reasoning'];
-
-    summaryCategories.forEach(category => {
-        categoryMaxScores[category] = data.questions
-            .filter(q => q.category === category)
-            .reduce((sum, q) => sum + q.points, 0);
-    });
-
-    // Calculate scores for each model
-    const modelTotalScores = {};
-    data.models.forEach(model => {
-        categoryScores[model] = {};
-
-        // Calculate total score from all questions
-        modelTotalScores[model] = data.questions.reduce((sum, q) => {
-            const result = q.results[model];
-            if (!result) return sum;
-            if (result.scoreClass === 'pass') return sum + q.points;
-            if (result.scoreClass === 'fail') return sum;
-            return sum + (result.score || 0);
-        }, 0);
-
-        // Calculate category scores
-        summaryCategories.forEach(category => {
-            const categoryQuestions = data.questions.filter(q => q.category === category);
-            const score = categoryQuestions.reduce((sum, q) => {
-                const result = q.results[model];
-                if (!result) return sum;
-                if (result.scoreClass === 'pass') return sum + q.points;
-                if (result.scoreClass === 'fail') return sum;
-                return sum + (result.score || 0);
-            }, 0);
-            categoryScores[model][category] = score;
-        });
-    });
-
-    const tableData = data.models.map((model, index) => {
-        const total = data.totals[model] || {};
-        const scoreNum = modelTotalScores[model] || 0;
-        const tokens = total.tokens || 0;
-        const cost = total.cost || 0;
-
-        return {
-            rank: index + 1,
-            model: model,
-            score: `${formatScore(scoreNum)}/${formatScore(totalMaxScore)}`,
-            scoreNum: scoreNum,
-            tokens: tokens,
-            cost: cost,
-            basicMixScore: categoryScores[model]['Basic Mix'] || 0,
-            basicMixMax: categoryMaxScores['Basic Mix'] || 0,
-            generalKnowledgeScore: categoryScores[model]['General Knowledge'] || 0,
-            generalKnowledgeMax: categoryMaxScores['General Knowledge'] || 0,
-            mathScore: categoryScores[model]['Math'] || 0,
-            mathMax: categoryMaxScores['Math'] || 0,
-            reasoningScore: categoryScores[model]['Reasoning'] || 0,
-            reasoningMax: categoryMaxScores['Reasoning'] || 0
-        };
-    });
-
-    // Sort by score descending
-    tableData.sort((a, b) => b.scoreNum - a.scoreNum);
-
-    // Update ranks after sorting
-    tableData.forEach((row, index) => {
-        row.rank = index + 1;
-    });
-
-    let currentTable = isV1 ? summaryTable : summaryTableV2;
-
-    if (currentTable) {
-        currentTable.replaceData(tableData);
-    } else {
-        const newTable = new Tabulator(tableSelector, {
-            data: tableData,
-            layout: 'fitColumns',
-            responsiveLayout: 'collapse',
-            nestedFieldSeparator: false,
-            columns: [
-                {
-                    title: 'Rank',
-                    field: 'rank',
-                    width: 93,
-                    hozAlign: 'center',
-                    formatter: rankFormatter
-                },
-                {
-                    title: 'Model',
-                    field: 'model',
-                    minWidth: 67,
-                    formatter: modelFormatter
-                },
-                {
-                    title: 'Score',
-                    field: 'score',
-                    width: 112,
-                    hozAlign: 'center',
-                    sorter: 'number',
-                    sorterParams: { alignEmptyValues: 'bottom' },
-                    formatter: (cell) => `<span class="total-score">${cell.getValue()}</span>`
-                },
-                {
-                    title: 'Tokens',
-                    field: 'tokens',
-                    width: 93,
-                    hozAlign: 'right',
-                    sorter: 'number',
-                    headerTooltip: 'Tokens',
-                    formatter: (cell) => {
-                        const val = cell.getValue();
-                        return `<span class="tokens-cell">${(val || 0).toLocaleString()}</span>`;
-                    }
-                },
-                {
-                    title: 'Cost',
-                    field: 'cost',
-                    width: 93,
-                    hozAlign: 'right',
-                    sorter: 'number',
-                    headerTooltip: 'Cost',
-                    formatter: (cell) => {
-                        const val = cell.getValue();
-                        return `<span class="cost-cell">$${(val || 0).toFixed(2)}</span>`;
-                    }
-                },
-                {
-                    title: 'Reasoning',
-                    field: 'reasoningScore',
-                    width: 120,
-                    hozAlign: 'center',
-                    sorter: 'number',
-                    headerTooltip: 'Reasoning',
-                    formatter: (cell) => {
-                        const row = cell.getRow().getData();
-                        return `<span class="score-partial">${formatScore(row.reasoningScore)}/${formatScore(row.reasoningMax)}</span>`;
-                    }
-                },
-                {
-                    title: 'World<br>Knowledge',
-                    field: 'generalKnowledgeScore',
-                    width: 120,
-                    hozAlign: 'center',
-                    sorter: 'number',
-                    headerTooltip: 'World Knowledge',
-                    formatter: (cell) => {
-                        const row = cell.getRow().getData();
-                        return `<span class="score-partial">${formatScore(row.generalKnowledgeScore)}/${formatScore(row.generalKnowledgeMax)}</span>`;
-                    }
-                },
-                {
-                    title: 'Math',
-                    field: 'mathScore',
-                    width: 120,
-                    hozAlign: 'center',
-                    sorter: 'number',
-                    headerTooltip: 'Math',
-                    formatter: (cell) => {
-                        const row = cell.getRow().getData();
-                        return `<span class="score-partial">${formatScore(row.mathScore)}/${formatScore(row.mathMax)}</span>`;
-                    }
-                },
-                {
-                    title: 'Basic Mix',
-                    field: 'basicMixScore',
-                    width: 120,
-                    hozAlign: 'center',
-                    sorter: 'number',
-                    headerTooltip: 'Basic Mix',
-                    formatter: (cell) => {
-                        const row = cell.getRow().getData();
-                        return `<span class="score-partial">${formatScore(row.basicMixScore)}/${formatScore(row.basicMixMax)}</span>`;
-                    }
-                }
-            ],
-            initialSort: [{ column: 'scoreNum', dir: 'desc' }]
-        });
-
-        if (isV1) summaryTable = newTable;
-        else summaryTableV2 = newTable;
-    }
-}
-
-/**
- * Parse total score string to number (e.g., "36.75/41" -> 36.75)
- */
-function parseScoreTotal(scoreStr) {
-    if (!scoreStr) return 0;
-    const match = scoreStr.match(/([\d.]+)/);
-    return match ? parseFloat(match[1]) : 0;
-}
-
-/**
- * Format score to max 2 decimal places (removes trailing zeros)
- */
-function formatScore(score) {
-    if (Number.isInteger(score)) return score.toString();
-    const rounded = Math.round(score * 100) / 100;
-    return rounded.toString();
-}
-
-/**
- * Format rank with medals
- */
-function rankFormatter(cell) {
-    const rank = cell.getValue();
-    if (rank === 1) {
-        return `<span class="rank-medal rank-gold">1</span>`;
-    } else if (rank === 2) {
-        return `<span class="rank-medal rank-silver">2</span>`;
-    } else if (rank === 3) {
-        return `<span class="rank-medal rank-bronze">3</span>`;
-    }
-    return `<span class="rank-number">${rank}</span>`;
-}
-
-/**
- * Format model name
- */
-function modelFormatter(cell) {
-    const model = cell.getValue();
-    return `<span class="model-name">${model}</span>`;
-}
-
-/**
- * Render the detailed results table
- */
-function renderDetailTable(data) {
-    // Calculate actual scores from questions for sorting
-    const modelScores = {};
-    data.models.forEach(model => {
-        modelScores[model] = data.questions.reduce((sum, q) => {
-            const result = q.results[model];
-            if (!result) return sum;
-            const scoreClass = result.scoreClass;
-            if (scoreClass === 'pass') return sum + q.points;
-            if (scoreClass === 'fail') return sum;
-            return sum + (result.score || 0);
-        }, 0);
-    });
-
-    // Sort models by score (highest first)
-    const sortedModels = [...data.models].sort((a, b) => {
-        return modelScores[b] - modelScores[a];
-    });
-
-    // Build columns dynamically based on models
-    const columns = [
-        {
-            title: 'Question',
-            field: 'index',
-            width: 100,
-            frozen: true,
-            headerSort: false,
-            formatter: (cell) => {
-                const value = cell.getValue();
-                const isStarred = STARRED_QUESTIONS.includes(value);
-                if (isStarred) {
-                    const el = cell.getElement();
-                    el.classList.add('question-highlight');
-                    el.setAttribute('title', 'This question is published');
-                    return `<span class="question-index">${value} (*)</span>`;
-                }
-                return `<span class="question-index">${value}</span>`;
-            }
-        },
-        {
-            title: 'Points',
-            field: 'points',
-            width: 80,
-            hozAlign: 'center',
-            headerSort: false,
-            formatter: (cell) => `<span class="points-cell">${cell.getValue()}</span>`
-        }
-    ];
-
-    // Add columns for each model (sorted by score, highest first)
-    sortedModels.forEach(model => {
-        columns.push({
-            title: model,
-            columns: [
-                {
-                    title: 'Score',
-                    field: `${model}_score`,
-                    width: 90,
-                    hozAlign: 'center',
-                    headerSort: false,
-                    formatter: scoreFormatter
-                },
-                {
-                    title: 'Tokens',
-                    field: `${model}_tokens`,
-                    width: 90,
-                    hozAlign: 'right',
-                    headerSort: false,
-                    formatter: (cell) => {
-                        const val = cell.getValue();
-                        return `<span class="tokens-cell">${(val || 0).toLocaleString()}</span>`;
-                    }
-                },
-                {
-                    title: 'Cost',
-                    field: `${model}_cost`,
-                    width: 80,
-                    hozAlign: 'right',
-                    headerSort: false,
-                    formatter: (cell) => {
-                        const val = cell.getValue();
-                        return `<span class="cost-cell">$${(val || 0).toFixed(2)}</span>`;
-                    }
-                }
-            ]
-        });
-    });
-
-    // Transform question data to flat rows
-    const tableData = data.questions.map(q => {
-        const row = {
-            index: q.index,
-            points: q.points,
-            category: q.category,
-            subcategory: q.subcategory || '(none)',
-            _categoryOrder: CATEGORY_ORDER.indexOf(q.category),
-            _isTotal: false
-        };
-
-        data.models.forEach(model => {
-            const result = q.results[model] || {};
-            row[`${model}_score`] = result.score || 0;
-            row[`${model}_scoreRaw`] = result.scoreRaw || '0';
-            row[`${model}_scoreClass`] = result.scoreClass || 'fail';
-            row[`${model}_tokens`] = result.tokens || 0;
-            row[`${model}_cost`] = result.cost || 0;
-        });
-
-        return row;
-    });
-
-    // Sort by category order, then subcategory, then index
-    tableData.sort((a, b) => {
-        if (a._categoryOrder !== b._categoryOrder) {
-            return a._categoryOrder - b._categoryOrder;
-        }
-        if (a.subcategory !== b.subcategory) {
-            return a.subcategory.localeCompare(b.subcategory);
-        }
-        return a.index.localeCompare(b.index);
-    });
-
-    // Calculate and add category totals
-    CATEGORY_ORDER.forEach(category => {
-        const categoryQuestions = tableData.filter(q => q.category === category && !q._isTotal);
-        if (categoryQuestions.length === 0) return;
-
-        const totalRow = {
-            index: 'Total',
-            points: categoryQuestions.reduce((sum, q) => sum + q.points, 0),
-            category: category,
-            subcategory: 'zzz_Total', // zzz to sort last
-            _categoryOrder: CATEGORY_ORDER.indexOf(category),
-            _isTotal: true
-        };
-
-        sortedModels.forEach(model => {
-            // PASS = full points, FAIL = 0, numeric = absolute value
-            const totalScore = categoryQuestions.reduce((sum, q) => {
-                const scoreClass = q[`${model}_scoreClass`];
-                if (scoreClass === 'pass') return sum + q.points;
-                if (scoreClass === 'fail') return sum + 0;
-                // Partial score - use the raw numeric value
-                return sum + (q[`${model}_score`] || 0);
-            }, 0);
-            const totalTokens = categoryQuestions.reduce((sum, q) => sum + (q[`${model}_tokens`] || 0), 0);
-            const totalCost = categoryQuestions.reduce((sum, q) => sum + (q[`${model}_cost`] || 0), 0);
-            const maxScore = categoryQuestions.reduce((sum, q) => sum + q.points, 0);
-
-            totalRow[`${model}_score`] = totalScore;
-            totalRow[`${model}_scoreRaw`] = `${formatScore(totalScore)}/${maxScore}`;
-            totalRow[`${model}_scoreClass`] = 'total';
-            totalRow[`${model}_tokens`] = totalTokens;
-            totalRow[`${model}_cost`] = totalCost;
-        });
-
-        tableData.push(totalRow);
-    });
-
-    // Add grand total row
-    const allQuestions = tableData.filter(q => !q._isTotal);
-    const grandTotalRow = {
-        index: 'TOTAL',
-        points: allQuestions.reduce((sum, q) => sum + q.points, 0),
-        category: 'zzz_Grand Total', // zzz to sort last
-        subcategory: '',
-        _categoryOrder: 999,
-        _isTotal: true
-    };
-
-    sortedModels.forEach(model => {
-        // PASS = full points, FAIL = 0, numeric = absolute value
-        const totalScore = allQuestions.reduce((sum, q) => {
-            const scoreClass = q[`${model}_scoreClass`];
-            if (scoreClass === 'pass') return sum + q.points;
-            if (scoreClass === 'fail') return sum + 0;
-            // Partial score - use the raw numeric value
-            return sum + (q[`${model}_score`] || 0);
-        }, 0);
-        const totalTokens = allQuestions.reduce((sum, q) => sum + (q[`${model}_tokens`] || 0), 0);
-        const totalCost = allQuestions.reduce((sum, q) => sum + (q[`${model}_cost`] || 0), 0);
-        const maxScore = allQuestions.reduce((sum, q) => sum + q.points, 0);
-
-        grandTotalRow[`${model}_score`] = totalScore;
-        grandTotalRow[`${model}_scoreRaw`] = `${formatScore(totalScore)}/${maxScore}`;
-        grandTotalRow[`${model}_scoreClass`] = 'total';
-        grandTotalRow[`${model}_tokens`] = totalTokens;
-        grandTotalRow[`${model}_cost`] = totalCost;
-    });
-
-    tableData.push(grandTotalRow);
-
-    // Re-sort to include totals in correct positions
-    tableData.sort((a, b) => {
-        if (a._categoryOrder !== b._categoryOrder) {
-            return a._categoryOrder - b._categoryOrder;
-        }
-        if (a.subcategory !== b.subcategory) {
-            return a.subcategory.localeCompare(b.subcategory);
-        }
-        return a.index.localeCompare(b.index);
-    });
-
-    // Destroy and recreate table to handle column reordering
-    if (detailTable) {
-        detailTable.destroy();
+function renderGameChart(gameId, gameName, data) {
+    if (!leaderboardData || !leaderboardData[gameId]) {
+        console.warn(`No leaderboard data for ${gameId}`);
+        return;
     }
 
-    detailTable = new Tabulator('#detail-table', {
-        data: tableData,
-        layout: 'fitDataFill',
-        nestedFieldSeparator: false,
-        groupBy: ['category', 'subcategory'],
-        groupStartOpen: [true, true],
-        groupHeader: (value, count, data, group) => {
-            const level = group.getParentGroup() ? 1 : 0;
-            // Handle special total category
-            if (value === 'zzz_Grand Total') {
-                return `<span style="font-weight: 700;">Grand Total</span>`;
-            }
-            if (level === 0) {
-                return `<span style="font-weight: 600;">${value}</span> <span style="opacity: 0.7; margin-left: 8px;">(${count} questions)</span>`;
-            }
-            // Handle subcategory totals
-            if (value === 'zzz_Total') {
-                return `<span style="font-weight: 600; padding-left: 10px;">Category Total</span>`;
-            }
-            return `<span style="font-weight: 500; padding-left: 10px;">${value === '(none)' ? 'General' : value}</span> <span style="opacity: 0.7; margin-left: 8px;">(${count})</span>`;
-        },
-        columns: columns,
-        columnDefaults: {
-            headerSort: false,
-            headerHozAlign: 'center'
-        }
-    });
+    const bestAgents = selectBestAgents(leaderboardData[gameId]);
+    const normalized = normalizePoints(bestAgents);
+    const sorted = normalized.sort((a, b) => b.normalized - a.normalized);
 
-    // Initialize dual scrollbar sync for industrial-grade UI
-    initDetailTableScrollSync();
+    const labels = sorted.map(entry => cleanModelName(entry.agent));
+    const scores = sorted.map(entry => entry.normalized);
+
+    renderChart(`chart-${gameId}`, gameName, labels, scores);
 }
 
 /**
- * Initialize synchronization between the top dummy scrollbar and the detail table
+ * Generic chart rendering function
  */
-function initDetailTableScrollSync() {
-    const topScrollContainer = document.getElementById('detail-table-top-scrollbar');
-    if (!topScrollContainer) return;
-
-    const topScrollDummy = topScrollContainer.querySelector('.top-scrollbar-dummy');
-
-    // Robustly find and bind to the table holder
-    const bindToTable = () => {
-        const tableHolder = document.querySelector('#detail-table .tabulator-tableholder');
-        if (!tableHolder || !topScrollDummy) return false;
-
-        const updateWidth = () => {
-            const scrollWidth = tableHolder.scrollWidth;
-            const clientWidth = tableHolder.clientWidth;
-
-            // Ensure we have actual values before making decisions
-            if (scrollWidth === 0 && clientWidth === 0) return;
-
-            // Set dummy width to match table's scrollable width
-            topScrollDummy.style.width = scrollWidth + 'px';
-
-            // Toggle visibility based on scroll necessity
-            if (scrollWidth <= clientWidth + 5) { // Adding a small buffer
-                topScrollContainer.style.opacity = '0';
-                topScrollContainer.style.pointerEvents = 'none';
-                topScrollContainer.style.height = '0';
-            } else {
-                topScrollContainer.style.opacity = '1';
-                topScrollContainer.style.pointerEvents = 'auto';
-                topScrollContainer.style.height = '16px';
-            }
-
-            // Sync current position
-            topScrollContainer.scrollLeft = tableHolder.scrollLeft;
-        };
-
-        // Sync from top dummy to table
-        topScrollContainer.onscroll = () => {
-            if (Math.abs(tableHolder.scrollLeft - topScrollContainer.scrollLeft) > 1) {
-                tableHolder.scrollLeft = topScrollContainer.scrollLeft;
-            }
-        };
-
-        // Sync from table to top dummy
-        tableHolder.onscroll = () => {
-            if (Math.abs(topScrollContainer.scrollLeft - tableHolder.scrollLeft) > 1) {
-                topScrollContainer.scrollLeft = tableHolder.scrollLeft;
-            }
-        };
-
-        // Use ResizeObserver for robust layout tracking
-        const resizeObserver = new ResizeObserver(() => {
-            updateWidth();
-        });
-        resizeObserver.observe(tableHolder);
-
-        // Tabulator events that affect layout
-        if (detailTable) {
-            detailTable.on("renderComplete", updateWidth);
-            detailTable.on("columnVisibilityChanged", updateWidth);
-            detailTable.on("tableRedrawn", updateWidth);
-            detailTable.on("dataLoaded", updateWidth);
-        }
-
-        // Initial update
-        updateWidth();
-        return true;
-    };
-
-    // Try multiple times to ensure we catch the table after Tabulator finishes creation
-    let attempts = 0;
-    const interval = setInterval(() => {
-        if (bindToTable() || attempts > 20) {
-            clearInterval(interval);
-        }
-        attempts++;
-    }, 200);
-}
-
-/**
- * Render the bar chart showing model scores
- */
-function renderChart(data) {
-    const ctx = document.getElementById('score-chart');
+function renderChart(canvasId, label, labels, scores) {
+    const ctx = document.getElementById(canvasId);
     if (!ctx) return;
 
-    // Get selected category
-    const categorySelector = document.getElementById('chart-category');
-    const selectedCategory = categorySelector ? categorySelector.value : 'General';
-
-    // Prepare chart data - calculate scores based on selected category
-    const chartData = data.models.map(model => {
-        let score = 0;
-        let maxScore = 0;
-
-        // Filter questions by category (or all for General)
-        const questions = selectedCategory === 'General'
-            ? data.questions
-            : data.questions.filter(q => q.category === selectedCategory);
-
-        maxScore = questions.reduce((sum, q) => sum + q.points, 0);
-        score = questions.reduce((sum, q) => {
-            const result = q.results[model];
-            if (!result) return sum;
-            if (result.scoreClass === 'pass') return sum + q.points;
-            if (result.scoreClass === 'fail') return sum;
-            return sum + (result.score || 0);
-        }, 0);
-
-        return {
-            model: model,
-            score: score,
-            maxScore: maxScore
-        };
-    }).sort((a, b) => b.score - a.score);
-
-    const labels = chartData.map(d => d.model);
-    const scores = chartData.map(d => d.score);
-
-    // Generate colors - gradient from best to worst
-    const colors = generateBarColors(scores.length);
-
-    // Destroy existing chart if any
-    if (scoreChart) {
-        scoreChart.destroy();
+    if (gameCharts[canvasId.replace('chart-', '')]) {
+        gameCharts[canvasId.replace('chart-', '')].destroy();
     }
 
-    scoreChart = new Chart(ctx, {
+    const colors = generateBarColors(scores.length);
+
+    const chart = new Chart(ctx, {
         type: 'bar',
         data: {
             labels: labels,
             datasets: [{
-                label: 'Score',
+                label: 'Points',
                 data: scores,
                 backgroundColor: colors,
                 borderColor: colors.map(c => adjustColorBrightness(c, -20)),
@@ -1472,7 +354,6 @@ function renderChart(data) {
         options: {
             responsive: true,
             maintainAspectRatio: false,
-            indexAxis: 'x',
             plugins: {
                 legend: {
                     display: false
@@ -1484,6 +365,18 @@ function renderChart(data) {
                 }
             },
             scales: {
+                x: {
+                    grid: {
+                        display: false
+                    },
+                    ticks: {
+                        font: {
+                            size: 12
+                        },
+                        maxRotation: 45,
+                        minRotation: 45
+                    }
+                },
                 y: {
                     beginAtZero: true,
                     grid: {
@@ -1494,38 +387,24 @@ function renderChart(data) {
                             size: 12
                         }
                     }
-                },
-                x: {
-                    grid: {
-                        display: false
-                    },
-                    ticks: {
-                        font: {
-                            size: 11
-                        },
-                        maxRotation: 45,
-                        minRotation: 45
-                    }
                 }
             }
         }
     });
+
+    gameCharts[canvasId.replace('chart-', '')] = chart;
 }
 
 /**
- * Generate gradient colors for bar chart (similar to example)
+ * Generate gradient colors for bar chart
  */
 function generateBarColors(count) {
     const colors = [];
-    // Start with muted teal/olive tones like the example
-    const baseHues = [160, 50, 45, 40, 35]; // Teal to olive/tan gradient
-
     for (let i = 0; i < count; i++) {
         const progress = i / Math.max(count - 1, 1);
-        // Interpolate between teal (160) and tan/gray (40)
         const hue = 160 - (progress * 120);
-        const saturation = 25 - (progress * 10); // Decrease saturation
-        const lightness = 45 + (progress * 20); // Increase lightness (lighter grays)
+        const saturation = 25 - (progress * 10);
+        const lightness = 45 + (progress * 20);
         colors.push(`hsl(${hue}, ${saturation}%, ${lightness}%)`);
     }
     return colors;
@@ -1535,7 +414,6 @@ function generateBarColors(count) {
  * Adjust color brightness
  */
 function adjustColorBrightness(color, amount) {
-    // For HSL colors, adjust lightness
     const match = color.match(/hsl\((\d+),\s*(\d+)%,\s*(\d+)%\)/);
     if (match) {
         const h = parseInt(match[1]);
@@ -1544,32 +422,6 @@ function adjustColorBrightness(color, amount) {
         return `hsl(${h}, ${s}%, ${l}%)`;
     }
     return color;
-}
-
-/**
- * Format score cell with badge
- */
-function scoreFormatter(cell) {
-    const row = cell.getRow().getData();
-    if (!row) return '';
-
-    const field = cell.getField();
-    const modelName = field.replace('_score', '');
-    const rawValue = row[`${modelName}_scoreRaw`];
-    const scoreClass = row[`${modelName}_scoreClass`];
-
-    if (scoreClass === 'total') {
-        return `<span class="score-total">${rawValue}</span>`;
-    } else if (scoreClass === 'pass') {
-        return `<span class="score-pass">PASS</span>`;
-    } else if (scoreClass === 'fail') {
-        return `<span class="score-fail">FAIL</span>`;
-    } else {
-        // Format partial score to max 2 decimal places
-        const numValue = parseFloat(rawValue);
-        const formatted = isNaN(numValue) ? rawValue : formatScore(numValue);
-        return `<span class="score-partial">${formatted}</span>`;
-    }
 }
 
 /**
@@ -1583,5 +435,299 @@ function showError(message) {
     main.insertBefore(errorDiv, main.firstChild);
 }
 
-// Initialize on DOM ready
+/**
+ * Load leaderboard files for all games
+ */
+async function loadLeaderboards() {
+    const leaderboardMapping = {
+        'game1': 'A1-scoreboard.txt',
+        'game2': 'A2-scoreboard.txt',
+        'game3': 'A4-scoreboard.txt',
+        'game4': 'A5-scoreboard.txt',
+        'game5': 'A8-scoreboard.txt'
+    };
+
+    leaderboardData = {};
+
+    for (const [gameId, filename] of Object.entries(leaderboardMapping)) {
+        try {
+            const response = await fetch(`data/leaderboards/${filename}?t=${new Date().getTime()}`);
+            if (!response.ok) {
+                console.warn(`Failed to load leaderboard ${filename}: ${response.status}`);
+                continue;
+            }
+
+            const text = await response.text();
+            leaderboardData[gameId] = parseLeaderboard(text);
+        } catch (error) {
+            console.error(`Error loading leaderboard ${filename}:`, error);
+        }
+    }
+}
+
+/**
+ * Parse leaderboard file format: "Agent | Games | Wins | Losses | Draws | Points | Score"
+ */
+function parseLeaderboard(text) {
+    const lines = text.trim().split('\n');
+    const results = [];
+
+    for (const line of lines) {
+        const trimmed = line.trim();
+        if (!trimmed) continue;
+
+        const parts = trimmed.split('|').map(p => p.trim());
+
+        if (parts.length < 7) continue;
+        if (parts[0].includes('Agent')) continue;
+
+        const agent = parts[0];
+        if (!agent || !agent.includes(':')) continue;
+
+        results.push({
+            agent: agent,
+            games: parseInt(parts[1]) || 0,
+            wins: parseInt(parts[2]) || 0,
+            losses: parseInt(parts[3]) || 0,
+            draws: parseInt(parts[4]) || 0,
+            points: parseInt(parts[5]) || 0,
+            score: parseFloat(parts[6]) || 0
+        });
+    }
+
+    return results;
+}
+
+/**
+ * Select best performing agent for each model
+ */
+function selectBestAgents(leaderboard) {
+    const modelBestAgents = {};
+
+    for (const entry of leaderboard) {
+        const modelName = cleanModelName(entry.agent);
+
+        if (!modelBestAgents[modelName] || entry.score > modelBestAgents[modelName].score) {
+            modelBestAgents[modelName] = entry;
+        }
+    }
+
+    return Object.values(modelBestAgents).sort((a, b) => b.score - a.score);
+}
+
+/**
+ * Normalize points to 0-100 scale
+ */
+function normalizePoints(leaderboard) {
+    if (leaderboard.length === 0) return leaderboard;
+
+    const points = leaderboard.map(entry => entry.points);
+    const maxPoints = Math.max(...points);
+    const minPoints = Math.min(...points);
+    const range = maxPoints - minPoints;
+
+    return leaderboard.map(entry => ({
+        ...entry,
+        normalized: range === 0 ? 100 : ((entry.points - minPoints) / range) * 100
+    }));
+}
+
+/**
+ * Calculate overall scores based on normalized points and game weights
+ */
+function calculateOverallScores() {
+    if (!leaderboardData || !gameWeights) return [];
+
+    const modelScores = {};
+    const gameIds = ['game1', 'game2', 'game3', 'game4', 'game5'];
+
+    for (const gameId of gameIds) {
+        if (!leaderboardData[gameId]) continue;
+
+        const bestAgents = selectBestAgents(leaderboardData[gameId]);
+        const normalized = normalizePoints(bestAgents);
+        const weight = gameWeights[gameId] || 0;
+
+        for (const entry of normalized) {
+            const modelName = cleanModelName(entry.agent);
+
+            if (!modelScores[modelName]) {
+                modelScores[modelName] = {
+                    model: modelName,
+                    weightedSum: 0,
+                    totalWeight: 0,
+                    gameScores: {}
+                };
+            }
+
+            modelScores[modelName].weightedSum += entry.normalized * weight;
+            modelScores[modelName].totalWeight += weight;
+            modelScores[modelName].gameScores[gameId] = entry.normalized;
+        }
+    }
+
+    const results = Object.values(modelScores).map(entry => ({
+        model: entry.model,
+        overallScore: entry.totalWeight > 0 ? entry.weightedSum / entry.totalWeight : 0,
+        gameScores: entry.gameScores
+    }));
+
+    return results.sort((a, b) => b.overallScore - a.overallScore);
+}
+
+/**
+ * Render all leaderboards
+ */
+function renderAllLeaderboards() {
+    if (!leaderboardData) return;
+
+    renderOverallLeaderboard();
+
+    gameConfig.games.forEach(game => {
+        renderLeaderboard(game.id);
+    });
+}
+
+/**
+ * Render overall leaderboard table
+ */
+function renderOverallLeaderboard() {
+    const container = document.getElementById('leaderboard-overall');
+    if (!container) return;
+
+    const overallScores = calculateOverallScores();
+
+    if (overallScores.length === 0) {
+        container.innerHTML = '<p class="text-gray-500 text-sm">No leaderboard data available</p>';
+        return;
+    }
+
+    const table = document.createElement('table');
+    table.className = 'min-w-full divide-y divide-gray-200';
+
+    const thead = document.createElement('thead');
+    thead.className = 'bg-gray-50';
+    thead.innerHTML = `
+        <tr>
+            <th class="px-4 py-3 text-left text-xs font-medium text-gray-500 uppercase tracking-wider">Rank</th>
+            <th class="px-4 py-3 text-left text-xs font-medium text-gray-500 uppercase tracking-wider">Model</th>
+            <th class="px-4 py-3 text-right text-xs font-medium text-gray-500 uppercase tracking-wider">Overall Score</th>
+        </tr>
+    `;
+
+    const tbody = document.createElement('tbody');
+    tbody.className = 'bg-white divide-y divide-gray-200';
+
+    overallScores.forEach((entry, index) => {
+        const row = document.createElement('tr');
+        row.className = index % 2 === 0 ? 'bg-white' : 'bg-gray-50';
+
+        row.innerHTML = `
+            <td class="px-4 py-3 text-sm text-gray-900">${index + 1}</td>
+            <td class="px-4 py-3 text-sm font-medium text-gray-900">${entry.model}</td>
+            <td class="px-4 py-3 text-sm font-semibold text-gray-900 text-right">${entry.overallScore.toFixed(2)}</td>
+        `;
+
+        tbody.appendChild(row);
+    });
+
+    table.appendChild(thead);
+    table.appendChild(tbody);
+    container.innerHTML = '';
+    container.appendChild(table);
+}
+
+/**
+ * Render individual leaderboard table
+ */
+function renderLeaderboard(gameId) {
+    const container = document.getElementById(`leaderboard-${gameId}`);
+    if (!container || !leaderboardData[gameId]) return;
+
+    const bestAgents = selectBestAgents(leaderboardData[gameId]);
+    const normalized = normalizePoints(bestAgents);
+
+    const sorted = normalized.sort((a, b) => b.normalized - a.normalized);
+
+    if (sorted.length === 0) {
+        container.innerHTML = '<p class="text-gray-500 text-sm">No leaderboard data available</p>';
+        return;
+    }
+
+    const table = document.createElement('table');
+    table.className = 'min-w-full divide-y divide-gray-200';
+
+    const thead = document.createElement('thead');
+    thead.className = 'bg-gray-50';
+    thead.innerHTML = `
+        <tr>
+            <th class="px-4 py-3 text-left text-xs font-medium text-gray-500 uppercase tracking-wider">Rank</th>
+            <th class="px-4 py-3 text-left text-xs font-medium text-gray-500 uppercase tracking-wider">Model</th>
+            <th class="px-4 py-3 text-right text-xs font-medium text-gray-500 uppercase tracking-wider">Games</th>
+            <th class="px-4 py-3 text-right text-xs font-medium text-gray-500 uppercase tracking-wider">Wins</th>
+            <th class="px-4 py-3 text-right text-xs font-medium text-gray-500 uppercase tracking-wider">Losses</th>
+            <th class="px-4 py-3 text-right text-xs font-medium text-gray-500 uppercase tracking-wider">Draws</th>
+            <th class="px-4 py-3 text-right text-xs font-medium text-gray-500 uppercase tracking-wider">Points</th>
+            <th class="px-4 py-3 text-right text-xs font-medium text-gray-500 uppercase tracking-wider">Normalized<br>Points</th>
+            <th class="px-4 py-3 text-right text-xs font-medium text-gray-500 uppercase tracking-wider">Score</th>
+        </tr>
+    `;
+
+    const tbody = document.createElement('tbody');
+    tbody.className = 'bg-white divide-y divide-gray-200';
+
+    sorted.forEach((entry, index) => {
+        const row = document.createElement('tr');
+        row.className = index % 2 === 0 ? 'bg-white' : 'bg-gray-50';
+
+        const modelName = cleanModelName(entry.agent);
+
+        row.innerHTML = `
+            <td class="px-4 py-3 text-sm text-gray-900">${index + 1}</td>
+            <td class="px-4 py-3 text-sm font-medium text-gray-900">${modelName}</td>
+            <td class="px-4 py-3 text-sm text-gray-600 text-right">${entry.games}</td>
+            <td class="px-4 py-3 text-sm text-gray-600 text-right">${entry.wins}</td>
+            <td class="px-4 py-3 text-sm text-gray-600 text-right">${entry.losses}</td>
+            <td class="px-4 py-3 text-sm text-gray-600 text-right">${entry.draws}</td>
+            <td class="px-4 py-3 text-sm text-gray-600 text-right">${entry.points}</td>
+            <td class="px-4 py-3 text-sm font-medium text-indigo-600 text-right">${entry.normalized.toFixed(2)}</td>
+            <td class="px-4 py-3 text-sm font-semibold text-gray-900 text-right">${entry.score.toFixed(1)}</td>
+        `;
+
+        tbody.appendChild(row);
+    });
+
+    table.appendChild(thead);
+    table.appendChild(tbody);
+    container.innerHTML = '';
+    container.appendChild(table);
+}
+
+/**
+ * Load all game prompts on page load
+ */
+async function loadAllPrompts() {
+    const promptFiles = ['battleship', 'tictactoe', 'wordfinder', 'connect4', 'surround_morris'];
+
+    for (const promptName of promptFiles) {
+        try {
+            const response = await fetch(`data/full_prompts/${promptName}.txt?t=${new Date().getTime()}`);
+            if (response.ok) {
+                const text = await response.text();
+                const details = document.querySelector(`details[data-prompt="${promptName}"]`);
+                if (details) {
+                    const contentDiv = details.querySelector('.prompt-content');
+                    if (contentDiv) {
+                        contentDiv.textContent = text;
+                    }
+                }
+            } else {
+                console.warn(`Failed to load prompt: ${promptName}`);
+            }
+        } catch (error) {
+            console.error(`Error loading prompt ${promptName}:`, error);
+        }
+    }
+}
+
 document.addEventListener('DOMContentLoaded', init);
