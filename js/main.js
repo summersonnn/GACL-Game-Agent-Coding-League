@@ -8,7 +8,6 @@ let currentData = null;
 let currentRunFile = null;
 let gameConfig = null;
 let leaderboardData = null;
-let gameWeights = null;
 
 /**
  * Clean model name by removing fp8 variants and agent suffixes
@@ -30,7 +29,7 @@ async function init() {
         await loadAllPrompts();
 
         gameConfig = await loadConfig();
-        gameWeights = await loadGameWeights();
+        // Weights are now handled in pre-processing script
         const manifest = await loadManifest();
         populateRunSelector(manifest.runs);
 
@@ -44,7 +43,7 @@ async function init() {
 }
 
 /**
- * Load game configuration with weights
+ * Load game configuration
  */
 async function loadConfig() {
     const response = await fetch(`data/config.json?t=${new Date().getTime()}`);
@@ -52,45 +51,6 @@ async function loadConfig() {
         throw new Error(`Failed to load config: ${response.status}`);
     }
     return response.json();
-}
-
-/**
- * Load game weights from config file
- */
-async function loadGameWeights() {
-    const response = await fetch(`config/game_weights.txt?t=${new Date().getTime()}`);
-    if (!response.ok) {
-        console.warn('Failed to load game weights, using defaults');
-        return { game1: 1, game2: 1, game3: 1, game4: 1, game5: 1 };
-    }
-
-    const text = await response.text();
-    const weights = {};
-    const mapping = {
-        'A1': 'game1',
-        'A2': 'game2',
-        'A4': 'game3',
-        'A5': 'game4',
-        'A8': 'game5'
-    };
-
-    const lines = text.trim().split('\n');
-    for (const line of lines) {
-        const trimmed = line.trim();
-        if (!trimmed) continue;
-
-        const match = trimmed.match(/^(A\d+)\s*-\s*(\d+)$/);
-        if (match) {
-            const gameCode = match[1];
-            const weight = parseInt(match[2]);
-            const gameId = mapping[gameCode];
-            if (gameId) {
-                weights[gameId] = weight;
-            }
-        }
-    }
-
-    return weights;
 }
 
 /**
@@ -293,15 +253,19 @@ function renderAllCharts(gameData) {
  * Render overall weighted chart
  */
 function renderOverallChart(gameData) {
-    const overallScores = calculateOverallScores();
-
-    if (overallScores.length === 0) {
+    if (!leaderboardData || !leaderboardData.overall) {
         console.warn('No overall score data available');
         return;
     }
 
+    const overallScores = leaderboardData.overall;
+    // Limit to top 20 or similar if needed, or show all. Python sorts by overall_score descending.
+
+    // Safety check for empty data
+    if (overallScores.length === 0) return;
+
     const labels = overallScores.map(entry => entry.model);
-    const scores = overallScores.map(entry => entry.overallScore);
+    const scores = overallScores.map(entry => entry.overall_score);
 
     renderChart('chart-overall', 'Overall Score', labels, scores);
 }
@@ -310,16 +274,14 @@ function renderOverallChart(gameData) {
  * Render individual game chart
  */
 function renderGameChart(gameId, gameName, data) {
-    if (!leaderboardData || !leaderboardData[gameId]) {
+    if (!leaderboardData || !leaderboardData.games || !leaderboardData.games[gameId]) {
         console.warn(`No leaderboard data for ${gameId}`);
         return;
     }
 
-    const bestAgents = selectBestAgents(leaderboardData[gameId]);
-    const normalized = normalizePoints(bestAgents);
-    const sorted = normalized.sort((a, b) => b.normalized - a.normalized);
+    const sorted = leaderboardData.games[gameId];
 
-    const labels = sorted.map(entry => cleanModelName(entry.agent));
+    const labels = sorted.map(entry => entry.model);
     const scores = sorted.map(entry => entry.normalized);
 
     renderChart(`chart-${gameId}`, gameName, labels, scores);
@@ -439,140 +401,18 @@ function showError(message) {
  * Load leaderboard files for all games
  */
 async function loadLeaderboards() {
-    const leaderboardMapping = {
-        'game1': 'A1-scoreboard.txt',
-        'game2': 'A2-scoreboard.txt',
-        'game3': 'A4-scoreboard.txt',
-        'game4': 'A5-scoreboard.txt',
-        'game5': 'A8-scoreboard.txt'
-    };
-
-    leaderboardData = {};
-
-    for (const [gameId, filename] of Object.entries(leaderboardMapping)) {
-        try {
-            const response = await fetch(`data/leaderboards/${filename}?t=${new Date().getTime()}`);
-            if (!response.ok) {
-                console.warn(`Failed to load leaderboard ${filename}: ${response.status}`);
-                continue;
-            }
-
-            const text = await response.text();
-            leaderboardData[gameId] = parseLeaderboard(text);
-        } catch (error) {
-            console.error(`Error loading leaderboard ${filename}:`, error);
+    try {
+        const response = await fetch(`data/leaderboard.json?t=${new Date().getTime()}`);
+        if (!response.ok) {
+            console.warn(`Failed to load leaderboard.json: ${response.status}`);
+            leaderboardData = { games: {}, overall: [] };
+            return;
         }
+        leaderboardData = await response.json();
+    } catch (error) {
+        console.error('Error loading leaderboard JSON:', error);
+        leaderboardData = { games: {}, overall: [] };
     }
-}
-
-/**
- * Parse leaderboard file format: "Agent | Games | Wins | Losses | Draws | Points | Score"
- */
-function parseLeaderboard(text) {
-    const lines = text.trim().split('\n');
-    const results = [];
-
-    for (const line of lines) {
-        const trimmed = line.trim();
-        if (!trimmed) continue;
-
-        const parts = trimmed.split('|').map(p => p.trim());
-
-        if (parts.length < 7) continue;
-        if (parts[0].includes('Agent')) continue;
-
-        const agent = parts[0];
-        if (!agent || !agent.includes(':')) continue;
-
-        results.push({
-            agent: agent,
-            games: parseInt(parts[1]) || 0,
-            wins: parseInt(parts[2]) || 0,
-            losses: parseInt(parts[3]) || 0,
-            draws: parseInt(parts[4]) || 0,
-            points: parseInt(parts[5]) || 0,
-            score: parseFloat(parts[6]) || 0
-        });
-    }
-
-    return results;
-}
-
-/**
- * Select best performing agent for each model
- */
-function selectBestAgents(leaderboard) {
-    const modelBestAgents = {};
-
-    for (const entry of leaderboard) {
-        const modelName = cleanModelName(entry.agent);
-
-        if (!modelBestAgents[modelName] || entry.score > modelBestAgents[modelName].score) {
-            modelBestAgents[modelName] = entry;
-        }
-    }
-
-    return Object.values(modelBestAgents).sort((a, b) => b.score - a.score);
-}
-
-/**
- * Normalize points to 0-100 scale
- */
-function normalizePoints(leaderboard) {
-    if (leaderboard.length === 0) return leaderboard;
-
-    const points = leaderboard.map(entry => entry.points);
-    const maxPoints = Math.max(...points);
-    const minPoints = Math.min(...points);
-    const range = maxPoints - minPoints;
-
-    return leaderboard.map(entry => ({
-        ...entry,
-        normalized: range === 0 ? 100 : ((entry.points - minPoints) / range) * 100
-    }));
-}
-
-/**
- * Calculate overall scores based on normalized points and game weights
- */
-function calculateOverallScores() {
-    if (!leaderboardData || !gameWeights) return [];
-
-    const modelScores = {};
-    const gameIds = ['game1', 'game2', 'game3', 'game4', 'game5'];
-
-    for (const gameId of gameIds) {
-        if (!leaderboardData[gameId]) continue;
-
-        const bestAgents = selectBestAgents(leaderboardData[gameId]);
-        const normalized = normalizePoints(bestAgents);
-        const weight = gameWeights[gameId] || 0;
-
-        for (const entry of normalized) {
-            const modelName = cleanModelName(entry.agent);
-
-            if (!modelScores[modelName]) {
-                modelScores[modelName] = {
-                    model: modelName,
-                    weightedSum: 0,
-                    totalWeight: 0,
-                    gameScores: {}
-                };
-            }
-
-            modelScores[modelName].weightedSum += entry.normalized * weight;
-            modelScores[modelName].totalWeight += weight;
-            modelScores[modelName].gameScores[gameId] = entry.normalized;
-        }
-    }
-
-    const results = Object.values(modelScores).map(entry => ({
-        model: entry.model,
-        overallScore: entry.totalWeight > 0 ? entry.weightedSum / entry.totalWeight : 0,
-        gameScores: entry.gameScores
-    }));
-
-    return results.sort((a, b) => b.overallScore - a.overallScore);
 }
 
 /**
@@ -595,12 +435,12 @@ function renderOverallLeaderboard() {
     const container = document.getElementById('leaderboard-overall');
     if (!container) return;
 
-    const overallScores = calculateOverallScores();
-
-    if (overallScores.length === 0) {
+    if (!leaderboardData.overall || leaderboardData.overall.length === 0) {
         container.innerHTML = '<p class="text-gray-500 text-sm">No leaderboard data available</p>';
         return;
     }
+
+    const overallScores = leaderboardData.overall;
 
     const table = document.createElement('table');
     table.className = 'min-w-full divide-y divide-gray-200';
@@ -625,7 +465,7 @@ function renderOverallLeaderboard() {
         row.innerHTML = `
             <td class="px-4 py-3 text-sm text-gray-900">${index + 1}</td>
             <td class="px-4 py-3 text-sm font-medium text-gray-900">${entry.model}</td>
-            <td class="px-4 py-3 text-sm font-semibold text-gray-900 text-right">${entry.overallScore.toFixed(2)}</td>
+            <td class="px-4 py-3 text-sm font-semibold text-gray-900 text-right">${entry.overall_score.toFixed(2)}</td>
         `;
 
         tbody.appendChild(row);
@@ -642,12 +482,9 @@ function renderOverallLeaderboard() {
  */
 function renderLeaderboard(gameId) {
     const container = document.getElementById(`leaderboard-${gameId}`);
-    if (!container || !leaderboardData[gameId]) return;
+    if (!container || !leaderboardData.games || !leaderboardData.games[gameId]) return;
 
-    const bestAgents = selectBestAgents(leaderboardData[gameId]);
-    const normalized = normalizePoints(bestAgents);
-
-    const sorted = normalized.sort((a, b) => b.normalized - a.normalized);
+    const sorted = leaderboardData.games[gameId];
 
     if (sorted.length === 0) {
         container.innerHTML = '<p class="text-gray-500 text-sm">No leaderboard data available</p>';
@@ -680,7 +517,7 @@ function renderLeaderboard(gameId) {
         const row = document.createElement('tr');
         row.className = index % 2 === 0 ? 'bg-white' : 'bg-gray-50';
 
-        const modelName = cleanModelName(entry.agent);
+        const modelName = entry.model; // Already cleaned in JSON
 
         row.innerHTML = `
             <td class="px-4 py-3 text-sm text-gray-900">${index + 1}</td>
