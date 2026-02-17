@@ -25,13 +25,15 @@ function cleanModelName(modelName) {
 async function init() {
     try {
         initTabs();
-        initHomeNav();
+        initNav();
         await loadAllPrompts();
 
         gameConfig = await loadConfig();
-        // Weights are now handled in pre-processing script
+        gameConfig.games.forEach(game => {
+            const span = document.querySelector(`[data-game-id="${game.id}"]`);
+            if (span) span.textContent = `Weight: ${game.weight}`;
+        });
         const manifest = await loadManifest();
-        populateRunSelector(manifest.runs);
 
         if (manifest.runs.length > 0) {
             await loadRun(manifest.runs[0]);
@@ -65,77 +67,65 @@ async function loadManifest() {
 }
 
 /**
- * Populate the run selector list in the sidebar
+ * Show only the given page div, hide the rest
  */
-function populateRunSelector(runs) {
-    const listContainer = document.getElementById('run-list');
-    if (!listContainer) return;
-
-    listContainer.innerHTML = '';
-
-    runs.forEach((run, index) => {
-        const item = document.createElement('div');
-        item.className = 'run-item px-3 py-2 cursor-pointer hover:bg-gray-100 rounded transition-colors';
-        item.dataset.index = index;
-
-        const displayTitle = run.name || 'Game Run';
-        const dateDisplay = run.date || '';
-
-        item.innerHTML = `
-            <div class="run-name truncate font-medium text-gray-700">${displayTitle}</div>
-            ${dateDisplay ? `<div class="run-date truncate text-xs text-gray-400">${dateDisplay}</div>` : ''}
-        `;
-
-        item.onclick = async () => {
-            document.querySelectorAll('.run-item').forEach(el => el.classList.remove('bg-gray-100'));
-            item.classList.add('bg-gray-100');
-
-            const btnHome = document.getElementById('nav-home');
-            if (btnHome) btnHome.classList.remove('bg-gray-100', 'text-gray-900');
-
-            updateHeaderTitle(displayTitle);
-            await loadRun(runs[index]);
-
-            const pageResults = document.getElementById('page-results');
-            const pageHome = document.getElementById('page-home');
-
-            if (pageResults && pageHome) {
-                pageResults.classList.remove('hidden');
-                pageHome.classList.add('hidden');
-            }
-        };
-
-        if (index === 0) {
-            item.classList.add('bg-gray-100');
-        }
-
-        listContainer.appendChild(item);
+function showPage(pageId) {
+    ['page-home', 'page-games', 'page-results'].forEach(id => {
+        const el = document.getElementById(id);
+        if (!el) return;
+        el.classList.toggle('hidden', id !== pageId);
     });
 }
 
 /**
- * Navigate to Home page
+ * Navigate to About page
  */
 function navigateToHome() {
-    const btnHome = document.getElementById('nav-home');
-    document.querySelectorAll('.run-item').forEach(el => el.classList.remove('bg-gray-100'));
-    if (btnHome) btnHome.classList.add('bg-gray-100', 'text-gray-900');
-
-    const pageHome = document.getElementById('page-home');
-    const pageResults = document.getElementById('page-results');
-
-    if (pageHome) pageHome.classList.remove('hidden');
-    if (pageResults) pageResults.classList.add('hidden');
+    showPage('page-home');
+    setActiveNav('nav-home');
 }
 
 /**
- * Initialize Home navigation
+ * Navigate to Games page
  */
-function initHomeNav() {
-    const btnHome = document.getElementById('nav-home');
-    if (!btnHome) return;
+function navigateToGames() {
+    showPage('page-games');
+    setActiveNav('nav-games');
+}
 
-    btnHome.onclick = navigateToHome;
+/**
+ * Navigate to Leaderboard page
+ */
+function navigateToLeaderboard() {
+    showPage('page-results');
+    setActiveNav('nav-leaderboard');
+}
+
+/**
+ * Set the active nav button
+ */
+function setActiveNav(activeId) {
+    const navIds = ['nav-home', 'nav-games', 'nav-leaderboard'];
+    navIds.forEach(id => {
+        const btn = document.getElementById(id);
+        if (!btn) return;
+        if (id === activeId) {
+            btn.classList.add('border-blue-600', 'text-blue-600');
+            btn.classList.remove('border-transparent', 'text-gray-600');
+        } else {
+            btn.classList.remove('border-blue-600', 'text-blue-600');
+            btn.classList.add('border-transparent', 'text-gray-600');
+        }
+    });
+}
+
+/**
+ * Initialize top navigation
+ */
+function initNav() {
+    document.getElementById('nav-home')?.addEventListener('click', navigateToHome);
+    document.getElementById('nav-games')?.addEventListener('click', navigateToGames);
+    document.getElementById('nav-leaderboard')?.addEventListener('click', navigateToLeaderboard);
 }
 
 /**
@@ -170,14 +160,6 @@ function initTabs() {
 }
 
 /**
- * Update the header title with current run
- */
-function updateHeaderTitle(title) {
-    const titleEl = document.getElementById('current-run-title');
-    if (titleEl) titleEl.textContent = title;
-}
-
-/**
  * Load and parse a game run
  */
 async function loadRun(run) {
@@ -202,9 +184,8 @@ async function loadRun(run) {
 
         currentData = gameData;
 
-        updateHeaderTitle(run.name || 'Game Run');
-        const dateEl = document.getElementById('run-date');
-        if (dateEl) dateEl.textContent = `Date: ${run.date}`;
+        const dateText = `Last run: ${run.date}`;
+        document.querySelectorAll('.run-date').forEach(el => { el.textContent = dateText; });
 
         await loadLeaderboards();
         renderAllCharts(gameData);
@@ -288,6 +269,29 @@ function renderGameChart(gameId, gameName, data) {
 }
 
 /**
+ * Inline plugin: draws score values inside the top of each bar
+ */
+const barValuePlugin = {
+    id: 'barValues',
+    afterDatasetsDraw(chart) {
+        const { ctx } = chart;
+        chart.data.datasets.forEach((dataset, datasetIndex) => {
+            const meta = chart.getDatasetMeta(datasetIndex);
+            meta.data.forEach((bar, index) => {
+                const value = dataset.data[index];
+                ctx.save();
+                ctx.fillStyle = '#000000';
+                ctx.font = 'bold 11px sans-serif';
+                ctx.textAlign = 'center';
+                ctx.textBaseline = 'top';
+                ctx.fillText(Math.round(value), bar.x, bar.y + 6);
+                ctx.restore();
+            });
+        });
+    }
+};
+
+/**
  * Generic chart rendering function
  */
 function renderChart(canvasId, label, labels, scores) {
@@ -351,25 +355,20 @@ function renderChart(canvasId, label, labels, scores) {
                     }
                 }
             }
-        }
+        },
+        plugins: [barValuePlugin]
     });
 
     gameCharts[canvasId.replace('chart-', '')] = chart;
 }
 
 /**
- * Generate gradient colors for bar chart
+ * Generate bar colors: top 5 get special colors, rest are grey
  */
 function generateBarColors(count) {
-    const colors = [];
-    for (let i = 0; i < count; i++) {
-        const progress = i / Math.max(count - 1, 1);
-        const hue = 160 - (progress * 120);
-        const saturation = 25 - (progress * 10);
-        const lightness = 45 + (progress * 20);
-        colors.push(`hsl(${hue}, ${saturation}%, ${lightness}%)`);
-    }
-    return colors;
+    const TOP_5 = ['#D4AF37', '#94A3B8', '#B87333', '#7C3AED', '#0891B2'];
+    const GREY = '#CBD5E1';
+    return Array.from({ length: count }, (_, i) => i < 5 ? TOP_5[i] : GREY);
 }
 
 /**

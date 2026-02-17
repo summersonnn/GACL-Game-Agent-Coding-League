@@ -3,20 +3,10 @@ import json
 import re
 
 # Configuration
-# Configuration
 BASE_DIR = os.path.dirname(os.path.dirname(os.path.abspath(__file__)))
-CONFIG_DIR = os.path.join(BASE_DIR, 'config')
 DATA_DIR = os.path.join(BASE_DIR, 'data', 'leaderboards')
 OUTPUT_FILE = os.path.join(BASE_DIR, 'data', 'leaderboard.json')
-GAME_WEIGHTS_FILE = os.path.join(CONFIG_DIR, 'game_weights.txt')
-
-GAME_MAPPING = {
-    'A1': 'game1',
-    'A2': 'game2',
-    'A4': 'game3',
-    'A5': 'game4',
-    'A8': 'game5'
-}
+CONFIG_FILE = os.path.join(BASE_DIR, 'data', 'config.json')
 
 def clean_model_name(agent_name):
     """
@@ -29,43 +19,19 @@ def clean_model_name(agent_name):
     name = re.sub(r':1$|:2$', '', name)
     return name
 
-def load_game_weights():
-    weights = {}
-    
-    # Defaults
-    default_weights = {'game1': 1, 'game2': 1, 'game3': 1, 'game4': 1, 'game5': 1}
-    
-    if not os.path.exists(GAME_WEIGHTS_FILE):
-        print(f"Warning: {GAME_WEIGHTS_FILE} not found. Using defaults.")
-        return default_weights
+def load_config() -> tuple[dict[str, str], dict[str, int]]:
+    """
+    Load game metadata from data/config.json.
+    Returns (game_mapping, weights):
+        game_mapping: {code -> game_id}, e.g. {'A1': 'game1'}
+        weights:      {game_id -> weight}, e.g. {'game1': 5}
+    """
+    with open(CONFIG_FILE, 'r') as f:
+        config = json.load(f)
 
-    try:
-        with open(GAME_WEIGHTS_FILE, 'r') as f:
-            lines = f.readlines()
-            
-        found_any = False
-        for line in lines:
-            trimmed = line.strip()
-            if not trimmed:
-                continue
-
-            # Check format "A1 - 5"
-            match = re.match(r'^(A\d+)\s*-\s*(\d+)$', trimmed)
-            if match:
-                game_code = match.group(1)
-                weight = int(match.group(2))
-                if game_code in GAME_MAPPING:
-                    weights[GAME_MAPPING[game_code]] = weight
-                    found_any = True
-        
-        if not found_any:
-            return default_weights
-            
-    except Exception as e:
-        print(f"Error loading weights: {e}")
-        return default_weights
-    
-    return weights
+    game_mapping = {g['code']: g['id'] for g in config['games']}
+    weights = {g['id']: g['weight'] for g in config['games']}
+    return game_mapping, weights
 
 def parse_leaderboard_file(filepath):
     """
@@ -169,7 +135,7 @@ def calculate_overall(game_data, weights):
     """
     model_scores = {}
     # game_ids needs to cover all potential games
-    game_ids = ['game1', 'game2', 'game3', 'game4', 'game5']
+    game_ids = ['game1', 'game2', 'game4', 'game5', 'game8']
     
     # We iterate through the processed game data
     for game_id, entries in game_data.items():
@@ -205,20 +171,21 @@ def calculate_overall(game_data, weights):
     return sorted(results, key=lambda x: x['overall_score'], reverse=True)
 
 def main():
-    print("Loading weights...")
-    weights = load_game_weights()
-    print(f"Weights loaded: {weights}")
-    
+    print("Loading config...")
+    game_mapping, weights = load_config()
+    print(f"Games: {game_mapping}")
+    print(f"Weights: {weights}")
+
     processed_data = {
         "games": {},
         "overall": []
     }
-    
+
     # Temporary storage for calculation
     game_best_normalized = {}
-    
-    # Iterate through games (game1..game5)
-    for code, game_id in GAME_MAPPING.items():
+
+    # Iterate through games defined in config
+    for code, game_id in game_mapping.items():
         filename = f"{code}-scoreboard.txt"
         path = os.path.join(DATA_DIR, filename)
         
