@@ -1,23 +1,12 @@
 /**
  * Game Agent Coding League - Main Application Logic
- * Handles TXT parsing, chart rendering, and run selection
+ * Fetches pre-computed leaderboard JSON and renders charts/tables.
  */
 
 let gameCharts = {};
-let currentData = null;
-let currentRunFile = null;
 let gameConfig = null;
 let leaderboardData = null;
-
-/**
- * Clean model name by removing fp8 variants and agent suffixes
- */
-function cleanModelName(modelName) {
-    return modelName
-        .replace(/-fp8-speedy/g, '')
-        .replace(/-fp8/g, '')
-        .replace(/:1$|:2$/, '');
-}
+let promptsLoaded = false;
 
 /**
  * Initialize the application
@@ -26,18 +15,27 @@ async function init() {
     try {
         initTabs();
         initNav();
-        await loadAllPrompts();
 
-        gameConfig = await loadConfig();
+        const [config, manifest] = await Promise.all([
+            loadConfig(),
+            loadManifest(),
+            loadLeaderboards(),
+        ]);
+
+        gameConfig = config;
         gameConfig.games.forEach(game => {
             const span = document.querySelector(`[data-game-id="${game.id}"]`);
             if (span) span.textContent = `Weight: ${game.weight}`;
         });
-        const manifest = await loadManifest();
 
         if (manifest.runs.length > 0) {
-            await loadRun(manifest.runs[0]);
+            const run = manifest.runs[0];
+            const dateText = `Last run: ${run.date}`;
+            document.querySelectorAll('.run-date').forEach(el => { el.textContent = dateText; });
         }
+
+        renderAllCharts();
+        renderAllLeaderboards();
     } catch (error) {
         console.error('Failed to initialize:', error);
         showError('Failed to load game data. Please check the console for details.');
@@ -48,7 +46,7 @@ async function init() {
  * Load game configuration
  */
 async function loadConfig() {
-    const response = await fetch(`data/config.json?t=${new Date().getTime()}`);
+    const response = await fetch('data/config.json');
     if (!response.ok) {
         throw new Error(`Failed to load config: ${response.status}`);
     }
@@ -59,7 +57,7 @@ async function loadConfig() {
  * Load the runs manifest
  */
 async function loadManifest() {
-    const response = await fetch(`data/runs.json?t=${new Date().getTime()}`);
+    const response = await fetch('data/runs.json');
     if (!response.ok) {
         throw new Error(`Failed to load manifest: ${response.status}`);
     }
@@ -86,11 +84,15 @@ function navigateToHome() {
 }
 
 /**
- * Navigate to Games page
+ * Navigate to Games page, lazy-load prompts on first visit
  */
 function navigateToGames() {
     showPage('page-games');
     setActiveNav('nav-games');
+    if (!promptsLoaded) {
+        promptsLoaded = true;
+        loadAllPrompts();
+    }
 }
 
 /**
@@ -152,7 +154,7 @@ function initTabs() {
                 }
             });
 
-            if (currentData && gameCharts[targetTab]) {
+            if (gameCharts[targetTab]) {
                 gameCharts[targetTab].resize();
             }
         });
@@ -160,89 +162,26 @@ function initTabs() {
 }
 
 /**
- * Load and parse a game run
- */
-async function loadRun(run) {
-    try {
-        currentRunFile = run.name;
-
-        const gameData = {};
-
-        for (const game of gameConfig.games) {
-            const filename = run.files[game.id];
-            if (!filename) continue;
-
-            const response = await fetch(`data/runs/${filename}?t=${new Date().getTime()}`);
-            if (!response.ok) {
-                console.warn(`Failed to load ${game.id}: ${response.status}`);
-                continue;
-            }
-
-            const text = await response.text();
-            gameData[game.id] = parseTXT(text);
-        }
-
-        currentData = gameData;
-
-        const dateText = `Last run: ${run.date}`;
-        document.querySelectorAll('.run-date').forEach(el => { el.textContent = dateText; });
-
-        await loadLeaderboards();
-        renderAllCharts(gameData);
-        renderAllLeaderboards();
-    } catch (error) {
-        console.error('Failed to load run:', error);
-        showError(`Failed to load game run: ${run.name}`);
-    }
-}
-
-/**
- * Parse TXT file format: "Model Name - Points"
- */
-function parseTXT(text) {
-    const lines = text.trim().split('\n');
-    const results = [];
-
-    for (const line of lines) {
-        const trimmed = line.trim();
-        if (!trimmed) continue;
-
-        const match = trimmed.match(/^(.+?)\s*-\s*(\d+(?:\.\d+)?)$/);
-        if (match) {
-            results.push({
-                model: match[1].trim(),
-                points: parseFloat(match[2])
-            });
-        }
-    }
-
-    return results;
-}
-
-/**
  * Render all charts (Overall + individual games)
  */
-function renderAllCharts(gameData) {
-    renderOverallChart(gameData);
+function renderAllCharts() {
+    renderOverallChart();
 
     gameConfig.games.forEach(game => {
-        renderGameChart(game.id, game.name, gameData[game.id] || []);
+        renderGameChart(game.id, game.name);
     });
 }
 
 /**
  * Render overall weighted chart
  */
-function renderOverallChart(gameData) {
+function renderOverallChart() {
     if (!leaderboardData || !leaderboardData.overall) {
         console.warn('No overall score data available');
         return;
     }
 
     const overallScores = leaderboardData.overall;
-    // Limit to top 20 or similar if needed, or show all. Python sorts by overall_score descending.
-
-    // Safety check for empty data
     if (overallScores.length === 0) return;
 
     const labels = overallScores.map(entry => entry.model);
@@ -254,7 +193,7 @@ function renderOverallChart(gameData) {
 /**
  * Render individual game chart
  */
-function renderGameChart(gameId, gameName, data) {
+function renderGameChart(gameId, gameName) {
     if (!leaderboardData || !leaderboardData.games || !leaderboardData.games[gameId]) {
         console.warn(`No leaderboard data for ${gameId}`);
         return;
@@ -401,7 +340,7 @@ function showError(message) {
  */
 async function loadLeaderboards() {
     try {
-        const response = await fetch(`data/leaderboard.json?t=${new Date().getTime()}`);
+        const response = await fetch('data/leaderboard.json');
         if (!response.ok) {
             console.warn(`Failed to load leaderboard.json: ${response.status}`);
             leaderboardData = { games: {}, overall: [] };
@@ -516,7 +455,7 @@ function renderLeaderboard(gameId) {
         const row = document.createElement('tr');
         row.className = index % 2 === 0 ? 'bg-white' : 'bg-gray-50';
 
-        const modelName = entry.model; // Already cleaned in JSON
+        const modelName = entry.model;
 
         row.innerHTML = `
             <td class="px-4 py-3 text-sm text-gray-900">${index + 1}</td>
@@ -540,14 +479,14 @@ function renderLeaderboard(gameId) {
 }
 
 /**
- * Load all game prompts on page load
+ * Lazy-load game prompts (called on first Games tab visit)
  */
 async function loadAllPrompts() {
     const promptFiles = ['battleship', 'tictactoe', 'wordfinder', 'connect4', 'surround_morris'];
 
-    for (const promptName of promptFiles) {
+    const fetches = promptFiles.map(async (promptName) => {
         try {
-            const response = await fetch(`data/full_prompts/${promptName}.txt?t=${new Date().getTime()}`);
+            const response = await fetch(`data/full_prompts/${promptName}.txt`);
             if (response.ok) {
                 const text = await response.text();
                 const details = document.querySelector(`details[data-prompt="${promptName}"]`);
@@ -563,7 +502,9 @@ async function loadAllPrompts() {
         } catch (error) {
             console.error(`Error loading prompt ${promptName}:`, error);
         }
-    }
+    });
+
+    await Promise.all(fetches);
 }
 
 document.addEventListener('DOMContentLoaded', init);
