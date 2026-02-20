@@ -46,6 +46,8 @@ def parse_leaderboard_file(filepath):
     with open(filepath, 'r') as f:
         lines = f.readlines()
 
+    is_a3 = "A3-scoreboard.txt" in os.path.basename(filepath)
+
     for line in lines:
         trimmed = line.strip()
         if not trimmed:
@@ -54,7 +56,8 @@ def parse_leaderboard_file(filepath):
         parts = [p.strip() for p in trimmed.split('|')]
         
         # Skip header or malformed lines
-        if len(parts) < 7:
+        expected_len = 10 if is_a3 else 7
+        if len(parts) < expected_len:
             continue
         if 'Agent' in parts[0]:
             continue
@@ -65,15 +68,29 @@ def parse_leaderboard_file(filepath):
             continue
 
         try:
-            entries.append({
-                'agent': agent_name,
-                'games': int(parts[1]),
-                'wins': int(parts[2]),
-                'losses': int(parts[3]),
-                'draws': int(parts[4]),
-                'points': float(parts[5]),
-                'score': float(parts[6])
-            })
+            if is_a3:
+                entries.append({
+                    'agent': agent_name,
+                    'games': int(parts[1]),
+                    '1st': int(parts[2]),
+                    '2nd': int(parts[3]),
+                    '3rd': int(parts[4]),
+                    '4th': int(parts[5]),
+                    '5th': int(parts[6]),
+                    '6th': int(parts[7]),
+                    'points': float(parts[8]),
+                    'score': float(parts[9])
+                })
+            else:
+                entries.append({
+                    'agent': agent_name,
+                    'games': int(parts[1]),
+                    'wins': int(parts[2]),
+                    'losses': int(parts[3]),
+                    'draws': int(parts[4]),
+                    'points': float(parts[5]),
+                    'score': float(parts[6])
+                })
         except ValueError:
             continue
             
@@ -103,28 +120,31 @@ def select_best_agents(entries):
             
     return list(model_best.values())
 
-def normalize_points(entries):
+def normalize_points(entries, game_code):
     """
-    Normalize points to 0-100 scale.
+    Normalize points based on theoretical maximum possible points.
     """
     if not entries:
         return []
     
-    points = [e['points'] for e in entries]
-    if not points:
-        return []
-        
-    max_p = max(points)
-    min_p = min(points)
-    p_range = max_p - min_p
-    
     normalized_entries = []
     for entry in entries:
         new_entry = entry.copy()
-        if p_range == 0:
-            new_entry['normalized'] = 100.0
+        total_games = entry.get('games', 0)
+        
+        if total_games == 0:
+            new_entry['normalized'] = 0.0
         else:
-            new_entry['normalized'] = ((entry['points'] - min_p) / p_range) * 100.0
+            if game_code == 'A3':
+                max_possible = total_games * 5
+            else:
+                max_possible = total_games * 3
+                
+            if max_possible > 0:
+                new_entry['normalized'] = (entry['points'] / max_possible) * 100.0
+            else:
+                new_entry['normalized'] = 0.0
+                
         normalized_entries.append(new_entry)
         
     return normalized_entries
@@ -201,7 +221,7 @@ def main():
         best_agents = select_best_agents(raw_entries)
         
         # Normalize
-        normalized_agents = normalize_points(best_agents)
+        normalized_agents = normalize_points(best_agents, code)
         
         # Sort descending by normalized score
         normalized_agents.sort(key=lambda x: x['normalized'], reverse=True)

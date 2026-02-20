@@ -150,6 +150,24 @@
                     </p>
                 </section>
 
+                <!-- Underperformance Check -->
+                <section id="underperformance">
+                    <h2 class="text-lg font-bold text-gray-900 mb-3">Unexpected Underperformance</h2>
+                    <p class="mb-3">
+                        Do you think one of the models performed significantly worse than expected in a particular game?
+                        That might simply be due to chance. To address this, we’ll request updated agent code from each
+                        model for every game on a biweekly basis. Then, the lowest-performing agent (among the existing
+                        three) will be
+                        eliminated. After making these adjustments, we’ll run the evaluation again. Ideally, the new
+                        agent will replace the one that underperformed unexpectedly.
+                    </p>
+                    <p>
+                        Also note that when building the leaderboards and charts, we only consider the top-performing
+                        agent from each model (out of two agents). So there is already a safeguard in place to mitigate
+                        this issue.
+                    </p>
+                </section>
+
             </div>
         </div>
 
@@ -167,7 +185,7 @@
 <script src="https://cdn.jsdelivr.net/npm/chart.js@4.4.1/dist/chart.umd.min.js"></script>
 
 <!-- Main application JS -->
-<script src="/js/main.js?v=24"></script>
+<script src="/js/main.js?v=25"></script>
 </body>
 
 </html>

@@ -373,19 +373,39 @@ function renderLeaderboard(gameId) {
 
     const thead = document.createElement('thead');
     thead.className = 'bg-gray-50';
-    thead.innerHTML = `
-        <tr>
-            <th class="px-4 py-3 text-left text-xs font-medium text-gray-500 uppercase tracking-wider">Rank</th>
-            <th class="px-4 py-3 text-left text-xs font-medium text-gray-500 uppercase tracking-wider">Model</th>
-            <th class="px-4 py-3 text-right text-xs font-medium text-gray-500 uppercase tracking-wider">Games</th>
-            <th class="px-4 py-3 text-right text-xs font-medium text-gray-500 uppercase tracking-wider">Wins</th>
-            <th class="px-4 py-3 text-right text-xs font-medium text-gray-500 uppercase tracking-wider">Losses</th>
-            <th class="px-4 py-3 text-right text-xs font-medium text-gray-500 uppercase tracking-wider">Draws</th>
-            <th class="px-4 py-3 text-right text-xs font-medium text-gray-500 uppercase tracking-wider">Points</th>
-            <th class="px-4 py-3 text-right text-xs font-medium text-gray-500 uppercase tracking-wider">Normalized<br>Points</th>
-            <th class="px-4 py-3 text-right text-xs font-medium text-gray-500 uppercase tracking-wider">Score</th>
-        </tr>
-    `;
+
+    if (gameId === 'game3') {
+        thead.innerHTML = `
+            <tr>
+                <th class="px-4 py-3 text-left text-xs font-medium text-gray-500 uppercase tracking-wider">Rank</th>
+                <th class="px-4 py-3 text-left text-xs font-medium text-gray-500 uppercase tracking-wider">Model</th>
+                <th class="px-4 py-3 text-right text-xs font-medium text-gray-500 uppercase tracking-wider">Games</th>
+                <th class="px-4 py-3 text-right text-xs font-medium text-gray-500 uppercase tracking-wider">1st</th>
+                <th class="px-4 py-3 text-right text-xs font-medium text-gray-500 uppercase tracking-wider">2nd</th>
+                <th class="px-4 py-3 text-right text-xs font-medium text-gray-500 uppercase tracking-wider">3rd</th>
+                <th class="px-4 py-3 text-right text-xs font-medium text-gray-500 uppercase tracking-wider">4th</th>
+                <th class="px-4 py-3 text-right text-xs font-medium text-gray-500 uppercase tracking-wider">5th</th>
+                <th class="px-4 py-3 text-right text-xs font-medium text-gray-500 uppercase tracking-wider">6th</th>
+                <th class="px-4 py-3 text-right text-xs font-medium text-gray-500 uppercase tracking-wider">Points</th>
+                <th class="px-4 py-3 text-right text-xs font-medium text-gray-500 uppercase tracking-wider">Normalized<br>Points</th>
+                <th class="px-4 py-3 text-right text-xs font-medium text-gray-500 uppercase tracking-wider">Score</th>
+            </tr>
+        `;
+    } else {
+        thead.innerHTML = `
+            <tr>
+                <th class="px-4 py-3 text-left text-xs font-medium text-gray-500 uppercase tracking-wider">Rank</th>
+                <th class="px-4 py-3 text-left text-xs font-medium text-gray-500 uppercase tracking-wider">Model</th>
+                <th class="px-4 py-3 text-right text-xs font-medium text-gray-500 uppercase tracking-wider">Games</th>
+                <th class="px-4 py-3 text-right text-xs font-medium text-gray-500 uppercase tracking-wider">Wins</th>
+                <th class="px-4 py-3 text-right text-xs font-medium text-gray-500 uppercase tracking-wider">Losses</th>
+                <th class="px-4 py-3 text-right text-xs font-medium text-gray-500 uppercase tracking-wider">Draws</th>
+                <th class="px-4 py-3 text-right text-xs font-medium text-gray-500 uppercase tracking-wider">Points</th>
+                <th class="px-4 py-3 text-right text-xs font-medium text-gray-500 uppercase tracking-wider">Normalized<br>Points</th>
+                <th class="px-4 py-3 text-right text-xs font-medium text-gray-500 uppercase tracking-wider">Score</th>
+            </tr>
+        `;
+    }
 
     const tbody = document.createElement('tbody');
     tbody.className = 'bg-white divide-y divide-gray-200';
@@ -396,17 +416,34 @@ function renderLeaderboard(gameId) {
 
         const modelName = entry.model;
 
-        row.innerHTML = `
-            <td class="px-4 py-3 text-sm text-gray-900">${index + 1}</td>
-            <td class="px-4 py-3 text-sm font-medium text-gray-900">${modelName}</td>
-            <td class="px-4 py-3 text-sm text-gray-600 text-right">${entry.games}</td>
-            <td class="px-4 py-3 text-sm text-gray-600 text-right">${entry.wins}</td>
-            <td class="px-4 py-3 text-sm text-gray-600 text-right">${entry.losses}</td>
-            <td class="px-4 py-3 text-sm text-gray-600 text-right">${entry.draws}</td>
-            <td class="px-4 py-3 text-sm text-gray-600 text-right">${entry.points}</td>
-            <td class="px-4 py-3 text-sm font-medium text-indigo-600 text-right">${entry.normalized.toFixed(2)}</td>
-            <td class="px-4 py-3 text-sm font-semibold text-gray-900 text-right">${entry.score.toFixed(1)}</td>
-        `;
+        if (gameId === 'game3') {
+            row.innerHTML = `
+                <td class="px-4 py-3 text-sm text-gray-900">${index + 1}</td>
+                <td class="px-4 py-3 text-sm font-medium text-gray-900">${modelName}</td>
+                <td class="px-4 py-3 text-sm text-gray-600 text-right">${entry.games}</td>
+                <td class="px-4 py-3 text-sm text-gray-600 text-right">${entry['1st']}</td>
+                <td class="px-4 py-3 text-sm text-gray-600 text-right">${entry['2nd']}</td>
+                <td class="px-4 py-3 text-sm text-gray-600 text-right">${entry['3rd']}</td>
+                <td class="px-4 py-3 text-sm text-gray-600 text-right">${entry['4th']}</td>
+                <td class="px-4 py-3 text-sm text-gray-600 text-right">${entry['5th']}</td>
+                <td class="px-4 py-3 text-sm text-gray-600 text-right">${entry['6th']}</td>
+                <td class="px-4 py-3 text-sm text-gray-600 text-right">${entry.points}</td>
+                <td class="px-4 py-3 text-sm font-medium text-indigo-600 text-right">${entry.normalized.toFixed(2)}</td>
+                <td class="px-4 py-3 text-sm font-semibold text-gray-900 text-right">${entry.score.toFixed(1)}</td>
+            `;
+        } else {
+            row.innerHTML = `
+                <td class="px-4 py-3 text-sm text-gray-900">${index + 1}</td>
+                <td class="px-4 py-3 text-sm font-medium text-gray-900">${modelName}</td>
+                <td class="px-4 py-3 text-sm text-gray-600 text-right">${entry.games}</td>
+                <td class="px-4 py-3 text-sm text-gray-600 text-right">${entry.wins}</td>
+                <td class="px-4 py-3 text-sm text-gray-600 text-right">${entry.losses}</td>
+                <td class="px-4 py-3 text-sm text-gray-600 text-right">${entry.draws}</td>
+                <td class="px-4 py-3 text-sm text-gray-600 text-right">${entry.points}</td>
+                <td class="px-4 py-3 text-sm font-medium text-indigo-600 text-right">${entry.normalized.toFixed(2)}</td>
+                <td class="px-4 py-3 text-sm font-semibold text-gray-900 text-right">${entry.score.toFixed(1)}</td>
+            `;
+        }
 
         tbody.appendChild(row);
     });
