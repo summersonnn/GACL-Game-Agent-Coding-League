@@ -17,9 +17,16 @@ class StaticHandler(http.server.SimpleHTTPRequestHandler):
     def do_GET(self):
         if self.path == '/':
             self.send_response(301)
-            self.send_header('Location', '/pages/index.html')
+            self.send_header('Location', '/docs/index.html')
             self.end_headers()
             return
+        elif self.path.startswith('/pages/'):
+            self.send_response(301)
+            new_path = self.path.replace('/pages/', '/docs/', 1)
+            self.send_header('Location', new_path)
+            self.end_headers()
+            return
+
         super().do_GET()
 
 def main():
