@@ -71,8 +71,8 @@ uv run python utils/process_leaderboards.py
 
 ### 3. Configuring Game Weights
 
-You can adjust the importance of each game in the overall ranking by editing `config/game_weights.txt`.
-Format: `GameID - Weight` (e.g., `A1 - 1`).
+You can adjust the importance of each game in the overall ranking by editing `data/config.json`.
+Update the `"weight"` property for each game object.
 
 ## Project Structure
 
