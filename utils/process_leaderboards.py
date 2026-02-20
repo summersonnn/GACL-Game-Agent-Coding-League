@@ -135,7 +135,7 @@ def calculate_overall(game_data, weights):
     """
     model_scores = {}
     # game_ids needs to cover all potential games
-    game_ids = ['game1', 'game2', 'game4', 'game5', 'game8']
+    game_ids = ['game1', 'game2', 'game3', 'game4', 'game5', 'game6', 'game7', 'game8']
     
     # We iterate through the processed game data
     for game_id, entries in game_data.items():

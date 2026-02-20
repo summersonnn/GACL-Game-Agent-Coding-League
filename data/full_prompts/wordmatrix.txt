@@ -1,0 +1,165 @@
+# WordMatrixGame (Simplified)
+
+WordMatrixGame is a 2-player word game on a 4x4 letter matrix. Players select paths on the board, provide matching words, and score by clearing cells.
+
+---
+
+## Game Overview
+
+The game is played on a 4x4 grid filled with random lowercase letters. On your turn, you make a **single attempt** to select a path of adjacent cells and provide a word that uses those letters as a subsequence.
+
+* **Valid Move:** Letters from the path get consumed, extra letters in your word fill some path cells, and remaining path cells are cleared. You score points and the turn passes to the opponent.
+* **Invalid Move / Crash / Timeout:** The turn ends immediately, you receive a **-10 point penalty**, and the board remains unchanged.
+
+---
+
+## Board
+
+* **Grid:** 4x4 matrix of lowercase letters (`'a'`-`'z'`).
+* **Empty Cells:** Represented as `""` (empty string).
+* **Coordinates:** `(row, col)` with `(0,0)` at the top-left.
+
+---
+
+## Turn Flow
+
+Each turn is **one-shot**. There are no retries.
+
+1.  **Receive State:** You are given the current board, scores, and pass count.
+2.  **Action:** You must return one of two things:
+    * A tuple `(path, word)` to play a move.
+    * The string `"PASS"` to skip your turn.
+3.  **Outcome:**
+    * **Valid Move:** Board updates, you score positive points. Turn ends.
+    * **Invalid Move** (bad path, bad word, bad format): You lose **10 points**. Turn ends.
+    * **PASS:** 0 points. Turn ends.
+
+---
+
+## Path Rules
+
+1.  **Length:** Must contain at least **2** cells.
+2.  **Adjacency:** Consecutive cells must be horizontally or vertically adjacent. **No diagonals.**
+3.  **Unique:** No cell can be visited twice in the same path.
+4.  **Content:** All cells in the path must contain a letter (cannot include empty `""` cells).
+
+---
+
+## Word Rules
+
+1.  **Dictionary:** Must be a valid English word from the provided dictionary.
+2.  **Subsequence:** The letters found in your `path` must appear in your `word` in the correct order.
+    * *Path letters:* `['c', 'a', 't']`
+    * *Word:* `"coat"` is **Valid** (`c`...`o`...`a`...`t`).
+    * *Word:* `"taco"` is **Invalid** (Order mismatch: `t` is after `a`).
+3.  **Length Constraints:**
+    * The word cannot be shorter than the path.
+    * The word cannot be more than **twice** the length of the path.
+    * `len(path) <= len(word) <= 2 * len(path)`
+
+---
+
+## Scoring & Penalties
+
+| Outcome | Points | Description |
+| :--- | :--- | :--- |
+| **Valid Move** | **10 + (10 x Cleared Cells)** | Base score + bonus for efficiency. |
+| **PASS** | **0** | No penalty. Increments global pass counter. |
+| **Invalid Move** | **-10** | Bad path, invalid word, or rule violation. |
+
+### Error Handling
+
+| Failure Type         | Consequence                                           | Stat Tracked      |
+| -------------------- | ----------------------------------------------------- | ----------------- |
+| make_move() Crash    | -10 penalty; turn ends.                               | make_move_crash   |
+| Initialization Crash | Immediate game forfeit. Opponent wins with max score. | other_crash       |
+| Move Timeout         | -10 penalty; turn ends.                               | timeout           |
+| Invalid Move         | -10 penalty; turn ends.                               | invalid           |
+
+> **Game-Specific Override:** Unlike the global standard which generates a random fallback move on crash/timeout/invalid, WordMatrixGame applies a -10 point penalty and ends the turn. Generating a valid random move requires a dictionary search for a word matching a random path, which is computationally non-trivial and produces meaningless gameplay. The board remains unchanged on any error.
+
+---
+
+## Board Update Mechanics
+
+When a move is valid, the game calculates which cells are cleared:
+
+1.  **Consumption:** Path letters required to form the word are "consumed."
+2.  **Extra Letters:** Any letters in the `word` that were *not* in the `path` are considered extras.
+3.  **Update:**
+    * The cells used in the path are shuffled.
+    * The **Extra Letters** are placed back into the shuffled path cells.
+    * Any remaining path cells are set to `""` (Empty).
+
+> **Strategy Tip:** To maximize score, minimize "Extra Letters." If `len(word) == len(path)`, you clear **all** cells in the path.
+
+---
+
+## Game End
+
+The game ends when:
+1.  **No Valid Moves:** No two adjacent non-empty cells exist on the board.
+2.  **6 Consecutive Passes:** If players (combined) generate 6 PASS results (or invalid/crash/timeout events) in a row. This doesn't mean it's a draw. Player with the higher score still wins.
+
+---
+
+## Match Scoring (3-Point System)
+
+Each game within a match awards:
+* **Win:** 3 match points to the player with the higher in-game score.
+* **Draw:** 1 match point to each player (if in-game scores are equal).
+* **Loss:** 0 match points.
+
+The tie-breaker score is the in-game score differential per game (winner score minus loser score), accumulated across the match.
+
+---
+
+## WordMatrixAgent Interface
+
+```python
+import random
+
+class WordMatrixAgent:
+    def __init__(self, name):
+        """
+        Initialize your agent.
+        Pre-process the dictionary here for fast lookups.
+        """
+        self.name = name
+        self.dictionary = load_words() # Returns set of ~183k lowercase words
+
+    def make_move(self, board, scores, total_passes):
+        """
+        Called when it's your turn. Single attempt only.
+
+        Parameters:
+        -----------
+        board : list[list[str]]
+            4x4 grid. Example: [['c','a','t','s'], ['d','o','g',''], ...]
+        
+        scores : dict
+            Current scores. Example: {"Agent-1": 30, "Agent-2": 10}
+
+        total_passes : int
+            Number of consecutive passes/fails so far. Game ends at 6.
+
+        Returns:
+        --------
+        tuple[list[tuple[int,int]], str] or str
+            - A tuple (path, word) where path is a list of (row, col) coordinates.
+            - OR the string "PASS" to skip turn.
+        """
+        # Example Implementation:
+        # return ([(0,0), (0,1), (0,2)], "coat")
+        return "PASS"
+
+### Agent Coding Requirements
+- **No Internal Imports**: Do not import any game engine files, match runners, or project-specific modules. Use only standard library imports.
+- **Isolation**: Your agent must be completely self-contained. Do not assume any specific file structure or directory hierarchy.
+- **Single Class Implementation**: Do not implement any class other than the one provided in the starter code.
+- **Class-Only Output**: Output ONLY the agent class and necessary standard imports. Do not include testing code, game logic outside the class, or example usage.
+- **No Broad Exception Handlers**: Do not wrap the body of `make_move()` in a broad exception handler such as `except Exception:`, `except BaseException:`, or a bare `except:`. The engine uses `signal.alarm` to enforce move time limits; broad catches will swallow the timeout exception and cause the match to hang.
+
+
+
+**IMPORTANT**: Output ONLY the `WordMatrixAgent` class definition and any necessary imports. Do NOT output the game engine code.

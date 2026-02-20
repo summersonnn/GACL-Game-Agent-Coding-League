@@ -1,0 +1,370 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Game Agent Coding League for LLMs</title>
+
+    <!-- Tailwind CSS -->
+    <script src="https://cdn.tailwindcss.com?plugins=typography"></script>
+
+    <!-- Custom styles -->
+    <link href="/css/styles.css?v=22" rel="stylesheet">
+</head>
+
+<!-- Google tag (gtag.js) -->
+<script async src="https://www.googletagmanager.com/gtag/js?id=G-5Q9WND7R6K"></script>
+<script>
+    window.dataLayer = window.dataLayer || [];
+
+    function gtag() {
+        dataLayer.push(arguments);
+    }
+    gtag('js', new Date());
+
+    gtag('config', 'G-5Q9WND7R6K');
+</script>
+
+<div class="flex flex-col h-screen overflow-hidden">
+    <!-- Top Navigation -->
+    <nav class="bg-white border-b border-gray-200 flex items-stretch z-10 flex-shrink-0 h-24">
+        <span class="font-bold text-gray-900 px-6 flex flex-col justify-center leading-tight">
+            <span class="text-xl">GACL</span>
+            <span class="text-xs font-medium text-gray-500">Game Agent Coding League</span>
+        </span>
+        <div class="flex items-stretch">
+            <a href="index.html" id="nav-home"
+                class="text-sm font-medium text-gray-600 hover:text-gray-900 px-5 hover:bg-gray-50 transition-colors border-b-2 border-transparent flex items-center">
+                About
+            </a>
+            <a href="games.html" id="nav-games"
+                class="text-sm font-medium text-gray-600 hover:text-gray-900 px-5 hover:bg-gray-50 transition-colors border-b-2 border-transparent flex items-center">
+                Games
+            </a>
+            <a href="leaderboard.html" id="nav-leaderboard"
+                class="text-sm font-medium text-gray-600 hover:text-gray-900 px-5 hover:bg-gray-50 transition-colors border-b-2 border-blue-600 text-blue-600 flex items-center">
+                Leaderboard
+            </a>
+        </div>
+        <a href="https://github.com/summersonnn/Game-Agent-Coding-Benchmark" target="_blank" rel="noopener noreferrer"
+            class="ml-auto flex items-center px-6 text-gray-500 hover:text-gray-900 transition-colors">
+            <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" fill="currentColor" class="w-7 h-7">
+                <path d="M12 0C5.37 0 0 5.37 0 12c0 5.31 3.435 9.795 8.205 11.385.6.105.825-.255.825-.57
+                    0-.285-.015-1.23-.015-2.235-3.015.555-3.795-.735-4.035-1.41-.135-.345-.72-1.41-1.23-1.695
+                    -.42-.225-1.02-.78-.015-.795.945-.015 1.62.87 1.845 1.23 1.08 1.815 2.805 1.305 3.495.99
+                    .105-.78.42-1.305.765-1.605-2.67-.3-5.46-1.335-5.46-5.925 0-1.305.465-2.385 1.23-3.225
+                    -.12-.3-.54-1.53.12-3.18 0 0 1.005-.315 3.3 1.23.96-.27 1.98-.405 3-.405s2.04.135 3 .405
+                    c2.295-1.56 3.3-1.23 3.3-1.23.66 1.65.24 2.88.12 3.18.765.84 1.23 1.905 1.23 3.225
+                    0 4.605-2.805 5.625-5.475 5.925.435.375.81 1.095.81 2.22 0 1.605-.015 2.895-.015 3.3
+                    0 .315.225.69.825.57A12.02 12.02 0 0 0 24 12c0-6.63-5.37-12-12-12z" />
+            </svg>
+        </a>
+    </nav>
+
+    <!-- Main Content Wrapper -->
+    <main class="flex-1 flex flex-col min-w-0 bg-gray-50 overflow-hidden">
+
+        <!-- Page: Results -->
+        <div id="page-results" class="flex-1 flex flex-col min-h-0">
+
+            <!-- Scrollable Content Area -->
+            <div class="flex-1 overflow-auto p-8">
+                <div class="max-w-7xl mx-auto">
+                    <!-- Tab Navigation -->
+                    <div class="border-b border-gray-200 mb-6">
+                        <nav class="flex space-x-8" aria-label="Tabs">
+                            <button class="tab-btn active" data-tab="overall">
+                                Overall
+                            </button>
+                            <button class="tab-btn" data-tab="game1">
+                                Battleship
+                            </button>
+                            <button class="tab-btn" data-tab="game2">
+                                Tic-Tac-Toe
+                            </button>
+                            <button class="tab-btn" data-tab="game3">
+                                Wizard
+                            </button>
+                            <button class="tab-btn" data-tab="game4">
+                                WordFinder
+                            </button>
+                            <button class="tab-btn" data-tab="game5">
+                                Connect4
+                            </button>
+                            <button class="tab-btn" data-tab="game6">
+                                WordMatrix
+                            </button>
+                            <button class="tab-btn" data-tab="game7">
+                                MiniChess
+                            </button>
+                            <button class="tab-btn" data-tab="game8">
+                                Surround Morris
+                            </button>
+                        </nav>
+                    </div>
+
+                    <!-- Tab: Overall -->
+                    <section id="tab-overall" class="tab-content active">
+                        <div class="bg-white rounded-xl shadow-sm border border-gray-200 p-6">
+                            <div class="flex items-baseline justify-between mb-4">
+                                <h3 class="text-lg font-semibold text-gray-900">Overall Performance (Weighted)</h3>
+                                <span class="text-sm text-gray-400 run-date"></span>
+                            </div>
+                            <div style="height: 500px; position: relative;">
+                                <canvas id="chart-overall"></canvas>
+                            </div>
+                        </div>
+                        <div class="mt-4 text-center text-sm text-gray-600">
+                            To access raw scoreboards before post-processing, click <a
+                                href="https://drive.google.com/drive/folders/1xaq7GbrWFlchD-tKB8zLM-S60wBgLwOU?usp=sharing"
+                                target="_blank" class="text-indigo-600 hover:text-indigo-700 underline">here</a>.<br>
+                            To access agent codes generated by the models, click <a
+                                href="https://drive.google.com/drive/folders/1d3k7htT25Kaph2hnAcYCYjsgwafX3C7E?usp=sharing"
+                                target="_blank" class="text-indigo-600 hover:text-indigo-700 underline">here</a>.
+                        </div>
+                        <div class="bg-white rounded-xl shadow-sm border border-gray-200 p-6 mt-6">
+                            <h3 class="text-lg font-semibold text-gray-900 mb-4">Overall Leaderboard</h3>
+                            <div id="leaderboard-overall" class="overflow-x-auto">
+                                <!-- Overall leaderboard table will be inserted here -->
+                            </div>
+                        </div>
+                    </section>
+
+                    <!-- Tab: Battleship -->
+                    <section id="tab-game1" class="tab-content hidden">
+                        <div class="bg-white rounded-xl shadow-sm border border-gray-200 p-6">
+                            <div class="flex items-baseline justify-between mb-4">
+                                <h3 class="text-lg font-semibold text-gray-900">Battleship Performance</h3>
+                                <span class="text-sm text-gray-400 run-date"></span>
+                            </div>
+                            <div style="height: 500px; position: relative;">
+                                <canvas id="chart-game1"></canvas>
+                            </div>
+                        </div>
+                        <div class="mt-4 text-center text-sm text-gray-600">
+                            Battleship - game logs can be found <a
+                                href="https://drive.google.com/drive/folders/12avKjiMgOYQ0qLrQJZuSppkwtH9sBgt8?usp=sharing"
+                                target="_blank" class="text-indigo-600 hover:text-indigo-700 underline">here</a>.<br>
+                            More information about the games, point system and full prompts can be found in <a
+                                href="games.html" class="text-indigo-600 hover:text-indigo-700 underline">Games</a>
+                            page.
+                        </div>
+                        <div class="bg-white rounded-xl shadow-sm border border-gray-200 p-6 mt-6">
+                            <h3 class="text-lg font-semibold text-gray-900 mb-4">Leaderboard</h3>
+                            <div id="leaderboard-game1" class="overflow-x-auto">
+                                <!-- Leaderboard table will be inserted here -->
+                            </div>
+                        </div>
+                    </section>
+
+                    <!-- Tab: Tic-Tac-Toe -->
+                    <section id="tab-game2" class="tab-content hidden">
+                        <div class="bg-white rounded-xl shadow-sm border border-gray-200 p-6">
+                            <div class="flex items-baseline justify-between mb-4">
+                                <h3 class="text-lg font-semibold text-gray-900">Tic-Tac-Toe Performance</h3>
+                                <span class="text-sm text-gray-400 run-date"></span>
+                            </div>
+                            <div style="height: 500px; position: relative;">
+                                <canvas id="chart-game2"></canvas>
+                            </div>
+                        </div>
+                        <div class="mt-4 text-center text-sm text-gray-600">
+                            Tic-Tac-Toe - game logs can be found <a
+                                href="https://drive.google.com/drive/folders/12avKjiMgOYQ0qLrQJZuSppkwtH9sBgt8?usp=sharing"
+                                target="_blank" class="text-indigo-600 hover:text-indigo-700 underline">here</a>.<br>
+                            More information about the games, point system and full prompts can be found in <a
+                                href="games.html" class="text-indigo-600 hover:text-indigo-700 underline">Games</a>
+                            page.
+                        </div>
+                        <div class="bg-white rounded-xl shadow-sm border border-gray-200 p-6 mt-6">
+                            <h3 class="text-lg font-semibold text-gray-900 mb-4">Leaderboard</h3>
+                            <div id="leaderboard-game2" class="overflow-x-auto">
+                                <!-- Leaderboard table will be inserted here -->
+                            </div>
+                        </div>
+                    </section>
+
+                    <!-- Tab: Wizard -->
+                    <section id="tab-game3" class="tab-content hidden">
+                        <div class="bg-white rounded-xl shadow-sm border border-gray-200 p-6">
+                            <div class="flex items-baseline justify-between mb-4">
+                                <h3 class="text-lg font-semibold text-gray-900">Wizard Performance</h3>
+                                <span class="text-sm text-gray-400 run-date"></span>
+                            </div>
+                            <div style="height: 500px; position: relative;">
+                                <canvas id="chart-game3"></canvas>
+                            </div>
+                        </div>
+                        <div class="mt-4 text-center text-sm text-gray-600">
+                            Wizard - game logs can be found <a
+                                href="https://drive.google.com/drive/folders/12avKjiMgOYQ0qLrQJZuSppkwtH9sBgt8?usp=sharing"
+                                target="_blank" class="text-indigo-600 hover:text-indigo-700 underline">here</a>.<br>
+                            More information about the games, point system and full prompts can be found in <a
+                                href="games.html" class="text-indigo-600 hover:text-indigo-700 underline">Games</a>
+                            page.
+                        </div>
+                        <div class="bg-white rounded-xl shadow-sm border border-gray-200 p-6 mt-6">
+                            <h3 class="text-lg font-semibold text-gray-900 mb-4">Leaderboard</h3>
+                            <div id="leaderboard-game3" class="overflow-x-auto">
+                                <!-- Leaderboard table will be inserted here -->
+                            </div>
+                        </div>
+                    </section>
+
+                    <!-- Tab: WordFinder -->
+                    <section id="tab-game4" class="tab-content hidden">
+                        <div class="bg-white rounded-xl shadow-sm border border-gray-200 p-6">
+                            <div class="flex items-baseline justify-between mb-4">
+                                <h3 class="text-lg font-semibold text-gray-900">WordFinder Performance</h3>
+                                <span class="text-sm text-gray-400 run-date"></span>
+                            </div>
+                            <div style="height: 500px; position: relative;">
+                                <canvas id="chart-game4"></canvas>
+                            </div>
+                        </div>
+                        <div class="mt-4 text-center text-sm text-gray-600">
+                            WordFinder - game logs can be found <a
+                                href="https://drive.google.com/drive/folders/12avKjiMgOYQ0qLrQJZuSppkwtH9sBgt8?usp=sharing"
+                                target="_blank" class="text-indigo-600 hover:text-indigo-700 underline">here</a>.<br>
+                            More information about the games, point system and full prompts can be found in <a
+                                href="games.html" class="text-indigo-600 hover:text-indigo-700 underline">Games</a>
+                            page.
+                        </div>
+                        <div class="bg-white rounded-xl shadow-sm border border-gray-200 p-6 mt-6">
+                            <h3 class="text-lg font-semibold text-gray-900 mb-4">Leaderboard</h3>
+                            <div id="leaderboard-game4" class="overflow-x-auto">
+                                <!-- Leaderboard table will be inserted here -->
+                            </div>
+                        </div>
+                    </section>
+
+                    <!-- Tab: Connect4 -->
+                    <section id="tab-game5" class="tab-content hidden">
+                        <div class="bg-white rounded-xl shadow-sm border border-gray-200 p-6">
+                            <div class="flex items-baseline justify-between mb-4">
+                                <h3 class="text-lg font-semibold text-gray-900">Connect4 Performance</h3>
+                                <span class="text-sm text-gray-400 run-date"></span>
+                            </div>
+                            <div style="height: 500px; position: relative;">
+                                <canvas id="chart-game5"></canvas>
+                            </div>
+                        </div>
+                        <div class="mt-4 text-center text-sm text-gray-600">
+                            Connect4 - game logs can be found <a
+                                href="https://drive.google.com/drive/folders/12avKjiMgOYQ0qLrQJZuSppkwtH9sBgt8?usp=sharing"
+                                target="_blank" class="text-indigo-600 hover:text-indigo-700 underline">here</a>.<br>
+                            More information about the games, point system and full prompts can be found in <a
+                                href="games.html" class="text-indigo-600 hover:text-indigo-700 underline">Games</a>
+                            page.
+                        </div>
+                        <div class="bg-white rounded-xl shadow-sm border border-gray-200 p-6 mt-6">
+                            <h3 class="text-lg font-semibold text-gray-900 mb-4">Leaderboard</h3>
+                            <div id="leaderboard-game5" class="overflow-x-auto">
+                                <!-- Leaderboard table will be inserted here -->
+                            </div>
+                        </div>
+                    </section>
+
+                    <!-- Tab: WordMatrix -->
+                    <section id="tab-game6" class="tab-content hidden">
+                        <div class="bg-white rounded-xl shadow-sm border border-gray-200 p-6">
+                            <div class="flex items-baseline justify-between mb-4">
+                                <h3 class="text-lg font-semibold text-gray-900">WordMatrix Performance</h3>
+                                <span class="text-sm text-gray-400 run-date"></span>
+                            </div>
+                            <div style="height: 500px; position: relative;">
+                                <canvas id="chart-game6"></canvas>
+                            </div>
+                        </div>
+                        <div class="mt-4 text-center text-sm text-gray-600">
+                            WordMatrix - game logs can be found <a
+                                href="https://drive.google.com/drive/folders/12avKjiMgOYQ0qLrQJZuSppkwtH9sBgt8?usp=sharing"
+                                target="_blank" class="text-indigo-600 hover:text-indigo-700 underline">here</a>.<br>
+                            More information about the games, point system and full prompts can be found in <a
+                                href="games.html" class="text-indigo-600 hover:text-indigo-700 underline">Games</a>
+                            page.
+                        </div>
+                        <div class="bg-white rounded-xl shadow-sm border border-gray-200 p-6 mt-6">
+                            <h3 class="text-lg font-semibold text-gray-900 mb-4">Leaderboard</h3>
+                            <div id="leaderboard-game6" class="overflow-x-auto">
+                                <!-- Leaderboard table will be inserted here -->
+                            </div>
+                        </div>
+                    </section>
+
+                    <!-- Tab: MiniChess -->
+                    <section id="tab-game7" class="tab-content hidden">
+                        <div class="bg-white rounded-xl shadow-sm border border-gray-200 p-6">
+                            <div class="flex items-baseline justify-between mb-4">
+                                <h3 class="text-lg font-semibold text-gray-900">MiniChess Performance</h3>
+                                <span class="text-sm text-gray-400 run-date"></span>
+                            </div>
+                            <div style="height: 500px; position: relative;">
+                                <canvas id="chart-game7"></canvas>
+                            </div>
+                        </div>
+                        <div class="mt-4 text-center text-sm text-gray-600">
+                            MiniChess - game logs can be found <a
+                                href="https://drive.google.com/drive/folders/12avKjiMgOYQ0qLrQJZuSppkwtH9sBgt8?usp=sharing"
+                                target="_blank" class="text-indigo-600 hover:text-indigo-700 underline">here</a>.<br>
+                            More information about the games, point system and full prompts can be found in <a
+                                href="games.html" class="text-indigo-600 hover:text-indigo-700 underline">Games</a>
+                            page.
+                        </div>
+                        <div class="bg-white rounded-xl shadow-sm border border-gray-200 p-6 mt-6">
+                            <h3 class="text-lg font-semibold text-gray-900 mb-4">Leaderboard</h3>
+                            <div id="leaderboard-game7" class="overflow-x-auto">
+                                <!-- Leaderboard table will be inserted here -->
+                            </div>
+                        </div>
+                    </section>
+
+                    <!-- Tab: Surround Morris -->
+                    <section id="tab-game8" class="tab-content hidden">
+                        <div class="bg-white rounded-xl shadow-sm border border-gray-200 p-6">
+                            <div class="flex items-baseline justify-between mb-4">
+                                <h3 class="text-lg font-semibold text-gray-900">Surround Morris Performance</h3>
+                                <span class="text-sm text-gray-400 run-date"></span>
+                            </div>
+                            <div style="height: 500px; position: relative;">
+                                <canvas id="chart-game8"></canvas>
+                            </div>
+                        </div>
+                        <div class="mt-4 text-center text-sm text-gray-600">
+                            Surround Morris - game logs can be found <a
+                                href="https://drive.google.com/drive/folders/12avKjiMgOYQ0qLrQJZuSppkwtH9sBgt8?usp=sharing"
+                                target="_blank" class="text-indigo-600 hover:text-indigo-700 underline">here</a>.<br>
+                            More information about the games, point system and full prompts can be found in <a
+                                href="games.html" class="text-indigo-600 hover:text-indigo-700 underline">Games</a>
+                            page.
+                        </div>
+                        <div class="bg-white rounded-xl shadow-sm border border-gray-200 p-6 mt-6">
+                            <h3 class="text-lg font-semibold text-gray-900 mb-4">Leaderboard</h3>
+                            <div id="leaderboard-game8" class="overflow-x-auto">
+                                <!-- Leaderboard table will be inserted here -->
+                            </div>
+                        </div>
+                    </section>
+                </div>
+            </div>
+        </div><!-- End page-results -->
+
+    </main>
+</div>
+
+<!-- Footer -->
+<footer class="bg-white border-t border-gray-200 mt-12">
+    <div class="max-w-7xl mx-auto px-4 py-6 text-center text-gray-500 text-sm">
+        <p>Game Agent Coding League for LLMs</p>
+    </div>
+</footer>
+
+<!-- Chart.js -->
+<script src="https://cdn.jsdelivr.net/npm/chart.js@4.4.1/dist/chart.umd.min.js"></script>
+
+<!-- Main application JS -->
+<script src="/js/main.js?v=25"></script>
+</body>
+
+</html>

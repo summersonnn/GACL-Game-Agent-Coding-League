@@ -13,7 +13,14 @@ PORT = 8000
 
 class StaticHandler(http.server.SimpleHTTPRequestHandler):
     """Serves pre-computed static files. Leaderboard data is generated once at startup."""
-    pass
+    
+    def do_GET(self):
+        if self.path == '/':
+            self.send_response(301)
+            self.send_header('Location', '/pages/index.html')
+            self.end_headers()
+            return
+        super().do_GET()
 
 def main():
     # Ensure we are serving from the project root

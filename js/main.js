@@ -14,7 +14,10 @@ let promptsLoaded = false;
 async function init() {
     try {
         initTabs();
-        initNav();
+
+        if (document.getElementById('page-games')) {
+            loadAllPrompts();
+        }
 
         const [config, manifest] = await Promise.all([
             loadConfig(),
@@ -38,7 +41,7 @@ async function init() {
         renderAllLeaderboards();
     } catch (error) {
         console.error('Failed to initialize:', error);
-        showError('Failed to load game data. Please check the console for details.');
+        showError(`Failed to load game data. Error: ${error.message} \nPlease check the console for details.`);
     }
 }
 
@@ -46,7 +49,7 @@ async function init() {
  * Load game configuration
  */
 async function loadConfig() {
-    const response = await fetch('data/config.json');
+    const response = await fetch('/data/config.json');
     if (!response.ok) {
         throw new Error(`Failed to load config: ${response.status}`);
     }
@@ -57,78 +60,14 @@ async function loadConfig() {
  * Load the runs manifest
  */
 async function loadManifest() {
-    const response = await fetch('data/runs.json');
+    const response = await fetch('/data/runs.json');
     if (!response.ok) {
         throw new Error(`Failed to load manifest: ${response.status}`);
     }
     return response.json();
 }
 
-/**
- * Show only the given page div, hide the rest
- */
-function showPage(pageId) {
-    ['page-home', 'page-games', 'page-results'].forEach(id => {
-        const el = document.getElementById(id);
-        if (!el) return;
-        el.classList.toggle('hidden', id !== pageId);
-    });
-}
 
-/**
- * Navigate to About page
- */
-function navigateToHome() {
-    showPage('page-home');
-    setActiveNav('nav-home');
-}
-
-/**
- * Navigate to Games page, lazy-load prompts on first visit
- */
-function navigateToGames() {
-    showPage('page-games');
-    setActiveNav('nav-games');
-    if (!promptsLoaded) {
-        promptsLoaded = true;
-        loadAllPrompts();
-    }
-}
-
-/**
- * Navigate to Leaderboard page
- */
-function navigateToLeaderboard() {
-    showPage('page-results');
-    setActiveNav('nav-leaderboard');
-}
-
-/**
- * Set the active nav button
- */
-function setActiveNav(activeId) {
-    const navIds = ['nav-home', 'nav-games', 'nav-leaderboard'];
-    navIds.forEach(id => {
-        const btn = document.getElementById(id);
-        if (!btn) return;
-        if (id === activeId) {
-            btn.classList.add('border-blue-600', 'text-blue-600');
-            btn.classList.remove('border-transparent', 'text-gray-600');
-        } else {
-            btn.classList.remove('border-blue-600', 'text-blue-600');
-            btn.classList.add('border-transparent', 'text-gray-600');
-        }
-    });
-}
-
-/**
- * Initialize top navigation
- */
-function initNav() {
-    document.getElementById('nav-home')?.addEventListener('click', navigateToHome);
-    document.getElementById('nav-games')?.addEventListener('click', navigateToGames);
-    document.getElementById('nav-leaderboard')?.addEventListener('click', navigateToLeaderboard);
-}
 
 /**
  * Initialize tab navigation
@@ -340,7 +279,7 @@ function showError(message) {
  */
 async function loadLeaderboards() {
     try {
-        const response = await fetch('data/leaderboard.json');
+        const response = await fetch('/data/leaderboard.json');
         if (!response.ok) {
             console.warn(`Failed to load leaderboard.json: ${response.status}`);
             leaderboardData = { games: {}, overall: [] };
@@ -482,11 +421,11 @@ function renderLeaderboard(gameId) {
  * Lazy-load game prompts (called on first Games tab visit)
  */
 async function loadAllPrompts() {
-    const promptFiles = ['battleship', 'tictactoe', 'wordfinder', 'connect4', 'surround_morris'];
+    const promptFiles = ['battleship', 'tictactoe', 'wizard', 'wordfinder', 'connect4', 'surround_morris', 'minichess', 'wordmatrix'];
 
     const fetches = promptFiles.map(async (promptName) => {
         try {
-            const response = await fetch(`data/full_prompts/${promptName}.txt`);
+            const response = await fetch(`/data/full_prompts/${promptName}.txt`);
             if (response.ok) {
                 const text = await response.text();
                 const details = document.querySelector(`details[data-prompt="${promptName}"]`);

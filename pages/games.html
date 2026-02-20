@@ -1,0 +1,339 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Game Agent Coding League for LLMs</title>
+
+    <!-- Tailwind CSS -->
+    <script src="https://cdn.tailwindcss.com?plugins=typography"></script>
+
+    <!-- Custom styles -->
+    <link href="/css/styles.css?v=21" rel="stylesheet">
+</head>
+
+<!-- Google tag (gtag.js) -->
+<script async src="https://www.googletagmanager.com/gtag/js?id=G-5Q9WND7R6K"></script>
+<script>
+    window.dataLayer = window.dataLayer || [];
+
+    function gtag() {
+        dataLayer.push(arguments);
+    }
+    gtag('js', new Date());
+
+    gtag('config', 'G-5Q9WND7R6K');
+</script>
+
+<div class="flex flex-col h-screen overflow-hidden">
+    <!-- Top Navigation -->
+    <nav class="bg-white border-b border-gray-200 flex items-stretch z-10 flex-shrink-0 h-24">
+        <span class="font-bold text-gray-900 px-6 flex flex-col justify-center leading-tight">
+            <span class="text-xl">GACL</span>
+            <span class="text-xs font-medium text-gray-500">Game Agent Coding League</span>
+        </span>
+        <div class="flex items-stretch">
+            <a href="index.html" id="nav-home"
+                class="text-sm font-medium text-gray-600 hover:text-gray-900 px-5 hover:bg-gray-50 transition-colors border-b-2 border-transparent flex items-center">
+                About
+            </a>
+            <a href="games.html" id="nav-games"
+                class="text-sm font-medium text-gray-600 hover:text-gray-900 px-5 hover:bg-gray-50 transition-colors border-b-2 border-blue-600 text-blue-600 flex items-center">
+                Games
+            </a>
+            <a href="leaderboard.html" id="nav-leaderboard"
+                class="text-sm font-medium text-gray-600 hover:text-gray-900 px-5 hover:bg-gray-50 transition-colors border-b-2 border-transparent flex items-center">
+                Leaderboard
+            </a>
+        </div>
+        <a href="https://github.com/summersonnn/Game-Agent-Coding-Benchmark" target="_blank" rel="noopener noreferrer"
+            class="ml-auto flex items-center px-6 text-gray-500 hover:text-gray-900 transition-colors">
+            <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" fill="currentColor" class="w-7 h-7">
+                <path d="M12 0C5.37 0 0 5.37 0 12c0 5.31 3.435 9.795 8.205 11.385.6.105.825-.255.825-.57
+                    0-.285-.015-1.23-.015-2.235-3.015.555-3.795-.735-4.035-1.41-.135-.345-.72-1.41-1.23-1.695
+                    -.42-.225-1.02-.78-.015-.795.945-.015 1.62.87 1.845 1.23 1.08 1.815 2.805 1.305 3.495.99
+                    .105-.78.42-1.305.765-1.605-2.67-.3-5.46-1.335-5.46-5.925 0-1.305.465-2.385 1.23-3.225
+                    -.12-.3-.54-1.53.12-3.18 0 0 1.005-.315 3.3 1.23.96-.27 1.98-.405 3-.405s2.04.135 3 .405
+                    c2.295-1.56 3.3-1.23 3.3-1.23.66 1.65.24 2.88.12 3.18.765.84 1.23 1.905 1.23 3.225
+                    0 4.605-2.805 5.625-5.475 5.925.435.375.81 1.095.81 2.22 0 1.605-.015 2.895-.015 3.3
+                    0 .315.225.69.825.57A12.02 12.02 0 0 0 24 12c0-6.63-5.37-12-12-12z" />
+            </svg>
+        </a>
+    </nav>
+
+    <!-- Main Content Wrapper -->
+    <main class="flex-1 flex flex-col min-w-0 bg-gray-50 overflow-hidden">
+
+        <!-- Page: Games -->
+        <div id="page-games" class="flex-1 flex flex-col min-h-0 overflow-auto">
+            <div class="p-8 max-w-4xl mx-auto">
+                <div class="bg-white rounded-xl shadow-sm border border-gray-200 p-8 mb-8">
+                    <h2 class="text-2xl font-bold text-gray-900 mb-8 border-b border-gray-100 pb-4">
+                        Supported Games (February 2026)
+                    </h2>
+
+                    <div class="space-y-8">
+                        <!-- 1. Battleship -->
+                        <div class="flex gap-4">
+                            <div
+                                class="flex-shrink-0 w-8 h-8 flex items-center justify-center rounded-full bg-indigo-100 text-indigo-600 font-bold text-sm">
+                                1</div>
+                            <div class="flex-1">
+                                <h3 class="text-lg font-semibold text-gray-900">Battleship <span data-game-id="game1"
+                                        class="ml-2 text-xs font-medium bg-indigo-50 text-indigo-600 px-2 py-0.5 rounded"></span>
+                                </h3>
+                                <p class="mt-2 text-gray-600 leading-relaxed">
+                                    A turn-based grid strategy game with two stages. Players first place ships of fixed
+                                    lengths on their boards in straight horizontal or vertical lines without overlap. In
+                                    the attack phase, they alternate guessing coordinates to strike enemy ships—earning
+                                    bonus shots for hits and losing turns on misses—aiming to sink all opposing ships
+                                    before the move cap.
+                                </p>
+                                <details class="mt-3 group" data-prompt="battleship">
+                                    <summary
+                                        class="cursor-pointer text-indigo-600 hover:text-indigo-700 font-medium text-sm flex items-center gap-2">
+                                        <span class="transform group-open:rotate-90 transition-transform">▶</span>
+                                        Show full prompt
+                                    </summary>
+                                    <div
+                                        class="prompt-content mt-3 p-4 bg-gray-50 rounded-lg border border-gray-200 text-sm text-gray-700 leading-relaxed whitespace-pre-wrap">
+                                        Loading...
+                                    </div>
+                                </details>
+                            </div>
+                        </div>
+
+                        <!-- 2. Tic-Tac-Toe -->
+                        <div class="flex gap-4">
+                            <div
+                                class="flex-shrink-0 w-8 h-8 flex items-center justify-center rounded-full bg-indigo-100 text-indigo-600 font-bold text-sm">
+                                2</div>
+                            <div class="flex-1">
+                                <h3 class="text-lg font-semibold text-gray-900">Tic-Tac-Toe (5×5 Random Start) <span
+                                        data-game-id="game2"
+                                        class="ml-2 text-xs font-medium bg-indigo-50 text-indigo-600 px-2 py-0.5 rounded"></span>
+                                </h3>
+                                <p class="mt-2 text-gray-600 leading-relaxed">
+                                    Played on a 5×5 grid, players alternate placing Xs and Os, with X going first. The
+                                    engine randomly assigns X's opening move. The objective is to achieve three
+                                    consecutive marks horizontally, vertically, or diagonally. If the board fills
+                                    without a three-in-a-row, the result is a draw.
+                                </p>
+                                <details class="mt-3 group" data-prompt="tictactoe">
+                                    <summary
+                                        class="cursor-pointer text-indigo-600 hover:text-indigo-700 font-medium text-sm flex items-center gap-2">
+                                        <span class="transform group-open:rotate-90 transition-transform">▶</span>
+                                        Show full prompt
+                                    </summary>
+                                    <div
+                                        class="prompt-content mt-3 p-4 bg-gray-50 rounded-lg border border-gray-200 text-sm text-gray-700 leading-relaxed whitespace-pre-wrap">
+                                        Loading...
+                                    </div>
+                                </details>
+                            </div>
+                        </div>
+
+                        <!-- 3. Wizard -->
+                        <div class="flex gap-4">
+                            <div
+                                class="flex-shrink-0 w-8 h-8 flex items-center justify-center rounded-full bg-indigo-100 text-indigo-600 font-bold text-sm">
+                                3</div>
+                            <div class="flex-1">
+                                <h3 class="text-lg font-semibold text-gray-900">Wizard <span data-game-id="game3"
+                                        class="ml-2 text-xs font-medium bg-indigo-50 text-indigo-600 px-2 py-0.5 rounded"></span>
+                                </h3>
+                                <p class="mt-2 text-gray-600 leading-relaxed">
+                                    Wizard is a 6-player trick-taking game played over 10 rounds using a 60-card deck
+                                    (including 4 Wizards and 4 Jesters). Players must first bid the exact number of
+                                    tricks they expect to win; points are awarded for hitting the target and penalized
+                                    for missing it. Standard trick-taking rules apply with a trump suit, though Wizards
+                                    always win and Jesters always lose. A "Hook Rule" prevents the total bids from
+                                    equaling the available tricks, ensuring at least one player fails their bid each
+                                    round.
+                                </p>
+                                <details class="mt-3 group" data-prompt="wizard">
+                                    <summary
+                                        class="cursor-pointer text-indigo-600 hover:text-indigo-700 font-medium text-sm flex items-center gap-2">
+                                        <span class="transform group-open:rotate-90 transition-transform">▶</span>
+                                        Show full prompt
+                                    </summary>
+                                    <div
+                                        class="prompt-content mt-3 p-4 bg-gray-50 rounded-lg border border-gray-200 text-sm text-gray-700 leading-relaxed whitespace-pre-wrap">
+                                        Loading...
+                                    </div>
+                                </details>
+                            </div>
+                        </div>
+
+                        <!-- 4. WordFinder -->
+                        <div class="flex gap-4">
+                            <div
+                                class="flex-shrink-0 w-8 h-8 flex items-center justify-center rounded-full bg-indigo-100 text-indigo-600 font-bold text-sm">
+                                4</div>
+                            <div class="flex-1">
+                                <h3 class="text-lg font-semibold text-gray-900">WordFinder <span data-game-id="game4"
+                                        class="ml-2 text-xs font-medium bg-indigo-50 text-indigo-600 px-2 py-0.5 rounded"></span>
+                                </h3>
+                                <p class="mt-2 text-gray-600 leading-relaxed">
+                                    A turn-based word-chaining game where each new word must include the previous word's
+                                    first and last letters somewhere inside (not at the edges), differ in length, be
+                                    unused, and exist in the dictionary. Points depend on word length, with bonuses for
+                                    consecutive required letters and penalties for hyphens or partial matches. The game
+                                    lasts up to 100 rounds, and the higher score wins.
+                                </p>
+                                <details class="mt-3 group" data-prompt="wordfinder">
+                                    <summary
+                                        class="cursor-pointer text-indigo-600 hover:text-indigo-700 font-medium text-sm flex items-center gap-2">
+                                        <span class="transform group-open:rotate-90 transition-transform">▶</span>
+                                        Show full prompt
+                                    </summary>
+                                    <div
+                                        class="prompt-content mt-3 p-4 bg-gray-50 rounded-lg border border-gray-200 text-sm text-gray-700 leading-relaxed whitespace-pre-wrap">
+                                        Loading...
+                                    </div>
+                                </details>
+                            </div>
+                        </div>
+
+                        <!-- 5. Connect4 -->
+                        <div class="flex gap-4">
+                            <div
+                                class="flex-shrink-0 w-8 h-8 flex items-center justify-center rounded-full bg-indigo-100 text-indigo-600 font-bold text-sm">
+                                5</div>
+                            <div class="flex-1">
+                                <h3 class="text-lg font-semibold text-gray-900">Connect4 (Random Start) <span
+                                        data-game-id="game5"
+                                        class="ml-2 text-xs font-medium bg-indigo-50 text-indigo-600 px-2 py-0.5 rounded"></span>
+                                </h3>
+                                <p class="mt-2 text-gray-600 leading-relaxed">
+                                    Played on a 6×7 grid, players drop discs to connect four vertically, horizontally,
+                                    or diagonally. Before standard alternating play begins, the engine places a random
+                                    opening disc for Player 1 (Red) to reduce first-move advantage. Play continues until
+                                    a connection is made or the grid fills.
+                                </p>
+                                <details class="mt-3 group" data-prompt="connect4">
+                                    <summary
+                                        class="cursor-pointer text-indigo-600 hover:text-indigo-700 font-medium text-sm flex items-center gap-2">
+                                        <span class="transform group-open:rotate-90 transition-transform">▶</span>
+                                        Show full prompt
+                                    </summary>
+                                    <div
+                                        class="prompt-content mt-3 p-4 bg-gray-50 rounded-lg border border-gray-200 text-sm text-gray-700 leading-relaxed whitespace-pre-wrap">
+                                        Loading...
+                                    </div>
+                                </details>
+                            </div>
+                        </div>
+
+                        <!-- 6. WordMatrix -->
+                        <div class="flex gap-4">
+                            <div
+                                class="flex-shrink-0 w-8 h-8 flex items-center justify-center rounded-full bg-indigo-100 text-indigo-600 font-bold text-sm">
+                                6</div>
+                            <div class="flex-1">
+                                <h3 class="text-lg font-semibold text-gray-900">WordMatrix <span data-game-id="game6"
+                                        class="ml-2 text-xs font-medium bg-indigo-50 text-indigo-600 px-2 py-0.5 rounded"></span>
+                                </h3>
+                                <p class="mt-2 text-gray-600 leading-relaxed">
+                                    A two-player word strategy game on a 4x4 letter grid where players select adjacent
+                                    cell paths and submit words containing those letters in order as a subsequence,
+                                    scoring by consuming and clearing path cells (with extra letters refilling some
+                                    spaces), while invalid moves incur penalties, passes advance the turn, and the game
+                                    ends when no moves remain or too many consecutive passes occur, with the higher
+                                    score winning.
+                                </p>
+                                <details class="mt-3 group" data-prompt="wordmatrix">
+                                    <summary
+                                        class="cursor-pointer text-indigo-600 hover:text-indigo-700 font-medium text-sm flex items-center gap-2">
+                                        <span class="transform group-open:rotate-90 transition-transform">▶</span>
+                                        Show full prompt
+                                    </summary>
+                                    <div
+                                        class="prompt-content mt-3 p-4 bg-gray-50 rounded-lg border border-gray-200 text-sm text-gray-700 leading-relaxed whitespace-pre-wrap">
+                                        Loading...
+                                    </div>
+                                </details>
+                            </div>
+                        </div>
+
+                        <!-- 7. 2x8 MiniChess -->
+                        <div class="flex gap-4">
+                            <div
+                                class="flex-shrink-0 w-8 h-8 flex items-center justify-center rounded-full bg-indigo-100 text-indigo-600 font-bold text-sm">
+                                7</div>
+                            <div class="flex-1">
+                                <h3 class="text-lg font-semibold text-gray-900">2x8 MiniChess <span data-game-id="game7"
+                                        class="ml-2 text-xs font-medium bg-indigo-50 text-indigo-600 px-2 py-0.5 rounded"></span>
+                                </h3>
+                                <p class="mt-2 text-gray-600 leading-relaxed">
+                                    A chess variant played on a 2-row by 8-column board. Two players (White and Black)
+                                    compete using King, Knight, Rook, and Pawn pieces to checkmate the opponent's King.
+                                    White pieces occupy columns a-c, Black pieces occupy columns f-h, with columns d-e
+                                    initially empty. Knights have enhanced movement including L-shaped jumps and
+                                    2-square horizontal leaps. Pawns promote to Rooks when reaching the far end.
+                                </p>
+                                <details class="mt-3 group" data-prompt="minichess">
+                                    <summary
+                                        class="cursor-pointer text-indigo-600 hover:text-indigo-700 font-medium text-sm flex items-center gap-2">
+                                        <span class="transform group-open:rotate-90 transition-transform">▶</span>
+                                        Show full prompt
+                                    </summary>
+                                    <div
+                                        class="prompt-content mt-3 p-4 bg-gray-50 rounded-lg border border-gray-200 text-sm text-gray-700 leading-relaxed whitespace-pre-wrap">
+                                        Loading...
+                                    </div>
+                                </details>
+                            </div>
+                        </div>
+
+                        <!-- 8. Surround Morris -->
+                        <div class="flex gap-4">
+                            <div
+                                class="flex-shrink-0 w-8 h-8 flex items-center justify-center rounded-full bg-indigo-100 text-indigo-600 font-bold text-sm">
+                                8</div>
+                            <div class="flex-1">
+                                <h3 class="text-lg font-semibold text-gray-900">Surround Morris <span
+                                        data-game-id="game8"
+                                        class="ml-2 text-xs font-medium bg-indigo-50 text-indigo-600 px-2 py-0.5 rounded"></span>
+                                </h3>
+                                <p class="mt-2 text-gray-600 leading-relaxed">
+                                    A territorial strategy game set on a 24-position Nine Men's Morris board. Players
+                                    place and then maneuver seven pieces each, attempting to eliminate the opponent by
+                                    surrounding their pieces so they lack empty adjacent spaces and are numerically
+                                    overpowered. Captures follow strict "suicide-first" and self-harm priority rules.
+                                    Games can end by elimination, immobilization, repetition, or turn limit.
+                                </p>
+                                <details class="mt-3 group" data-prompt="surround_morris">
+                                    <summary
+                                        class="cursor-pointer text-indigo-600 hover:text-indigo-700 font-medium text-sm flex items-center gap-2">
+                                        <span class="transform group-open:rotate-90 transition-transform">▶</span>
+                                        Show full prompt
+                                    </summary>
+                                    <div
+                                        class="prompt-content mt-3 p-4 bg-gray-50 rounded-lg border border-gray-200 text-sm text-gray-700 leading-relaxed whitespace-pre-wrap">
+                                        Loading...
+                                    </div>
+                                </details>
+                            </div>
+                        </div>
+                    </div>
+
+    </main>
+</div>
+
+<!-- Footer -->
+<footer class="bg-white border-t border-gray-200 mt-12">
+    <div class="max-w-7xl mx-auto px-4 py-6 text-center text-gray-500 text-sm">
+        <p>Game Agent Coding League for LLMs</p>
+    </div>
+</footer>
+
+<!-- Chart.js -->
+<script src="https://cdn.jsdelivr.net/npm/chart.js@4.4.1/dist/chart.umd.min.js"></script>
+
+<!-- Main application JS -->
+<script src="/js/main.js?v=24"></script>
+</body>
+
+</html>

@@ -1,0 +1,173 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Game Agent Coding League for LLMs</title>
+
+    <!-- Tailwind CSS -->
+    <script src="https://cdn.tailwindcss.com?plugins=typography"></script>
+
+    <!-- Custom styles -->
+    <link href="/css/styles.css?v=21" rel="stylesheet">
+</head>
+
+<!-- Google tag (gtag.js) -->
+<script async src="https://www.googletagmanager.com/gtag/js?id=G-5Q9WND7R6K"></script>
+<script>
+    window.dataLayer = window.dataLayer || [];
+
+    function gtag() {
+        dataLayer.push(arguments);
+    }
+    gtag('js', new Date());
+
+    gtag('config', 'G-5Q9WND7R6K');
+</script>
+
+<div class="flex flex-col h-screen overflow-hidden">
+    <!-- Top Navigation -->
+    <nav class="bg-white border-b border-gray-200 flex items-stretch z-10 flex-shrink-0 h-24">
+        <span class="font-bold text-gray-900 px-6 flex flex-col justify-center leading-tight">
+            <span class="text-xl">GACL</span>
+            <span class="text-xs font-medium text-gray-500">Game Agent Coding League</span>
+        </span>
+        <div class="flex items-stretch">
+            <a href="index.html" id="nav-home"
+                class="text-sm font-medium text-gray-600 hover:text-gray-900 px-5 hover:bg-gray-50 transition-colors border-b-2 border-blue-600 text-blue-600 flex items-center">
+                About
+            </a>
+            <a href="games.html" id="nav-games"
+                class="text-sm font-medium text-gray-600 hover:text-gray-900 px-5 hover:bg-gray-50 transition-colors border-b-2 border-transparent flex items-center">
+                Games
+            </a>
+            <a href="leaderboard.html" id="nav-leaderboard"
+                class="text-sm font-medium text-gray-600 hover:text-gray-900 px-5 hover:bg-gray-50 transition-colors border-b-2 border-transparent flex items-center">
+                Leaderboard
+            </a>
+        </div>
+        <a href="https://github.com/summersonnn/Game-Agent-Coding-Benchmark" target="_blank" rel="noopener noreferrer"
+            class="ml-auto flex items-center px-6 text-gray-500 hover:text-gray-900 transition-colors">
+            <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" fill="currentColor" class="w-7 h-7">
+                <path d="M12 0C5.37 0 0 5.37 0 12c0 5.31 3.435 9.795 8.205 11.385.6.105.825-.255.825-.57
+                    0-.285-.015-1.23-.015-2.235-3.015.555-3.795-.735-4.035-1.41-.135-.345-.72-1.41-1.23-1.695
+                    -.42-.225-1.02-.78-.015-.795.945-.015 1.62.87 1.845 1.23 1.08 1.815 2.805 1.305 3.495.99
+                    .105-.78.42-1.305.765-1.605-2.67-.3-5.46-1.335-5.46-5.925 0-1.305.465-2.385 1.23-3.225
+                    -.12-.3-.54-1.53.12-3.18 0 0 1.005-.315 3.3 1.23.96-.27 1.98-.405 3-.405s2.04.135 3 .405
+                    c2.295-1.56 3.3-1.23 3.3-1.23.66 1.65.24 2.88.12 3.18.765.84 1.23 1.905 1.23 3.225
+                    0 4.605-2.805 5.625-5.475 5.925.435.375.81 1.095.81 2.22 0 1.605-.015 2.895-.015 3.3
+                    0 .315.225.69.825.57A12.02 12.02 0 0 0 24 12c0-6.63-5.37-12-12-12z" />
+            </svg>
+        </a>
+    </nav>
+
+    <!-- Main Content Wrapper -->
+    <main class="flex-1 flex flex-col min-w-0 bg-gray-50 overflow-hidden">
+
+        <!-- Page: About -->
+        <div id="page-home" class="flex-1 flex flex-col min-h-0 overflow-auto">
+            <div class="p-8 max-w-3xl mx-auto text-gray-600 leading-relaxed space-y-10">
+
+                <!-- Overview -->
+                <section>
+                    <h2 class="text-lg font-bold text-gray-900 mb-3">Overview</h2>
+                    <p class="mb-3">
+                        Game Agent Coding League (GACL) is a benchmarking framework designed for LLMs in which
+                        models are tasked with generating code for game-playing agents. These agents compete in
+                        games such as Battleship, Tic-Tac-Toe variants, and others. At present, the league supports
+                        five games, with additional titles planned.
+                    </p>
+                    <p class="font-semibold text-red-600">
+                        Models produce code that can play games rather than playing the games themselves. Their sole
+                        interaction occurs at the stage of code creation. As a result, this benchmark is hybrid in
+                        nature, combining elements of both code generation and reasoning.
+                    </p>
+                </section>
+
+                <!-- Methodology -->
+                <section>
+                    <h2 class="text-lg font-bold text-gray-900 mb-3">Methodology</h2>
+                    <p class="mb-3">
+                        For each game, a base implementation is provided, including the core game logic and an
+                        initialized—but empty—agent class. The function signature is shared with the model but the
+                        implementation is left empty. Models receive this code along with the game rules, scoring
+                        details, and other relevant information. After a model generates its agent implementation,
+                        the output is parsed and inserted back into the game environment. A matchmaking system then
+                        schedules matches between all agent pairs, producing a final leaderboard.
+                    </p>
+                    <p class="mb-3">
+                        Each model is prompted twice, meaning every model submits two separate agents. During
+                        matchmaking, agents from the same model do not compete against each other. Instead, each
+                        agent plays against all non-friendly agents.
+                    </p>
+                    <p>
+                        When compiling performance charts, only the stronger of a model's two agents is considered;
+                        the weaker one is excluded. You can find links to the raw scoreboards—where both agents
+                        appear—on the Leaderboard page.
+                    </p>
+                </section>
+
+                <!-- Point System -->
+                <section>
+                    <h2 class="text-lg font-bold text-gray-900 mb-3">Point System</h2>
+                    <p class="mb-3">
+                        Each matchup between two agents is made up of multiple individual games, all using the same
+                        point allocation system. A win awards 3 points, a loss gives 0, and a draw grants 1 point to
+                        each side. The way a win, loss, or draw is determined varies by game—refer to the full game
+                        prompts for detailed scoring mechanics.
+                    </p>
+                    <p class="mb-3">
+                        Performance is tracked at the game level, not the match level. If a model is listed as having
+                        played "10" games, that refers to 10 individual games—not 10 matches.
+                    </p>
+                    <p>
+                        <span class="font-medium text-gray-800">Example:</span> Suppose Mistral's first agent plays a
+                        match against Qwen's second agent, and that match consists of 100 games. The leaderboard is
+                        updated based on the results of each of those 100 games separately, with all points recorded
+                        on a per-game basis.
+                    </p>
+                </section>
+
+                <!-- Unified Model Source -->
+                <section>
+                    <h2 class="text-lg font-bold text-gray-900 mb-3">Unified Model Source</h2>
+                    <p class="mb-3">
+                        All models are accessed through the OpenRouter API, providing a single, consistent interface
+                        across providers. When multiple providers serve the same model, we select only those that
+                        support fp8 quantization or better, ensuring inference quality is not a confounding variable
+                        in the results.
+                    </p>
+                </section>
+
+                <!-- Scoring -->
+                <section>
+                    <h2 class="text-lg font-bold text-gray-900 mb-3">Overall Score</h2>
+                    <p>
+                        Each game carries a specific weighting coefficient. The overall leaderboard is calculated by
+                        combining each game's normalized score (0–100), multiplied by its weight, divided by the total
+                        weight of games the model participated in.
+                    </p>
+                </section>
+
+            </div>
+        </div>
+
+    </main>
+</div>
+
+<!-- Footer -->
+<footer class="bg-white border-t border-gray-200 mt-12">
+    <div class="max-w-7xl mx-auto px-4 py-6 text-center text-gray-500 text-sm">
+        <p>Game Agent Coding League for LLMs</p>
+    </div>
+</footer>
+
+<!-- Chart.js -->
+<script src="https://cdn.jsdelivr.net/npm/chart.js@4.4.1/dist/chart.umd.min.js"></script>
+
+<!-- Main application JS -->
+<script src="/js/main.js?v=24"></script>
+</body>
+
+</html>
