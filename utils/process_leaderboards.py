@@ -4,9 +4,9 @@ import re
 
 # Configuration
 BASE_DIR = os.path.dirname(os.path.dirname(os.path.abspath(__file__)))
-DATA_DIR = os.path.join(BASE_DIR, 'data', 'leaderboards')
-OUTPUT_FILE = os.path.join(BASE_DIR, 'data', 'leaderboard.json')
-CONFIG_FILE = os.path.join(BASE_DIR, 'data', 'config.json')
+DATA_DIR = os.path.join(BASE_DIR, 'docs', 'data', 'leaderboards')
+OUTPUT_FILE = os.path.join(BASE_DIR, 'docs', 'data', 'leaderboard.json')
+CONFIG_FILE = os.path.join(BASE_DIR, 'docs', 'data', 'config.json')
 
 def clean_model_name(agent_name):
     """

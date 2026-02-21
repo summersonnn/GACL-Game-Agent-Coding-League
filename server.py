@@ -17,23 +17,22 @@ class StaticHandler(http.server.SimpleHTTPRequestHandler):
     def do_GET(self):
         if self.path == '/':
             self.send_response(301)
-            self.send_header('Location', '/docs/index.html')
+            self.send_header('Location', '/index.html')
             self.end_headers()
             return
-        elif self.path.startswith('/pages/'):
+        elif self.path.startswith('/docs/'):
             self.send_response(301)
-            new_path = self.path.replace('/pages/', '/docs/', 1)
-            self.send_header('Location', new_path)
+            self.send_header('Location', self.path[len('/docs'):])
             self.end_headers()
             return
 
         super().do_GET()
 
 def main():
-    # Ensure we are serving from the project root
     project_root = os.path.dirname(os.path.abspath(__file__))
-    os.chdir(project_root)
-    
+    docs_dir = os.path.join(project_root, 'docs')
+    os.chdir(docs_dir)
+
     # Run initial processing once on startup
     print("Running initial leaderboard processing...")
     try:
@@ -43,10 +42,10 @@ def main():
 
     # Set up the server
     handler = StaticHandler
-    
+
     # Allow address reuse to avoid "Address already in use" errors during quick restarts
     socketserver.TCPServer.allow_reuse_address = True
-    
+
     with socketserver.TCPServer(("", PORT), handler) as httpd:
         print(f"\nServing at http://localhost:{PORT}")
         print("Serving pre-computed static files.")

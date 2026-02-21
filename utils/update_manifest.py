@@ -5,9 +5,9 @@ from datetime import datetime
 
 # Configuration
 BASE_DIR = os.path.dirname(os.path.dirname(os.path.abspath(__file__)))
-RUNS_DIR = os.path.join(BASE_DIR, 'data', 'runs')
-MANIFEST_FILE = os.path.join(BASE_DIR, 'data', 'runs.json')
-CONFIG_FILE = os.path.join(BASE_DIR, 'data', 'config.json')
+RUNS_DIR = os.path.join(BASE_DIR, 'docs', 'data', 'runs')
+MANIFEST_FILE = os.path.join(BASE_DIR, 'docs', 'data', 'runs.json')
+CONFIG_FILE = os.path.join(BASE_DIR, 'docs', 'data', 'config.json')
 
 def main():
     if not os.path.exists(RUNS_DIR):
