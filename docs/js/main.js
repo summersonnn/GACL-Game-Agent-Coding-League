@@ -116,7 +116,7 @@ function renderAllCharts() {
  */
 function renderOverallChart() {
     if (!leaderboardData || !leaderboardData.overall) {
-        console.warn('No overall score data available');
+        console.warn('No overall point data available');
         return;
     }
 
@@ -126,7 +126,7 @@ function renderOverallChart() {
     const labels = overallScores.map(entry => entry.model);
     const scores = overallScores.map(entry => entry.overall_score);
 
-    renderChart('chart-overall', 'Overall Score', labels, scores);
+    renderChart('chart-overall', 'Overall Points', labels, scores);
 }
 
 /**
@@ -328,7 +328,7 @@ function renderOverallLeaderboard() {
         <tr>
             <th class="px-4 py-3 text-left text-xs font-medium text-gray-500 uppercase tracking-wider">Rank</th>
             <th class="px-4 py-3 text-left text-xs font-medium text-gray-500 uppercase tracking-wider">Model</th>
-            <th class="px-4 py-3 text-right text-xs font-medium text-gray-500 uppercase tracking-wider">Overall Score</th>
+            <th class="px-4 py-3 text-right text-xs font-medium text-gray-500 uppercase tracking-wider">Overall Points</th>
         </tr>
     `;
 

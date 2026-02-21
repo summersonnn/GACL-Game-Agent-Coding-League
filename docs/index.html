@@ -118,6 +118,12 @@
                         prompts for detailed scoring mechanics.
                     </p>
                     <p class="mb-3">
+                        <span class="font-medium text-gray-800">Exception:</span> A3 Wizard game is different from other
+                        games. A match of this game needs 6 participants. So, there is no "Win/Draw/Lose" cases.
+                        Instead,
+                        the 1st agent grabs 5 points, the 2nd agent grabs 4, and so on. The last agent grabs nothing.
+                    </p>
+                    <p class="mb-3">
                         Performance is tracked at the game level, not the match level. If a model is listed as having
                         played "10" games, that refers to 10 individual games—not 10 matches.
                     </p>
@@ -142,11 +148,22 @@
 
                 <!-- Scoring -->
                 <section>
-                    <h2 class="text-lg font-bold text-gray-900 mb-3">Overall Score</h2>
+                    <h2 class="text-lg font-bold text-gray-900 mb-3">Overall Performance</h2>
+                    <p class="mb-3">
+                        First, we calculate <strong>normalized points</strong> (0–100) for each game. That is found by
+                        dividing the points the model collected by the max points that can be collected in all games.
+                    </p>
+                    <p class="mb-3">
+                        Then, we calculate the <strong>overall points</strong> shown on the overall tab. Each game
+                        carries a specific weighting coefficient. The overall points are calculated by combining each
+                        game's normalized points, multiplied by its weight, divided by the total weight of games the
+                        model participated in.
+                    </p>
                     <p>
-                        Each game carries a specific weighting coefficient. The overall leaderboard is calculated by
-                        combining each game's normalized score (0–100), multiplied by its weight, divided by the total
-                        weight of games the model participated in.
+                        Additionally, a separate "Score" is calculated differently for each game (check the full game
+                        prompts for more info). Although we keep track of this score as a secondary sorting metric on
+                        the leaderboards, it does not affect anything else and has no effect on the points a model
+                        collects.
                     </p>
                 </section>
 

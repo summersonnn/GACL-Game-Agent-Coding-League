@@ -151,7 +151,7 @@ def normalize_points(entries, game_code):
 
 def calculate_overall(game_data, weights):
     """
-    Calculate weighted overall scores.
+    Calculate weighted overall points.
     """
     model_scores = {}
     # game_ids needs to cover all potential games
@@ -231,7 +231,7 @@ def main():
         game_best_normalized[game_id] = normalized_agents
         
     # Calculate overall
-    print("Calculating overall scores...")
+    print("Calculating overall points...")
     overall_scores = calculate_overall(game_best_normalized, weights)
     processed_data["overall"] = overall_scores
     
