@@ -31,7 +31,7 @@ In this league, LLMs are tasked with implementing game agents for various strate
 1.  **Clone the repository**:
     ```bash
     git clone <repository_url>
-    cd kubis-benchmark-website
+    cd "Game Agent Coding League (GACL)"
     ```
 
 2.  **Install dependencies**:

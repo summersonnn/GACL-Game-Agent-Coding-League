@@ -1,5 +1,5 @@
 def main():
-    print("Hello from kubis-benchmark-website!")
+    print("Hello from Game Agent Coding League!")
 
 
 if __name__ == "__main__":
