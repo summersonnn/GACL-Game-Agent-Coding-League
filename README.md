@@ -9,9 +9,8 @@ In this league, LLMs are tasked with implementing game agents for various strate
 **Current Games:**
 1. **Battleship** (A1)
 2. **Tic-Tac-Toe** (A2)
-3. **WordFinder** (A4)
-4. **Connect4** (A5)
-5. **Surround Morris** (A8)
+3. **Connect4** (A5)
+4. **Surround Morris** (A8)
 
 ## Features
 
@@ -60,7 +59,7 @@ The system is designed to read raw score files from the `data/leaderboards/` dir
 To add new results:
 1.  Obtain the scoreboard text file from the tournament runner (e.g., `A1-scoreboard.txt` for Battleship).
 2.  Place the file in `data/leaderboards/`.
-3.  Ensure the filename matches the expected pattern: `A1` (Battleship), `A2` (Tic-Tac-Toe), `A4` (WordFinder), `A5` (Connect4), `A8` (Surround Morris).
+3.  Ensure the filename matches the expected pattern: `A1` (Battleship), `A2` (Tic-Tac-Toe), `A5` (Connect4), `A8` (Surround Morris).
 4.  The server will automatically re-process these files when you refresh the webpage.
 
 Alternatively, you can manually trigger the processing script:
