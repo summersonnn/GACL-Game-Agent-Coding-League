@@ -103,9 +103,18 @@
 
                     <!-- Tab: Overall -->
                     <section id="tab-overall" class="tab-content active">
+                        <!-- Inner toggle: Weighted vs Unweighted -->
+                        <div class="flex items-center gap-2 mb-4">
+                            <button class="overall-mode-btn active px-3 py-1.5 text-sm font-medium rounded-md border transition-colors" data-mode="weighted">
+                                Weighted Average
+                            </button>
+                            <button class="overall-mode-btn px-3 py-1.5 text-sm font-medium rounded-md border transition-colors" data-mode="unweighted">
+                                Equal Average
+                            </button>
+                        </div>
                         <div class="bg-white rounded-xl shadow-sm border border-gray-200 p-6">
                             <div class="flex items-baseline justify-between mb-4">
-                                <h3 class="text-lg font-semibold text-gray-900">Overall Performance (Weighted)</h3>
+                                <h3 id="overall-chart-title" class="text-lg font-semibold text-gray-900">Overall Performance (Games have different weights)</h3>
                                 <span class="text-sm text-gray-400 run-date"></span>
                             </div>
                             <div style="height: 500px; position: relative;">
@@ -119,7 +128,7 @@
                                 target="_blank" class="text-indigo-600 hover:text-indigo-700 underline">here</a>.
                         </div>
                         <div class="bg-white rounded-xl shadow-sm border border-gray-200 p-6 mt-6">
-                            <h3 class="text-lg font-semibold text-gray-900 mb-4">Overall Leaderboard</h3>
+                            <h3 id="overall-table-title" class="text-lg font-semibold text-gray-900 mb-4">Overall Leaderboard</h3>
                             <div id="leaderboard-overall" class="overflow-x-auto">
                                 <!-- Overall leaderboard table will be inserted here -->
                             </div>

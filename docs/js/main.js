@@ -7,6 +7,7 @@ let gameCharts = {};
 let gameConfig = null;
 let leaderboardData = null;
 let promptsLoaded = false;
+let currentOverallMode = 'weighted';
 
 /**
  * Initialize the application
@@ -30,6 +31,9 @@ async function init() {
             const span = document.querySelector(`[data-game-id="${game.id}"]`);
             if (span) span.textContent = `Weight: ${game.weight}`;
         });
+
+        addWeightBadgesToLeaderboardTabs();
+        initOverallModeToggle();
 
         if (manifest.runs.length > 0) {
             const run = manifest.runs[0];
@@ -120,7 +124,10 @@ function renderOverallChart() {
         return;
     }
 
-    const overallScores = leaderboardData.overall;
+    const overallScores = currentOverallMode === 'weighted'
+        ? leaderboardData.overall
+        : computeUnweightedOverall();
+
     if (overallScores.length === 0) return;
 
     const labels = overallScores.map(entry => entry.model);
@@ -312,12 +319,14 @@ function renderOverallLeaderboard() {
     const container = document.getElementById('leaderboard-overall');
     if (!container) return;
 
-    if (!leaderboardData.overall || leaderboardData.overall.length === 0) {
+    const overallScores = currentOverallMode === 'weighted'
+        ? leaderboardData.overall
+        : computeUnweightedOverall();
+
+    if (!overallScores || overallScores.length === 0) {
         container.innerHTML = '<p class="text-gray-500 text-sm">No leaderboard data available</p>';
         return;
     }
-
-    const overallScores = leaderboardData.overall;
 
     const table = document.createElement('table');
     table.className = 'min-w-full divide-y divide-gray-200';
@@ -481,6 +490,67 @@ async function loadAllPrompts() {
     });
 
     await Promise.all(fetches);
+}
+
+/**
+ * Add weight badges to game tab chart headings on the leaderboard page
+ */
+function addWeightBadgesToLeaderboardTabs() {
+    if (!gameConfig) return;
+
+    gameConfig.games.forEach(game => {
+        const section = document.getElementById(`tab-${game.id}`);
+        if (!section) return;
+
+        const heading = section.querySelector('h3');
+        if (!heading || heading.querySelector('.weight-badge')) return;
+
+        const badge = document.createElement('span');
+        badge.className = 'weight-badge ml-2 text-xs font-medium bg-indigo-50 text-indigo-600 px-2 py-0.5 rounded';
+        badge.textContent = `Weight: ${game.weight}`;
+        heading.appendChild(badge);
+    });
+}
+
+/**
+ * Initialize the weighted/unweighted toggle in the overall tab
+ */
+function initOverallModeToggle() {
+    const buttons = document.querySelectorAll('.overall-mode-btn');
+    buttons.forEach(btn => {
+        btn.addEventListener('click', () => {
+            const mode = btn.dataset.mode;
+            if (mode === currentOverallMode) return;
+
+            currentOverallMode = mode;
+            buttons.forEach(b => b.classList.remove('active'));
+            btn.classList.add('active');
+
+            const suffix = mode === 'weighted' ? '(Games have different weights)' : '(Games have equal weights)';
+            const chartTitle = document.getElementById('overall-chart-title');
+            if (chartTitle) chartTitle.textContent = `Overall Performance ${suffix}`;
+
+            renderOverallChart();
+            renderOverallLeaderboard();
+        });
+    });
+}
+
+/**
+ * Compute unweighted overall scores from per-game normalized values
+ */
+function computeUnweightedOverall() {
+    if (!leaderboardData || !leaderboardData.overall) return [];
+
+    return leaderboardData.overall
+        .map(entry => {
+            const scores = Object.values(entry.game_scores);
+            const avg = scores.length > 0
+                ? scores.reduce((a, b) => a + b, 0) / scores.length
+                : 0;
+            return { model: entry.model, overall_score: avg, game_scores: entry.game_scores };
+        })
+        .sort((a, b) => b.overall_score - a.overall_score);
 }
 
 document.addEventListener('DOMContentLoaded', init);
