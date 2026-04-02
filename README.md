@@ -4,13 +4,19 @@ The **Game Agent Coding League** is a benchmarking platform designed to evaluate
 
 ## Overview
 
-In this league, LLMs are tasked with implementing game agents for various strategy games (e.g., Battleship, Connect4, Tic-Tac-Toe). These agents then compete in a round-robin tournament. This repository hosts the visualization dashboard that effectively aggregates and displays the results of these tournaments.
+In this league, LLMs are tasked with implementing game agents for various strategy games (e.g., Battleship, Wizard, Connect4RandomStart, TwoByEightChess). These agents then compete in a round-robin tournament. This repository hosts the visualization dashboard that effectively aggregates and displays the results of these tournaments.
 
-**Current Games:**
-1. **Battleship** (A1)
-2. **Tic-Tac-Toe** (A2)
-3. **Connect4** (A5)
-4. **Surround Morris** (A8)
+## Games Overview
+
+| ID | Game | Players | Status |
+|----|------|---------|--------|
+| A1 | Battleship | 2 | Playable |
+| A2 | TicTacToe | 2 | Playable (pending deprecation) |
+| A3 | Wizard | 6 | Playable |
+| A5 | Connect4RandomStart | 2 | Playable |
+| A6 | WordMatrixGame | 2 | Playable |
+| A7 | TwoByEightChess | 2 | Playable |
+| A8 | SurroundMorris | 2 | Playable |
 
 ## Features
 
@@ -59,7 +65,7 @@ The system is designed to read raw score files from the `data/leaderboards/` dir
 To add new results:
 1.  Obtain the scoreboard text file from the tournament runner (e.g., `A1-scoreboard.txt` for Battleship).
 2.  Place the file in `data/leaderboards/`.
-3.  Ensure the filename matches the expected pattern: `A1` (Battleship), `A2` (Tic-Tac-Toe), `A5` (Connect4), `A8` (Surround Morris).
+3.  Ensure the filename matches the expected pattern: `A1` (Battleship), `A2` (TicTacToe), `A3` (Wizard), `A5` (Connect4RandomStart), `A6` (WordMatrixGame), `A7` (TwoByEightChess), `A8` (SurroundMorris).
 4.  The server will automatically re-process these files when you refresh the webpage.
 
 Alternatively, you can manually trigger the processing script:
