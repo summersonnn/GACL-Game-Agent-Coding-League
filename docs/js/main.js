@@ -153,6 +153,45 @@ function renderGameChart(gameId, gameName) {
     renderChart(`chart-${gameId}`, gameName, labels, scores);
 }
 
+const BAR_ICON_SOURCES = [
+    'data/media/claude.png',
+    'data/media/openai.png',
+    'data/media/qwen.png',
+    'data/media/gemini.png',
+    'data/media/kimi.png',
+    'data/media/zai.png',
+    'data/media/grok.png',
+    'data/media/mi.png',
+    'data/media/minimax.png'
+];
+const barIconImages = BAR_ICON_SOURCES.map(src => {
+    const img = new Image();
+    img.onload = () => {
+        Object.values(gameCharts).forEach(c => c && c.draw && c.draw());
+    };
+    img.src = src;
+    return img;
+});
+
+function shuffle(arr) {
+    const a = arr.slice();
+    for (let i = a.length - 1; i > 0; i--) {
+        const j = Math.floor(Math.random() * (i + 1));
+        [a[i], a[j]] = [a[j], a[i]];
+    }
+    return a;
+}
+
+function buildIconAssignment(barCount) {
+    const assignment = new Array(barCount);
+    let pool = [];
+    for (let i = 0; i < barCount; i++) {
+        if (pool.length === 0) pool = shuffle(barIconImages);
+        assignment[i] = pool.pop();
+    }
+    return assignment;
+}
+
 /**
  * Inline plugin: draws score values inside the top of each bar
  */
@@ -160,17 +199,67 @@ const barValuePlugin = {
     id: 'barValues',
     afterDatasetsDraw(chart) {
         const { ctx } = chart;
+        const active = chart.getActiveElements ? chart.getActiveElements() : [];
+        const activeKey = new Set(
+            active.map(a => `${a.datasetIndex}:${a.index}`)
+        );
         chart.data.datasets.forEach((dataset, datasetIndex) => {
             const meta = chart.getDatasetMeta(datasetIndex);
             meta.data.forEach((bar, index) => {
                 const value = dataset.data[index];
+                const isHovered = activeKey.has(`${datasetIndex}:${index}`);
+                const text = isHovered
+                    ? Number(value).toFixed(2)
+                    : String(Math.round(value));
+
                 ctx.save();
                 ctx.fillStyle = '#000000';
-                ctx.font = 'bold 11px sans-serif';
                 ctx.textAlign = 'center';
                 ctx.textBaseline = 'top';
-                ctx.fillText(Math.round(value), bar.x, bar.y + 6);
+
+                let fontSize = 11;
+                ctx.font = `bold ${fontSize}px sans-serif`;
+                const maxWidth = Math.max(0, (bar.width || 0) - 4);
+                if (maxWidth > 0) {
+                    while (
+                        ctx.measureText(text).width > maxWidth &&
+                        fontSize > 7
+                    ) {
+                        fontSize -= 1;
+                        ctx.font = `bold ${fontSize}px sans-serif`;
+                    }
+                }
+
+                ctx.fillText(text, bar.x, bar.y + 6);
                 ctx.restore();
+
+                const assignment = chart.$barIconAssignment || [];
+                const icon = datasetIndex === 0 ? assignment[index] : null;
+                if (icon && icon.complete && icon.naturalWidth > 0) {
+                    const barWidth = bar.width || 0;
+                    const barHeight = Math.abs((bar.base || 0) - bar.y);
+                    const circleSize = Math.min(barWidth - 4, barHeight - 4, 36);
+                    if (circleSize > 8) {
+                        const radius = circleSize / 2;
+                        const cx = bar.x;
+                        const cy = (bar.base || 0) - radius - 4;
+                        const iconSize = circleSize * 0.7;
+                        const iconX = cx - iconSize / 2;
+                        const iconY = cy - iconSize / 2;
+
+                        ctx.save();
+                        ctx.fillStyle = '#FFFFFF';
+                        ctx.beginPath();
+                        ctx.arc(cx, cy, radius, 0, Math.PI * 2);
+                        ctx.fill();
+
+                        ctx.beginPath();
+                        ctx.arc(cx, cy, radius, 0, Math.PI * 2);
+                        ctx.clip();
+                        ctx.drawImage(icon, iconX, iconY, iconSize, iconSize);
+                        ctx.restore();
+                    }
+                }
             });
         });
     }
@@ -188,6 +277,7 @@ function renderChart(canvasId, label, labels, scores) {
     }
 
     const colors = generateBarColors(scores.length);
+    const hoverColors = generateBarHoverColors(scores.length);
 
     const chart = new Chart(ctx, {
         type: 'bar',
@@ -198,6 +288,8 @@ function renderChart(canvasId, label, labels, scores) {
                 data: scores,
                 backgroundColor: colors,
                 borderColor: colors.map(c => adjustColorBrightness(c, -20)),
+                hoverBackgroundColor: hoverColors,
+                hoverBorderColor: hoverColors.map(c => adjustColorBrightness(c, -20)),
                 borderWidth: 1,
                 borderRadius: 4
             }]
@@ -205,14 +297,20 @@ function renderChart(canvasId, label, labels, scores) {
         options: {
             responsive: true,
             maintainAspectRatio: false,
+            interaction: {
+                mode: 'nearest',
+                intersect: true,
+                axis: 'x'
+            },
+            onHover: (_event, _elements, chartInstance) => {
+                chartInstance.draw();
+            },
             plugins: {
                 legend: {
                     display: false
                 },
                 tooltip: {
-                    callbacks: {
-                        label: (context) => `Score: ${context.raw.toFixed(2)}`
-                    }
+                    enabled: false
                 }
             },
             scales: {
@@ -244,6 +342,7 @@ function renderChart(canvasId, label, labels, scores) {
         plugins: [barValuePlugin]
     });
 
+    chart.$barIconAssignment = buildIconAssignment(scores.length);
     gameCharts[canvasId.replace('chart-', '')] = chart;
 }
 
@@ -251,8 +350,14 @@ function renderChart(canvasId, label, labels, scores) {
  * Generate bar colors: top 5 get special colors, rest are grey
  */
 function generateBarColors(count) {
-    const TOP_5 = ['#D4AF37', '#94A3B8', '#B87333', '#7C3AED', '#0891B2'];
+    const TOP_5 = ['#a0c3c4', '#93b5a7', '#aab788', '#bc976a', '#d4c68b'];
     const GREY = '#CBD5E1';
+    return Array.from({ length: count }, (_, i) => i < 5 ? TOP_5[i] : GREY);
+}
+
+function generateBarHoverColors(count) {
+    const TOP_5 = ['#6F8889', '#667E74', '#767F5F', '#83694A', '#948A61'];
+    const GREY = '#94A3B8';
     return Array.from({ length: count }, (_, i) => i < 5 ? TOP_5[i] : GREY);
 }
 
