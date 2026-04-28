@@ -75,7 +75,7 @@
                     <p class="mb-3">
                         Game Agent Coding League (GACL) is a benchmarking framework designed for LLMs in which
                         models are tasked with generating code for game-playing agents. These agents compete in
-                        games such as Battleship, Tic-Tac-Toe variants, and others. At present, the league supports
+                        games such as Battleship, Connect4 and others. At present, the league supports
                         five games, with additional titles planned.
                     </p>
                     <p class="font-semibold text-red-600">
@@ -97,9 +97,7 @@
                         schedules matches between all agent pairs, producing a final leaderboard.
                     </p>
                     <p class="mb-3">
-                        Each model is prompted twice, meaning every model submits two separate agents. During
-                        matchmaking, agents from the same model do not compete against each other. Instead, each
-                        agent plays against all non-friendly agents.
+                        Each model is prompted four times, meaning every model submits four separate agents. Before the real matchmaking, the best two agents from each model are selected (using --mini option in the matchmaking script to conduct a mini tournament). Others are discarded. During matchmaking, agents from the same model do not compete against each other (remember, there are two agents from each model). Instead, each agent plays against all non-friendly agents.
                     </p>
                     <p>
                         When compiling performance charts, only the stronger of a model's two agents is considered;

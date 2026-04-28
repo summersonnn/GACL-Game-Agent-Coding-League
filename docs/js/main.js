@@ -616,7 +616,7 @@ function renderLeaderboard(gameId) {
  * Lazy-load game prompts (called on first Games tab visit)
  */
 async function loadAllPrompts() {
-    const promptFiles = ['battleship', 'tictactoe', 'wizard', 'connect4', 'surround_morris', 'minichess', 'wordmatrix'];
+    const promptFiles = ['battleship', 'lieonce', 'wizard', 'connect4', 'surround_morris', 'minichess', 'wordmatrix'];
 
     const fetches = promptFiles.map(async (promptName) => {
         try {
