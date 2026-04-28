@@ -130,7 +130,7 @@ function renderOverallChart() {
 
     if (overallScores.length === 0) return;
 
-    const labels = overallScores.map(entry => entry.model);
+    const labels = overallScores.map(entry => formatModelName(entry.model));
     const scores = overallScores.map(entry => entry.overall_score);
 
     renderChart('chart-overall', 'Overall Points', labels, scores);
@@ -147,10 +147,54 @@ function renderGameChart(gameId, gameName) {
 
     const sorted = leaderboardData.games[gameId];
 
-    const labels = sorted.map(entry => entry.model);
+    const labels = sorted.map(entry => formatModelName(entry.model));
     const scores = sorted.map(entry => entry.normalized);
 
     renderChart(`chart-${gameId}`, gameName, labels, scores);
+}
+
+const MODEL_LABEL_RULES = [
+    [/^anthropic-claude-/i, 'Claude '],
+    [/^anthropic-/i, ''],
+    [/^openai-gpt-/i, 'GPT '],
+    [/^openai-/i, ''],
+    [/^google-gemini-/i, 'Gemini '],
+    [/^google-gemma-/i, 'Gemma '],
+    [/^google-/i, ''],
+    [/^moonshotai-kimi-/i, 'Kimi '],
+    [/^moonshotai-/i, ''],
+    [/^minimax-minimax-/i, 'MiniMax '],
+    [/^minimax-/i, ''],
+    [/^mistralai-mistral-/i, 'Mistral '],
+    [/^mistralai-/i, ''],
+    [/^deepseek-deepseek-/i, 'DeepSeek '],
+    [/^deepseek-/i, ''],
+    [/^qwen-qwen/i, 'Qwen'],
+    [/^qwen-/i, ''],
+    [/^nvidia-nemotron-/i, 'Nemotron '],
+    [/^nvidia-/i, ''],
+    [/^xiaomi-mimo-/i, 'MiMo '],
+    [/^xiaomi-/i, ''],
+    [/^x-ai-grok-/i, 'Grok '],
+    [/^x-ai-/i, ''],
+    [/^z-ai-glm-/i, 'GLM '],
+    [/^z-ai-/i, ''],
+    [/^stepfun-step-/i, 'Step '],
+    [/^stepfun-/i, '']
+];
+
+function formatModelName(model) {
+    if (!model) return model;
+    let s = model;
+    for (const [re, prefix] of MODEL_LABEL_RULES) {
+        if (re.test(s)) {
+            s = s.replace(re, prefix);
+            break;
+        }
+    }
+    s = s.replace(/[-_]/g, ' ').trim();
+    s = s.replace(/\b\w/g, c => c.toUpperCase());
+    return s;
 }
 
 const BAR_ICON_SOURCES = [
