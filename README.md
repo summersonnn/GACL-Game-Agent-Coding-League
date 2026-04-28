@@ -13,6 +13,7 @@ In this league, LLMs are tasked with implementing game agents for various strate
 | A1 | Battleship | 2 | Playable |
 | A2 | LieOnce | 2 | Playable (replaced the TicTacToe game) |
 | A3 | Wizard | 6 | Playable |
+| A4 | Backgammon | 2 | Playable |
 | A5 | Connect4RandomStart | 2 | Playable |
 | A6 | WordMatrixGame | 2 | Playable |
 | A7 | TwoByEightChess | 2 | Playable |
@@ -65,7 +66,7 @@ The system is designed to read raw score files from the `data/leaderboards/` dir
 To add new results:
 1.  Obtain the scoreboard text file from the tournament runner (e.g., `A1-scoreboard.txt` for Battleship).
 2.  Place the file in `data/leaderboards/`.
-3.  Ensure the filename matches the expected pattern: `A1` (Battleship), `A2` (LieOnce), `A3` (Wizard), `A5` (Connect4RandomStart), `A6` (WordMatrixGame), `A7` (TwoByEightChess), `A8` (SurroundMorris).
+3.  Ensure the filename matches the expected pattern: `A1` (Battleship), `A2` (LieOnce), `A3` (Wizard), `A4` (Backgammon), `A5` (Connect4RandomStart), `A6` (WordMatrixGame), `A7` (TwoByEightChess), `A8` (SurroundMorris).
 4.  The server will automatically re-process these files when you refresh the webpage.
 
 Alternatively, you can manually trigger the processing script:

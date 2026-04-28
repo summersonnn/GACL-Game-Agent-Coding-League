@@ -86,6 +86,9 @@
                             <button class="tab-btn" data-tab="game3">
                                 Wizard
                             </button>
+                            <button class="tab-btn" data-tab="game4">
+                                Backgammon
+                            </button>
                             <button class="tab-btn" data-tab="game5">
                                 Connect4
                             </button>
@@ -216,6 +219,33 @@
                         </div>
                     </section>
 
+
+                    <!-- Tab: Backgammon -->
+                    <section id="tab-game4" class="tab-content hidden">
+                        <div class="bg-white rounded-xl shadow-sm border border-gray-200 p-6">
+                            <div class="flex items-baseline justify-between mb-4">
+                                <h3 class="text-lg font-semibold text-gray-900">Backgammon Performance</h3>
+                                <span class="text-sm text-gray-400 run-date"></span>
+                            </div>
+                            <div style="height: 500px; position: relative;">
+                                <canvas id="chart-game4"></canvas>
+                            </div>
+                        </div>
+                        <div class="mt-4 text-center text-sm text-gray-600">
+                            More information about the games, point system and full prompts can be found in <a
+                                href="games.html" class="text-indigo-600 hover:text-indigo-700 underline">Games</a>
+                            page.<br>
+                            Do you think one of the models performed significantly worse than expected in a particular
+                            game? You can find more details about this <a href="index.html#underperformance"
+                                class="text-indigo-600 hover:text-indigo-700 underline">here</a>.
+                        </div>
+                        <div class="bg-white rounded-xl shadow-sm border border-gray-200 p-6 mt-6">
+                            <h3 class="text-lg font-semibold text-gray-900 mb-4">Leaderboard</h3>
+                            <div id="leaderboard-game4" class="overflow-x-auto">
+                                <!-- Leaderboard table will be inserted here -->
+                            </div>
+                        </div>
+                    </section>
 
                     <!-- Tab: Connect4 -->
                     <section id="tab-game5" class="tab-content hidden">
