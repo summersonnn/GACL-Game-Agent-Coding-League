@@ -132,8 +132,9 @@ function renderOverallChart() {
 
     const labels = overallScores.map(entry => formatModelName(entry.model));
     const scores = overallScores.map(entry => entry.overall_score);
+    const models = overallScores.map(entry => entry.model);
 
-    renderChart('chart-overall', 'Overall Points', labels, scores);
+    renderChart('chart-overall', 'Overall Points', labels, scores, models);
 }
 
 /**
@@ -149,8 +150,9 @@ function renderGameChart(gameId, gameName) {
 
     const labels = sorted.map(entry => formatModelName(entry.model));
     const scores = sorted.map(entry => entry.normalized);
+    const models = sorted.map(entry => entry.model);
 
-    renderChart(`chart-${gameId}`, gameName, labels, scores);
+    renderChart(`chart-${gameId}`, gameName, labels, scores, models);
 }
 
 const MODEL_LABEL_RULES = [
@@ -197,43 +199,40 @@ function formatModelName(model) {
     return s;
 }
 
-const BAR_ICON_SOURCES = [
-    'data/media/claude.png',
-    'data/media/openai.png',
-    'data/media/qwen.png',
-    'data/media/gemini.png',
-    'data/media/kimi.png',
-    'data/media/zai.png',
-    'data/media/grok.png',
-    'data/media/mi.png',
-    'data/media/minimax.png'
+const ICON_RULES = [
+    [/claude|anthropic/i, 'data/media/claude.png'],
+    [/openai|gpt/i, 'data/media/openai.png'],
+    [/gemini|gemma|google/i, 'data/media/gemini.png'],
+    [/kimi|moonshot/i, 'data/media/kimi.png'],
+    [/z-ai|glm|zai/i, 'data/media/zai.png'],
+    [/grok|x-ai/i, 'data/media/grok.png'],
+    [/xiaomi|mimo/i, 'data/media/mi.png'],
+    [/minimax/i, 'data/media/minimax.png'],
+    [/qwen|alibaba/i, 'data/media/qwen.png'],
+    [/deepseek/i, 'data/media/deepseek.png']
 ];
-const barIconImages = BAR_ICON_SOURCES.map(src => {
-    const img = new Image();
-    img.onload = () => {
-        Object.values(gameCharts).forEach(c => c && c.draw && c.draw());
-    };
-    img.src = src;
-    return img;
-});
 
-function shuffle(arr) {
-    const a = arr.slice();
-    for (let i = a.length - 1; i > 0; i--) {
-        const j = Math.floor(Math.random() * (i + 1));
-        [a[i], a[j]] = [a[j], a[i]];
+const iconImageCache = {};
+function getIconForModel(model) {
+    if (!model) return null;
+    for (const [re, src] of ICON_RULES) {
+        if (re.test(model)) {
+            if (!iconImageCache[src]) {
+                const img = new Image();
+                img.onload = () => {
+                    Object.values(gameCharts).forEach(c => c && c.draw && c.draw());
+                };
+                img.src = src;
+                iconImageCache[src] = img;
+            }
+            return iconImageCache[src];
+        }
     }
-    return a;
+    return null;
 }
 
-function buildIconAssignment(barCount) {
-    const assignment = new Array(barCount);
-    let pool = [];
-    for (let i = 0; i < barCount; i++) {
-        if (pool.length === 0) pool = shuffle(barIconImages);
-        assignment[i] = pool.pop();
-    }
-    return assignment;
+function buildIconAssignment(models) {
+    return (models || []).map(getIconForModel);
 }
 
 /**
@@ -312,7 +311,7 @@ const barValuePlugin = {
 /**
  * Generic chart rendering function
  */
-function renderChart(canvasId, label, labels, scores) {
+function renderChart(canvasId, label, labels, scores, models) {
     const ctx = document.getElementById(canvasId);
     if (!ctx) return;
 
@@ -386,7 +385,7 @@ function renderChart(canvasId, label, labels, scores) {
         plugins: [barValuePlugin]
     });
 
-    chart.$barIconAssignment = buildIconAssignment(scores.length);
+    chart.$barIconAssignment = buildIconAssignment(models);
     gameCharts[canvasId.replace('chart-', '')] = chart;
 }
 
