@@ -1,106 +1,46 @@
 # Game Agent Coding League (GACL)
 
-The **Game Agent Coding League** is a benchmarking platform designed to evaluate Large Language Models (LLMs) on their ability to generate code for game-playing agents. This project provides a web-based dashboard to visualize model performance across multiple strategic games.
+This repository contains the static dashboard for the [Competitive LLM Agent Benchmark](https://github.com/summersonnn/Game-Agent-Coding-Benchmark). Models generate code for game-playing agents; the benchmark runner schedules matches and writes scoreboards for this dashboard.
 
-## Overview
+## Current benchmark
 
-In this league, LLMs are tasked with implementing game agents for various strategy games (e.g., Battleship, Wizard, Connect4RandomStart, TwoByEightChess). These agents then compete in a round-robin tournament. This repository hosts the visualization dashboard that effectively aggregates and displays the results of these tournaments.
+| ID | Game | Players |
+| --- | --- | --- |
+| A1 | Battleship | 2 |
+| A2 | LieOnce | 2 |
+| A3 | Wizard | 6 |
+| A4 | Backgammon | 2 |
+| A5 | Connect4 (Random Start) | 2 |
+| A6 | WordMatrix | 2 |
+| A7 | Mancala | 2 |
+| A8 | Surround Morris | 2 |
 
-## Games Overview
+The current model roster is in [docs/data/models.txt](docs/data/models.txt). Each model has two agents per game in the benchmark. Game prompts in `docs/data/full_prompts/` are based on the benchmark's `games/` directory and include the current tournament configuration.
 
-| ID | Game | Players | Status |
-|----|------|---------|--------|
-| A1 | Battleship | 2 | Playable |
-| A2 | LieOnce | 2 | Playable (replaced the TicTacToe game) |
-| A3 | Wizard | 6 | Playable |
-| A4 | Backgammon | 2 | Playable |
-| A5 | Connect4RandomStart | 2 | Playable |
-| A6 | WordMatrixGame | 2 | Playable |
-| A7 | TwoByEightChess | 2 | Playable |
-| A8 | SurroundMorris | 2 | Playable |
+Current tournament scoreboards are not ready; the dashboard intentionally starts empty. Earlier results and the former A7 MiniChess prompt are preserved under `docs/data/archive/legacy/`. Those results describe a different roster and A7 game and should not be mixed into current standings.
 
-## Features
 
-- **Automated Leaderboards**: Parses raw tournament match logs to generate up-to-date standings.
-- **Weighted Scoring**: Calculates an overall "Meta-Score" based on weighted performance across all games.
-- **Interactive Visualization**: Uses Chart.js to display relative performance and rankings.
-- **Static-First Design**: Optimized for simple hosting, with Python-based pre-processing steps.
+## Agent creation
 
-## Requirements
+The league's Claude agents are written using the Claude Code VS Code extension, GPT agents using the Codex VS Code extension, and Gemini agents using the Antigravity VS Code extension. Open-source agents are written using DeepSeek Harness (`dsh`) with OpenRouter credentials.
 
-- **OS**: Linux (recommended) or macOS/Windows.
-- **Python**: >= 3.12
-- **Package Manager**: [uv](https://github.com/astral-sh/uv) (Mandatory)
+The benchmark repository also supports generating every agent through OpenRouter, although that is not very economical :)
 
-## Installation
+## Run locally
 
-1.  **Clone the repository**:
-    ```bash
-    git clone <repository_url>
-    cd "Game Agent Coding League (GACL)"
-    ```
-
-2.  **Install dependencies**:
-    Initialize the virtual environment and install required packages using `uv`:
-    ```bash
-    uv sync
-    ```
-
-## Usage
-
-### 1. Running the Local Server
-
-To view the dashboard and automatically process the latest data:
+Python 3.12 or newer is required. From the repository root:
 
 ```bash
+uv sync
 uv run python server.py
 ```
 
-- Open your browser to `http://localhost:8000`.
-- The server automatically detects requests to the data file and regenerates the leaderboard if needed.
+Open http://localhost:8000. The server regenerates `docs/data/leaderboard.json` once at startup. To regenerate it manually after adding scoreboards, run `uv run python utils/process_leaderboards.py`.
 
-### 2. Updating Leaderboard Data
+## Update results
 
-The system is designed to read raw score files from the `data/leaderboards/` directory.
+When current tournament data is ready, copy each runner scoreboard to `docs/data/leaderboards/A1-scoreboard.txt` through `A8-scoreboard.txt`, then regenerate the JSON. Empty or missing files result in empty game leaderboards. The overall view averages the available game scores, so partial results are not a complete league ranking.
 
-To add new results:
-1.  Obtain the scoreboard text file from the tournament runner (e.g., `A1-scoreboard.txt` for Battleship).
-2.  Place the file in `data/leaderboards/`.
-3.  Ensure the filename matches the expected pattern: `A1` (Battleship), `A2` (LieOnce), `A3` (Wizard), `A4` (Backgammon), `A5` (Connect4RandomStart), `A6` (WordMatrixGame), `A7` (TwoByEightChess), `A8` (SurroundMorris).
-4.  The server will automatically re-process these files when you refresh the webpage.
+The processor selects each model's agent by league points per game, using score per game as a tiebreaker. It normalizes points against the maximum possible, then applies weights in `docs/data/config.json`. Backgammon is excluded from normalized results: the runner awards league points per race, while its scoreboard records games and does not include the number of races. The source scoreboard format must expose race counts before those results can be normalized accurately.
 
-Alternatively, you can manually trigger the processing script:
-
-```bash
-uv run python utils/process_leaderboards.py
-```
-
-### 3. Configuring Game Weights
-
-You can adjust the importance of each game in the overall ranking by editing `data/config.json`.
-Update the `"weight"` property for each game object.
-
-## Project Structure
-
-```
-.
-├── css/                    # Custom stylesheets
-├── data/
-│   ├── config.json         # General configuration
-│   ├── leaderboards/       # RAW INPUT: Text files with match scores
-│   ├── leaderboard.json    # GENERATED OUTPUT: JSON data for frontend
-│   └── runs/               # Historical run data
-├── js/
-│   └── main.js             # Frontend logic (Chart.js integration)
-├── utils/
-│   ├── process_leaderboards.py  # Core script to parse text files -> JSON
-│   └── update_manifest.py       # Helper for historical run management
-├── server.py               # Local development server
-├── index.html              # Main dashboard entry point
-├── pyproject.toml          # Python dependency definition
-└── CLAUDE.md               # Developer documentation
-```
-
-## Licensing
-
-[Add License Information Here]
+`docs/data/runs.json` is optional metadata displayed as the last run date. Do not reuse the historical manifest for new results. `utils/update_manifest.py` operates on files in `docs/data/runs/` and does not import runner scoreboards.
