@@ -1,0 +1,730 @@
+Match Contenders:
+Muse-Wonder-Max:1
+Qwen4-Max-xhigh:2
+
+Result:
+Muse-Wonder-Max:1 : Pts: 15 - Score: -10.0
+Qwen4-Max-xhigh:2 : Pts: 15 - Score: 10.0
+
+
+============================================================
+Game 1
+Agent-1: Muse-Wonder-Max:1
+Agent-2: Qwen4-Max-xhigh:2
+Starting Player: Agent-1
+------------------------------------------------------------
+    0  1  2  3
+   -----------
+0 | g  n  x  z
+1 | x  s  a  r
+2 | o  w  u  r
+3 | k  n  n  d
+Agent-1: path=[(1,1) -> (1,2) -> (2,2) -> (3,2) -> (3,3) -> (2,3)] word='saundra' cleared=5 points=+60
+    0  1  2  3
+   -----------
+0 | g  n  x  z
+1 | x  .  .  r
+2 | o  w  .  .
+3 | k  n  a  .
+Agent-2: path=[(3,2) -> (3,1) -> (3,0) -> (2,0) -> (2,1)] word='hankow' cleared=4 points=+50
+    0  1  2  3
+   -----------
+0 | g  n  x  z
+1 | x  .  .  r
+2 | .  .  .  .
+3 | .  h  .  .
+Agent-1: path=[(0,2) -> (0,1) -> (0,0)] word='xing' cleared=2 points=+30
+    0  1  2  3
+   -----------
+0 | .  .  i  z
+1 | x  .  .  r
+2 | .  .  .  .
+3 | .  h  .  .
+Agent-2: path=[(1,3) -> (0,3) -> (0,2)] word='nrzi' cleared=2 points=+30
+    0  1  2  3
+   -----------
+0 | .  .  .  .
+1 | x  .  .  n
+2 | .  .  .  .
+3 | .  h  .  .
+Final Position:
+BOARD:     0  1  2  3
+BOARD:    -----------
+BOARD: 0 | .  .  .  .
+BOARD: 1 | x  .  .  n
+BOARD: 2 | .  .  .  .
+BOARD: 3 | .  h  .  .
+Scores: Agent-1=90 Agent-2=80
+----------------------------------------
+Final Result: Agent-1 wins. (No valid paths remaining)
+----------------------------------------
+Points:
+Agent-1: 3
+Agent-2: 0
+----------------------------------------
+Scores:
+Agent-1: 10
+Agent-2: -10
+============================================================
+
+============================================================
+Game 2
+Agent-1: Muse-Wonder-Max:1
+Agent-2: Qwen4-Max-xhigh:2
+Starting Player: Agent-2
+------------------------------------------------------------
+    0  1  2  3
+   -----------
+0 | p  d  j  c
+1 | o  i  t  p
+2 | c  a  l  r
+3 | s  i  a  w
+Agent-2: path=[(2,0) -> (2,1) -> (2,2) -> (3,2) -> (3,1) -> (3,0)] word='calais' cleared=6 points=+70
+    0  1  2  3
+   -----------
+0 | p  d  j  c
+1 | o  i  t  p
+2 | .  .  .  r
+3 | .  .  .  w
+Agent-1: path=[(0,0) -> (1,0) -> (1,1)] word='poi' cleared=3 points=+40
+    0  1  2  3
+   -----------
+0 | .  d  j  c
+1 | .  .  t  p
+2 | .  .  .  r
+3 | .  .  .  w
+Agent-2: path=[(0,3) -> (1,3) -> (2,3)] word='cpr' cleared=3 points=+40
+    0  1  2  3
+   -----------
+0 | .  d  j  .
+1 | .  .  t  .
+2 | .  .  .  .
+3 | .  .  .  w
+Agent-1: path=[(0,1) -> (0,2) -> (1,2)] word='djt' cleared=3 points=+40
+    0  1  2  3
+   -----------
+0 | .  .  .  .
+1 | .  .  .  .
+2 | .  .  .  .
+3 | .  .  .  w
+Final Position:
+BOARD:     0  1  2  3
+BOARD:    -----------
+BOARD: 0 | .  .  .  .
+BOARD: 1 | .  .  .  .
+BOARD: 2 | .  .  .  .
+BOARD: 3 | .  .  .  w
+Scores: Agent-1=80 Agent-2=110
+----------------------------------------
+Final Result: Agent-2 wins. (No valid paths remaining)
+----------------------------------------
+Points:
+Agent-1: 0
+Agent-2: 3
+----------------------------------------
+Scores:
+Agent-1: -30
+Agent-2: 30
+============================================================
+
+============================================================
+Game 3
+Agent-1: Muse-Wonder-Max:1
+Agent-2: Qwen4-Max-xhigh:2
+Starting Player: Agent-1
+------------------------------------------------------------
+    0  1  2  3
+   -----------
+0 | l  z  n  j
+1 | r  z  r  b
+2 | w  q  z  h
+3 | n  e  q  q
+Agent-1: path=[(0,2) -> (1,2) -> (1,1)] word='nrz' cleared=3 points=+40
+    0  1  2  3
+   -----------
+0 | l  z  .  j
+1 | r  .  .  b
+2 | w  q  z  h
+3 | n  e  q  q
+Agent-2: path=[(2,0) -> (3,0) -> (3,1)] word='wyne' cleared=2 points=+30
+    0  1  2  3
+   -----------
+0 | l  z  .  j
+1 | r  .  .  b
+2 | .  q  z  h
+3 | y  .  q  q
+Agent-1: path=[(0,0) -> (1,0)] word='lrb' cleared=1 points=+20
+    0  1  2  3
+   -----------
+0 | .  z  .  j
+1 | b  .  .  b
+2 | .  q  z  h
+3 | y  .  q  q
+Agent-2: path=[(1,3) -> (0,3)] word='bsj' cleared=1 points=+20
+    0  1  2  3
+   -----------
+0 | .  z  .  .
+1 | b  .  .  s
+2 | .  q  z  h
+3 | y  .  q  q
+Agent-1: path=[(1,3) -> (2,3) -> (3,3)] word='shoq' cleared=2 points=+30
+    0  1  2  3
+   -----------
+0 | .  z  .  .
+1 | b  .  .  .
+2 | .  q  z  .
+3 | y  .  q  o
+Agent-2: path=[(3,2) -> (3,3)] word='qom' cleared=1 points=+20
+    0  1  2  3
+   -----------
+0 | .  z  .  .
+1 | b  .  .  .
+2 | .  q  z  .
+3 | y  .  .  m
+Agent-1: path=[(2,1) -> (2,2)] word='quiz' cleared=0 points=+10
+    0  1  2  3
+   -----------
+0 | .  z  .  .
+1 | b  .  .  .
+2 | .  u  i  .
+3 | y  .  .  m
+Agent-2: path=[(2,1) -> (2,2)] word='ubi' cleared=1 points=+20
+    0  1  2  3
+   -----------
+0 | .  z  .  .
+1 | b  .  .  .
+2 | .  .  b  .
+3 | y  .  .  m
+Final Position:
+BOARD:     0  1  2  3
+BOARD:    -----------
+BOARD: 0 | .  z  .  .
+BOARD: 1 | b  .  .  .
+BOARD: 2 | .  .  b  .
+BOARD: 3 | y  .  .  m
+Scores: Agent-1=100 Agent-2=90
+----------------------------------------
+Final Result: Agent-1 wins. (No valid paths remaining)
+----------------------------------------
+Points:
+Agent-1: 3
+Agent-2: 0
+----------------------------------------
+Scores:
+Agent-1: 10
+Agent-2: -10
+============================================================
+
+============================================================
+Game 4
+Agent-1: Muse-Wonder-Max:1
+Agent-2: Qwen4-Max-xhigh:2
+Starting Player: Agent-2
+------------------------------------------------------------
+    0  1  2  3
+   -----------
+0 | e  n  j  e
+1 | h  k  c  s
+2 | j  n  s  l
+3 | r  r  n  o
+Agent-2: path=[(1,3) -> (2,3) -> (3,3) -> (3,2)] word='slon' cleared=4 points=+50
+    0  1  2  3
+   -----------
+0 | e  n  j  e
+1 | h  k  c  .
+2 | j  n  s  .
+3 | r  r  .  .
+Agent-1: path=[(0,1) -> (0,0) -> (1,0)] word='neh' cleared=3 points=+40
+    0  1  2  3
+   -----------
+0 | .  .  j  e
+1 | .  k  c  .
+2 | j  n  s  .
+3 | r  r  .  .
+Agent-2: path=[(1,2) -> (2,2) -> (2,1)] word='csn' cleared=3 points=+40
+    0  1  2  3
+   -----------
+0 | .  .  j  e
+1 | .  k  .  .
+2 | j  .  .  .
+3 | r  r  .  .
+Agent-1: path=[(0,2) -> (0,3)] word='jea' cleared=1 points=+20
+    0  1  2  3
+   -----------
+0 | .  .  .  a
+1 | .  k  .  .
+2 | j  .  .  .
+3 | r  r  .  .
+Agent-2: path=[(2,0) -> (3,0)] word='jer' cleared=1 points=+20
+    0  1  2  3
+   -----------
+0 | .  .  .  a
+1 | .  k  .  .
+2 | e  .  .  .
+3 | .  r  .  .
+Final Position:
+BOARD:     0  1  2  3
+BOARD:    -----------
+BOARD: 0 | .  .  .  a
+BOARD: 1 | .  k  .  .
+BOARD: 2 | e  .  .  .
+BOARD: 3 | .  r  .  .
+Scores: Agent-1=60 Agent-2=110
+----------------------------------------
+Final Result: Agent-2 wins. (No valid paths remaining)
+----------------------------------------
+Points:
+Agent-1: 0
+Agent-2: 3
+----------------------------------------
+Scores:
+Agent-1: -50
+Agent-2: 50
+============================================================
+
+============================================================
+Game 5
+Agent-1: Muse-Wonder-Max:1
+Agent-2: Qwen4-Max-xhigh:2
+Starting Player: Agent-1
+------------------------------------------------------------
+    0  1  2  3
+   -----------
+0 | r  j  z  f
+1 | x  t  o  g
+2 | p  o  m  k
+3 | k  t  m  w
+Agent-1: path=[(1,3) -> (1,2) -> (1,1) -> (2,1)] word='goto' cleared=4 points=+50
+    0  1  2  3
+   -----------
+0 | r  j  z  f
+1 | x  .  .  .
+2 | p  .  m  k
+3 | k  t  m  w
+Agent-2: path=[(2,0) -> (3,0) -> (3,1)] word='pkt' cleared=3 points=+40
+    0  1  2  3
+   -----------
+0 | r  j  z  f
+1 | x  .  .  .
+2 | .  .  m  k
+3 | .  .  m  w
+Agent-1: path=[(2,2) -> (3,2) -> (3,3)] word='mmw' cleared=3 points=+40
+    0  1  2  3
+   -----------
+0 | r  j  z  f
+1 | x  .  .  .
+2 | .  .  .  k
+3 | .  .  .  .
+Agent-2: path=[(0,0) -> (1,0)] word='rax' cleared=1 points=+20
+    0  1  2  3
+   -----------
+0 | a  j  z  f
+1 | .  .  .  .
+2 | .  .  .  k
+3 | .  .  .  .
+Agent-1: path=[(0,0) -> (0,1)] word='ajo' cleared=1 points=+20
+    0  1  2  3
+   -----------
+0 | o  .  z  f
+1 | .  .  .  .
+2 | .  .  .  k
+3 | .  .  .  .
+Agent-2: path=[(0,3) -> (0,2)] word='rfz' cleared=1 points=+20
+    0  1  2  3
+   -----------
+0 | o  .  r  .
+1 | .  .  .  .
+2 | .  .  .  k
+3 | .  .  .  .
+Final Position:
+BOARD:     0  1  2  3
+BOARD:    -----------
+BOARD: 0 | o  .  r  .
+BOARD: 1 | .  .  .  .
+BOARD: 2 | .  .  .  k
+BOARD: 3 | .  .  .  .
+Scores: Agent-1=110 Agent-2=80
+----------------------------------------
+Final Result: Agent-1 wins. (No valid paths remaining)
+----------------------------------------
+Points:
+Agent-1: 3
+Agent-2: 0
+----------------------------------------
+Scores:
+Agent-1: 30
+Agent-2: -30
+============================================================
+
+============================================================
+Game 6
+Agent-1: Muse-Wonder-Max:1
+Agent-2: Qwen4-Max-xhigh:2
+Starting Player: Agent-2
+------------------------------------------------------------
+    0  1  2  3
+   -----------
+0 | z  p  t  l
+1 | h  v  z  l
+2 | x  k  y  v
+3 | q  x  d  h
+Agent-2: path=[(0,3) -> (0,2) -> (0,1)] word='ltp' cleared=3 points=+40
+    0  1  2  3
+   -----------
+0 | z  .  .  .
+1 | h  v  z  l
+2 | x  k  y  v
+3 | q  x  d  h
+Agent-1: path=[(2,1) -> (2,2) -> (3,2)] word='kyd' cleared=3 points=+40
+    0  1  2  3
+   -----------
+0 | z  .  .  .
+1 | h  v  z  l
+2 | x  .  .  v
+3 | q  x  .  h
+Agent-2: path=[(2,3) -> (3,3)] word='vhd' cleared=1 points=+20
+    0  1  2  3
+   -----------
+0 | z  .  .  .
+1 | h  v  z  l
+2 | x  .  .  .
+3 | q  x  .  d
+Agent-1: path=[(0,0) -> (1,0)] word='zho' cleared=1 points=+20
+    0  1  2  3
+   -----------
+0 | .  .  .  .
+1 | o  v  z  l
+2 | x  .  .  .
+3 | q  x  .  d
+Agent-2: path=[(1,1) -> (1,0) -> (2,0)] word='vox' cleared=3 points=+40
+    0  1  2  3
+   -----------
+0 | .  .  .  .
+1 | .  .  z  l
+2 | .  .  .  .
+3 | q  x  .  d
+Agent-1: path=[(1,2) -> (1,3)] word='zel' cleared=1 points=+20
+    0  1  2  3
+   -----------
+0 | .  .  .  .
+1 | .  .  .  e
+2 | .  .  .  .
+3 | q  x  .  d
+Agent-2: PASS
+Agent-1: PASS
+Agent-2: PASS
+Agent-1: PASS
+Agent-2: PASS
+Agent-1: PASS
+Final Position:
+BOARD:     0  1  2  3
+BOARD:    -----------
+BOARD: 0 | .  .  .  .
+BOARD: 1 | .  .  .  e
+BOARD: 2 | .  .  .  .
+BOARD: 3 | q  x  .  d
+Scores: Agent-1=80 Agent-2=100
+----------------------------------------
+Final Result: Agent-2 wins. (6 consecutive passes reached)
+----------------------------------------
+Points:
+Agent-1: 0
+Agent-2: 3
+----------------------------------------
+Scores:
+Agent-1: -20
+Agent-2: 20
+============================================================
+
+============================================================
+Game 7
+Agent-1: Muse-Wonder-Max:1
+Agent-2: Qwen4-Max-xhigh:2
+Starting Player: Agent-1
+------------------------------------------------------------
+    0  1  2  3
+   -----------
+0 | r  e  h  d
+1 | u  i  n  u
+2 | t  t  y  h
+3 | w  c  d  c
+Agent-1: path=[(3,3) -> (2,3) -> (1,3) -> (1,2) -> (1,1) -> (0,1) -> (0,0)] word='chunkier' cleared=6 points=+70
+    0  1  2  3
+   -----------
+0 | .  .  h  d
+1 | u  .  k  .
+2 | t  t  y  .
+3 | w  c  d  .
+Agent-2: path=[(1,2) -> (2,2) -> (3,2)] word='kyd' cleared=3 points=+40
+    0  1  2  3
+   -----------
+0 | .  .  h  d
+1 | u  .  .  .
+2 | t  t  .  .
+3 | w  c  .  .
+Agent-1: path=[(2,0) -> (2,1) -> (3,1)] word='ttc' cleared=3 points=+40
+    0  1  2  3
+   -----------
+0 | .  .  h  d
+1 | u  .  .  .
+2 | .  .  .  .
+3 | w  .  .  .
+Agent-2: path=[(0,2) -> (0,3)] word='phd' cleared=1 points=+20
+    0  1  2  3
+   -----------
+0 | .  .  p  .
+1 | u  .  .  .
+2 | .  .  .  .
+3 | w  .  .  .
+Final Position:
+BOARD:     0  1  2  3
+BOARD:    -----------
+BOARD: 0 | .  .  p  .
+BOARD: 1 | u  .  .  .
+BOARD: 2 | .  .  .  .
+BOARD: 3 | w  .  .  .
+Scores: Agent-1=110 Agent-2=60
+----------------------------------------
+Final Result: Agent-1 wins. (No valid paths remaining)
+----------------------------------------
+Points:
+Agent-1: 3
+Agent-2: 0
+----------------------------------------
+Scores:
+Agent-1: 50
+Agent-2: -50
+============================================================
+
+============================================================
+Game 8
+Agent-1: Muse-Wonder-Max:1
+Agent-2: Qwen4-Max-xhigh:2
+Starting Player: Agent-2
+------------------------------------------------------------
+    0  1  2  3
+   -----------
+0 | s  z  a  v
+1 | c  q  g  l
+2 | g  f  o  x
+3 | g  m  o  w
+Agent-2: path=[(3,3) -> (3,2) -> (2,2) -> (2,1)] word='woof' cleared=4 points=+50
+    0  1  2  3
+   -----------
+0 | s  z  a  v
+1 | c  q  g  l
+2 | g  .  .  x
+3 | g  m  .  .
+Agent-1: path=[(0,1) -> (0,2) -> (1,2)] word='zag' cleared=3 points=+40
+    0  1  2  3
+   -----------
+0 | s  .  .  v
+1 | c  q  .  l
+2 | g  .  .  x
+3 | g  m  .  .
+Agent-2: path=[(2,0) -> (1,0) -> (0,0)] word='gcs' cleared=3 points=+40
+    0  1  2  3
+   -----------
+0 | .  .  .  v
+1 | .  q  .  l
+2 | .  .  .  x
+3 | g  m  .  .
+Agent-1: path=[(0,3) -> (1,3)] word='vla' cleared=1 points=+20
+    0  1  2  3
+   -----------
+0 | .  .  .  .
+1 | .  q  .  a
+2 | .  .  .  x
+3 | g  m  .  .
+Agent-2: path=[(3,0) -> (3,1)] word='gmw' cleared=1 points=+20
+    0  1  2  3
+   -----------
+0 | .  .  .  .
+1 | .  q  .  a
+2 | .  .  .  x
+3 | w  .  .  .
+Agent-1: path=[(1,3) -> (2,3)] word='axe' cleared=1 points=+20
+    0  1  2  3
+   -----------
+0 | .  .  .  .
+1 | .  q  .  e
+2 | .  .  .  .
+3 | w  .  .  .
+Final Position:
+BOARD:     0  1  2  3
+BOARD:    -----------
+BOARD: 0 | .  .  .  .
+BOARD: 1 | .  q  .  e
+BOARD: 2 | .  .  .  .
+BOARD: 3 | w  .  .  .
+Scores: Agent-1=80 Agent-2=110
+----------------------------------------
+Final Result: Agent-2 wins. (No valid paths remaining)
+----------------------------------------
+Points:
+Agent-1: 0
+Agent-2: 3
+----------------------------------------
+Scores:
+Agent-1: -30
+Agent-2: 30
+============================================================
+
+============================================================
+Game 9
+Agent-1: Muse-Wonder-Max:1
+Agent-2: Qwen4-Max-xhigh:2
+Starting Player: Agent-1
+------------------------------------------------------------
+    0  1  2  3
+   -----------
+0 | z  n  t  d
+1 | k  w  v  d
+2 | o  e  l  w
+3 | v  p  g  c
+Agent-1: path=[(1,0) -> (2,0) -> (2,1) -> (2,2)] word='koel' cleared=4 points=+50
+    0  1  2  3
+   -----------
+0 | z  n  t  d
+1 | .  w  v  d
+2 | .  .  .  w
+3 | v  p  g  c
+Agent-2: path=[(0,2) -> (0,3) -> (1,3)] word='tdd' cleared=3 points=+40
+    0  1  2  3
+   -----------
+0 | z  n  .  .
+1 | .  w  v  .
+2 | .  .  .  w
+3 | v  p  g  c
+Agent-1: path=[(1,1) -> (0,1) -> (0,0)] word='wenz' cleared=2 points=+30
+    0  1  2  3
+   -----------
+0 | .  e  .  .
+1 | .  .  v  .
+2 | .  .  .  w
+3 | v  p  g  c
+Agent-2: path=[(3,3) -> (2,3)] word='cow' cleared=1 points=+20
+    0  1  2  3
+   -----------
+0 | .  e  .  .
+1 | .  .  v  .
+2 | .  .  .  .
+3 | v  p  g  o
+Agent-1: path=[(3,1) -> (3,2) -> (3,3)] word='pogo' cleared=2 points=+30
+    0  1  2  3
+   -----------
+0 | .  e  .  .
+1 | .  .  v  .
+2 | .  .  .  .
+3 | v  .  .  o
+Final Position:
+BOARD:     0  1  2  3
+BOARD:    -----------
+BOARD: 0 | .  e  .  .
+BOARD: 1 | .  .  v  .
+BOARD: 2 | .  .  .  .
+BOARD: 3 | v  .  .  o
+Scores: Agent-1=110 Agent-2=60
+----------------------------------------
+Final Result: Agent-1 wins. (No valid paths remaining)
+----------------------------------------
+Points:
+Agent-1: 3
+Agent-2: 0
+----------------------------------------
+Scores:
+Agent-1: 50
+Agent-2: -50
+============================================================
+
+============================================================
+Game 10
+Agent-1: Muse-Wonder-Max:1
+Agent-2: Qwen4-Max-xhigh:2
+Starting Player: Agent-2
+------------------------------------------------------------
+    0  1  2  3
+   -----------
+0 | n  q  t  z
+1 | b  p  k  m
+2 | k  c  d  q
+3 | d  z  o  n
+Agent-2: path=[(3,0) -> (3,1) -> (3,2)] word='dzo' cleared=3 points=+40
+    0  1  2  3
+   -----------
+0 | n  q  t  z
+1 | b  p  k  m
+2 | k  c  d  q
+3 | .  .  .  n
+Agent-1: path=[(0,0) -> (1,0) -> (1,1)] word='nbp' cleared=3 points=+40
+    0  1  2  3
+   -----------
+0 | .  q  t  z
+1 | .  .  k  m
+2 | k  c  d  q
+3 | .  .  .  n
+Agent-2: path=[(1,3) -> (1,2) -> (0,2)] word='mkt' cleared=3 points=+40
+    0  1  2  3
+   -----------
+0 | .  q  .  z
+1 | .  .  .  .
+2 | k  c  d  q
+3 | .  .  .  n
+Agent-1: path=[(2,2) -> (2,1) -> (2,0)] word='deck' cleared=2 points=+30
+    0  1  2  3
+   -----------
+0 | .  q  .  z
+1 | .  .  .  .
+2 | e  .  .  q
+3 | .  .  .  n
+Agent-2: path=[(2,3) -> (3,3)] word='qnp' cleared=1 points=+20
+    0  1  2  3
+   -----------
+0 | .  q  .  z
+1 | .  .  .  .
+2 | e  .  .  p
+3 | .  .  .  .
+Final Position:
+BOARD:     0  1  2  3
+BOARD:    -----------
+BOARD: 0 | .  q  .  z
+BOARD: 1 | .  .  .  .
+BOARD: 2 | e  .  .  p
+BOARD: 3 | .  .  .  .
+Scores: Agent-1=70 Agent-2=100
+----------------------------------------
+Final Result: Agent-2 wins. (No valid paths remaining)
+----------------------------------------
+Points:
+Agent-1: 0
+Agent-2: 3
+----------------------------------------
+Scores:
+Agent-1: -30
+Agent-2: 30
+============================================================
+============================================================
+Agent-1: Muse-Wonder-Max:1
+Agent-2: Qwen4-Max-xhigh:2
+RESULT:Agent-1=15.0,Agent-2=15.0
+SCORE:Agent-1=-10.0,Agent-2=10.0
+WINS:Agent-1=5,Agent-2=5
+DRAWS:0
+STATS:Agent-1={'wins': 5, 'losses': 5, 'draws': 0, 'points': 15, 'score': -10.0, 'make_move_crash': 0, 'other_crash': 0, 'crash': 0, 'timeout': 0, 'invalid': 0}
+STATS:Agent-2={'wins': 5, 'losses': 5, 'draws': 0, 'points': 15, 'score': 10.0, 'make_move_crash': 0, 'other_crash': 0, 'crash': 0, 'timeout': 0, 'invalid': 0}
+--- MATCH STATISTICS ---
+Agent-1 make_move_crash: 0
+Agent-2 make_move_crash: 0
+Agent-1 other_crash: 0
+Agent-2 other_crash: 0
+Agent-1 crash (total): 0
+Agent-2 crash (total): 0
+Agent-1 Timeouts: 0
+Agent-2 Timeouts: 0
+Agent-1 Invalid: 0
+Agent-2 Invalid: 0
+Time-limit Draws: 0
+------------------------------------------------------------
+
+
+------------------------------------------------------------

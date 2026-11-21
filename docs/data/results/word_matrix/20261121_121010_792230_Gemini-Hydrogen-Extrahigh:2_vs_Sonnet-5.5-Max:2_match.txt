@@ -1,0 +1,730 @@
+Match Contenders:
+Gemini-Hydrogen-Extrahigh:2
+Sonnet-5.5-Max:2
+
+Result:
+Gemini-Hydrogen-Extrahigh:2 : Pts: 16 - Score: 50.0
+Sonnet-5.5-Max:2 : Pts: 13 - Score: -50.0
+
+
+============================================================
+Game 1
+Agent-1: Gemini-Hydrogen-Extrahigh:2
+Agent-2: Sonnet-5.5-Max:2
+Starting Player: Agent-1
+------------------------------------------------------------
+    0  1  2  3
+   -----------
+0 | u  q  u  n
+1 | n  c  y  q
+2 | q  g  t  k
+3 | v  m  m  c
+Agent-1: path=[(2,2) -> (2,1) -> (1,1)] word='tgc' cleared=3 points=+40
+    0  1  2  3
+   -----------
+0 | u  q  u  n
+1 | n  .  y  q
+2 | q  .  .  k
+3 | v  m  m  c
+Agent-2: path=[(0,1) -> (0,0) -> (1,0)] word='qung' cleared=2 points=+30
+    0  1  2  3
+   -----------
+0 | .  .  u  n
+1 | g  .  y  q
+2 | q  .  .  k
+3 | v  m  m  c
+Agent-1: path=[(3,1) -> (3,2) -> (3,3)] word='mmc' cleared=3 points=+40
+    0  1  2  3
+   -----------
+0 | .  .  u  n
+1 | g  .  y  q
+2 | q  .  .  k
+3 | v  .  .  .
+Agent-2: path=[(1,2) -> (0,2) -> (0,3)] word='yun' cleared=3 points=+40
+    0  1  2  3
+   -----------
+0 | .  .  .  .
+1 | g  .  .  q
+2 | q  .  .  k
+3 | v  .  .  .
+Agent-1: path=[(2,0) -> (3,0)] word='qqv' cleared=1 points=+20
+    0  1  2  3
+   -----------
+0 | .  .  .  .
+1 | g  .  .  q
+2 | .  .  .  k
+3 | q  .  .  .
+Agent-2: path=[(1,3) -> (2,3)] word='qkt' cleared=1 points=+20
+    0  1  2  3
+   -----------
+0 | .  .  .  .
+1 | g  .  .  t
+2 | .  .  .  .
+3 | q  .  .  .
+Final Position:
+BOARD:     0  1  2  3
+BOARD:    -----------
+BOARD: 0 | .  .  .  .
+BOARD: 1 | g  .  .  t
+BOARD: 2 | .  .  .  .
+BOARD: 3 | q  .  .  .
+Scores: Agent-1=100 Agent-2=90
+----------------------------------------
+Final Result: Agent-1 wins. (No valid paths remaining)
+----------------------------------------
+Points:
+Agent-1: 3
+Agent-2: 0
+----------------------------------------
+Scores:
+Agent-1: 10
+Agent-2: -10
+============================================================
+
+============================================================
+Game 2
+Agent-1: Gemini-Hydrogen-Extrahigh:2
+Agent-2: Sonnet-5.5-Max:2
+Starting Player: Agent-2
+------------------------------------------------------------
+    0  1  2  3
+   -----------
+0 | q  k  a  e
+1 | s  n  o  u
+2 | h  x  j  g
+3 | x  y  n  o
+Agent-2: path=[(3,3) -> (3,2) -> (3,1) -> (2,1)] word='onyx' cleared=4 points=+50
+    0  1  2  3
+   -----------
+0 | q  k  a  e
+1 | s  n  o  u
+2 | h  .  j  g
+3 | x  .  .  .
+Agent-1: path=[(0,1) -> (0,2) -> (1,2) -> (1,1) -> (1,0)] word='kaons' cleared=5 points=+60
+    0  1  2  3
+   -----------
+0 | q  .  .  e
+1 | .  .  .  u
+2 | h  .  j  g
+3 | x  .  .  .
+Agent-2: path=[(0,3) -> (1,3) -> (2,3)] word='eug' cleared=3 points=+40
+    0  1  2  3
+   -----------
+0 | q  .  .  .
+1 | .  .  .  .
+2 | h  .  j  .
+3 | x  .  .  .
+Agent-1: path=[(2,0) -> (3,0)] word='hdx' cleared=1 points=+20
+    0  1  2  3
+   -----------
+0 | q  .  .  .
+1 | .  .  .  .
+2 | .  .  j  .
+3 | d  .  .  .
+Final Position:
+BOARD:     0  1  2  3
+BOARD:    -----------
+BOARD: 0 | q  .  .  .
+BOARD: 1 | .  .  .  .
+BOARD: 2 | .  .  j  .
+BOARD: 3 | d  .  .  .
+Scores: Agent-1=80 Agent-2=90
+----------------------------------------
+Final Result: Agent-2 wins. (No valid paths remaining)
+----------------------------------------
+Points:
+Agent-1: 0
+Agent-2: 3
+----------------------------------------
+Scores:
+Agent-1: -10
+Agent-2: 10
+============================================================
+
+============================================================
+Game 3
+Agent-1: Gemini-Hydrogen-Extrahigh:2
+Agent-2: Sonnet-5.5-Max:2
+Starting Player: Agent-1
+------------------------------------------------------------
+    0  1  2  3
+   -----------
+0 | l  s  e  u
+1 | r  p  f  z
+2 | q  g  m  k
+3 | c  c  z  m
+Agent-1: path=[(1,2) -> (1,1) -> (0,1)] word='fps' cleared=3 points=+40
+    0  1  2  3
+   -----------
+0 | l  .  e  u
+1 | r  .  .  z
+2 | q  g  m  k
+3 | c  c  z  m
+Agent-2: path=[(2,1) -> (3,1) -> (3,0)] word='gcc' cleared=3 points=+40
+    0  1  2  3
+   -----------
+0 | l  .  e  u
+1 | r  .  .  z
+2 | q  .  m  k
+3 | .  .  z  m
+Agent-1: path=[(2,3) -> (1,3) -> (0,3) -> (0,2)] word='kazue' cleared=3 points=+40
+    0  1  2  3
+   -----------
+0 | l  .  a  .
+1 | r  .  .  .
+2 | q  .  m  .
+3 | .  .  z  m
+Agent-2: path=[(0,0) -> (1,0)] word='clr' cleared=1 points=+20
+    0  1  2  3
+   -----------
+0 | c  .  a  .
+1 | .  .  .  .
+2 | q  .  m  .
+3 | .  .  z  m
+Agent-1: path=[(2,2) -> (3,2)] word='mhz' cleared=1 points=+20
+    0  1  2  3
+   -----------
+0 | c  .  a  .
+1 | .  .  .  .
+2 | q  .  .  .
+3 | .  .  h  m
+Agent-2: path=[(3,2) -> (3,3)] word='chm' cleared=1 points=+20
+    0  1  2  3
+   -----------
+0 | c  .  a  .
+1 | .  .  .  .
+2 | q  .  .  .
+3 | .  .  .  c
+Final Position:
+BOARD:     0  1  2  3
+BOARD:    -----------
+BOARD: 0 | c  .  a  .
+BOARD: 1 | .  .  .  .
+BOARD: 2 | q  .  .  .
+BOARD: 3 | .  .  .  c
+Scores: Agent-1=100 Agent-2=80
+----------------------------------------
+Final Result: Agent-1 wins. (No valid paths remaining)
+----------------------------------------
+Points:
+Agent-1: 3
+Agent-2: 0
+----------------------------------------
+Scores:
+Agent-1: 20
+Agent-2: -20
+============================================================
+
+============================================================
+Game 4
+Agent-1: Gemini-Hydrogen-Extrahigh:2
+Agent-2: Sonnet-5.5-Max:2
+Starting Player: Agent-2
+------------------------------------------------------------
+    0  1  2  3
+   -----------
+0 | x  e  v  v
+1 | e  v  d  s
+2 | a  u  b  m
+3 | o  x  i  m
+Agent-2: path=[(0,1) -> (1,1) -> (1,0) -> (2,0)] word='evea' cleared=4 points=+50
+    0  1  2  3
+   -----------
+0 | x  .  v  v
+1 | .  .  d  s
+2 | .  u  b  m
+3 | o  x  i  m
+Agent-1: path=[(1,2) -> (2,2) -> (2,3) -> (1,3)] word='dbms' cleared=4 points=+50
+    0  1  2  3
+   -----------
+0 | x  .  v  v
+1 | .  .  .  .
+2 | .  u  .  .
+3 | o  x  i  m
+Agent-2: path=[(3,0) -> (3,1) -> (3,2) -> (3,3)] word='oxim' cleared=4 points=+50
+    0  1  2  3
+   -----------
+0 | x  .  v  v
+1 | .  .  .  .
+2 | .  u  .  .
+3 | .  .  .  .
+Agent-1: path=[(0,2) -> (0,3)] word='viv' cleared=1 points=+20
+    0  1  2  3
+   -----------
+0 | x  .  .  i
+1 | .  .  .  .
+2 | .  u  .  .
+3 | .  .  .  .
+Final Position:
+BOARD:     0  1  2  3
+BOARD:    -----------
+BOARD: 0 | x  .  .  i
+BOARD: 1 | .  .  .  .
+BOARD: 2 | .  u  .  .
+BOARD: 3 | .  .  .  .
+Scores: Agent-1=70 Agent-2=100
+----------------------------------------
+Final Result: Agent-2 wins. (No valid paths remaining)
+----------------------------------------
+Points:
+Agent-1: 0
+Agent-2: 3
+----------------------------------------
+Scores:
+Agent-1: -30
+Agent-2: 30
+============================================================
+
+============================================================
+Game 5
+Agent-1: Gemini-Hydrogen-Extrahigh:2
+Agent-2: Sonnet-5.5-Max:2
+Starting Player: Agent-1
+------------------------------------------------------------
+    0  1  2  3
+   -----------
+0 | i  x  y  d
+1 | l  l  l  r
+2 | x  s  c  o
+3 | k  z  n  a
+Agent-1: path=[(2,2) -> (2,3) -> (1,3) -> (0,3) -> (0,2) -> (1,2)] word='cordyl' cleared=6 points=+70
+    0  1  2  3
+   -----------
+0 | i  x  .  .
+1 | l  l  .  .
+2 | x  s  .  .
+3 | k  z  n  a
+Agent-2: path=[(0,0) -> (1,0) -> (1,1) -> (2,1)] word='ills' cleared=4 points=+50
+    0  1  2  3
+   -----------
+0 | .  x  .  .
+1 | .  .  .  .
+2 | x  .  .  .
+3 | k  z  n  a
+Agent-1: path=[(3,1) -> (3,2) -> (3,3)] word='zina' cleared=2 points=+30
+    0  1  2  3
+   -----------
+0 | .  x  .  .
+1 | .  .  .  .
+2 | x  .  .  .
+3 | k  .  .  i
+Agent-2: path=[(3,0) -> (2,0)] word='kex' cleared=1 points=+20
+    0  1  2  3
+   -----------
+0 | .  x  .  .
+1 | .  .  .  .
+2 | .  .  .  .
+3 | e  .  .  i
+Final Position:
+BOARD:     0  1  2  3
+BOARD:    -----------
+BOARD: 0 | .  x  .  .
+BOARD: 1 | .  .  .  .
+BOARD: 2 | .  .  .  .
+BOARD: 3 | e  .  .  i
+Scores: Agent-1=100 Agent-2=70
+----------------------------------------
+Final Result: Agent-1 wins. (No valid paths remaining)
+----------------------------------------
+Points:
+Agent-1: 3
+Agent-2: 0
+----------------------------------------
+Scores:
+Agent-1: 30
+Agent-2: -30
+============================================================
+
+============================================================
+Game 6
+Agent-1: Gemini-Hydrogen-Extrahigh:2
+Agent-2: Sonnet-5.5-Max:2
+Starting Player: Agent-2
+------------------------------------------------------------
+    0  1  2  3
+   -----------
+0 | j  h  u  n
+1 | v  m  r  w
+2 | j  r  x  e
+3 | d  p  o  v
+Agent-2: path=[(3,3) -> (2,3) -> (2,2)] word='vex' cleared=3 points=+40
+    0  1  2  3
+   -----------
+0 | j  h  u  n
+1 | v  m  r  w
+2 | j  r  .  .
+3 | d  p  o  .
+Agent-1: path=[(1,0) -> (1,1) -> (2,1)] word='vmr' cleared=3 points=+40
+    0  1  2  3
+   -----------
+0 | j  h  u  n
+1 | .  .  r  w
+2 | j  .  .  .
+3 | d  p  o  .
+Agent-2: path=[(0,3) -> (0,2) -> (1,2)] word='nur' cleared=3 points=+40
+    0  1  2  3
+   -----------
+0 | j  h  .  .
+1 | .  .  .  w
+2 | j  .  .  .
+3 | d  p  o  .
+Agent-1: path=[(3,2) -> (3,1) -> (3,0)] word='opdu' cleared=2 points=+30
+    0  1  2  3
+   -----------
+0 | j  h  .  .
+1 | .  .  .  w
+2 | j  .  .  .
+3 | .  u  .  .
+Agent-2: path=[(0,0) -> (0,1)] word='jah' cleared=1 points=+20
+    0  1  2  3
+   -----------
+0 | .  a  .  .
+1 | .  .  .  w
+2 | j  .  .  .
+3 | .  u  .  .
+Final Position:
+BOARD:     0  1  2  3
+BOARD:    -----------
+BOARD: 0 | .  a  .  .
+BOARD: 1 | .  .  .  w
+BOARD: 2 | j  .  .  .
+BOARD: 3 | .  u  .  .
+Scores: Agent-1=70 Agent-2=100
+----------------------------------------
+Final Result: Agent-2 wins. (No valid paths remaining)
+----------------------------------------
+Points:
+Agent-1: 0
+Agent-2: 3
+----------------------------------------
+Scores:
+Agent-1: -30
+Agent-2: 30
+============================================================
+
+============================================================
+Game 7
+Agent-1: Gemini-Hydrogen-Extrahigh:2
+Agent-2: Sonnet-5.5-Max:2
+Starting Player: Agent-1
+------------------------------------------------------------
+    0  1  2  3
+   -----------
+0 | c  x  h  l
+1 | a  k  s  u
+2 | i  u  j  g
+3 | a  n  m  t
+Agent-1: path=[(1,2) -> (1,1) -> (2,1) -> (3,1)] word='skun' cleared=4 points=+50
+    0  1  2  3
+   -----------
+0 | c  x  h  l
+1 | a  .  .  u
+2 | i  .  j  g
+3 | a  .  m  t
+Agent-2: path=[(0,0) -> (1,0) -> (2,0) -> (3,0)] word='caia' cleared=4 points=+50
+    0  1  2  3
+   -----------
+0 | .  x  h  l
+1 | .  .  .  u
+2 | .  .  j  g
+3 | .  .  m  t
+Agent-1: path=[(1,3) -> (2,3) -> (3,3)] word='ugt' cleared=3 points=+40
+    0  1  2  3
+   -----------
+0 | .  x  h  l
+1 | .  .  .  .
+2 | .  .  j  .
+3 | .  .  m  .
+Agent-2: path=[(0,2) -> (0,1)] word='hax' cleared=1 points=+20
+    0  1  2  3
+   -----------
+0 | .  .  a  l
+1 | .  .  .  .
+2 | .  .  j  .
+3 | .  .  m  .
+Agent-1: path=[(0,3) -> (0,2)] word='laz' cleared=1 points=+20
+    0  1  2  3
+   -----------
+0 | .  .  .  z
+1 | .  .  .  .
+2 | .  .  j  .
+3 | .  .  m  .
+Agent-2: path=[(2,2) -> (3,2)] word='jam' cleared=1 points=+20
+    0  1  2  3
+   -----------
+0 | .  .  .  z
+1 | .  .  .  .
+2 | .  .  .  .
+3 | .  .  a  .
+Final Position:
+BOARD:     0  1  2  3
+BOARD:    -----------
+BOARD: 0 | .  .  .  z
+BOARD: 1 | .  .  .  .
+BOARD: 2 | .  .  .  .
+BOARD: 3 | .  .  a  .
+Scores: Agent-1=110 Agent-2=90
+----------------------------------------
+Final Result: Agent-1 wins. (No valid paths remaining)
+----------------------------------------
+Points:
+Agent-1: 3
+Agent-2: 0
+----------------------------------------
+Scores:
+Agent-1: 20
+Agent-2: -20
+============================================================
+
+============================================================
+Game 8
+Agent-1: Gemini-Hydrogen-Extrahigh:2
+Agent-2: Sonnet-5.5-Max:2
+Starting Player: Agent-2
+------------------------------------------------------------
+    0  1  2  3
+   -----------
+0 | x  j  l  s
+1 | s  e  w  w
+2 | j  p  v  z
+3 | s  l  l  u
+Agent-2: path=[(3,2) -> (3,3) -> (2,3)] word='luz' cleared=3 points=+40
+    0  1  2  3
+   -----------
+0 | x  j  l  s
+1 | s  e  w  w
+2 | j  p  v  .
+3 | s  l  .  .
+Agent-1: path=[(2,1) -> (1,1) -> (1,2)] word='pew' cleared=3 points=+40
+    0  1  2  3
+   -----------
+0 | x  j  l  s
+1 | s  .  .  w
+2 | j  .  v  .
+3 | s  l  .  .
+Agent-2: path=[(0,0) -> (1,0)] word='bxs' cleared=1 points=+20
+    0  1  2  3
+   -----------
+0 | b  j  l  s
+1 | .  .  .  w
+2 | j  .  v  .
+3 | s  l  .  .
+Agent-1: path=[(0,2) -> (0,1) -> (0,0)] word='ljbf' cleared=2 points=+30
+    0  1  2  3
+   -----------
+0 | .  .  f  s
+1 | .  .  .  w
+2 | j  .  v  .
+3 | s  l  .  .
+Agent-2: path=[(0,2) -> (0,3) -> (1,3)] word='fsw' cleared=3 points=+40
+    0  1  2  3
+   -----------
+0 | .  .  .  .
+1 | .  .  .  .
+2 | j  .  v  .
+3 | s  l  .  .
+Agent-1: path=[(3,0) -> (3,1)] word='qsl' cleared=1 points=+20
+    0  1  2  3
+   -----------
+0 | .  .  .  .
+1 | .  .  .  .
+2 | j  .  v  .
+3 | q  .  .  .
+Agent-2: PASS
+Agent-1: PASS
+Agent-2: PASS
+Agent-1: PASS
+Agent-2: PASS
+Agent-1: PASS
+Final Position:
+BOARD:     0  1  2  3
+BOARD:    -----------
+BOARD: 0 | .  .  .  .
+BOARD: 1 | .  .  .  .
+BOARD: 2 | j  .  v  .
+BOARD: 3 | q  .  .  .
+Scores: Agent-1=90 Agent-2=100
+----------------------------------------
+Final Result: Agent-2 wins. (6 consecutive passes reached)
+----------------------------------------
+Points:
+Agent-1: 0
+Agent-2: 3
+----------------------------------------
+Scores:
+Agent-1: -10
+Agent-2: 10
+============================================================
+
+============================================================
+Game 9
+Agent-1: Gemini-Hydrogen-Extrahigh:2
+Agent-2: Sonnet-5.5-Max:2
+Starting Player: Agent-1
+------------------------------------------------------------
+    0  1  2  3
+   -----------
+0 | d  i  n  q
+1 | k  w  f  k
+2 | k  d  w  o
+3 | w  u  g  a
+Agent-1: path=[(3,1) -> (2,1) -> (1,1) -> (0,1) -> (0,2)] word='audwin' cleared=4 points=+50
+    0  1  2  3
+   -----------
+0 | d  .  .  q
+1 | k  a  f  k
+2 | k  .  w  o
+3 | w  .  g  a
+Agent-2: path=[(1,0) -> (1,1) -> (1,2) -> (1,3)] word='kafka' cleared=3 points=+40
+    0  1  2  3
+   -----------
+0 | d  .  .  q
+1 | .  .  a  .
+2 | k  .  w  o
+3 | w  .  g  a
+Agent-1: path=[(1,2) -> (2,2) -> (3,2)] word='awg' cleared=3 points=+40
+    0  1  2  3
+   -----------
+0 | d  .  .  q
+1 | .  .  .  .
+2 | k  .  .  o
+3 | w  .  .  a
+Agent-2: path=[(2,0) -> (3,0)] word='ckw' cleared=1 points=+20
+    0  1  2  3
+   -----------
+0 | d  .  .  q
+1 | .  .  .  .
+2 | .  .  .  o
+3 | c  .  .  a
+Agent-1: path=[(3,3) -> (2,3)] word='aoq' cleared=1 points=+20
+    0  1  2  3
+   -----------
+0 | d  .  .  q
+1 | .  .  .  .
+2 | .  .  .  q
+3 | c  .  .  .
+Final Position:
+BOARD:     0  1  2  3
+BOARD:    -----------
+BOARD: 0 | d  .  .  q
+BOARD: 1 | .  .  .  .
+BOARD: 2 | .  .  .  q
+BOARD: 3 | c  .  .  .
+Scores: Agent-1=110 Agent-2=60
+----------------------------------------
+Final Result: Agent-1 wins. (No valid paths remaining)
+----------------------------------------
+Points:
+Agent-1: 3
+Agent-2: 0
+----------------------------------------
+Scores:
+Agent-1: 50
+Agent-2: -50
+============================================================
+
+============================================================
+Game 10
+Agent-1: Gemini-Hydrogen-Extrahigh:2
+Agent-2: Sonnet-5.5-Max:2
+Starting Player: Agent-2
+------------------------------------------------------------
+    0  1  2  3
+   -----------
+0 | v  d  q  e
+1 | v  d  v  z
+2 | j  s  o  y
+3 | g  n  q  c
+Agent-2: path=[(2,2) -> (2,1) -> (3,1)] word='osn' cleared=3 points=+40
+    0  1  2  3
+   -----------
+0 | v  d  q  e
+1 | v  d  v  z
+2 | j  .  .  y
+3 | g  .  q  c
+Agent-1: path=[(2,3) -> (1,3) -> (0,3)] word='lyze' cleared=2 points=+30
+    0  1  2  3
+   -----------
+0 | v  d  q  .
+1 | v  d  v  l
+2 | j  .  .  .
+3 | g  .  q  c
+Agent-2: path=[(0,0) -> (1,0)] word='vav' cleared=1 points=+20
+    0  1  2  3
+   -----------
+0 | .  d  q  .
+1 | a  d  v  l
+2 | j  .  .  .
+3 | g  .  q  c
+Agent-1: path=[(2,0) -> (1,0) -> (1,1) -> (0,1)] word='jadd' cleared=4 points=+50
+    0  1  2  3
+   -----------
+0 | .  .  q  .
+1 | .  .  v  l
+2 | .  .  .  .
+3 | g  .  q  c
+Agent-2: path=[(0,2) -> (1,2)] word='qqv' cleared=1 points=+20
+    0  1  2  3
+   -----------
+0 | .  .  .  .
+1 | .  .  q  l
+2 | .  .  .  .
+3 | g  .  q  c
+Agent-1: path=[(3,2) -> (3,3)] word='kqc' cleared=1 points=+20
+    0  1  2  3
+   -----------
+0 | .  .  .  .
+1 | .  .  q  l
+2 | .  .  .  .
+3 | g  .  .  k
+Agent-2: path=[(1,2) -> (1,3)] word='aql' cleared=1 points=+20
+    0  1  2  3
+   -----------
+0 | .  .  .  .
+1 | .  .  a  .
+2 | .  .  .  .
+3 | g  .  .  k
+Final Position:
+BOARD:     0  1  2  3
+BOARD:    -----------
+BOARD: 0 | .  .  .  .
+BOARD: 1 | .  .  a  .
+BOARD: 2 | .  .  .  .
+BOARD: 3 | g  .  .  k
+Scores: Agent-1=100 Agent-2=100
+----------------------------------------
+Final Result: Draw. (No valid paths remaining)
+----------------------------------------
+Points:
+Agent-1: 1
+Agent-2: 1
+----------------------------------------
+Scores:
+Agent-1: 0
+Agent-2: 0
+============================================================
+============================================================
+Agent-1: Gemini-Hydrogen-Extrahigh:2
+Agent-2: Sonnet-5.5-Max:2
+RESULT:Agent-1=16.0,Agent-2=13.0
+SCORE:Agent-1=50.0,Agent-2=-50.0
+WINS:Agent-1=5,Agent-2=4
+DRAWS:1
+STATS:Agent-1={'wins': 5, 'losses': 4, 'draws': 1, 'points': 16, 'score': 50.0, 'make_move_crash': 0, 'other_crash': 0, 'crash': 0, 'timeout': 0, 'invalid': 0}
+STATS:Agent-2={'wins': 4, 'losses': 5, 'draws': 1, 'points': 13, 'score': -50.0, 'make_move_crash': 0, 'other_crash': 0, 'crash': 0, 'timeout': 0, 'invalid': 0}
+--- MATCH STATISTICS ---
+Agent-1 make_move_crash: 0
+Agent-2 make_move_crash: 0
+Agent-1 other_crash: 0
+Agent-2 other_crash: 0
+Agent-1 crash (total): 0
+Agent-2 crash (total): 0
+Agent-1 Timeouts: 0
+Agent-2 Timeouts: 0
+Agent-1 Invalid: 0
+Agent-2 Invalid: 0
+Time-limit Draws: 0
+------------------------------------------------------------
+
+
+------------------------------------------------------------

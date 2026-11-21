@@ -1,0 +1,738 @@
+Match Contenders:
+Kimi-K3.1-Pro-Max:1
+Sonnet-5.5-Max:1
+
+Result:
+Kimi-K3.1-Pro-Max:1 : Pts: 15 - Score: -40.0
+Sonnet-5.5-Max:1 : Pts: 15 - Score: 40.0
+
+
+============================================================
+Game 1
+Agent-1: Kimi-K3.1-Pro-Max:1
+Agent-2: Sonnet-5.5-Max:1
+Starting Player: Agent-1
+------------------------------------------------------------
+    0  1  2  3
+   -----------
+0 | n  i  k  h
+1 | g  w  r  x
+2 | c  i  x  t
+3 | t  c  v  u
+Agent-1: path=[(0,2) -> (0,1) -> (1,1) -> (2,1)] word='kiwi' cleared=4 points=+50
+    0  1  2  3
+   -----------
+0 | n  .  .  h
+1 | g  .  r  x
+2 | c  .  x  t
+3 | t  c  v  u
+Agent-2: path=[(1,0) -> (2,0) -> (3,0)] word='gct' cleared=3 points=+40
+    0  1  2  3
+   -----------
+0 | n  .  .  h
+1 | .  .  r  x
+2 | .  .  x  t
+3 | .  c  v  u
+Agent-1: path=[(0,3) -> (1,3) -> (2,3)] word='hext' cleared=2 points=+30
+    0  1  2  3
+   -----------
+0 | n  .  .  e
+1 | .  .  r  .
+2 | .  .  x  .
+3 | .  c  v  u
+Agent-2: path=[(3,3) -> (3,2) -> (3,1)] word='uvic' cleared=2 points=+30
+    0  1  2  3
+   -----------
+0 | n  .  .  e
+1 | .  .  r  .
+2 | .  .  x  .
+3 | .  .  .  i
+Agent-1: path=[(1,2) -> (2,2)] word='rax' cleared=1 points=+20
+    0  1  2  3
+   -----------
+0 | n  .  .  e
+1 | .  .  .  .
+2 | .  .  a  .
+3 | .  .  .  i
+Final Position:
+BOARD:     0  1  2  3
+BOARD:    -----------
+BOARD: 0 | n  .  .  e
+BOARD: 1 | .  .  .  .
+BOARD: 2 | .  .  a  .
+BOARD: 3 | .  .  .  i
+Scores: Agent-1=100 Agent-2=70
+----------------------------------------
+Final Result: Agent-1 wins. (No valid paths remaining)
+----------------------------------------
+Points:
+Agent-1: 3
+Agent-2: 0
+----------------------------------------
+Scores:
+Agent-1: 30
+Agent-2: -30
+============================================================
+
+============================================================
+Game 2
+Agent-1: Kimi-K3.1-Pro-Max:1
+Agent-2: Sonnet-5.5-Max:1
+Starting Player: Agent-2
+------------------------------------------------------------
+    0  1  2  3
+   -----------
+0 | d  b  e  a
+1 | o  i  v  d
+2 | l  o  r  r
+3 | n  v  s  b
+Agent-2: path=[(0,1) -> (1,1) -> (1,0) -> (2,0) -> (2,1) -> (2,2) -> (3,2)] word='bicolors' cleared=6 points=+70
+    0  1  2  3
+   -----------
+0 | d  c  e  a
+1 | .  .  v  d
+2 | .  .  .  r
+3 | n  v  .  b
+Agent-1: path=[(0,0) -> (0,1) -> (0,2)] word='dce' cleared=3 points=+40
+    0  1  2  3
+   -----------
+0 | .  .  .  a
+1 | .  .  v  d
+2 | .  .  .  r
+3 | n  v  .  b
+Agent-2: path=[(3,3) -> (2,3) -> (1,3) -> (0,3)] word='borda' cleared=3 points=+40
+    0  1  2  3
+   -----------
+0 | .  .  .  .
+1 | .  .  v  o
+2 | .  .  .  .
+3 | n  v  .  .
+Agent-1: path=[(1,2) -> (1,3)] word='avo' cleared=1 points=+20
+    0  1  2  3
+   -----------
+0 | .  .  .  .
+1 | .  .  .  a
+2 | .  .  .  .
+3 | n  v  .  .
+Agent-2: path=[(3,0) -> (3,1)] word='npv' cleared=1 points=+20
+    0  1  2  3
+   -----------
+0 | .  .  .  .
+1 | .  .  .  a
+2 | .  .  .  .
+3 | .  p  .  .
+Final Position:
+BOARD:     0  1  2  3
+BOARD:    -----------
+BOARD: 0 | .  .  .  .
+BOARD: 1 | .  .  .  a
+BOARD: 2 | .  .  .  .
+BOARD: 3 | .  p  .  .
+Scores: Agent-1=60 Agent-2=130
+----------------------------------------
+Final Result: Agent-2 wins. (No valid paths remaining)
+----------------------------------------
+Points:
+Agent-1: 0
+Agent-2: 3
+----------------------------------------
+Scores:
+Agent-1: -70
+Agent-2: 70
+============================================================
+
+============================================================
+Game 3
+Agent-1: Kimi-K3.1-Pro-Max:1
+Agent-2: Sonnet-5.5-Max:1
+Starting Player: Agent-1
+------------------------------------------------------------
+    0  1  2  3
+   -----------
+0 | w  a  k  y
+1 | o  n  a  h
+2 | e  i  u  r
+3 | z  l  h  u
+Agent-1: path=[(0,0) -> (0,1) -> (0,2) -> (1,2) -> (1,1)] word='wakan' cleared=5 points=+60
+    0  1  2  3
+   -----------
+0 | .  .  .  y
+1 | o  .  .  h
+2 | e  i  u  r
+3 | z  l  h  u
+Agent-2: path=[(2,3) -> (3,3) -> (3,2) -> (3,1)] word='ruhl' cleared=4 points=+50
+    0  1  2  3
+   -----------
+0 | .  .  .  y
+1 | o  .  .  h
+2 | e  i  u  .
+3 | z  .  .  .
+Agent-1: path=[(1,0) -> (2,0) -> (3,0)] word='oyez' cleared=2 points=+30
+    0  1  2  3
+   -----------
+0 | .  .  .  y
+1 | .  .  .  h
+2 | y  i  u  .
+3 | .  .  .  .
+Agent-2: path=[(2,2) -> (2,1) -> (2,0)] word='suiy' cleared=2 points=+30
+    0  1  2  3
+   -----------
+0 | .  .  .  y
+1 | .  .  .  h
+2 | s  .  .  .
+3 | .  .  .  .
+Agent-1: path=[(0,3) -> (1,3)] word='yha' cleared=1 points=+20
+    0  1  2  3
+   -----------
+0 | .  .  .  .
+1 | .  .  .  a
+2 | s  .  .  .
+3 | .  .  .  .
+Final Position:
+BOARD:     0  1  2  3
+BOARD:    -----------
+BOARD: 0 | .  .  .  .
+BOARD: 1 | .  .  .  a
+BOARD: 2 | s  .  .  .
+BOARD: 3 | .  .  .  .
+Scores: Agent-1=110 Agent-2=80
+----------------------------------------
+Final Result: Agent-1 wins. (No valid paths remaining)
+----------------------------------------
+Points:
+Agent-1: 3
+Agent-2: 0
+----------------------------------------
+Scores:
+Agent-1: 30
+Agent-2: -30
+============================================================
+
+============================================================
+Game 4
+Agent-1: Kimi-K3.1-Pro-Max:1
+Agent-2: Sonnet-5.5-Max:1
+Starting Player: Agent-2
+------------------------------------------------------------
+    0  1  2  3
+   -----------
+0 | k  b  w  h
+1 | d  d  n  a
+2 | y  k  h  h
+3 | u  s  x  m
+Agent-2: path=[(0,3) -> (1,3) -> (1,2) -> (1,1) -> (0,1) -> (0,2)] word='handbow' cleared=5 points=+60
+    0  1  2  3
+   -----------
+0 | k  o  .  .
+1 | d  .  .  .
+2 | y  k  h  h
+3 | u  s  x  m
+Agent-1: path=[(1,0) -> (2,0) -> (3,0) -> (3,1)] word='dyaus' cleared=3 points=+40
+    0  1  2  3
+   -----------
+0 | k  o  .  .
+1 | .  .  .  .
+2 | a  k  h  h
+3 | .  .  x  m
+Agent-2: path=[(2,0) -> (2,1) -> (2,2)] word='akh' cleared=3 points=+40
+    0  1  2  3
+   -----------
+0 | k  o  .  .
+1 | .  .  .  .
+2 | .  .  .  h
+3 | .  .  x  m
+Agent-1: path=[(0,0) -> (0,1)] word='kho' cleared=1 points=+20
+    0  1  2  3
+   -----------
+0 | .  h  .  .
+1 | .  .  .  .
+2 | .  .  .  h
+3 | .  .  x  m
+Agent-2: path=[(3,3) -> (2,3)] word='mhg' cleared=1 points=+20
+    0  1  2  3
+   -----------
+0 | .  h  .  .
+1 | .  .  .  .
+2 | .  .  .  .
+3 | .  .  x  g
+Agent-1: path=[(3,2) -> (3,3)] word='xpg' cleared=1 points=+20
+    0  1  2  3
+   -----------
+0 | .  h  .  .
+1 | .  .  .  .
+2 | .  .  .  .
+3 | .  .  p  .
+Final Position:
+BOARD:     0  1  2  3
+BOARD:    -----------
+BOARD: 0 | .  h  .  .
+BOARD: 1 | .  .  .  .
+BOARD: 2 | .  .  .  .
+BOARD: 3 | .  .  p  .
+Scores: Agent-1=80 Agent-2=120
+----------------------------------------
+Final Result: Agent-2 wins. (No valid paths remaining)
+----------------------------------------
+Points:
+Agent-1: 0
+Agent-2: 3
+----------------------------------------
+Scores:
+Agent-1: -40
+Agent-2: 40
+============================================================
+
+============================================================
+Game 5
+Agent-1: Kimi-K3.1-Pro-Max:1
+Agent-2: Sonnet-5.5-Max:1
+Starting Player: Agent-1
+------------------------------------------------------------
+    0  1  2  3
+   -----------
+0 | d  x  d  k
+1 | s  d  b  w
+2 | c  v  r  w
+3 | x  l  z  m
+Agent-1: path=[(0,0) -> (1,0) -> (2,0)] word='dsc' cleared=3 points=+40
+    0  1  2  3
+   -----------
+0 | .  x  d  k
+1 | .  d  b  w
+2 | .  v  r  w
+3 | x  l  z  m
+Agent-2: path=[(2,2) -> (2,3) -> (3,3)] word='rwm' cleared=3 points=+40
+    0  1  2  3
+   -----------
+0 | .  x  d  k
+1 | .  d  b  w
+2 | .  v  .  .
+3 | x  l  z  .
+Agent-1: path=[(0,2) -> (1,2) -> (1,3)] word='dbw' cleared=3 points=+40
+    0  1  2  3
+   -----------
+0 | .  x  .  k
+1 | .  d  .  .
+2 | .  v  .  .
+3 | x  l  z  .
+Agent-2: path=[(3,1) -> (2,1) -> (1,1)] word='blvd' cleared=2 points=+30
+    0  1  2  3
+   -----------
+0 | .  x  .  k
+1 | .  .  .  .
+2 | .  .  .  .
+3 | x  b  z  .
+Agent-1: path=[(3,0) -> (3,1)] word='xbt' cleared=1 points=+20
+    0  1  2  3
+   -----------
+0 | .  x  .  k
+1 | .  .  .  .
+2 | .  .  .  .
+3 | t  .  z  .
+Final Position:
+BOARD:     0  1  2  3
+BOARD:    -----------
+BOARD: 0 | .  x  .  k
+BOARD: 1 | .  .  .  .
+BOARD: 2 | .  .  .  .
+BOARD: 3 | t  .  z  .
+Scores: Agent-1=100 Agent-2=70
+----------------------------------------
+Final Result: Agent-1 wins. (No valid paths remaining)
+----------------------------------------
+Points:
+Agent-1: 3
+Agent-2: 0
+----------------------------------------
+Scores:
+Agent-1: 30
+Agent-2: -30
+============================================================
+
+============================================================
+Game 6
+Agent-1: Kimi-K3.1-Pro-Max:1
+Agent-2: Sonnet-5.5-Max:1
+Starting Player: Agent-2
+------------------------------------------------------------
+    0  1  2  3
+   -----------
+0 | m  n  u  m
+1 | f  w  i  c
+2 | x  z  s  f
+3 | o  c  c  x
+Agent-2: path=[(3,2) -> (2,2) -> (1,2) -> (0,2) -> (0,3)] word='cesium' cleared=4 points=+50
+    0  1  2  3
+   -----------
+0 | m  n  e  .
+1 | f  w  .  c
+2 | x  z  .  f
+3 | o  c  .  x
+Agent-1: path=[(0,0) -> (0,1) -> (0,2)] word='mne' cleared=3 points=+40
+    0  1  2  3
+   -----------
+0 | .  .  .  .
+1 | f  w  .  c
+2 | x  z  .  f
+3 | o  c  .  x
+Agent-2: path=[(3,1) -> (3,0) -> (2,0)] word='cox' cleared=3 points=+40
+    0  1  2  3
+   -----------
+0 | .  .  .  .
+1 | f  w  .  c
+2 | .  z  .  f
+3 | .  .  .  x
+Agent-1: path=[(1,0) -> (1,1)] word='fsw' cleared=1 points=+20
+    0  1  2  3
+   -----------
+0 | .  .  .  .
+1 | s  .  .  c
+2 | .  z  .  f
+3 | .  .  .  x
+Agent-2: path=[(2,3) -> (1,3)] word='fgc' cleared=1 points=+20
+    0  1  2  3
+   -----------
+0 | .  .  .  .
+1 | s  .  .  .
+2 | .  z  .  g
+3 | .  .  .  x
+Agent-1: path=[(2,3) -> (3,3)] word='cgx' cleared=1 points=+20
+    0  1  2  3
+   -----------
+0 | .  .  .  .
+1 | s  .  .  .
+2 | .  z  .  .
+3 | .  .  .  c
+Final Position:
+BOARD:     0  1  2  3
+BOARD:    -----------
+BOARD: 0 | .  .  .  .
+BOARD: 1 | s  .  .  .
+BOARD: 2 | .  z  .  .
+BOARD: 3 | .  .  .  c
+Scores: Agent-1=80 Agent-2=110
+----------------------------------------
+Final Result: Agent-2 wins. (No valid paths remaining)
+----------------------------------------
+Points:
+Agent-1: 0
+Agent-2: 3
+----------------------------------------
+Scores:
+Agent-1: -30
+Agent-2: 30
+============================================================
+
+============================================================
+Game 7
+Agent-1: Kimi-K3.1-Pro-Max:1
+Agent-2: Sonnet-5.5-Max:1
+Starting Player: Agent-1
+------------------------------------------------------------
+    0  1  2  3
+   -----------
+0 | e  z  c  i
+1 | y  s  u  q
+2 | t  q  u  w
+3 | s  l  u  x
+Agent-1: path=[(1,1) -> (1,2) -> (0,2) -> (0,3)] word='suci' cleared=4 points=+50
+    0  1  2  3
+   -----------
+0 | e  z  .  .
+1 | y  .  .  q
+2 | t  q  u  w
+3 | s  l  u  x
+Agent-2: path=[(3,0) -> (2,0) -> (1,0) -> (0,0)] word='stye' cleared=4 points=+50
+    0  1  2  3
+   -----------
+0 | .  z  .  .
+1 | .  .  .  q
+2 | .  q  u  w
+3 | .  l  u  x
+Agent-1: path=[(3,1) -> (3,2) -> (3,3)] word='lux' cleared=3 points=+40
+    0  1  2  3
+   -----------
+0 | .  z  .  .
+1 | .  .  .  q
+2 | .  q  u  w
+3 | .  .  .  .
+Agent-2: path=[(2,1) -> (2,2) -> (2,3)] word='quaw' cleared=2 points=+30
+    0  1  2  3
+   -----------
+0 | .  z  .  .
+1 | .  .  .  q
+2 | .  .  .  a
+3 | .  .  .  .
+Agent-1: path=[(1,3) -> (2,3)] word='qas' cleared=1 points=+20
+    0  1  2  3
+   -----------
+0 | .  z  .  .
+1 | .  .  .  s
+2 | .  .  .  .
+3 | .  .  .  .
+Final Position:
+BOARD:     0  1  2  3
+BOARD:    -----------
+BOARD: 0 | .  z  .  .
+BOARD: 1 | .  .  .  s
+BOARD: 2 | .  .  .  .
+BOARD: 3 | .  .  .  .
+Scores: Agent-1=110 Agent-2=80
+----------------------------------------
+Final Result: Agent-1 wins. (No valid paths remaining)
+----------------------------------------
+Points:
+Agent-1: 3
+Agent-2: 0
+----------------------------------------
+Scores:
+Agent-1: 30
+Agent-2: -30
+============================================================
+
+============================================================
+Game 8
+Agent-1: Kimi-K3.1-Pro-Max:1
+Agent-2: Sonnet-5.5-Max:1
+Starting Player: Agent-2
+------------------------------------------------------------
+    0  1  2  3
+   -----------
+0 | w  z  p  r
+1 | u  m  o  b
+2 | q  s  x  x
+3 | q  b  v  r
+Agent-2: path=[(0,2) -> (1,2) -> (1,1) -> (2,1)] word='poms' cleared=4 points=+50
+    0  1  2  3
+   -----------
+0 | w  z  .  r
+1 | u  .  .  b
+2 | q  .  x  x
+3 | q  b  v  r
+Agent-1: path=[(2,3) -> (2,2) -> (3,2)] word='xxv' cleared=3 points=+40
+    0  1  2  3
+   -----------
+0 | w  z  .  r
+1 | u  .  .  b
+2 | q  .  .  .
+3 | q  b  .  r
+Agent-2: path=[(2,0) -> (1,0) -> (0,0)] word='quaw' cleared=2 points=+30
+    0  1  2  3
+   -----------
+0 | .  z  .  r
+1 | .  .  .  b
+2 | a  .  .  .
+3 | q  b  .  r
+Agent-1: path=[(0,3) -> (1,3)] word='lrb' cleared=1 points=+20
+    0  1  2  3
+   -----------
+0 | .  z  .  .
+1 | .  .  .  l
+2 | a  .  .  .
+3 | q  b  .  r
+Agent-2: path=[(2,0) -> (3,0)] word='faq' cleared=1 points=+20
+    0  1  2  3
+   -----------
+0 | .  z  .  .
+1 | .  .  .  l
+2 | .  .  .  .
+3 | f  b  .  r
+Agent-1: path=[(3,0) -> (3,1)] word='fob' cleared=1 points=+20
+    0  1  2  3
+   -----------
+0 | .  z  .  .
+1 | .  .  .  l
+2 | .  .  .  .
+3 | .  o  .  r
+Final Position:
+BOARD:     0  1  2  3
+BOARD:    -----------
+BOARD: 0 | .  z  .  .
+BOARD: 1 | .  .  .  l
+BOARD: 2 | .  .  .  .
+BOARD: 3 | .  o  .  r
+Scores: Agent-1=80 Agent-2=100
+----------------------------------------
+Final Result: Agent-2 wins. (No valid paths remaining)
+----------------------------------------
+Points:
+Agent-1: 0
+Agent-2: 3
+----------------------------------------
+Scores:
+Agent-1: -20
+Agent-2: 20
+============================================================
+
+============================================================
+Game 9
+Agent-1: Kimi-K3.1-Pro-Max:1
+Agent-2: Sonnet-5.5-Max:1
+Starting Player: Agent-1
+------------------------------------------------------------
+    0  1  2  3
+   -----------
+0 | v  l  v  o
+1 | g  t  z  q
+2 | b  u  w  c
+3 | b  h  v  y
+Agent-1: path=[(1,1) -> (2,1) -> (2,0) -> (3,0)] word='tubb' cleared=4 points=+50
+    0  1  2  3
+   -----------
+0 | v  l  v  o
+1 | g  .  z  q
+2 | .  .  w  c
+3 | .  h  v  y
+Agent-2: path=[(3,1) -> (3,2) -> (3,3)] word='hvy' cleared=3 points=+40
+    0  1  2  3
+   -----------
+0 | v  l  v  o
+1 | g  .  z  q
+2 | .  .  w  c
+3 | .  .  .  .
+Agent-1: path=[(0,0) -> (0,1) -> (0,2) -> (0,3)] word='volvo' cleared=3 points=+40
+    0  1  2  3
+   -----------
+0 | o  .  .  .
+1 | g  .  z  q
+2 | .  .  w  c
+3 | .  .  .  .
+Agent-2: path=[(0,0) -> (1,0)] word='dog' cleared=1 points=+20
+    0  1  2  3
+   -----------
+0 | d  .  .  .
+1 | .  .  z  q
+2 | .  .  w  c
+3 | .  .  .  .
+Agent-1: path=[(1,2) -> (2,2) -> (2,3)] word='zwick' cleared=1 points=+20
+    0  1  2  3
+   -----------
+0 | d  .  .  .
+1 | .  .  k  q
+2 | .  .  i  .
+3 | .  .  .  .
+Agent-2: path=[(1,2) -> (2,2)] word='kin' cleared=1 points=+20
+    0  1  2  3
+   -----------
+0 | d  .  .  .
+1 | .  .  .  q
+2 | .  .  n  .
+3 | .  .  .  .
+Final Position:
+BOARD:     0  1  2  3
+BOARD:    -----------
+BOARD: 0 | d  .  .  .
+BOARD: 1 | .  .  .  q
+BOARD: 2 | .  .  n  .
+BOARD: 3 | .  .  .  .
+Scores: Agent-1=110 Agent-2=80
+----------------------------------------
+Final Result: Agent-1 wins. (No valid paths remaining)
+----------------------------------------
+Points:
+Agent-1: 3
+Agent-2: 0
+----------------------------------------
+Scores:
+Agent-1: 30
+Agent-2: -30
+============================================================
+
+============================================================
+Game 10
+Agent-1: Kimi-K3.1-Pro-Max:1
+Agent-2: Sonnet-5.5-Max:1
+Starting Player: Agent-2
+------------------------------------------------------------
+    0  1  2  3
+   -----------
+0 | l  h  o  r
+1 | w  r  v  q
+2 | g  z  a  c
+3 | m  e  l  t
+Agent-2: path=[(0,2) -> (1,2) -> (2,2) -> (3,2)] word='oval' cleared=4 points=+50
+    0  1  2  3
+   -----------
+0 | l  h  .  r
+1 | w  r  .  q
+2 | g  z  .  c
+3 | m  e  .  t
+Agent-1: path=[(0,1) -> (1,1) -> (2,1) -> (3,1)] word='harze' cleared=3 points=+40
+    0  1  2  3
+   -----------
+0 | l  a  .  r
+1 | w  .  .  q
+2 | g  .  .  c
+3 | m  .  .  t
+Agent-2: path=[(0,1) -> (0,0) -> (1,0)] word='alw' cleared=3 points=+40
+    0  1  2  3
+   -----------
+0 | .  .  .  r
+1 | .  .  .  q
+2 | g  .  .  c
+3 | m  .  .  t
+Agent-1: path=[(0,3) -> (1,3)] word='rpq' cleared=1 points=+20
+    0  1  2  3
+   -----------
+0 | .  .  .  p
+1 | .  .  .  .
+2 | g  .  .  c
+3 | m  .  .  t
+Agent-2: path=[(3,0) -> (2,0)] word='smg' cleared=1 points=+20
+    0  1  2  3
+   -----------
+0 | .  .  .  p
+1 | .  .  .  .
+2 | .  .  .  c
+3 | s  .  .  t
+Agent-1: path=[(2,3) -> (3,3)] word='ctm' cleared=1 points=+20
+    0  1  2  3
+   -----------
+0 | .  .  .  p
+1 | .  .  .  .
+2 | .  .  .  .
+3 | s  .  .  m
+Final Position:
+BOARD:     0  1  2  3
+BOARD:    -----------
+BOARD: 0 | .  .  .  p
+BOARD: 1 | .  .  .  .
+BOARD: 2 | .  .  .  .
+BOARD: 3 | s  .  .  m
+Scores: Agent-1=80 Agent-2=110
+----------------------------------------
+Final Result: Agent-2 wins. (No valid paths remaining)
+----------------------------------------
+Points:
+Agent-1: 0
+Agent-2: 3
+----------------------------------------
+Scores:
+Agent-1: -30
+Agent-2: 30
+============================================================
+============================================================
+Agent-1: Kimi-K3.1-Pro-Max:1
+Agent-2: Sonnet-5.5-Max:1
+RESULT:Agent-1=15.0,Agent-2=15.0
+SCORE:Agent-1=-40.0,Agent-2=40.0
+WINS:Agent-1=5,Agent-2=5
+DRAWS:0
+STATS:Agent-1={'wins': 5, 'losses': 5, 'draws': 0, 'points': 15, 'score': -40.0, 'make_move_crash': 0, 'other_crash': 0, 'crash': 0, 'timeout': 0, 'invalid': 0}
+STATS:Agent-2={'wins': 5, 'losses': 5, 'draws': 0, 'points': 15, 'score': 40.0, 'make_move_crash': 0, 'other_crash': 0, 'crash': 0, 'timeout': 0, 'invalid': 0}
+--- MATCH STATISTICS ---
+Agent-1 make_move_crash: 0
+Agent-2 make_move_crash: 0
+Agent-1 other_crash: 0
+Agent-2 other_crash: 0
+Agent-1 crash (total): 0
+Agent-2 crash (total): 0
+Agent-1 Timeouts: 0
+Agent-2 Timeouts: 0
+Agent-1 Invalid: 0
+Agent-2 Invalid: 0
+Time-limit Draws: 0
+------------------------------------------------------------
+
+
+------------------------------------------------------------

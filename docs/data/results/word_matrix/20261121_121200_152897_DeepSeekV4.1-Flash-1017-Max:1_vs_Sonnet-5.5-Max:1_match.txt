@@ -1,0 +1,738 @@
+Match Contenders:
+DeepSeekV4.1-Flash-1017-Max:1
+Sonnet-5.5-Max:1
+
+Result:
+DeepSeekV4.1-Flash-1017-Max:1 : Pts: 15 - Score: -10.0
+Sonnet-5.5-Max:1 : Pts: 15 - Score: 10.0
+
+
+============================================================
+Game 1
+Agent-1: DeepSeekV4.1-Flash-1017-Max:1
+Agent-2: Sonnet-5.5-Max:1
+Starting Player: Agent-1
+------------------------------------------------------------
+    0  1  2  3
+   -----------
+0 | n  v  k  w
+1 | c  x  y  t
+2 | s  h  m  y
+3 | s  b  u  w
+Agent-1: path=[(3,1) -> (3,0) -> (2,0) -> (1,0)] word='bssc' cleared=4 points=+50
+    0  1  2  3
+   -----------
+0 | n  v  k  w
+1 | .  x  y  t
+2 | .  h  m  y
+3 | .  .  u  w
+Agent-2: path=[(3,2) -> (2,2) -> (1,2) -> (0,2)] word='kumyk' cleared=3 points=+40
+    0  1  2  3
+   -----------
+0 | n  v  .  w
+1 | .  x  .  t
+2 | .  h  k  y
+3 | .  .  .  w
+Agent-1: path=[(2,2) -> (2,3) -> (1,3)] word='kyat' cleared=2 points=+30
+    0  1  2  3
+   -----------
+0 | n  v  .  w
+1 | .  x  .  .
+2 | .  h  .  a
+3 | .  .  .  w
+Agent-2: path=[(3,3) -> (2,3)] word='twa' cleared=1 points=+20
+    0  1  2  3
+   -----------
+0 | n  v  .  w
+1 | .  x  .  .
+2 | .  h  .  t
+3 | .  .  .  .
+Agent-1: path=[(0,0) -> (0,1)] word='ndv' cleared=1 points=+20
+    0  1  2  3
+   -----------
+0 | .  d  .  w
+1 | .  x  .  .
+2 | .  h  .  t
+3 | .  .  .  .
+Agent-2: path=[(2,1) -> (1,1)] word='hdx' cleared=1 points=+20
+    0  1  2  3
+   -----------
+0 | .  d  .  w
+1 | .  .  .  .
+2 | .  d  .  t
+3 | .  .  .  .
+Final Position:
+BOARD:     0  1  2  3
+BOARD:    -----------
+BOARD: 0 | .  d  .  w
+BOARD: 1 | .  .  .  .
+BOARD: 2 | .  d  .  t
+BOARD: 3 | .  .  .  .
+Scores: Agent-1=100 Agent-2=80
+----------------------------------------
+Final Result: Agent-1 wins. (No valid paths remaining)
+----------------------------------------
+Points:
+Agent-1: 3
+Agent-2: 0
+----------------------------------------
+Scores:
+Agent-1: 20
+Agent-2: -20
+============================================================
+
+============================================================
+Game 2
+Agent-1: DeepSeekV4.1-Flash-1017-Max:1
+Agent-2: Sonnet-5.5-Max:1
+Starting Player: Agent-2
+------------------------------------------------------------
+    0  1  2  3
+   -----------
+0 | j  m  u  o
+1 | u  y  s  i
+2 | t  a  t  p
+3 | p  m  g  e
+Agent-2: path=[(3,3) -> (2,3) -> (1,3) -> (1,2) -> (2,2) -> (2,1) -> (1,1)] word='epistasy' cleared=6 points=+70
+    0  1  2  3
+   -----------
+0 | j  m  u  o
+1 | u  .  .  .
+2 | t  s  .  .
+3 | p  m  g  .
+Agent-1: path=[(0,0) -> (1,0) -> (2,0) -> (2,1)] word='juts' cleared=4 points=+50
+    0  1  2  3
+   -----------
+0 | .  m  u  o
+1 | .  .  .  .
+2 | .  .  .  .
+3 | p  m  g  .
+Agent-2: path=[(3,0) -> (3,1) -> (3,2)] word='pmg' cleared=3 points=+40
+    0  1  2  3
+   -----------
+0 | .  m  u  o
+1 | .  .  .  .
+2 | .  .  .  .
+3 | .  .  .  .
+Agent-1: path=[(0,1) -> (0,2) -> (0,3)] word='muso' cleared=2 points=+30
+    0  1  2  3
+   -----------
+0 | .  .  s  .
+1 | .  .  .  .
+2 | .  .  .  .
+3 | .  .  .  .
+Final Position:
+BOARD:     0  1  2  3
+BOARD:    -----------
+BOARD: 0 | .  .  s  .
+BOARD: 1 | .  .  .  .
+BOARD: 2 | .  .  .  .
+BOARD: 3 | .  .  .  .
+Scores: Agent-1=80 Agent-2=110
+----------------------------------------
+Final Result: Agent-2 wins. (No valid paths remaining)
+----------------------------------------
+Points:
+Agent-1: 0
+Agent-2: 3
+----------------------------------------
+Scores:
+Agent-1: -30
+Agent-2: 30
+============================================================
+
+============================================================
+Game 3
+Agent-1: DeepSeekV4.1-Flash-1017-Max:1
+Agent-2: Sonnet-5.5-Max:1
+Starting Player: Agent-1
+------------------------------------------------------------
+    0  1  2  3
+   -----------
+0 | d  m  u  m
+1 | i  r  z  i
+2 | x  g  w  u
+3 | z  q  r  h
+Agent-1: path=[(2,1) -> (1,1) -> (1,0) -> (0,0)] word='grid' cleared=4 points=+50
+    0  1  2  3
+   -----------
+0 | .  m  u  m
+1 | .  .  z  i
+2 | x  .  w  u
+3 | z  q  r  h
+Agent-2: path=[(0,1) -> (0,2) -> (1,2) -> (1,3) -> (0,3)] word='murzim' cleared=4 points=+50
+    0  1  2  3
+   -----------
+0 | .  .  .  .
+1 | .  .  .  r
+2 | x  .  w  u
+3 | z  q  r  h
+Agent-1: path=[(1,3) -> (2,3) -> (3,3) -> (3,2)] word='ruhr' cleared=4 points=+50
+    0  1  2  3
+   -----------
+0 | .  .  .  .
+1 | .  .  .  .
+2 | x  .  w  .
+3 | z  q  .  .
+Agent-2: path=[(2,0) -> (3,0)] word='xyz' cleared=1 points=+20
+    0  1  2  3
+   -----------
+0 | .  .  .  .
+1 | .  .  .  .
+2 | y  .  w  .
+3 | .  q  .  .
+Final Position:
+BOARD:     0  1  2  3
+BOARD:    -----------
+BOARD: 0 | .  .  .  .
+BOARD: 1 | .  .  .  .
+BOARD: 2 | y  .  w  .
+BOARD: 3 | .  q  .  .
+Scores: Agent-1=100 Agent-2=70
+----------------------------------------
+Final Result: Agent-1 wins. (No valid paths remaining)
+----------------------------------------
+Points:
+Agent-1: 3
+Agent-2: 0
+----------------------------------------
+Scores:
+Agent-1: 30
+Agent-2: -30
+============================================================
+
+============================================================
+Game 4
+Agent-1: DeepSeekV4.1-Flash-1017-Max:1
+Agent-2: Sonnet-5.5-Max:1
+Starting Player: Agent-2
+------------------------------------------------------------
+    0  1  2  3
+   -----------
+0 | s  y  p  b
+1 | d  o  u  f
+2 | v  l  v  u
+3 | z  x  u  l
+Agent-2: path=[(1,1) -> (2,1) -> (2,2) -> (2,3) -> (3,3) -> (3,2)] word='volvulus' cleared=4 points=+50
+    0  1  2  3
+   -----------
+0 | s  y  p  b
+1 | d  s  u  f
+2 | v  v  .  .
+3 | z  x  .  .
+Agent-1: path=[(1,0) -> (0,0) -> (0,1) -> (0,2) -> (1,2) -> (1,1)] word='dasypus' cleared=5 points=+60
+    0  1  2  3
+   -----------
+0 | .  .  .  b
+1 | a  .  .  f
+2 | v  v  .  .
+3 | z  x  .  .
+Agent-2: path=[(1,0) -> (2,0) -> (2,1)] word='aviv' cleared=2 points=+30
+    0  1  2  3
+   -----------
+0 | .  .  .  b
+1 | .  .  .  f
+2 | i  .  .  .
+3 | z  x  .  .
+Agent-1: path=[(0,3) -> (1,3)] word='bdf' cleared=1 points=+20
+    0  1  2  3
+   -----------
+0 | .  .  .  d
+1 | .  .  .  .
+2 | i  .  .  .
+3 | z  x  .  .
+Agent-2: path=[(3,0) -> (2,0)] word='zia' cleared=1 points=+20
+    0  1  2  3
+   -----------
+0 | .  .  .  d
+1 | .  .  .  .
+2 | a  .  .  .
+3 | .  x  .  .
+Final Position:
+BOARD:     0  1  2  3
+BOARD:    -----------
+BOARD: 0 | .  .  .  d
+BOARD: 1 | .  .  .  .
+BOARD: 2 | a  .  .  .
+BOARD: 3 | .  x  .  .
+Scores: Agent-1=80 Agent-2=100
+----------------------------------------
+Final Result: Agent-2 wins. (No valid paths remaining)
+----------------------------------------
+Points:
+Agent-1: 0
+Agent-2: 3
+----------------------------------------
+Scores:
+Agent-1: -20
+Agent-2: 20
+============================================================
+
+============================================================
+Game 5
+Agent-1: DeepSeekV4.1-Flash-1017-Max:1
+Agent-2: Sonnet-5.5-Max:1
+Starting Player: Agent-1
+------------------------------------------------------------
+    0  1  2  3
+   -----------
+0 | j  a  s  p
+1 | k  n  e  j
+2 | c  q  t  a
+3 | s  t  z  q
+Agent-1: path=[(0,0) -> (0,1) -> (1,1) -> (1,2) -> (2,2) -> (2,3)] word='janeta' cleared=6 points=+70
+    0  1  2  3
+   -----------
+0 | .  .  s  p
+1 | k  .  .  j
+2 | c  q  .  .
+3 | s  t  z  q
+Agent-2: path=[(2,0) -> (3,0) -> (3,1)] word='cst' cleared=3 points=+40
+    0  1  2  3
+   -----------
+0 | .  .  s  p
+1 | k  .  .  j
+2 | .  q  .  .
+3 | .  .  z  q
+Agent-1: path=[(0,2) -> (0,3)] word='spr' cleared=1 points=+20
+    0  1  2  3
+   -----------
+0 | .  .  .  r
+1 | k  .  .  j
+2 | .  q  .  .
+3 | .  .  z  q
+Agent-2: path=[(1,3) -> (0,3)] word='jrc' cleared=1 points=+20
+    0  1  2  3
+   -----------
+0 | .  .  .  .
+1 | k  .  .  c
+2 | .  q  .  .
+3 | .  .  z  q
+Agent-1: path=[(3,3) -> (3,2)] word='quiz' cleared=0 points=+10
+    0  1  2  3
+   -----------
+0 | .  .  .  .
+1 | k  .  .  c
+2 | .  q  .  .
+3 | .  .  u  i
+Agent-2: path=[(3,3) -> (3,2)] word='viu' cleared=1 points=+20
+    0  1  2  3
+   -----------
+0 | .  .  .  .
+1 | k  .  .  c
+2 | .  q  .  .
+3 | .  .  v  .
+Final Position:
+BOARD:     0  1  2  3
+BOARD:    -----------
+BOARD: 0 | .  .  .  .
+BOARD: 1 | k  .  .  c
+BOARD: 2 | .  q  .  .
+BOARD: 3 | .  .  v  .
+Scores: Agent-1=100 Agent-2=80
+----------------------------------------
+Final Result: Agent-1 wins. (No valid paths remaining)
+----------------------------------------
+Points:
+Agent-1: 3
+Agent-2: 0
+----------------------------------------
+Scores:
+Agent-1: 20
+Agent-2: -20
+============================================================
+
+============================================================
+Game 6
+Agent-1: DeepSeekV4.1-Flash-1017-Max:1
+Agent-2: Sonnet-5.5-Max:1
+Starting Player: Agent-2
+------------------------------------------------------------
+    0  1  2  3
+   -----------
+0 | h  v  m  m
+1 | x  h  e  q
+2 | r  z  p  i
+3 | f  m  k  d
+Agent-2: path=[(0,3) -> (0,2) -> (1,2)] word='mme' cleared=3 points=+40
+    0  1  2  3
+   -----------
+0 | h  v  .  .
+1 | x  h  .  q
+2 | r  z  p  i
+3 | f  m  k  d
+Agent-1: path=[(2,2) -> (2,3) -> (3,3)] word='pid' cleared=3 points=+40
+    0  1  2  3
+   -----------
+0 | h  v  .  .
+1 | x  h  .  q
+2 | r  z  .  .
+3 | f  m  k  .
+Agent-2: path=[(3,1) -> (3,0) -> (2,0)] word='mfr' cleared=3 points=+40
+    0  1  2  3
+   -----------
+0 | h  v  .  .
+1 | x  h  .  q
+2 | .  z  .  .
+3 | .  .  k  .
+Agent-1: path=[(0,0) -> (0,1) -> (1,1)] word='jhvh' cleared=2 points=+30
+    0  1  2  3
+   -----------
+0 | j  .  .  .
+1 | x  .  .  q
+2 | .  z  .  .
+3 | .  .  k  .
+Agent-2: path=[(0,0) -> (1,0)] word='jmx' cleared=1 points=+20
+    0  1  2  3
+   -----------
+0 | .  .  .  .
+1 | m  .  .  q
+2 | .  z  .  .
+3 | .  .  k  .
+Final Position:
+BOARD:     0  1  2  3
+BOARD:    -----------
+BOARD: 0 | .  .  .  .
+BOARD: 1 | m  .  .  q
+BOARD: 2 | .  z  .  .
+BOARD: 3 | .  .  k  .
+Scores: Agent-1=70 Agent-2=100
+----------------------------------------
+Final Result: Agent-2 wins. (No valid paths remaining)
+----------------------------------------
+Points:
+Agent-1: 0
+Agent-2: 3
+----------------------------------------
+Scores:
+Agent-1: -30
+Agent-2: 30
+============================================================
+
+============================================================
+Game 7
+Agent-1: DeepSeekV4.1-Flash-1017-Max:1
+Agent-2: Sonnet-5.5-Max:1
+Starting Player: Agent-1
+------------------------------------------------------------
+    0  1  2  3
+   -----------
+0 | j  x  v  p
+1 | p  m  u  f
+2 | x  o  u  x
+3 | s  b  y  x
+Agent-1: path=[(3,1) -> (2,1) -> (1,1) -> (1,2)] word='bomu' cleared=4 points=+50
+    0  1  2  3
+   -----------
+0 | j  x  v  p
+1 | p  .  .  f
+2 | x  .  u  x
+3 | s  .  y  x
+Agent-2: path=[(0,2) -> (0,3) -> (1,3)] word='vpf' cleared=3 points=+40
+    0  1  2  3
+   -----------
+0 | j  x  .  .
+1 | p  .  .  .
+2 | x  .  u  x
+3 | s  .  y  x
+Agent-1: path=[(0,0) -> (1,0)] word='jmp' cleared=1 points=+20
+    0  1  2  3
+   -----------
+0 | .  x  .  .
+1 | m  .  .  .
+2 | x  .  u  x
+3 | s  .  y  x
+Agent-2: path=[(2,3) -> (2,2)] word='xuv' cleared=1 points=+20
+    0  1  2  3
+   -----------
+0 | .  x  .  .
+1 | m  .  .  .
+2 | x  .  v  .
+3 | s  .  y  x
+Agent-1: path=[(1,0) -> (2,0)] word='mlx' cleared=1 points=+20
+    0  1  2  3
+   -----------
+0 | .  x  .  .
+1 | .  .  .  .
+2 | l  .  v  .
+3 | s  .  y  x
+Agent-2: path=[(2,0) -> (3,0)] word='las' cleared=1 points=+20
+    0  1  2  3
+   -----------
+0 | .  x  .  .
+1 | .  .  .  .
+2 | .  .  v  .
+3 | a  .  y  x
+Agent-1: path=[(2,2) -> (3,2)] word='bvy' cleared=1 points=+20
+    0  1  2  3
+   -----------
+0 | .  x  .  .
+1 | .  .  .  .
+2 | .  .  b  .
+3 | a  .  .  x
+Final Position:
+BOARD:     0  1  2  3
+BOARD:    -----------
+BOARD: 0 | .  x  .  .
+BOARD: 1 | .  .  .  .
+BOARD: 2 | .  .  b  .
+BOARD: 3 | a  .  .  x
+Scores: Agent-1=110 Agent-2=80
+----------------------------------------
+Final Result: Agent-1 wins. (No valid paths remaining)
+----------------------------------------
+Points:
+Agent-1: 3
+Agent-2: 0
+----------------------------------------
+Scores:
+Agent-1: 30
+Agent-2: -30
+============================================================
+
+============================================================
+Game 8
+Agent-1: DeepSeekV4.1-Flash-1017-Max:1
+Agent-2: Sonnet-5.5-Max:1
+Starting Player: Agent-2
+------------------------------------------------------------
+    0  1  2  3
+   -----------
+0 | f  r  u  p
+1 | b  k  h  t
+2 | v  e  l  c
+3 | o  x  v  c
+Agent-2: path=[(0,1) -> (0,2) -> (1,2) -> (2,2)] word='ruhl' cleared=4 points=+50
+    0  1  2  3
+   -----------
+0 | f  .  .  p
+1 | b  k  .  t
+2 | v  e  .  c
+3 | o  x  v  c
+Agent-1: path=[(0,0) -> (1,0) -> (2,0)] word='fbv' cleared=3 points=+40
+    0  1  2  3
+   -----------
+0 | .  .  .  p
+1 | .  k  .  t
+2 | .  e  .  c
+3 | o  x  v  c
+Agent-2: path=[(1,1) -> (2,1) -> (3,1)] word='kex' cleared=3 points=+40
+    0  1  2  3
+   -----------
+0 | .  .  .  p
+1 | .  .  .  t
+2 | .  .  .  c
+3 | o  .  v  c
+Agent-1: path=[(1,3) -> (2,3) -> (3,3)] word='tcc' cleared=3 points=+40
+    0  1  2  3
+   -----------
+0 | .  .  .  p
+1 | .  .  .  .
+2 | .  .  .  .
+3 | o  .  v  .
+Final Position:
+BOARD:     0  1  2  3
+BOARD:    -----------
+BOARD: 0 | .  .  .  p
+BOARD: 1 | .  .  .  .
+BOARD: 2 | .  .  .  .
+BOARD: 3 | o  .  v  .
+Scores: Agent-1=80 Agent-2=90
+----------------------------------------
+Final Result: Agent-2 wins. (No valid paths remaining)
+----------------------------------------
+Points:
+Agent-1: 0
+Agent-2: 3
+----------------------------------------
+Scores:
+Agent-1: -10
+Agent-2: 10
+============================================================
+
+============================================================
+Game 9
+Agent-1: DeepSeekV4.1-Flash-1017-Max:1
+Agent-2: Sonnet-5.5-Max:1
+Starting Player: Agent-1
+------------------------------------------------------------
+    0  1  2  3
+   -----------
+0 | s  g  z  z
+1 | v  s  x  a
+2 | z  v  l  a
+3 | a  q  y  b
+Agent-1: path=[(0,0) -> (1,0) -> (1,1)] word='svs' cleared=3 points=+40
+    0  1  2  3
+   -----------
+0 | .  g  z  z
+1 | .  .  x  a
+2 | z  v  l  a
+3 | a  q  y  b
+Agent-2: path=[(2,1) -> (2,2) -> (2,3) -> (1,3)] word='vlada' cleared=3 points=+40
+    0  1  2  3
+   -----------
+0 | .  g  z  z
+1 | .  .  x  d
+2 | z  .  .  .
+3 | a  q  y  b
+Agent-1: path=[(0,1) -> (0,2) -> (0,3)] word='gizz' cleared=2 points=+30
+    0  1  2  3
+   -----------
+0 | .  i  .  .
+1 | .  .  x  d
+2 | z  .  .  .
+3 | a  q  y  b
+Agent-2: path=[(2,0) -> (3,0)] word='zea' cleared=1 points=+20
+    0  1  2  3
+   -----------
+0 | .  i  .  .
+1 | .  .  x  d
+2 | .  .  .  .
+3 | e  q  y  b
+Agent-1: path=[(1,2) -> (1,3)] word='xdr' cleared=1 points=+20
+    0  1  2  3
+   -----------
+0 | .  i  .  .
+1 | .  .  .  r
+2 | .  .  .  .
+3 | e  q  y  b
+Agent-2: path=[(3,3) -> (3,2)] word='bvy' cleared=1 points=+20
+    0  1  2  3
+   -----------
+0 | .  i  .  .
+1 | .  .  .  r
+2 | .  .  .  .
+3 | e  q  v  .
+Agent-1: path=[(3,0) -> (3,1)] word='ceq' cleared=1 points=+20
+    0  1  2  3
+   -----------
+0 | .  i  .  .
+1 | .  .  .  r
+2 | .  .  .  .
+3 | c  .  v  .
+Final Position:
+BOARD:     0  1  2  3
+BOARD:    -----------
+BOARD: 0 | .  i  .  .
+BOARD: 1 | .  .  .  r
+BOARD: 2 | .  .  .  .
+BOARD: 3 | c  .  v  .
+Scores: Agent-1=110 Agent-2=80
+----------------------------------------
+Final Result: Agent-1 wins. (No valid paths remaining)
+----------------------------------------
+Points:
+Agent-1: 3
+Agent-2: 0
+----------------------------------------
+Scores:
+Agent-1: 30
+Agent-2: -30
+============================================================
+
+============================================================
+Game 10
+Agent-1: DeepSeekV4.1-Flash-1017-Max:1
+Agent-2: Sonnet-5.5-Max:1
+Starting Player: Agent-2
+------------------------------------------------------------
+    0  1  2  3
+   -----------
+0 | q  f  z  w
+1 | f  f  o  l
+2 | a  a  t  h
+3 | v  t  d  d
+Agent-2: path=[(2,0) -> (2,1) -> (1,1) -> (1,2) -> (2,2) -> (2,3)] word='hakafoth' cleared=4 points=+50
+    0  1  2  3
+   -----------
+0 | q  f  z  w
+1 | f  .  .  l
+2 | .  h  .  k
+3 | v  t  d  d
+Agent-1: path=[(2,3) -> (3,3) -> (3,2)] word='kdd' cleared=3 points=+40
+    0  1  2  3
+   -----------
+0 | q  f  z  w
+1 | f  .  .  l
+2 | .  h  .  .
+3 | v  t  .  .
+Agent-2: path=[(2,1) -> (3,1) -> (3,0)] word='hdtv' cleared=2 points=+30
+    0  1  2  3
+   -----------
+0 | q  f  z  w
+1 | f  .  .  l
+2 | .  .  .  .
+3 | .  d  .  .
+Agent-1: path=[(0,0) -> (1,0)] word='qef' cleared=1 points=+20
+    0  1  2  3
+   -----------
+0 | e  f  z  w
+1 | .  .  .  l
+2 | .  .  .  .
+3 | .  d  .  .
+Agent-2: path=[(0,0) -> (0,1)] word='wef' cleared=1 points=+20
+    0  1  2  3
+   -----------
+0 | .  w  z  w
+1 | .  .  .  l
+2 | .  .  .  .
+3 | .  d  .  .
+Agent-1: path=[(0,1) -> (0,2)] word='wiz' cleared=1 points=+20
+    0  1  2  3
+   -----------
+0 | .  .  i  w
+1 | .  .  .  l
+2 | .  .  .  .
+3 | .  d  .  .
+Agent-2: path=[(1,3) -> (0,3) -> (0,2)] word='lwei' cleared=2 points=+30
+    0  1  2  3
+   -----------
+0 | .  .  e  .
+1 | .  .  .  .
+2 | .  .  .  .
+3 | .  d  .  .
+Final Position:
+BOARD:     0  1  2  3
+BOARD:    -----------
+BOARD: 0 | .  .  e  .
+BOARD: 1 | .  .  .  .
+BOARD: 2 | .  .  .  .
+BOARD: 3 | .  d  .  .
+Scores: Agent-1=80 Agent-2=130
+----------------------------------------
+Final Result: Agent-2 wins. (No valid paths remaining)
+----------------------------------------
+Points:
+Agent-1: 0
+Agent-2: 3
+----------------------------------------
+Scores:
+Agent-1: -50
+Agent-2: 50
+============================================================
+============================================================
+Agent-1: DeepSeekV4.1-Flash-1017-Max:1
+Agent-2: Sonnet-5.5-Max:1
+RESULT:Agent-1=15.0,Agent-2=15.0
+SCORE:Agent-1=-10.0,Agent-2=10.0
+WINS:Agent-1=5,Agent-2=5
+DRAWS:0
+STATS:Agent-1={'wins': 5, 'losses': 5, 'draws': 0, 'points': 15, 'score': -10.0, 'make_move_crash': 0, 'other_crash': 0, 'crash': 0, 'timeout': 0, 'invalid': 0}
+STATS:Agent-2={'wins': 5, 'losses': 5, 'draws': 0, 'points': 15, 'score': 10.0, 'make_move_crash': 0, 'other_crash': 0, 'crash': 0, 'timeout': 0, 'invalid': 0}
+--- MATCH STATISTICS ---
+Agent-1 make_move_crash: 0
+Agent-2 make_move_crash: 0
+Agent-1 other_crash: 0
+Agent-2 other_crash: 0
+Agent-1 crash (total): 0
+Agent-2 crash (total): 0
+Agent-1 Timeouts: 0
+Agent-2 Timeouts: 0
+Agent-1 Invalid: 0
+Agent-2 Invalid: 0
+Time-limit Draws: 0
+------------------------------------------------------------
+
+
+------------------------------------------------------------

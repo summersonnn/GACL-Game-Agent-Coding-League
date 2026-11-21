@@ -1,0 +1,780 @@
+Match Contenders:
+Gemini-Neon-Extrahigh:1
+Opus-5.5-Max:2
+
+Result:
+Gemini-Neon-Extrahigh:1 : Pts: 13 - Score: -30.0
+Opus-5.5-Max:2 : Pts: 16 - Score: 30.0
+
+
+============================================================
+Game 1
+Agent-1: Gemini-Neon-Extrahigh:1
+Agent-2: Opus-5.5-Max:2
+Starting Player: Agent-1
+------------------------------------------------------------
+    0  1  2  3
+   -----------
+0 | s  q  k  d
+1 | j  o  j  a
+2 | p  h  p  h
+3 | w  s  v  f
+Agent-1: path=[(1,2) -> (1,1) -> (2,1)] word='joh' cleared=3 points=+40
+    0  1  2  3
+   -----------
+0 | s  q  k  d
+1 | j  .  .  a
+2 | p  .  p  h
+3 | w  s  v  f
+Agent-2: path=[(2,2) -> (2,3) -> (1,3)] word='pha' cleared=3 points=+40
+    0  1  2  3
+   -----------
+0 | s  q  k  d
+1 | j  .  .  .
+2 | p  .  .  .
+3 | w  s  v  f
+Agent-1: path=[(2,0) -> (3,0) -> (3,1)] word='pows' cleared=2 points=+30
+    0  1  2  3
+   -----------
+0 | s  q  k  d
+1 | j  .  .  .
+2 | o  .  .  .
+3 | .  .  v  f
+Agent-2: path=[(1,0) -> (0,0)] word='jsw' cleared=1 points=+20
+    0  1  2  3
+   -----------
+0 | .  q  k  d
+1 | w  .  .  .
+2 | o  .  .  .
+3 | .  .  v  f
+Agent-1: path=[(2,0) -> (1,0)] word='jow' cleared=1 points=+20
+    0  1  2  3
+   -----------
+0 | .  q  k  d
+1 | j  .  .  .
+2 | .  .  .  .
+3 | .  .  v  f
+Agent-2: path=[(0,2) -> (0,1)] word='kqc' cleared=1 points=+20
+    0  1  2  3
+   -----------
+0 | .  c  .  d
+1 | j  .  .  .
+2 | .  .  .  .
+3 | .  .  v  f
+Agent-1: path=[(3,2) -> (3,3)] word='vfw' cleared=1 points=+20
+    0  1  2  3
+   -----------
+0 | .  c  .  d
+1 | j  .  .  .
+2 | .  .  .  .
+3 | .  .  w  .
+Final Position:
+BOARD:     0  1  2  3
+BOARD:    -----------
+BOARD: 0 | .  c  .  d
+BOARD: 1 | j  .  .  .
+BOARD: 2 | .  .  .  .
+BOARD: 3 | .  .  w  .
+Scores: Agent-1=110 Agent-2=80
+----------------------------------------
+Final Result: Agent-1 wins. (No valid paths remaining)
+----------------------------------------
+Points:
+Agent-1: 3
+Agent-2: 0
+----------------------------------------
+Scores:
+Agent-1: 30
+Agent-2: -30
+============================================================
+
+============================================================
+Game 2
+Agent-1: Gemini-Neon-Extrahigh:1
+Agent-2: Opus-5.5-Max:2
+Starting Player: Agent-2
+------------------------------------------------------------
+    0  1  2  3
+   -----------
+0 | e  l  d  z
+1 | u  g  m  r
+2 | x  k  t  v
+3 | z  m  g  k
+Agent-2: path=[(1,2) -> (1,1) -> (1,0) -> (0,0) -> (0,1)] word='miguel' cleared=4 points=+50
+    0  1  2  3
+   -----------
+0 | .  .  d  z
+1 | i  .  .  r
+2 | x  k  t  v
+3 | z  m  g  k
+Agent-1: path=[(3,1) -> (2,1) -> (2,2)] word='mktg' cleared=2 points=+30
+    0  1  2  3
+   -----------
+0 | .  .  d  z
+1 | i  .  .  r
+2 | x  .  g  v
+3 | z  .  g  k
+Agent-2: path=[(2,3) -> (2,2) -> (3,2)] word='vugg' cleared=2 points=+30
+    0  1  2  3
+   -----------
+0 | .  .  d  z
+1 | i  .  .  r
+2 | x  .  .  u
+3 | z  .  .  k
+Agent-1: path=[(3,3) -> (2,3) -> (1,3) -> (0,3)] word='kurtz' cleared=3 points=+40
+    0  1  2  3
+   -----------
+0 | .  .  d  .
+1 | i  .  .  .
+2 | x  .  .  t
+3 | z  .  .  .
+Agent-2: path=[(2,0) -> (1,0)] word='xix' cleared=1 points=+20
+    0  1  2  3
+   -----------
+0 | .  .  d  .
+1 | .  .  .  .
+2 | x  .  .  t
+3 | z  .  .  .
+Agent-1: path=[(2,0) -> (3,0)] word='xyz' cleared=1 points=+20
+    0  1  2  3
+   -----------
+0 | .  .  d  .
+1 | .  .  .  .
+2 | .  .  .  t
+3 | y  .  .  .
+Final Position:
+BOARD:     0  1  2  3
+BOARD:    -----------
+BOARD: 0 | .  .  d  .
+BOARD: 1 | .  .  .  .
+BOARD: 2 | .  .  .  t
+BOARD: 3 | y  .  .  .
+Scores: Agent-1=90 Agent-2=100
+----------------------------------------
+Final Result: Agent-2 wins. (No valid paths remaining)
+----------------------------------------
+Points:
+Agent-1: 0
+Agent-2: 3
+----------------------------------------
+Scores:
+Agent-1: -10
+Agent-2: 10
+============================================================
+
+============================================================
+Game 3
+Agent-1: Gemini-Neon-Extrahigh:1
+Agent-2: Opus-5.5-Max:2
+Starting Player: Agent-1
+------------------------------------------------------------
+    0  1  2  3
+   -----------
+0 | h  n  f  o
+1 | f  m  l  d
+2 | b  y  c  j
+3 | d  b  l  d
+Agent-1: path=[(2,1) -> (2,2) -> (1,2)] word='ycl' cleared=3 points=+40
+    0  1  2  3
+   -----------
+0 | h  n  f  o
+1 | f  m  .  d
+2 | b  .  .  j
+3 | d  b  l  d
+Agent-2: path=[(1,1) -> (1,0) -> (2,0)] word='mfb' cleared=3 points=+40
+    0  1  2  3
+   -----------
+0 | h  n  f  o
+1 | .  .  .  d
+2 | .  .  .  j
+3 | d  b  l  d
+Agent-1: path=[(2,3) -> (3,3) -> (3,2)] word='jodel' cleared=1 points=+20
+    0  1  2  3
+   -----------
+0 | h  n  f  o
+1 | .  .  .  d
+2 | .  .  .  e
+3 | d  b  o  .
+Agent-2: path=[(0,2) -> (0,3) -> (1,3)] word='fod' cleared=3 points=+40
+    0  1  2  3
+   -----------
+0 | h  n  .  .
+1 | .  .  .  .
+2 | .  .  .  e
+3 | d  b  o  .
+Agent-1: path=[(3,0) -> (3,1) -> (3,2)] word='dbo' cleared=3 points=+40
+    0  1  2  3
+   -----------
+0 | h  n  .  .
+1 | .  .  .  .
+2 | .  .  .  e
+3 | .  .  .  .
+Agent-2: path=[(0,1) -> (0,0)] word='nvh' cleared=1 points=+20
+    0  1  2  3
+   -----------
+0 | v  .  .  .
+1 | .  .  .  .
+2 | .  .  .  e
+3 | .  .  .  .
+Final Position:
+BOARD:     0  1  2  3
+BOARD:    -----------
+BOARD: 0 | v  .  .  .
+BOARD: 1 | .  .  .  .
+BOARD: 2 | .  .  .  e
+BOARD: 3 | .  .  .  .
+Scores: Agent-1=100 Agent-2=100
+----------------------------------------
+Final Result: Draw. (No valid paths remaining)
+----------------------------------------
+Points:
+Agent-1: 1
+Agent-2: 1
+----------------------------------------
+Scores:
+Agent-1: 0
+Agent-2: 0
+============================================================
+
+============================================================
+Game 4
+Agent-1: Gemini-Neon-Extrahigh:1
+Agent-2: Opus-5.5-Max:2
+Starting Player: Agent-2
+------------------------------------------------------------
+    0  1  2  3
+   -----------
+0 | q  s  o  v
+1 | o  c  b  t
+2 | c  q  n  x
+3 | z  a  r  g
+Agent-2: path=[(1,1) -> (1,0) -> (2,0)] word='coc' cleared=3 points=+40
+    0  1  2  3
+   -----------
+0 | q  s  o  v
+1 | .  .  b  t
+2 | .  q  n  x
+3 | z  a  r  g
+Agent-1: path=[(1,3) -> (1,2) -> (0,2)] word='tbo' cleared=3 points=+40
+    0  1  2  3
+   -----------
+0 | q  s  .  v
+1 | .  .  .  .
+2 | .  q  n  x
+3 | z  a  r  g
+Agent-2: path=[(3,3) -> (3,2) -> (3,1) -> (3,0)] word='graz' cleared=4 points=+50
+    0  1  2  3
+   -----------
+0 | q  s  .  v
+1 | .  .  .  .
+2 | .  q  n  x
+3 | .  .  .  .
+Agent-1: path=[(2,1) -> (2,2)] word='qnp' cleared=1 points=+20
+    0  1  2  3
+   -----------
+0 | q  s  .  v
+1 | .  .  .  .
+2 | .  p  .  x
+3 | .  .  .  .
+Agent-2: path=[(0,1) -> (0,0)] word='sqq' cleared=1 points=+20
+    0  1  2  3
+   -----------
+0 | .  q  .  v
+1 | .  .  .  .
+2 | .  p  .  x
+3 | .  .  .  .
+Final Position:
+BOARD:     0  1  2  3
+BOARD:    -----------
+BOARD: 0 | .  q  .  v
+BOARD: 1 | .  .  .  .
+BOARD: 2 | .  p  .  x
+BOARD: 3 | .  .  .  .
+Scores: Agent-1=60 Agent-2=110
+----------------------------------------
+Final Result: Agent-2 wins. (No valid paths remaining)
+----------------------------------------
+Points:
+Agent-1: 0
+Agent-2: 3
+----------------------------------------
+Scores:
+Agent-1: -50
+Agent-2: 50
+============================================================
+
+============================================================
+Game 5
+Agent-1: Gemini-Neon-Extrahigh:1
+Agent-2: Opus-5.5-Max:2
+Starting Player: Agent-1
+------------------------------------------------------------
+    0  1  2  3
+   -----------
+0 | n  i  j  z
+1 | k  y  w  m
+2 | j  j  t  b
+3 | w  u  x  v
+Agent-1: path=[(0,2) -> (0,1) -> (0,0) -> (1,0)] word='jink' cleared=4 points=+50
+    0  1  2  3
+   -----------
+0 | .  .  .  z
+1 | .  y  w  m
+2 | j  j  t  b
+3 | w  u  x  v
+Agent-2: path=[(3,3) -> (3,2) -> (2,2)] word='vext' cleared=2 points=+30
+    0  1  2  3
+   -----------
+0 | .  .  .  z
+1 | .  y  w  m
+2 | j  j  .  b
+3 | w  u  e  .
+Agent-1: path=[(2,3) -> (1,3) -> (1,2)] word='bmw' cleared=3 points=+40
+    0  1  2  3
+   -----------
+0 | .  .  .  z
+1 | .  y  .  .
+2 | j  j  .  .
+3 | w  u  e  .
+Agent-2: path=[(2,0) -> (2,1) -> (3,1)] word='juju' cleared=2 points=+30
+    0  1  2  3
+   -----------
+0 | .  .  .  z
+1 | .  y  .  .
+2 | .  .  .  .
+3 | w  u  e  .
+Agent-1: path=[(3,1) -> (3,2)] word='que' cleared=1 points=+20
+    0  1  2  3
+   -----------
+0 | .  .  .  z
+1 | .  y  .  .
+2 | .  .  .  .
+3 | w  .  q  .
+Final Position:
+BOARD:     0  1  2  3
+BOARD:    -----------
+BOARD: 0 | .  .  .  z
+BOARD: 1 | .  y  .  .
+BOARD: 2 | .  .  .  .
+BOARD: 3 | w  .  q  .
+Scores: Agent-1=110 Agent-2=60
+----------------------------------------
+Final Result: Agent-1 wins. (No valid paths remaining)
+----------------------------------------
+Points:
+Agent-1: 3
+Agent-2: 0
+----------------------------------------
+Scores:
+Agent-1: 50
+Agent-2: -50
+============================================================
+
+============================================================
+Game 6
+Agent-1: Gemini-Neon-Extrahigh:1
+Agent-2: Opus-5.5-Max:2
+Starting Player: Agent-2
+------------------------------------------------------------
+    0  1  2  3
+   -----------
+0 | x  u  u  u
+1 | t  g  t  v
+2 | p  l  q  q
+3 | a  o  y  j
+Agent-2: path=[(2,0) -> (3,0) -> (3,1)] word='pao' cleared=3 points=+40
+    0  1  2  3
+   -----------
+0 | x  u  u  u
+1 | t  g  t  v
+2 | .  l  q  q
+3 | .  .  y  j
+Agent-1: path=[(0,3) -> (0,2) -> (1,2)] word='uut' cleared=3 points=+40
+    0  1  2  3
+   -----------
+0 | x  u  .  .
+1 | t  g  .  v
+2 | .  l  q  q
+3 | .  .  y  j
+Agent-2: path=[(0,1) -> (1,1) -> (1,0)] word='ugt' cleared=3 points=+40
+    0  1  2  3
+   -----------
+0 | x  .  .  .
+1 | .  .  .  v
+2 | .  l  q  q
+3 | .  .  y  j
+Agent-1: path=[(2,2) -> (2,1)] word='qwl' cleared=1 points=+20
+    0  1  2  3
+   -----------
+0 | x  .  .  .
+1 | .  .  .  v
+2 | .  .  w  q
+3 | .  .  y  j
+Agent-2: path=[(2,3) -> (1,3)] word='qqv' cleared=1 points=+20
+    0  1  2  3
+   -----------
+0 | x  .  .  .
+1 | .  .  .  .
+2 | .  .  w  q
+3 | .  .  y  j
+Agent-1: path=[(2,2) -> (3,2)] word='hwy' cleared=1 points=+20
+    0  1  2  3
+   -----------
+0 | x  .  .  .
+1 | .  .  .  .
+2 | .  .  h  q
+3 | .  .  .  j
+Agent-2: path=[(2,2) -> (2,3)] word='ghq' cleared=1 points=+20
+    0  1  2  3
+   -----------
+0 | x  .  .  .
+1 | .  .  .  .
+2 | .  .  g  .
+3 | .  .  .  j
+Final Position:
+BOARD:     0  1  2  3
+BOARD:    -----------
+BOARD: 0 | x  .  .  .
+BOARD: 1 | .  .  .  .
+BOARD: 2 | .  .  g  .
+BOARD: 3 | .  .  .  j
+Scores: Agent-1=80 Agent-2=120
+----------------------------------------
+Final Result: Agent-2 wins. (No valid paths remaining)
+----------------------------------------
+Points:
+Agent-1: 0
+Agent-2: 3
+----------------------------------------
+Scores:
+Agent-1: -40
+Agent-2: 40
+============================================================
+
+============================================================
+Game 7
+Agent-1: Gemini-Neon-Extrahigh:1
+Agent-2: Opus-5.5-Max:2
+Starting Player: Agent-1
+------------------------------------------------------------
+    0  1  2  3
+   -----------
+0 | m  b  f  g
+1 | y  q  h  m
+2 | u  i  e  e
+3 | b  y  t  f
+Agent-1: path=[(1,3) -> (2,3) -> (2,2) -> (3,2)] word='meet' cleared=4 points=+50
+    0  1  2  3
+   -----------
+0 | m  b  f  g
+1 | y  q  h  .
+2 | u  i  .  .
+3 | b  y  .  f
+Agent-2: path=[(3,0) -> (2,0) -> (2,1)] word='bui' cleared=3 points=+40
+    0  1  2  3
+   -----------
+0 | m  b  f  g
+1 | y  q  h  .
+2 | .  .  .  .
+3 | .  y  .  f
+Agent-1: path=[(0,0) -> (0,1) -> (0,2)] word='mtbf' cleared=2 points=+30
+    0  1  2  3
+   -----------
+0 | t  .  .  g
+1 | y  q  h  .
+2 | .  .  .  .
+3 | .  y  .  f
+Agent-2: path=[(1,1) -> (1,0)] word='qty' cleared=1 points=+20
+    0  1  2  3
+   -----------
+0 | t  .  .  g
+1 | .  t  h  .
+2 | .  .  .  .
+3 | .  y  .  f
+Agent-1: path=[(1,1) -> (1,2)] word='thx' cleared=1 points=+20
+    0  1  2  3
+   -----------
+0 | t  .  .  g
+1 | .  x  .  .
+2 | .  .  .  .
+3 | .  y  .  f
+Final Position:
+BOARD:     0  1  2  3
+BOARD:    -----------
+BOARD: 0 | t  .  .  g
+BOARD: 1 | .  x  .  .
+BOARD: 2 | .  .  .  .
+BOARD: 3 | .  y  .  f
+Scores: Agent-1=100 Agent-2=60
+----------------------------------------
+Final Result: Agent-1 wins. (No valid paths remaining)
+----------------------------------------
+Points:
+Agent-1: 3
+Agent-2: 0
+----------------------------------------
+Scores:
+Agent-1: 40
+Agent-2: -40
+============================================================
+
+============================================================
+Game 8
+Agent-1: Gemini-Neon-Extrahigh:1
+Agent-2: Opus-5.5-Max:2
+Starting Player: Agent-2
+------------------------------------------------------------
+    0  1  2  3
+   -----------
+0 | h  q  l  f
+1 | s  d  z  j
+2 | m  s  c  c
+3 | d  g  o  q
+Agent-2: path=[(2,0) -> (2,1) -> (3,1)] word='msg' cleared=3 points=+40
+    0  1  2  3
+   -----------
+0 | h  q  l  f
+1 | s  d  z  j
+2 | .  .  c  c
+3 | d  .  o  q
+Agent-1: path=[(1,1) -> (1,0) -> (0,0)] word='dush' cleared=2 points=+30
+    0  1  2  3
+   -----------
+0 | .  q  l  f
+1 | u  .  z  j
+2 | .  .  c  c
+3 | d  .  o  q
+Agent-2: path=[(2,2) -> (3,2) -> (3,3)] word='coq' cleared=3 points=+40
+    0  1  2  3
+   -----------
+0 | .  q  l  f
+1 | u  .  z  j
+2 | .  .  .  c
+3 | d  .  .  .
+Agent-1: path=[(1,3) -> (2,3)] word='wjc' cleared=1 points=+20
+    0  1  2  3
+   -----------
+0 | .  q  l  f
+1 | u  .  z  w
+2 | .  .  .  .
+3 | d  .  .  .
+Agent-2: path=[(0,3) -> (0,2) -> (1,2)] word='pfalz' cleared=1 points=+20
+    0  1  2  3
+   -----------
+0 | .  q  p  a
+1 | u  .  .  w
+2 | .  .  .  .
+3 | d  .  .  .
+Agent-1: path=[(0,2) -> (0,3) -> (1,3)] word='pawk' cleared=2 points=+30
+    0  1  2  3
+   -----------
+0 | .  q  k  .
+1 | u  .  .  .
+2 | .  .  .  .
+3 | d  .  .  .
+Agent-2: path=[(0,2) -> (0,1)] word='kqc' cleared=1 points=+20
+    0  1  2  3
+   -----------
+0 | .  c  .  .
+1 | u  .  .  .
+2 | .  .  .  .
+3 | d  .  .  .
+Final Position:
+BOARD:     0  1  2  3
+BOARD:    -----------
+BOARD: 0 | .  c  .  .
+BOARD: 1 | u  .  .  .
+BOARD: 2 | .  .  .  .
+BOARD: 3 | d  .  .  .
+Scores: Agent-1=80 Agent-2=120
+----------------------------------------
+Final Result: Agent-2 wins. (No valid paths remaining)
+----------------------------------------
+Points:
+Agent-1: 0
+Agent-2: 3
+----------------------------------------
+Scores:
+Agent-1: -40
+Agent-2: 40
+============================================================
+
+============================================================
+Game 9
+Agent-1: Gemini-Neon-Extrahigh:1
+Agent-2: Opus-5.5-Max:2
+Starting Player: Agent-1
+------------------------------------------------------------
+    0  1  2  3
+   -----------
+0 | k  d  k  w
+1 | h  k  z  g
+2 | t  c  x  m
+3 | n  r  o  k
+Agent-1: path=[(3,2) -> (3,1) -> (3,0) -> (2,0) -> (1,0)] word='ornith' cleared=4 points=+50
+    0  1  2  3
+   -----------
+0 | k  d  k  w
+1 | .  k  z  g
+2 | .  c  x  m
+3 | .  i  .  k
+Agent-2: path=[(1,1) -> (2,1) -> (3,1)] word='kci' cleared=3 points=+40
+    0  1  2  3
+   -----------
+0 | k  d  k  w
+1 | .  .  z  g
+2 | .  .  x  m
+3 | .  .  .  k
+Agent-1: path=[(0,1) -> (0,2) -> (0,3)] word='dukw' cleared=2 points=+30
+    0  1  2  3
+   -----------
+0 | k  u  .  .
+1 | .  .  z  g
+2 | .  .  x  m
+3 | .  .  .  k
+Agent-2: path=[(3,3) -> (2,3) -> (1,3)] word='kcmg' cleared=2 points=+30
+    0  1  2  3
+   -----------
+0 | k  u  .  .
+1 | .  .  z  .
+2 | .  .  x  .
+3 | .  .  .  c
+Agent-1: path=[(0,1) -> (0,0)] word='juck' cleared=0 points=+10
+    0  1  2  3
+   -----------
+0 | j  c  .  .
+1 | .  .  z  .
+2 | .  .  x  .
+3 | .  .  .  c
+Agent-2: path=[(0,0) -> (0,1)] word='wjc' cleared=1 points=+20
+    0  1  2  3
+   -----------
+0 | .  w  .  .
+1 | .  .  z  .
+2 | .  .  x  .
+3 | .  .  .  c
+Agent-1: path=[(2,2) -> (1,2)] word='xyz' cleared=1 points=+20
+    0  1  2  3
+   -----------
+0 | .  w  .  .
+1 | .  .  .  .
+2 | .  .  y  .
+3 | .  .  .  c
+Final Position:
+BOARD:     0  1  2  3
+BOARD:    -----------
+BOARD: 0 | .  w  .  .
+BOARD: 1 | .  .  .  .
+BOARD: 2 | .  .  y  .
+BOARD: 3 | .  .  .  c
+Scores: Agent-1=110 Agent-2=90
+----------------------------------------
+Final Result: Agent-1 wins. (No valid paths remaining)
+----------------------------------------
+Points:
+Agent-1: 3
+Agent-2: 0
+----------------------------------------
+Scores:
+Agent-1: 20
+Agent-2: -20
+============================================================
+
+============================================================
+Game 10
+Agent-1: Gemini-Neon-Extrahigh:1
+Agent-2: Opus-5.5-Max:2
+Starting Player: Agent-2
+------------------------------------------------------------
+    0  1  2  3
+   -----------
+0 | h  c  j  s
+1 | s  d  l  p
+2 | a  c  l  o
+3 | v  l  p  s
+Agent-2: path=[(2,2) -> (2,1) -> (3,1)] word='lcl' cleared=3 points=+40
+    0  1  2  3
+   -----------
+0 | h  c  j  s
+1 | s  d  l  p
+2 | a  .  .  o
+3 | v  .  p  s
+Agent-1: path=[(0,3) -> (1,3) -> (1,2)] word='spdl' cleared=2 points=+30
+    0  1  2  3
+   -----------
+0 | h  c  j  .
+1 | s  d  d  .
+2 | a  .  .  o
+3 | v  .  p  s
+Agent-2: path=[(2,0) -> (1,0) -> (0,0)] word='ash' cleared=3 points=+40
+    0  1  2  3
+   -----------
+0 | .  c  j  .
+1 | .  d  d  .
+2 | .  .  .  o
+3 | v  .  p  s
+Agent-1: path=[(0,2) -> (1,2)] word='jcd' cleared=1 points=+20
+    0  1  2  3
+   -----------
+0 | .  c  .  .
+1 | .  d  c  .
+2 | .  .  .  o
+3 | v  .  p  s
+Agent-2: path=[(0,1) -> (1,1) -> (1,2)] word='cdc' cleared=3 points=+40
+    0  1  2  3
+   -----------
+0 | .  .  .  .
+1 | .  .  .  .
+2 | .  .  .  o
+3 | v  .  p  s
+Agent-1: path=[(2,3) -> (3,3) -> (3,2)] word='osp' cleared=3 points=+40
+    0  1  2  3
+   -----------
+0 | .  .  .  .
+1 | .  .  .  .
+2 | .  .  .  .
+3 | v  .  .  .
+Final Position:
+BOARD:     0  1  2  3
+BOARD:    -----------
+BOARD: 0 | .  .  .  .
+BOARD: 1 | .  .  .  .
+BOARD: 2 | .  .  .  .
+BOARD: 3 | v  .  .  .
+Scores: Agent-1=90 Agent-2=120
+----------------------------------------
+Final Result: Agent-2 wins. (No valid paths remaining)
+----------------------------------------
+Points:
+Agent-1: 0
+Agent-2: 3
+----------------------------------------
+Scores:
+Agent-1: -30
+Agent-2: 30
+============================================================
+============================================================
+Agent-1: Gemini-Neon-Extrahigh:1
+Agent-2: Opus-5.5-Max:2
+RESULT:Agent-1=13.0,Agent-2=16.0
+SCORE:Agent-1=-30.0,Agent-2=30.0
+WINS:Agent-1=4,Agent-2=5
+DRAWS:1
+STATS:Agent-1={'wins': 4, 'losses': 5, 'draws': 1, 'points': 13, 'score': -30.0, 'make_move_crash': 0, 'other_crash': 0, 'crash': 0, 'timeout': 0, 'invalid': 0}
+STATS:Agent-2={'wins': 5, 'losses': 4, 'draws': 1, 'points': 16, 'score': 30.0, 'make_move_crash': 0, 'other_crash': 0, 'crash': 0, 'timeout': 0, 'invalid': 0}
+--- MATCH STATISTICS ---
+Agent-1 make_move_crash: 0
+Agent-2 make_move_crash: 0
+Agent-1 other_crash: 0
+Agent-2 other_crash: 0
+Agent-1 crash (total): 0
+Agent-2 crash (total): 0
+Agent-1 Timeouts: 0
+Agent-2 Timeouts: 0
+Agent-1 Invalid: 0
+Agent-2 Invalid: 0
+Time-limit Draws: 0
+------------------------------------------------------------
+
+
+------------------------------------------------------------

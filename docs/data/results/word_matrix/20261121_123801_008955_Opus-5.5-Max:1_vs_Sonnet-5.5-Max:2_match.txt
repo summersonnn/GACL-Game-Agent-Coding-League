@@ -1,0 +1,724 @@
+Match Contenders:
+Opus-5.5-Max:1
+Sonnet-5.5-Max:2
+
+Result:
+Opus-5.5-Max:1 : Pts: 18 - Score: 100.0
+Sonnet-5.5-Max:2 : Pts: 12 - Score: -100.0
+
+
+============================================================
+Game 1
+Agent-1: Opus-5.5-Max:1
+Agent-2: Sonnet-5.5-Max:2
+Starting Player: Agent-1
+------------------------------------------------------------
+    0  1  2  3
+   -----------
+0 | s  m  j  r
+1 | b  o  a  a
+2 | g  s  b  d
+3 | t  v  j  z
+Agent-1: path=[(1,2) -> (2,2) -> (2,1) -> (1,1) -> (1,0) -> (0,0)] word='absorbs' cleared=5 points=+60
+    0  1  2  3
+   -----------
+0 | .  m  j  r
+1 | r  .  .  a
+2 | g  .  .  d
+3 | t  v  j  z
+Agent-2: path=[(1,3) -> (0,3) -> (0,2)] word='arjan' cleared=1 points=+20
+    0  1  2  3
+   -----------
+0 | .  m  a  .
+1 | r  .  .  n
+2 | g  .  .  d
+3 | t  v  j  z
+Agent-1: path=[(1,0) -> (2,0) -> (3,0)] word='rgt' cleared=3 points=+40
+    0  1  2  3
+   -----------
+0 | .  m  a  .
+1 | .  .  .  n
+2 | .  .  .  d
+3 | .  v  j  z
+Agent-2: path=[(0,1) -> (0,2)] word='ama' cleared=1 points=+20
+    0  1  2  3
+   -----------
+0 | .  .  a  .
+1 | .  .  .  n
+2 | .  .  .  d
+3 | .  v  j  z
+Agent-1: path=[(1,3) -> (2,3)] word='jnd' cleared=1 points=+20
+    0  1  2  3
+   -----------
+0 | .  .  a  .
+1 | .  .  .  j
+2 | .  .  .  .
+3 | .  v  j  z
+Agent-2: path=[(3,2) -> (3,1)] word='jav' cleared=1 points=+20
+    0  1  2  3
+   -----------
+0 | .  .  a  .
+1 | .  .  .  j
+2 | .  .  .  .
+3 | .  a  .  z
+Final Position:
+BOARD:     0  1  2  3
+BOARD:    -----------
+BOARD: 0 | .  .  a  .
+BOARD: 1 | .  .  .  j
+BOARD: 2 | .  .  .  .
+BOARD: 3 | .  a  .  z
+Scores: Agent-1=120 Agent-2=60
+----------------------------------------
+Final Result: Agent-1 wins. (No valid paths remaining)
+----------------------------------------
+Points:
+Agent-1: 3
+Agent-2: 0
+----------------------------------------
+Scores:
+Agent-1: 60
+Agent-2: -60
+============================================================
+
+============================================================
+Game 2
+Agent-1: Opus-5.5-Max:1
+Agent-2: Sonnet-5.5-Max:2
+Starting Player: Agent-2
+------------------------------------------------------------
+    0  1  2  3
+   -----------
+0 | p  z  c  x
+1 | g  d  s  h
+2 | u  l  f  p
+3 | h  z  b  l
+Agent-2: path=[(1,0) -> (2,0) -> (2,1) -> (2,2) -> (1,2)] word='gulfs' cleared=5 points=+60
+    0  1  2  3
+   -----------
+0 | p  z  c  x
+1 | .  d  .  h
+2 | .  .  .  p
+3 | h  z  b  l
+Agent-1: path=[(1,3) -> (2,3) -> (3,3)] word='hplt' cleared=2 points=+30
+    0  1  2  3
+   -----------
+0 | p  z  c  x
+1 | .  d  .  .
+2 | .  .  .  t
+3 | h  z  b  .
+Agent-2: path=[(0,0) -> (0,1)] word='paz' cleared=1 points=+20
+    0  1  2  3
+   -----------
+0 | a  .  c  x
+1 | .  d  .  .
+2 | .  .  .  t
+3 | h  z  b  .
+Agent-1: path=[(3,0) -> (3,1)] word='khz' cleared=1 points=+20
+    0  1  2  3
+   -----------
+0 | a  .  c  x
+1 | .  d  .  .
+2 | .  .  .  t
+3 | .  k  b  .
+Agent-2: path=[(0,2) -> (0,3)] word='cbx' cleared=1 points=+20
+    0  1  2  3
+   -----------
+0 | a  .  .  b
+1 | .  d  .  .
+2 | .  .  .  t
+3 | .  k  b  .
+Agent-1: path=[(3,1) -> (3,2)] word='kab' cleared=1 points=+20
+    0  1  2  3
+   -----------
+0 | a  .  .  b
+1 | .  d  .  .
+2 | .  .  .  t
+3 | .  .  a  .
+Final Position:
+BOARD:     0  1  2  3
+BOARD:    -----------
+BOARD: 0 | a  .  .  b
+BOARD: 1 | .  d  .  .
+BOARD: 2 | .  .  .  t
+BOARD: 3 | .  .  a  .
+Scores: Agent-1=70 Agent-2=100
+----------------------------------------
+Final Result: Agent-2 wins. (No valid paths remaining)
+----------------------------------------
+Points:
+Agent-1: 0
+Agent-2: 3
+----------------------------------------
+Scores:
+Agent-1: -30
+Agent-2: 30
+============================================================
+
+============================================================
+Game 3
+Agent-1: Opus-5.5-Max:1
+Agent-2: Sonnet-5.5-Max:2
+Starting Player: Agent-1
+------------------------------------------------------------
+    0  1  2  3
+   -----------
+0 | f  x  s  b
+1 | y  j  i  f
+2 | r  d  l  k
+3 | j  x  e  m
+Agent-1: path=[(0,2) -> (0,3) -> (1,3) -> (1,2) -> (2,2) -> (2,1)] word='subfield' cleared=4 points=+50
+    0  1  2  3
+   -----------
+0 | f  x  .  .
+1 | y  j  u  e
+2 | r  .  .  k
+3 | j  x  e  m
+Agent-2: path=[(3,3) -> (3,2) -> (3,1)] word='mex' cleared=3 points=+40
+    0  1  2  3
+   -----------
+0 | f  x  .  .
+1 | y  j  u  e
+2 | r  .  .  k
+3 | j  .  .  .
+Agent-1: path=[(2,3) -> (1,3) -> (1,2)] word='ketu' cleared=2 points=+30
+    0  1  2  3
+   -----------
+0 | f  x  .  .
+1 | y  j  .  t
+2 | r  .  .  .
+3 | j  .  .  .
+Agent-2: path=[(0,0) -> (1,0) -> (2,0)] word='fyrd' cleared=2 points=+30
+    0  1  2  3
+   -----------
+0 | .  x  .  .
+1 | d  j  .  t
+2 | .  .  .  .
+3 | j  .  .  .
+Agent-1: path=[(1,0) -> (1,1)] word='adj' cleared=1 points=+20
+    0  1  2  3
+   -----------
+0 | .  x  .  .
+1 | .  a  .  t
+2 | .  .  .  .
+3 | j  .  .  .
+Agent-2: path=[(0,1) -> (1,1)] word='axa' cleared=1 points=+20
+    0  1  2  3
+   -----------
+0 | .  .  .  .
+1 | .  a  .  t
+2 | .  .  .  .
+3 | j  .  .  .
+Final Position:
+BOARD:     0  1  2  3
+BOARD:    -----------
+BOARD: 0 | .  .  .  .
+BOARD: 1 | .  a  .  t
+BOARD: 2 | .  .  .  .
+BOARD: 3 | j  .  .  .
+Scores: Agent-1=100 Agent-2=90
+----------------------------------------
+Final Result: Agent-1 wins. (No valid paths remaining)
+----------------------------------------
+Points:
+Agent-1: 3
+Agent-2: 0
+----------------------------------------
+Scores:
+Agent-1: 10
+Agent-2: -10
+============================================================
+
+============================================================
+Game 4
+Agent-1: Opus-5.5-Max:1
+Agent-2: Sonnet-5.5-Max:2
+Starting Player: Agent-2
+------------------------------------------------------------
+    0  1  2  3
+   -----------
+0 | v  l  f  t
+1 | m  n  d  n
+2 | l  v  b  u
+3 | g  u  a  w
+Agent-2: path=[(2,2) -> (1,2) -> (0,2) -> (0,3)] word='bdft' cleared=4 points=+50
+    0  1  2  3
+   -----------
+0 | v  l  .  .
+1 | m  n  .  n
+2 | l  v  .  u
+3 | g  u  a  w
+Agent-1: path=[(1,0) -> (2,0) -> (3,0)] word='mlg' cleared=3 points=+40
+    0  1  2  3
+   -----------
+0 | v  l  .  .
+1 | .  n  .  n
+2 | .  v  .  u
+3 | .  u  a  w
+Agent-2: path=[(3,3) -> (3,2) -> (3,1) -> (2,1)] word='wauve' cleared=3 points=+40
+    0  1  2  3
+   -----------
+0 | v  l  .  .
+1 | .  n  .  n
+2 | .  .  .  u
+3 | .  .  e  .
+Agent-1: path=[(0,0) -> (0,1) -> (1,1)] word='vuln' cleared=2 points=+30
+    0  1  2  3
+   -----------
+0 | .  .  .  .
+1 | .  u  .  n
+2 | .  .  .  u
+3 | .  .  e  .
+Agent-2: path=[(1,3) -> (2,3)] word='anu' cleared=1 points=+20
+    0  1  2  3
+   -----------
+0 | .  .  .  .
+1 | .  u  .  a
+2 | .  .  .  .
+3 | .  .  e  .
+Final Position:
+BOARD:     0  1  2  3
+BOARD:    -----------
+BOARD: 0 | .  .  .  .
+BOARD: 1 | .  u  .  a
+BOARD: 2 | .  .  .  .
+BOARD: 3 | .  .  e  .
+Scores: Agent-1=70 Agent-2=110
+----------------------------------------
+Final Result: Agent-2 wins. (No valid paths remaining)
+----------------------------------------
+Points:
+Agent-1: 0
+Agent-2: 3
+----------------------------------------
+Scores:
+Agent-1: -40
+Agent-2: 40
+============================================================
+
+============================================================
+Game 5
+Agent-1: Opus-5.5-Max:1
+Agent-2: Sonnet-5.5-Max:2
+Starting Player: Agent-1
+------------------------------------------------------------
+    0  1  2  3
+   -----------
+0 | b  a  b  f
+1 | i  o  i  g
+2 | h  p  o  h
+3 | d  d  u  z
+Agent-1: path=[(2,2) -> (2,1) -> (2,0) -> (1,0) -> (1,1) -> (1,2)] word='ophioid' cleared=5 points=+60
+    0  1  2  3
+   -----------
+0 | b  a  b  f
+1 | .  .  d  g
+2 | .  .  .  h
+3 | d  d  u  z
+Agent-2: path=[(1,3) -> (1,2) -> (0,2)] word='gdb' cleared=3 points=+40
+    0  1  2  3
+   -----------
+0 | b  a  .  f
+1 | .  .  .  .
+2 | .  .  .  h
+3 | d  d  u  z
+Agent-1: path=[(3,3) -> (3,2) -> (3,1) -> (3,0)] word='zudda' cleared=3 points=+40
+    0  1  2  3
+   -----------
+0 | b  a  .  f
+1 | .  .  .  .
+2 | .  .  .  h
+3 | a  .  .  .
+Agent-2: path=[(0,0) -> (0,1)] word='aba' cleared=1 points=+20
+    0  1  2  3
+   -----------
+0 | a  .  .  f
+1 | .  .  .  .
+2 | .  .  .  h
+3 | a  .  .  .
+Final Position:
+BOARD:     0  1  2  3
+BOARD:    -----------
+BOARD: 0 | a  .  .  f
+BOARD: 1 | .  .  .  .
+BOARD: 2 | .  .  .  h
+BOARD: 3 | a  .  .  .
+Scores: Agent-1=100 Agent-2=60
+----------------------------------------
+Final Result: Agent-1 wins. (No valid paths remaining)
+----------------------------------------
+Points:
+Agent-1: 3
+Agent-2: 0
+----------------------------------------
+Scores:
+Agent-1: 40
+Agent-2: -40
+============================================================
+
+============================================================
+Game 6
+Agent-1: Opus-5.5-Max:1
+Agent-2: Sonnet-5.5-Max:2
+Starting Player: Agent-2
+------------------------------------------------------------
+    0  1  2  3
+   -----------
+0 | g  d  s  i
+1 | y  o  j  s
+2 | f  f  y  o
+3 | j  u  k  n
+Agent-2: path=[(0,2) -> (0,3) -> (1,3)] word='sis' cleared=3 points=+40
+    0  1  2  3
+   -----------
+0 | g  d  .  .
+1 | y  o  j  .
+2 | f  f  y  o
+3 | j  u  k  n
+Agent-1: path=[(0,1) -> (1,1) -> (2,1) -> (2,0)] word='doff' cleared=4 points=+50
+    0  1  2  3
+   -----------
+0 | g  .  .  .
+1 | y  .  j  .
+2 | .  .  y  o
+3 | j  u  k  n
+Agent-2: path=[(2,2) -> (2,3) -> (3,3)] word='yon' cleared=3 points=+40
+    0  1  2  3
+   -----------
+0 | g  .  .  .
+1 | y  .  j  .
+2 | .  .  .  .
+3 | j  u  k  .
+Agent-1: path=[(3,0) -> (3,1) -> (3,2)] word='jauk' cleared=2 points=+30
+    0  1  2  3
+   -----------
+0 | g  .  .  .
+1 | y  .  j  .
+2 | .  .  .  .
+3 | .  a  .  .
+Agent-2: path=[(0,0) -> (1,0)] word='agy' cleared=1 points=+20
+    0  1  2  3
+   -----------
+0 | .  .  .  .
+1 | a  .  j  .
+2 | .  .  .  .
+3 | .  a  .  .
+Final Position:
+BOARD:     0  1  2  3
+BOARD:    -----------
+BOARD: 0 | .  .  .  .
+BOARD: 1 | a  .  j  .
+BOARD: 2 | .  .  .  .
+BOARD: 3 | .  a  .  .
+Scores: Agent-1=80 Agent-2=100
+----------------------------------------
+Final Result: Agent-2 wins. (No valid paths remaining)
+----------------------------------------
+Points:
+Agent-1: 0
+Agent-2: 3
+----------------------------------------
+Scores:
+Agent-1: -20
+Agent-2: 20
+============================================================
+
+============================================================
+Game 7
+Agent-1: Opus-5.5-Max:1
+Agent-2: Sonnet-5.5-Max:2
+Starting Player: Agent-1
+------------------------------------------------------------
+    0  1  2  3
+   -----------
+0 | v  v  x  s
+1 | v  h  t  n
+2 | x  i  u  n
+3 | r  p  s  c
+Agent-1: path=[(3,2) -> (2,2) -> (2,3) -> (1,3) -> (0,3)] word='sunns' cleared=5 points=+60
+    0  1  2  3
+   -----------
+0 | v  v  x  .
+1 | v  h  t  .
+2 | x  i  .  .
+3 | r  p  .  c
+Agent-2: path=[(2,1) -> (3,1) -> (3,0)] word='ipr' cleared=3 points=+40
+    0  1  2  3
+   -----------
+0 | v  v  x  .
+1 | v  h  t  .
+2 | x  .  .  .
+3 | .  .  .  c
+Agent-1: path=[(0,1) -> (0,2) -> (1,2)] word='vext' cleared=2 points=+30
+    0  1  2  3
+   -----------
+0 | v  .  .  .
+1 | v  h  e  .
+2 | x  .  .  .
+3 | .  .  .  c
+Agent-2: path=[(0,0) -> (1,0)] word='vav' cleared=1 points=+20
+    0  1  2  3
+   -----------
+0 | a  .  .  .
+1 | .  h  e  .
+2 | x  .  .  .
+3 | .  .  .  c
+Agent-1: path=[(1,1) -> (1,2)] word='che' cleared=1 points=+20
+    0  1  2  3
+   -----------
+0 | a  .  .  .
+1 | .  c  .  .
+2 | x  .  .  .
+3 | .  .  .  c
+Final Position:
+BOARD:     0  1  2  3
+BOARD:    -----------
+BOARD: 0 | a  .  .  .
+BOARD: 1 | .  c  .  .
+BOARD: 2 | x  .  .  .
+BOARD: 3 | .  .  .  c
+Scores: Agent-1=110 Agent-2=60
+----------------------------------------
+Final Result: Agent-1 wins. (No valid paths remaining)
+----------------------------------------
+Points:
+Agent-1: 3
+Agent-2: 0
+----------------------------------------
+Scores:
+Agent-1: 50
+Agent-2: -50
+============================================================
+
+============================================================
+Game 8
+Agent-1: Opus-5.5-Max:1
+Agent-2: Sonnet-5.5-Max:2
+Starting Player: Agent-2
+------------------------------------------------------------
+    0  1  2  3
+   -----------
+0 | j  y  w  q
+1 | o  x  o  n
+2 | u  b  f  f
+3 | h  o  i  o
+Agent-2: path=[(1,0) -> (1,1) -> (1,2) -> (1,3)] word='oxon' cleared=4 points=+50
+    0  1  2  3
+   -----------
+0 | j  y  w  q
+1 | .  .  .  .
+2 | u  b  f  f
+3 | h  o  i  o
+Agent-1: path=[(2,1) -> (3,1) -> (3,2) -> (3,3) -> (2,3) -> (2,2)] word='boiloff' cleared=5 points=+60
+    0  1  2  3
+   -----------
+0 | j  y  w  q
+1 | .  .  .  .
+2 | u  .  .  .
+3 | h  .  l  .
+Agent-2: path=[(0,0) -> (0,1)] word='jay' cleared=1 points=+20
+    0  1  2  3
+   -----------
+0 | a  .  w  q
+1 | .  .  .  .
+2 | u  .  .  .
+3 | h  .  l  .
+Agent-1: path=[(0,3) -> (0,2)] word='qwl' cleared=1 points=+20
+    0  1  2  3
+   -----------
+0 | a  .  l  .
+1 | .  .  .  .
+2 | u  .  .  .
+3 | h  .  l  .
+Agent-2: path=[(2,0) -> (3,0)] word='auh' cleared=1 points=+20
+    0  1  2  3
+   -----------
+0 | a  .  l  .
+1 | .  .  .  .
+2 | a  .  .  .
+3 | .  .  l  .
+Final Position:
+BOARD:     0  1  2  3
+BOARD:    -----------
+BOARD: 0 | a  .  l  .
+BOARD: 1 | .  .  .  .
+BOARD: 2 | a  .  .  .
+BOARD: 3 | .  .  l  .
+Scores: Agent-1=80 Agent-2=90
+----------------------------------------
+Final Result: Agent-2 wins. (No valid paths remaining)
+----------------------------------------
+Points:
+Agent-1: 0
+Agent-2: 3
+----------------------------------------
+Scores:
+Agent-1: -10
+Agent-2: 10
+============================================================
+
+============================================================
+Game 9
+Agent-1: Opus-5.5-Max:1
+Agent-2: Sonnet-5.5-Max:2
+Starting Player: Agent-1
+------------------------------------------------------------
+    0  1  2  3
+   -----------
+0 | f  j  a  e
+1 | q  l  t  n
+2 | l  v  g  a
+3 | p  y  r  p
+Agent-1: path=[(2,2) -> (2,3) -> (1,3) -> (1,2) -> (0,2)] word='ganta' cleared=5 points=+60
+    0  1  2  3
+   -----------
+0 | f  j  .  e
+1 | q  l  .  .
+2 | l  v  .  .
+3 | p  y  r  p
+Agent-2: path=[(3,3) -> (3,2) -> (3,1)] word='pry' cleared=3 points=+40
+    0  1  2  3
+   -----------
+0 | f  j  .  e
+1 | q  l  .  .
+2 | l  v  .  .
+3 | p  .  .  .
+Agent-1: path=[(0,0) -> (1,0) -> (1,1)] word='faql' cleared=2 points=+30
+    0  1  2  3
+   -----------
+0 | .  j  .  e
+1 | .  a  .  .
+2 | l  v  .  .
+3 | p  .  .  .
+Agent-2: path=[(0,1) -> (1,1) -> (2,1)] word='jav' cleared=3 points=+40
+    0  1  2  3
+   -----------
+0 | .  .  .  e
+1 | .  .  .  .
+2 | l  .  .  .
+3 | p  .  .  .
+Agent-1: path=[(2,0) -> (3,0)] word='plp' cleared=1 points=+20
+    0  1  2  3
+   -----------
+0 | .  .  .  e
+1 | .  .  .  .
+2 | p  .  .  .
+3 | .  .  .  .
+Final Position:
+BOARD:     0  1  2  3
+BOARD:    -----------
+BOARD: 0 | .  .  .  e
+BOARD: 1 | .  .  .  .
+BOARD: 2 | p  .  .  .
+BOARD: 3 | .  .  .  .
+Scores: Agent-1=110 Agent-2=80
+----------------------------------------
+Final Result: Agent-1 wins. (No valid paths remaining)
+----------------------------------------
+Points:
+Agent-1: 3
+Agent-2: 0
+----------------------------------------
+Scores:
+Agent-1: 30
+Agent-2: -30
+============================================================
+
+============================================================
+Game 10
+Agent-1: Opus-5.5-Max:1
+Agent-2: Sonnet-5.5-Max:2
+Starting Player: Agent-2
+------------------------------------------------------------
+    0  1  2  3
+   -----------
+0 | i  t  t  w
+1 | y  p  r  t
+2 | l  d  c  i
+3 | f  x  n  y
+Agent-2: path=[(1,2) -> (2,2) -> (3,2)] word='rcn' cleared=3 points=+40
+    0  1  2  3
+   -----------
+0 | i  t  t  w
+1 | y  p  .  t
+2 | l  d  .  i
+3 | f  x  .  y
+Agent-1: path=[(0,1) -> (1,1) -> (2,1)] word='tpd' cleared=3 points=+40
+    0  1  2  3
+   -----------
+0 | i  .  t  w
+1 | y  .  .  t
+2 | l  .  .  i
+3 | f  x  .  y
+Agent-2: path=[(3,0) -> (2,0) -> (1,0) -> (0,0)] word='flying' cleared=2 points=+30
+    0  1  2  3
+   -----------
+0 | g  .  t  w
+1 | .  .  .  t
+2 | .  .  .  i
+3 | n  x  .  y
+Agent-1: path=[(0,2) -> (0,3) -> (1,3)] word='twt' cleared=3 points=+40
+    0  1  2  3
+   -----------
+0 | g  .  .  .
+1 | .  .  .  .
+2 | .  .  .  i
+3 | n  x  .  y
+Agent-2: path=[(2,3) -> (3,3)] word='diy' cleared=1 points=+20
+    0  1  2  3
+   -----------
+0 | g  .  .  .
+1 | .  .  .  .
+2 | .  .  .  .
+3 | n  x  .  d
+Agent-1: path=[(3,0) -> (3,1)] word='dnx' cleared=1 points=+20
+    0  1  2  3
+   -----------
+0 | g  .  .  .
+1 | .  .  .  .
+2 | .  .  .  .
+3 | .  d  .  d
+Final Position:
+BOARD:     0  1  2  3
+BOARD:    -----------
+BOARD: 0 | g  .  .  .
+BOARD: 1 | .  .  .  .
+BOARD: 2 | .  .  .  .
+BOARD: 3 | .  d  .  d
+Scores: Agent-1=100 Agent-2=90
+----------------------------------------
+Final Result: Agent-1 wins. (No valid paths remaining)
+----------------------------------------
+Points:
+Agent-1: 3
+Agent-2: 0
+----------------------------------------
+Scores:
+Agent-1: 10
+Agent-2: -10
+============================================================
+============================================================
+Agent-1: Opus-5.5-Max:1
+Agent-2: Sonnet-5.5-Max:2
+RESULT:Agent-1=18.0,Agent-2=12.0
+SCORE:Agent-1=100.0,Agent-2=-100.0
+WINS:Agent-1=6,Agent-2=4
+DRAWS:0
+STATS:Agent-1={'wins': 6, 'losses': 4, 'draws': 0, 'points': 18, 'score': 100.0, 'make_move_crash': 0, 'other_crash': 0, 'crash': 0, 'timeout': 0, 'invalid': 0}
+STATS:Agent-2={'wins': 4, 'losses': 6, 'draws': 0, 'points': 12, 'score': -100.0, 'make_move_crash': 0, 'other_crash': 0, 'crash': 0, 'timeout': 0, 'invalid': 0}
+--- MATCH STATISTICS ---
+Agent-1 make_move_crash: 0
+Agent-2 make_move_crash: 0
+Agent-1 other_crash: 0
+Agent-2 other_crash: 0
+Agent-1 crash (total): 0
+Agent-2 crash (total): 0
+Agent-1 Timeouts: 0
+Agent-2 Timeouts: 0
+Agent-1 Invalid: 0
+Agent-2 Invalid: 0
+Time-limit Draws: 0
+------------------------------------------------------------
+
+
+------------------------------------------------------------

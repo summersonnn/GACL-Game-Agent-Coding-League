@@ -1,0 +1,743 @@
+Match Contenders:
+DeepSeekV4.1-Flash-1017-Max:2
+GPT-6.1-Terra-Extrahigh:2
+
+Result:
+DeepSeekV4.1-Flash-1017-Max:2 : Pts: 6 - Score: -310.0
+GPT-6.1-Terra-Extrahigh:2 : Pts: 24 - Score: 310.0
+
+
+============================================================
+Game 1
+Agent-1: DeepSeekV4.1-Flash-1017-Max:2
+Agent-2: GPT-6.1-Terra-Extrahigh:2
+Starting Player: Agent-1
+------------------------------------------------------------
+    0  1  2  3
+   -----------
+0 | z  l  v  o
+1 | x  f  y  k
+2 | f  c  v  h
+3 | o  h  h  r
+Agent-1: path=[(0,2) -> (0,1) -> (1,1)] word='vlf' cleared=3 points=+40
+    0  1  2  3
+   -----------
+0 | z  .  .  o
+1 | x  .  y  k
+2 | f  c  v  h
+3 | o  h  h  r
+Agent-2: path=[(2,0) -> (3,0) -> (3,1)] word='foh' cleared=3 points=+40
+    0  1  2  3
+   -----------
+0 | z  .  .  o
+1 | x  .  y  k
+2 | .  c  v  h
+3 | .  .  h  r
+Agent-1: path=[(2,3) -> (3,3) -> (3,2)] word='hrh' cleared=3 points=+40
+    0  1  2  3
+   -----------
+0 | z  .  .  o
+1 | x  .  y  k
+2 | .  c  v  .
+3 | .  .  .  .
+Agent-2: path=[(0,3) -> (1,3) -> (1,2)] word='okay' cleared=2 points=+30
+    0  1  2  3
+   -----------
+0 | z  .  .  .
+1 | x  .  .  a
+2 | .  c  v  .
+3 | .  .  .  .
+Agent-1: PASS
+Agent-2: path=[(0,0) -> (1,0)] word='zax' cleared=1 points=+20
+    0  1  2  3
+   -----------
+0 | .  .  .  .
+1 | a  .  .  a
+2 | .  c  v  .
+3 | .  .  .  .
+Agent-1: PASS
+Agent-2: path=[(2,1) -> (2,2)] word='cvr' cleared=1 points=+20
+    0  1  2  3
+   -----------
+0 | .  .  .  .
+1 | a  .  .  a
+2 | .  r  .  .
+3 | .  .  .  .
+Final Position:
+BOARD:     0  1  2  3
+BOARD:    -----------
+BOARD: 0 | .  .  .  .
+BOARD: 1 | a  .  .  a
+BOARD: 2 | .  r  .  .
+BOARD: 3 | .  .  .  .
+Scores: Agent-1=80 Agent-2=110
+----------------------------------------
+Final Result: Agent-2 wins. (No valid paths remaining)
+----------------------------------------
+Points:
+Agent-1: 0
+Agent-2: 3
+----------------------------------------
+Scores:
+Agent-1: -30
+Agent-2: 30
+============================================================
+
+============================================================
+Game 2
+Agent-1: DeepSeekV4.1-Flash-1017-Max:2
+Agent-2: GPT-6.1-Terra-Extrahigh:2
+Starting Player: Agent-2
+------------------------------------------------------------
+    0  1  2  3
+   -----------
+0 | z  n  s  y
+1 | b  k  w  l
+2 | b  c  g  y
+3 | g  p  f  g
+Agent-2: path=[(2,2) -> (2,3) -> (1,3) -> (0,3) -> (0,2)] word='gylys' cleared=5 points=+60
+    0  1  2  3
+   -----------
+0 | z  n  .  .
+1 | b  k  w  .
+2 | b  c  .  .
+3 | g  p  f  g
+Agent-1: path=[(0,0) -> (1,0) -> (2,0)] word='zbb' cleared=3 points=+40
+    0  1  2  3
+   -----------
+0 | .  n  .  .
+1 | .  k  w  .
+2 | .  c  .  .
+3 | g  p  f  g
+Agent-2: path=[(2,1) -> (1,1) -> (1,2)] word='ckw' cleared=3 points=+40
+    0  1  2  3
+   -----------
+0 | .  n  .  .
+1 | .  .  .  .
+2 | .  .  .  .
+3 | g  p  f  g
+Agent-1: path=[(3,1) -> (3,2) -> (3,3)] word='pfg' cleared=3 points=+40
+    0  1  2  3
+   -----------
+0 | .  n  .  .
+1 | .  .  .  .
+2 | .  .  .  .
+3 | g  .  .  .
+Final Position:
+BOARD:     0  1  2  3
+BOARD:    -----------
+BOARD: 0 | .  n  .  .
+BOARD: 1 | .  .  .  .
+BOARD: 2 | .  .  .  .
+BOARD: 3 | g  .  .  .
+Scores: Agent-1=80 Agent-2=100
+----------------------------------------
+Final Result: Agent-2 wins. (No valid paths remaining)
+----------------------------------------
+Points:
+Agent-1: 0
+Agent-2: 3
+----------------------------------------
+Scores:
+Agent-1: -20
+Agent-2: 20
+============================================================
+
+============================================================
+Game 3
+Agent-1: DeepSeekV4.1-Flash-1017-Max:2
+Agent-2: GPT-6.1-Terra-Extrahigh:2
+Starting Player: Agent-1
+------------------------------------------------------------
+    0  1  2  3
+   -----------
+0 | m  w  y  p
+1 | h  x  l  j
+2 | b  a  y  k
+3 | v  k  b  u
+Agent-1: path=[(2,0) -> (2,1) -> (2,2) -> (1,2) -> (0,2)] word='bayly' cleared=5 points=+60
+    0  1  2  3
+   -----------
+0 | m  w  .  p
+1 | h  x  .  j
+2 | .  .  .  k
+3 | v  k  b  u
+Agent-2: path=[(2,3) -> (3,3) -> (3,2)] word='kuba' cleared=2 points=+30
+    0  1  2  3
+   -----------
+0 | m  w  .  p
+1 | h  x  .  j
+2 | .  .  .  a
+3 | v  k  .  .
+Agent-1: path=[(0,3) -> (1,3) -> (2,3)] word='ponja' cleared=1 points=+20
+    0  1  2  3
+   -----------
+0 | m  w  .  .
+1 | h  x  .  n
+2 | .  .  .  o
+3 | v  k  .  .
+Agent-2: path=[(0,0) -> (1,0)] word='mho' cleared=1 points=+20
+    0  1  2  3
+   -----------
+0 | o  w  .  .
+1 | .  x  .  n
+2 | .  .  .  o
+3 | v  k  .  .
+Agent-1: path=[(1,1) -> (0,1) -> (0,0)] word='axwort' cleared=0 points=+10
+    0  1  2  3
+   -----------
+0 | r  t  .  .
+1 | .  a  .  n
+2 | .  .  .  o
+3 | v  k  .  .
+Agent-2: path=[(0,0) -> (0,1) -> (1,1)] word='rta' cleared=3 points=+40
+    0  1  2  3
+   -----------
+0 | .  .  .  .
+1 | .  .  .  n
+2 | .  .  .  o
+3 | v  k  .  .
+Agent-1: PASS
+Agent-2: path=[(1,3) -> (2,3)] word='non' cleared=1 points=+20
+    0  1  2  3
+   -----------
+0 | .  .  .  .
+1 | .  .  .  n
+2 | .  .  .  .
+3 | v  k  .  .
+Agent-1: PASS
+Agent-2: path=[(3,1) -> (3,0)] word='kva' cleared=1 points=+20
+    0  1  2  3
+   -----------
+0 | .  .  .  .
+1 | .  .  .  n
+2 | .  .  .  .
+3 | a  .  .  .
+Final Position:
+BOARD:     0  1  2  3
+BOARD:    -----------
+BOARD: 0 | .  .  .  .
+BOARD: 1 | .  .  .  n
+BOARD: 2 | .  .  .  .
+BOARD: 3 | a  .  .  .
+Scores: Agent-1=90 Agent-2=130
+----------------------------------------
+Final Result: Agent-2 wins. (No valid paths remaining)
+----------------------------------------
+Points:
+Agent-1: 0
+Agent-2: 3
+----------------------------------------
+Scores:
+Agent-1: -40
+Agent-2: 40
+============================================================
+
+============================================================
+Game 4
+Agent-1: DeepSeekV4.1-Flash-1017-Max:2
+Agent-2: GPT-6.1-Terra-Extrahigh:2
+Starting Player: Agent-2
+------------------------------------------------------------
+    0  1  2  3
+   -----------
+0 | f  b  q  p
+1 | o  b  j  n
+2 | b  k  u  e
+3 | a  f  q  k
+Agent-2: path=[(1,1) -> (1,0) -> (2,0) -> (3,0)] word='boba' cleared=4 points=+50
+    0  1  2  3
+   -----------
+0 | f  b  q  p
+1 | .  .  j  n
+2 | .  k  u  e
+3 | .  f  q  k
+Agent-1: path=[(1,3) -> (2,3) -> (2,2) -> (2,1)] word='neuk' cleared=4 points=+50
+    0  1  2  3
+   -----------
+0 | f  b  q  p
+1 | .  .  j  .
+2 | .  .  .  .
+3 | .  f  q  k
+Agent-2: path=[(0,0) -> (0,1)] word='fba' cleared=1 points=+20
+    0  1  2  3
+   -----------
+0 | a  .  q  p
+1 | .  .  j  .
+2 | .  .  .  .
+3 | .  f  q  k
+Agent-1: PASS
+Agent-2: path=[(0,2) -> (0,3)] word='qrp' cleared=1 points=+20
+    0  1  2  3
+   -----------
+0 | a  .  r  .
+1 | .  .  j  .
+2 | .  .  .  .
+3 | .  f  q  k
+Agent-1: PASS
+Agent-2: path=[(0,2) -> (1,2)] word='rje' cleared=1 points=+20
+    0  1  2  3
+   -----------
+0 | a  .  e  .
+1 | .  .  .  .
+2 | .  .  .  .
+3 | .  f  q  k
+Agent-1: PASS
+Agent-2: path=[(3,1) -> (3,2)] word='faq' cleared=1 points=+20
+    0  1  2  3
+   -----------
+0 | a  .  e  .
+1 | .  .  .  .
+2 | .  .  .  .
+3 | .  .  a  k
+Agent-1: PASS
+Agent-2: path=[(3,2) -> (3,3)] word='ako' cleared=1 points=+20
+    0  1  2  3
+   -----------
+0 | a  .  e  .
+1 | .  .  .  .
+2 | .  .  .  .
+3 | .  .  .  o
+Final Position:
+BOARD:     0  1  2  3
+BOARD:    -----------
+BOARD: 0 | a  .  e  .
+BOARD: 1 | .  .  .  .
+BOARD: 2 | .  .  .  .
+BOARD: 3 | .  .  .  o
+Scores: Agent-1=50 Agent-2=150
+----------------------------------------
+Final Result: Agent-2 wins. (No valid paths remaining)
+----------------------------------------
+Points:
+Agent-1: 0
+Agent-2: 3
+----------------------------------------
+Scores:
+Agent-1: -100
+Agent-2: 100
+============================================================
+
+============================================================
+Game 5
+Agent-1: DeepSeekV4.1-Flash-1017-Max:2
+Agent-2: GPT-6.1-Terra-Extrahigh:2
+Starting Player: Agent-1
+------------------------------------------------------------
+    0  1  2  3
+   -----------
+0 | z  z  d  t
+1 | j  w  w  n
+2 | c  r  u  x
+3 | e  n  d  f
+Agent-1: path=[(2,0) -> (2,1) -> (2,2) -> (3,2)] word='crud' cleared=4 points=+50
+    0  1  2  3
+   -----------
+0 | z  z  d  t
+1 | j  w  w  n
+2 | .  .  .  x
+3 | e  n  .  f
+Agent-2: path=[(1,2) -> (0,2) -> (0,3)] word='wdt' cleared=3 points=+40
+    0  1  2  3
+   -----------
+0 | z  z  .  .
+1 | j  w  .  n
+2 | .  .  .  x
+3 | e  n  .  f
+Agent-1: path=[(3,3) -> (2,3) -> (1,3)] word='faxan' cleared=1 points=+20
+    0  1  2  3
+   -----------
+0 | z  z  .  .
+1 | j  w  .  a
+2 | .  .  .  a
+3 | e  n  .  .
+Agent-2: path=[(1,0) -> (0,0) -> (0,1)] word='jazz' cleared=2 points=+30
+    0  1  2  3
+   -----------
+0 | .  a  .  .
+1 | .  w  .  a
+2 | .  .  .  a
+3 | e  n  .  .
+Agent-1: PASS
+Agent-2: path=[(0,1) -> (1,1)] word='awe' cleared=1 points=+20
+    0  1  2  3
+   -----------
+0 | .  .  .  .
+1 | .  e  .  a
+2 | .  .  .  a
+3 | e  n  .  .
+Agent-1: PASS
+Agent-2: path=[(1,3) -> (2,3)] word='aau' cleared=1 points=+20
+    0  1  2  3
+   -----------
+0 | .  .  .  .
+1 | .  e  .  .
+2 | .  .  .  u
+3 | e  n  .  .
+Agent-1: PASS
+Agent-2: path=[(3,0) -> (3,1)] word='ens' cleared=1 points=+20
+    0  1  2  3
+   -----------
+0 | .  .  .  .
+1 | .  e  .  .
+2 | .  .  .  u
+3 | s  .  .  .
+Final Position:
+BOARD:     0  1  2  3
+BOARD:    -----------
+BOARD: 0 | .  .  .  .
+BOARD: 1 | .  e  .  .
+BOARD: 2 | .  .  .  u
+BOARD: 3 | s  .  .  .
+Scores: Agent-1=70 Agent-2=130
+----------------------------------------
+Final Result: Agent-2 wins. (No valid paths remaining)
+----------------------------------------
+Points:
+Agent-1: 0
+Agent-2: 3
+----------------------------------------
+Scores:
+Agent-1: -60
+Agent-2: 60
+============================================================
+
+============================================================
+Game 6
+Agent-1: DeepSeekV4.1-Flash-1017-Max:2
+Agent-2: GPT-6.1-Terra-Extrahigh:2
+Starting Player: Agent-2
+------------------------------------------------------------
+    0  1  2  3
+   -----------
+0 | t  o  z  m
+1 | o  y  r  j
+2 | o  h  r  a
+3 | s  s  x  q
+Agent-2: path=[(1,3) -> (2,3) -> (2,2) -> (1,2) -> (1,1)] word='jarry' cleared=5 points=+60
+    0  1  2  3
+   -----------
+0 | t  o  z  m
+1 | o  .  .  .
+2 | o  h  .  .
+3 | s  s  x  q
+Agent-1: path=[(3,1) -> (2,1) -> (2,0) -> (1,0) -> (0,0)] word='shoot' cleared=5 points=+60
+    0  1  2  3
+   -----------
+0 | .  o  z  m
+1 | .  .  .  .
+2 | .  .  .  .
+3 | s  .  x  q
+Agent-2: path=[(0,1) -> (0,2) -> (0,3)] word='ozmo' cleared=2 points=+30
+    0  1  2  3
+   -----------
+0 | .  .  o  .
+1 | .  .  .  .
+2 | .  .  .  .
+3 | s  .  x  q
+Agent-1: PASS
+Agent-2: PASS
+Agent-1: PASS
+Agent-2: PASS
+Agent-1: PASS
+Agent-2: PASS
+Final Position:
+BOARD:     0  1  2  3
+BOARD:    -----------
+BOARD: 0 | .  .  o  .
+BOARD: 1 | .  .  .  .
+BOARD: 2 | .  .  .  .
+BOARD: 3 | s  .  x  q
+Scores: Agent-1=60 Agent-2=90
+----------------------------------------
+Final Result: Agent-2 wins. (6 consecutive passes reached)
+----------------------------------------
+Points:
+Agent-1: 0
+Agent-2: 3
+----------------------------------------
+Scores:
+Agent-1: -30
+Agent-2: 30
+============================================================
+
+============================================================
+Game 7
+Agent-1: DeepSeekV4.1-Flash-1017-Max:2
+Agent-2: GPT-6.1-Terra-Extrahigh:2
+Starting Player: Agent-1
+------------------------------------------------------------
+    0  1  2  3
+   -----------
+0 | y  y  n  u
+1 | w  n  b  n
+2 | a  f  b  g
+3 | k  u  b  u
+Agent-1: path=[(2,1) -> (2,0) -> (1,0) -> (1,1) -> (0,1)] word='fawny' cleared=5 points=+60
+    0  1  2  3
+   -----------
+0 | y  .  n  u
+1 | .  .  b  n
+2 | .  .  b  g
+3 | k  u  b  u
+Agent-2: path=[(0,3) -> (0,2) -> (1,2) -> (1,3) -> (2,3)] word='unbung' cleared=4 points=+50
+    0  1  2  3
+   -----------
+0 | y  .  u  .
+1 | .  .  .  .
+2 | .  .  b  .
+3 | k  u  b  u
+Agent-1: path=[(3,0) -> (3,1) -> (3,2) -> (2,2)] word='kubba' cleared=3 points=+40
+    0  1  2  3
+   -----------
+0 | y  .  u  .
+1 | .  .  .  .
+2 | .  .  .  .
+3 | a  .  .  u
+Final Position:
+BOARD:     0  1  2  3
+BOARD:    -----------
+BOARD: 0 | y  .  u  .
+BOARD: 1 | .  .  .  .
+BOARD: 2 | .  .  .  .
+BOARD: 3 | a  .  .  u
+Scores: Agent-1=100 Agent-2=50
+----------------------------------------
+Final Result: Agent-1 wins. (No valid paths remaining)
+----------------------------------------
+Points:
+Agent-1: 3
+Agent-2: 0
+----------------------------------------
+Scores:
+Agent-1: 50
+Agent-2: -50
+============================================================
+
+============================================================
+Game 8
+Agent-1: DeepSeekV4.1-Flash-1017-Max:2
+Agent-2: GPT-6.1-Terra-Extrahigh:2
+Starting Player: Agent-2
+------------------------------------------------------------
+    0  1  2  3
+   -----------
+0 | z  l  i  x
+1 | k  s  p  n
+2 | l  o  e  t
+3 | x  j  b  t
+Agent-2: path=[(1,1) -> (0,1) -> (0,2) -> (1,2) -> (2,2)] word='slipe' cleared=5 points=+60
+    0  1  2  3
+   -----------
+0 | z  .  .  x
+1 | k  .  .  n
+2 | l  o  .  t
+3 | x  j  b  t
+Agent-1: path=[(1,3) -> (2,3) -> (3,3)] word='ntt' cleared=3 points=+40
+    0  1  2  3
+   -----------
+0 | z  .  .  x
+1 | k  .  .  .
+2 | l  o  .  .
+3 | x  j  b  .
+Agent-2: path=[(1,0) -> (2,0) -> (3,0)] word='klux' cleared=2 points=+30
+    0  1  2  3
+   -----------
+0 | z  .  .  x
+1 | u  .  .  .
+2 | .  o  .  .
+3 | .  j  b  .
+Agent-1: path=[(3,2) -> (3,1) -> (2,1)] word='banjo' cleared=1 points=+20
+    0  1  2  3
+   -----------
+0 | z  .  .  x
+1 | u  .  .  .
+2 | .  n  .  .
+3 | .  a  .  .
+Agent-2: path=[(0,0) -> (1,0)] word='zug' cleared=1 points=+20
+    0  1  2  3
+   -----------
+0 | g  .  .  x
+1 | .  .  .  .
+2 | .  n  .  .
+3 | .  a  .  .
+Agent-1: PASS
+Agent-2: path=[(2,1) -> (3,1)] word='nan' cleared=1 points=+20
+    0  1  2  3
+   -----------
+0 | g  .  .  x
+1 | .  .  .  .
+2 | .  n  .  .
+3 | .  .  .  .
+Final Position:
+BOARD:     0  1  2  3
+BOARD:    -----------
+BOARD: 0 | g  .  .  x
+BOARD: 1 | .  .  .  .
+BOARD: 2 | .  n  .  .
+BOARD: 3 | .  .  .  .
+Scores: Agent-1=60 Agent-2=130
+----------------------------------------
+Final Result: Agent-2 wins. (No valid paths remaining)
+----------------------------------------
+Points:
+Agent-1: 0
+Agent-2: 3
+----------------------------------------
+Scores:
+Agent-1: -70
+Agent-2: 70
+============================================================
+
+============================================================
+Game 9
+Agent-1: DeepSeekV4.1-Flash-1017-Max:2
+Agent-2: GPT-6.1-Terra-Extrahigh:2
+Starting Player: Agent-1
+------------------------------------------------------------
+    0  1  2  3
+   -----------
+0 | e  k  t  t
+1 | z  o  t  e
+2 | k  z  r  w
+3 | u  d  t  g
+Agent-1: path=[(0,3) -> (1,3) -> (1,2) -> (2,2) -> (2,1) -> (1,1)] word='tetrazo' cleared=5 points=+60
+    0  1  2  3
+   -----------
+0 | e  k  t  a
+1 | z  .  .  .
+2 | k  .  .  w
+3 | u  d  t  g
+Agent-2: path=[(0,3) -> (0,2) -> (0,1)] word='atk' cleared=3 points=+40
+    0  1  2  3
+   -----------
+0 | e  .  .  .
+1 | z  .  .  .
+2 | k  .  .  w
+3 | u  d  t  g
+Agent-1: path=[(3,0) -> (3,1) -> (3,2)] word='udt' cleared=3 points=+40
+    0  1  2  3
+   -----------
+0 | e  .  .  .
+1 | z  .  .  .
+2 | k  .  .  w
+3 | .  .  .  g
+Agent-2: path=[(0,0) -> (1,0) -> (2,0)] word='ezek' cleared=2 points=+30
+    0  1  2  3
+   -----------
+0 | .  .  .  .
+1 | .  .  .  .
+2 | e  .  .  w
+3 | .  .  .  g
+Agent-1: PASS
+Agent-2: path=[(2,3) -> (3,3)] word='wgs' cleared=1 points=+20
+    0  1  2  3
+   -----------
+0 | .  .  .  .
+1 | .  .  .  .
+2 | e  .  .  s
+3 | .  .  .  .
+Final Position:
+BOARD:     0  1  2  3
+BOARD:    -----------
+BOARD: 0 | .  .  .  .
+BOARD: 1 | .  .  .  .
+BOARD: 2 | e  .  .  s
+BOARD: 3 | .  .  .  .
+Scores: Agent-1=100 Agent-2=90
+----------------------------------------
+Final Result: Agent-1 wins. (No valid paths remaining)
+----------------------------------------
+Points:
+Agent-1: 3
+Agent-2: 0
+----------------------------------------
+Scores:
+Agent-1: 10
+Agent-2: -10
+============================================================
+
+============================================================
+Game 10
+Agent-1: DeepSeekV4.1-Flash-1017-Max:2
+Agent-2: GPT-6.1-Terra-Extrahigh:2
+Starting Player: Agent-2
+------------------------------------------------------------
+    0  1  2  3
+   -----------
+0 | n  g  u  n
+1 | v  u  c  h
+2 | w  a  h  e
+3 | b  f  m  h
+Agent-2: path=[(0,3) -> (0,2) -> (1,2) -> (2,2) -> (2,1)] word='nucha' cleared=5 points=+60
+    0  1  2  3
+   -----------
+0 | n  g  .  .
+1 | v  u  .  h
+2 | w  .  .  e
+3 | b  f  m  h
+Agent-1: path=[(0,1) -> (1,1) -> (1,0)] word='guv' cleared=3 points=+40
+    0  1  2  3
+   -----------
+0 | n  .  .  .
+1 | .  .  .  h
+2 | w  .  .  e
+3 | b  f  m  h
+Agent-2: path=[(1,3) -> (2,3) -> (3,3)] word='heh' cleared=3 points=+40
+    0  1  2  3
+   -----------
+0 | n  .  .  .
+1 | .  .  .  .
+2 | w  .  .  .
+3 | b  f  m  .
+Agent-1: path=[(3,2) -> (3,1) -> (3,0)] word='mfb' cleared=3 points=+40
+    0  1  2  3
+   -----------
+0 | n  .  .  .
+1 | .  .  .  .
+2 | w  .  .  .
+3 | .  .  .  .
+Final Position:
+BOARD:     0  1  2  3
+BOARD:    -----------
+BOARD: 0 | n  .  .  .
+BOARD: 1 | .  .  .  .
+BOARD: 2 | w  .  .  .
+BOARD: 3 | .  .  .  .
+Scores: Agent-1=80 Agent-2=100
+----------------------------------------
+Final Result: Agent-2 wins. (No valid paths remaining)
+----------------------------------------
+Points:
+Agent-1: 0
+Agent-2: 3
+----------------------------------------
+Scores:
+Agent-1: -20
+Agent-2: 20
+============================================================
+============================================================
+Agent-1: DeepSeekV4.1-Flash-1017-Max:2
+Agent-2: GPT-6.1-Terra-Extrahigh:2
+RESULT:Agent-1=6.0,Agent-2=24.0
+SCORE:Agent-1=-310.0,Agent-2=310.0
+WINS:Agent-1=2,Agent-2=8
+DRAWS:0
+STATS:Agent-1={'wins': 2, 'losses': 8, 'draws': 0, 'points': 6, 'score': -310.0, 'make_move_crash': 0, 'other_crash': 0, 'crash': 0, 'timeout': 0, 'invalid': 0}
+STATS:Agent-2={'wins': 8, 'losses': 2, 'draws': 0, 'points': 24, 'score': 310.0, 'make_move_crash': 0, 'other_crash': 0, 'crash': 0, 'timeout': 0, 'invalid': 0}
+--- MATCH STATISTICS ---
+Agent-1 make_move_crash: 0
+Agent-2 make_move_crash: 0
+Agent-1 other_crash: 0
+Agent-2 other_crash: 0
+Agent-1 crash (total): 0
+Agent-2 crash (total): 0
+Agent-1 Timeouts: 0
+Agent-2 Timeouts: 0
+Agent-1 Invalid: 0
+Agent-2 Invalid: 0
+Time-limit Draws: 0
+------------------------------------------------------------
+
+
+------------------------------------------------------------

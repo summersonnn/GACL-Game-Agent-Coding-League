@@ -1,0 +1,724 @@
+Match Contenders:
+GPT-6.2-Sol-Extrahigh:2
+Sonnet-5.5-Max:1
+
+Result:
+GPT-6.2-Sol-Extrahigh:2 : Pts: 15 - Score: 30.0
+Sonnet-5.5-Max:1 : Pts: 15 - Score: -30.0
+
+
+============================================================
+Game 1
+Agent-1: GPT-6.2-Sol-Extrahigh:2
+Agent-2: Sonnet-5.5-Max:1
+Starting Player: Agent-1
+------------------------------------------------------------
+    0  1  2  3
+   -----------
+0 | t  k  i  q
+1 | q  d  t  y
+2 | a  u  r  v
+3 | a  c  i  q
+Agent-1: path=[(1,2) -> (2,2) -> (3,2) -> (3,1) -> (3,0)] word='trica' cleared=5 points=+60
+    0  1  2  3
+   -----------
+0 | t  k  i  q
+1 | q  d  .  y
+2 | a  u  .  v
+3 | .  .  .  q
+Agent-2: path=[(1,1) -> (2,1) -> (2,0)] word='dua' cleared=3 points=+40
+    0  1  2  3
+   -----------
+0 | t  k  i  q
+1 | q  .  .  y
+2 | .  .  .  v
+3 | .  .  .  q
+Agent-1: path=[(0,2) -> (0,1) -> (0,0)] word='ikat' cleared=2 points=+30
+    0  1  2  3
+   -----------
+0 | a  .  .  q
+1 | q  .  .  y
+2 | .  .  .  v
+3 | .  .  .  q
+Agent-2: path=[(2,3) -> (1,3)] word='vny' cleared=1 points=+20
+    0  1  2  3
+   -----------
+0 | a  .  .  q
+1 | q  .  .  .
+2 | .  .  .  n
+3 | .  .  .  q
+Agent-1: path=[(0,0) -> (1,0)] word='aeq' cleared=1 points=+20
+    0  1  2  3
+   -----------
+0 | e  .  .  q
+1 | .  .  .  .
+2 | .  .  .  n
+3 | .  .  .  q
+Agent-2: path=[(3,3) -> (2,3)] word='qns' cleared=1 points=+20
+    0  1  2  3
+   -----------
+0 | e  .  .  q
+1 | .  .  .  .
+2 | .  .  .  .
+3 | .  .  .  s
+Final Position:
+BOARD:     0  1  2  3
+BOARD:    -----------
+BOARD: 0 | e  .  .  q
+BOARD: 1 | .  .  .  .
+BOARD: 2 | .  .  .  .
+BOARD: 3 | .  .  .  s
+Scores: Agent-1=110 Agent-2=80
+----------------------------------------
+Final Result: Agent-1 wins. (No valid paths remaining)
+----------------------------------------
+Points:
+Agent-1: 3
+Agent-2: 0
+----------------------------------------
+Scores:
+Agent-1: 30
+Agent-2: -30
+============================================================
+
+============================================================
+Game 2
+Agent-1: GPT-6.2-Sol-Extrahigh:2
+Agent-2: Sonnet-5.5-Max:1
+Starting Player: Agent-2
+------------------------------------------------------------
+    0  1  2  3
+   -----------
+0 | u  c  i  n
+1 | j  e  d  y
+2 | z  w  r  v
+3 | v  x  e  g
+Agent-2: path=[(0,1) -> (1,1) -> (1,2) -> (2,2) -> (3,2)] word='cedre' cleared=5 points=+60
+    0  1  2  3
+   -----------
+0 | u  .  i  n
+1 | j  .  .  y
+2 | z  w  .  v
+3 | v  x  .  g
+Agent-1: path=[(0,2) -> (0,3) -> (1,3)] word='iny' cleared=3 points=+40
+    0  1  2  3
+   -----------
+0 | u  .  .  .
+1 | j  .  .  .
+2 | z  w  .  v
+3 | v  x  .  g
+Agent-2: path=[(3,0) -> (3,1)] word='vex' cleared=1 points=+20
+    0  1  2  3
+   -----------
+0 | u  .  .  .
+1 | j  .  .  .
+2 | z  w  .  v
+3 | e  .  .  g
+Agent-1: path=[(2,3) -> (3,3)] word='avg' cleared=1 points=+20
+    0  1  2  3
+   -----------
+0 | u  .  .  .
+1 | j  .  .  .
+2 | z  w  .  .
+3 | e  .  .  a
+Agent-2: path=[(3,0) -> (2,0)] word='lez' cleared=1 points=+20
+    0  1  2  3
+   -----------
+0 | u  .  .  .
+1 | j  .  .  .
+2 | .  w  .  .
+3 | l  .  .  a
+Agent-1: path=[(0,0) -> (1,0)] word='cuj' cleared=1 points=+20
+    0  1  2  3
+   -----------
+0 | .  .  .  .
+1 | c  .  .  .
+2 | .  w  .  .
+3 | l  .  .  a
+Final Position:
+BOARD:     0  1  2  3
+BOARD:    -----------
+BOARD: 0 | .  .  .  .
+BOARD: 1 | c  .  .  .
+BOARD: 2 | .  w  .  .
+BOARD: 3 | l  .  .  a
+Scores: Agent-1=80 Agent-2=100
+----------------------------------------
+Final Result: Agent-2 wins. (No valid paths remaining)
+----------------------------------------
+Points:
+Agent-1: 0
+Agent-2: 3
+----------------------------------------
+Scores:
+Agent-1: -20
+Agent-2: 20
+============================================================
+
+============================================================
+Game 3
+Agent-1: GPT-6.2-Sol-Extrahigh:2
+Agent-2: Sonnet-5.5-Max:1
+Starting Player: Agent-1
+------------------------------------------------------------
+    0  1  2  3
+   -----------
+0 | y  r  k  h
+1 | e  o  v  m
+2 | n  z  v  l
+3 | z  s  l  q
+Agent-1: path=[(0,1) -> (1,1) -> (1,0) -> (0,0)] word='roey' cleared=4 points=+50
+    0  1  2  3
+   -----------
+0 | .  .  k  h
+1 | .  .  v  m
+2 | n  z  v  l
+3 | z  s  l  q
+Agent-2: path=[(1,3) -> (2,3) -> (2,2)] word='mlv' cleared=3 points=+40
+    0  1  2  3
+   -----------
+0 | .  .  k  h
+1 | .  .  v  .
+2 | n  z  .  .
+3 | z  s  l  q
+Agent-1: path=[(2,1) -> (2,0) -> (3,0) -> (3,1)] word='zanzas' cleared=2 points=+30
+    0  1  2  3
+   -----------
+0 | .  .  k  h
+1 | .  .  v  .
+2 | a  .  .  .
+3 | .  a  l  q
+Agent-2: path=[(0,2) -> (1,2)] word='kva' cleared=1 points=+20
+    0  1  2  3
+   -----------
+0 | .  .  .  h
+1 | .  .  a  .
+2 | a  .  .  .
+3 | .  a  l  q
+Agent-1: path=[(3,1) -> (3,2)] word='aal' cleared=1 points=+20
+    0  1  2  3
+   -----------
+0 | .  .  .  h
+1 | .  .  a  .
+2 | a  .  .  .
+3 | .  .  a  q
+Agent-2: path=[(3,3) -> (3,2)] word='sqa' cleared=1 points=+20
+    0  1  2  3
+   -----------
+0 | .  .  .  h
+1 | .  .  a  .
+2 | a  .  .  .
+3 | .  .  .  s
+Final Position:
+BOARD:     0  1  2  3
+BOARD:    -----------
+BOARD: 0 | .  .  .  h
+BOARD: 1 | .  .  a  .
+BOARD: 2 | a  .  .  .
+BOARD: 3 | .  .  .  s
+Scores: Agent-1=100 Agent-2=80
+----------------------------------------
+Final Result: Agent-1 wins. (No valid paths remaining)
+----------------------------------------
+Points:
+Agent-1: 3
+Agent-2: 0
+----------------------------------------
+Scores:
+Agent-1: 20
+Agent-2: -20
+============================================================
+
+============================================================
+Game 4
+Agent-1: GPT-6.2-Sol-Extrahigh:2
+Agent-2: Sonnet-5.5-Max:1
+Starting Player: Agent-2
+------------------------------------------------------------
+    0  1  2  3
+   -----------
+0 | d  v  p  y
+1 | w  z  e  o
+2 | o  h  k  q
+3 | g  j  r  l
+Agent-2: path=[(3,0) -> (2,0) -> (1,0) -> (0,0)] word='gowd' cleared=4 points=+50
+    0  1  2  3
+   -----------
+0 | .  v  p  y
+1 | .  z  e  o
+2 | .  h  k  q
+3 | .  j  r  l
+Agent-1: path=[(2,2) -> (1,2) -> (1,3)] word='keo' cleared=3 points=+40
+    0  1  2  3
+   -----------
+0 | .  v  p  y
+1 | .  z  .  .
+2 | .  h  .  q
+3 | .  j  r  l
+Agent-2: path=[(3,1) -> (3,2) -> (3,3)] word='jarl' cleared=2 points=+30
+    0  1  2  3
+   -----------
+0 | .  v  p  y
+1 | .  z  .  .
+2 | .  h  .  q
+3 | .  .  .  a
+Agent-1: path=[(0,3) -> (0,2) -> (0,1)] word='ypvs' cleared=2 points=+30
+    0  1  2  3
+   -----------
+0 | .  .  .  s
+1 | .  z  .  .
+2 | .  h  .  q
+3 | .  .  .  a
+Agent-2: path=[(3,3) -> (2,3)] word='aql' cleared=1 points=+20
+    0  1  2  3
+   -----------
+0 | .  .  .  s
+1 | .  z  .  .
+2 | .  h  .  l
+3 | .  .  .  .
+Agent-1: path=[(1,1) -> (2,1)] word='zho' cleared=1 points=+20
+    0  1  2  3
+   -----------
+0 | .  .  .  s
+1 | .  o  .  .
+2 | .  .  .  l
+3 | .  .  .  .
+Final Position:
+BOARD:     0  1  2  3
+BOARD:    -----------
+BOARD: 0 | .  .  .  s
+BOARD: 1 | .  o  .  .
+BOARD: 2 | .  .  .  l
+BOARD: 3 | .  .  .  .
+Scores: Agent-1=90 Agent-2=100
+----------------------------------------
+Final Result: Agent-2 wins. (No valid paths remaining)
+----------------------------------------
+Points:
+Agent-1: 0
+Agent-2: 3
+----------------------------------------
+Scores:
+Agent-1: -10
+Agent-2: 10
+============================================================
+
+============================================================
+Game 5
+Agent-1: GPT-6.2-Sol-Extrahigh:2
+Agent-2: Sonnet-5.5-Max:1
+Starting Player: Agent-1
+------------------------------------------------------------
+    0  1  2  3
+   -----------
+0 | m  m  w  z
+1 | w  t  g  d
+2 | c  h  l  n
+3 | l  h  f  g
+Agent-1: path=[(1,0) -> (2,0) -> (2,1) -> (2,2) -> (2,3) -> (1,3)] word='uwchland' cleared=4 points=+50
+    0  1  2  3
+   -----------
+0 | m  m  w  z
+1 | .  t  g  .
+2 | a  .  .  u
+3 | l  h  f  g
+Agent-2: path=[(3,2) -> (3,1) -> (3,0) -> (2,0)] word='fhlba' cleared=3 points=+40
+    0  1  2  3
+   -----------
+0 | m  m  w  z
+1 | .  t  g  .
+2 | b  .  .  u
+3 | .  .  .  g
+Agent-1: path=[(0,0) -> (0,1) -> (0,2)] word='mmw' cleared=3 points=+40
+    0  1  2  3
+   -----------
+0 | .  .  .  z
+1 | .  t  g  .
+2 | b  .  .  u
+3 | .  .  .  g
+Agent-2: path=[(3,3) -> (2,3)] word='guz' cleared=1 points=+20
+    0  1  2  3
+   -----------
+0 | .  .  .  z
+1 | .  t  g  .
+2 | b  .  .  .
+3 | .  .  .  z
+Agent-1: path=[(1,1) -> (1,2)] word='ctg' cleared=1 points=+20
+    0  1  2  3
+   -----------
+0 | .  .  .  z
+1 | .  .  c  .
+2 | b  .  .  .
+3 | .  .  .  z
+Final Position:
+BOARD:     0  1  2  3
+BOARD:    -----------
+BOARD: 0 | .  .  .  z
+BOARD: 1 | .  .  c  .
+BOARD: 2 | b  .  .  .
+BOARD: 3 | .  .  .  z
+Scores: Agent-1=110 Agent-2=60
+----------------------------------------
+Final Result: Agent-1 wins. (No valid paths remaining)
+----------------------------------------
+Points:
+Agent-1: 3
+Agent-2: 0
+----------------------------------------
+Scores:
+Agent-1: 50
+Agent-2: -50
+============================================================
+
+============================================================
+Game 6
+Agent-1: GPT-6.2-Sol-Extrahigh:2
+Agent-2: Sonnet-5.5-Max:1
+Starting Player: Agent-2
+------------------------------------------------------------
+    0  1  2  3
+   -----------
+0 | d  h  f  w
+1 | n  l  h  c
+2 | j  f  j  i
+3 | i  h  h  y
+Agent-2: path=[(3,0) -> (3,1) -> (3,2) -> (3,3) -> (2,3) -> (1,3)] word='ichthyic' cleared=4 points=+50
+    0  1  2  3
+   -----------
+0 | d  h  f  w
+1 | n  l  h  t
+2 | j  f  j  .
+3 | .  c  .  .
+Agent-1: path=[(1,0) -> (1,1) -> (2,1)] word='nlf' cleared=3 points=+40
+    0  1  2  3
+   -----------
+0 | d  h  f  w
+1 | .  .  h  t
+2 | j  .  j  .
+3 | .  c  .  .
+Agent-2: path=[(1,3) -> (1,2) -> (0,2)] word='thof' cleared=2 points=+30
+    0  1  2  3
+   -----------
+0 | d  h  .  w
+1 | .  .  .  o
+2 | j  .  j  .
+3 | .  c  .  .
+Agent-1: path=[(0,0) -> (0,1)] word='dah' cleared=1 points=+20
+    0  1  2  3
+   -----------
+0 | .  a  .  w
+1 | .  .  .  o
+2 | j  .  j  .
+3 | .  c  .  .
+Agent-2: path=[(1,3) -> (0,3)] word='now' cleared=1 points=+20
+    0  1  2  3
+   -----------
+0 | .  a  .  .
+1 | .  .  .  n
+2 | j  .  j  .
+3 | .  c  .  .
+Final Position:
+BOARD:     0  1  2  3
+BOARD:    -----------
+BOARD: 0 | .  a  .  .
+BOARD: 1 | .  .  .  n
+BOARD: 2 | j  .  j  .
+BOARD: 3 | .  c  .  .
+Scores: Agent-1=60 Agent-2=100
+----------------------------------------
+Final Result: Agent-2 wins. (No valid paths remaining)
+----------------------------------------
+Points:
+Agent-1: 0
+Agent-2: 3
+----------------------------------------
+Scores:
+Agent-1: -40
+Agent-2: 40
+============================================================
+
+============================================================
+Game 7
+Agent-1: GPT-6.2-Sol-Extrahigh:2
+Agent-2: Sonnet-5.5-Max:1
+Starting Player: Agent-1
+------------------------------------------------------------
+    0  1  2  3
+   -----------
+0 | p  g  d  c
+1 | f  t  j  e
+2 | o  k  c  h
+3 | r  p  g  j
+Agent-1: path=[(3,1) -> (3,0) -> (2,0) -> (1,0)] word='prof' cleared=4 points=+50
+    0  1  2  3
+   -----------
+0 | p  g  d  c
+1 | .  t  j  e
+2 | .  k  c  h
+3 | .  .  g  j
+Agent-2: path=[(2,2) -> (2,3) -> (1,3) -> (0,3) -> (0,2)] word='checked' cleared=3 points=+40
+    0  1  2  3
+   -----------
+0 | p  g  .  e
+1 | .  t  j  .
+2 | .  k  .  k
+3 | .  .  g  j
+Agent-1: path=[(2,1) -> (1,1) -> (0,1)] word='mktg' cleared=2 points=+30
+    0  1  2  3
+   -----------
+0 | p  .  .  e
+1 | .  .  j  .
+2 | .  m  .  k
+3 | .  .  g  j
+Agent-2: path=[(3,3) -> (2,3)] word='jak' cleared=1 points=+20
+    0  1  2  3
+   -----------
+0 | p  .  .  e
+1 | .  .  j  .
+2 | .  m  .  a
+3 | .  .  g  .
+Final Position:
+BOARD:     0  1  2  3
+BOARD:    -----------
+BOARD: 0 | p  .  .  e
+BOARD: 1 | .  .  j  .
+BOARD: 2 | .  m  .  a
+BOARD: 3 | .  .  g  .
+Scores: Agent-1=80 Agent-2=60
+----------------------------------------
+Final Result: Agent-1 wins. (No valid paths remaining)
+----------------------------------------
+Points:
+Agent-1: 3
+Agent-2: 0
+----------------------------------------
+Scores:
+Agent-1: 20
+Agent-2: -20
+============================================================
+
+============================================================
+Game 8
+Agent-1: GPT-6.2-Sol-Extrahigh:2
+Agent-2: Sonnet-5.5-Max:1
+Starting Player: Agent-2
+------------------------------------------------------------
+    0  1  2  3
+   -----------
+0 | x  f  p  j
+1 | r  p  b  g
+2 | d  y  f  i
+3 | l  o  m  c
+Agent-2: path=[(3,2) -> (3,1) -> (3,0) -> (2,0) -> (2,1)] word='moldy' cleared=5 points=+60
+    0  1  2  3
+   -----------
+0 | x  f  p  j
+1 | r  p  b  g
+2 | .  .  f  i
+3 | .  .  .  c
+Agent-1: path=[(1,2) -> (1,1) -> (1,0)] word='bkpr' cleared=2 points=+30
+    0  1  2  3
+   -----------
+0 | x  f  p  j
+1 | .  .  k  g
+2 | .  .  f  i
+3 | .  .  .  c
+Agent-2: path=[(1,2) -> (2,2) -> (2,3) -> (3,3)] word='kufic' cleared=3 points=+40
+    0  1  2  3
+   -----------
+0 | x  f  p  j
+1 | .  .  .  g
+2 | .  .  .  .
+3 | .  .  .  u
+Agent-1: path=[(0,2) -> (0,1) -> (0,0)] word='pfx' cleared=3 points=+40
+    0  1  2  3
+   -----------
+0 | .  .  .  j
+1 | .  .  .  g
+2 | .  .  .  .
+3 | .  .  .  u
+Agent-2: path=[(0,3) -> (1,3)] word='jig' cleared=1 points=+20
+    0  1  2  3
+   -----------
+0 | .  .  .  .
+1 | .  .  .  i
+2 | .  .  .  .
+3 | .  .  .  u
+Final Position:
+BOARD:     0  1  2  3
+BOARD:    -----------
+BOARD: 0 | .  .  .  .
+BOARD: 1 | .  .  .  i
+BOARD: 2 | .  .  .  .
+BOARD: 3 | .  .  .  u
+Scores: Agent-1=70 Agent-2=120
+----------------------------------------
+Final Result: Agent-2 wins. (No valid paths remaining)
+----------------------------------------
+Points:
+Agent-1: 0
+Agent-2: 3
+----------------------------------------
+Scores:
+Agent-1: -50
+Agent-2: 50
+============================================================
+
+============================================================
+Game 9
+Agent-1: GPT-6.2-Sol-Extrahigh:2
+Agent-2: Sonnet-5.5-Max:1
+Starting Player: Agent-1
+------------------------------------------------------------
+    0  1  2  3
+   -----------
+0 | x  w  e  m
+1 | f  t  p  j
+2 | d  h  c  g
+3 | n  e  t  j
+Agent-1: path=[(0,2) -> (1,2) -> (1,1) -> (2,1) -> (3,1) -> (3,0)] word='depthen' cleared=5 points=+60
+    0  1  2  3
+   -----------
+0 | x  w  .  m
+1 | f  d  .  j
+2 | d  .  c  g
+3 | .  .  t  j
+Agent-2: path=[(2,0) -> (1,0) -> (1,1)] word='dfd' cleared=3 points=+40
+    0  1  2  3
+   -----------
+0 | x  w  .  m
+1 | .  .  .  j
+2 | .  .  c  g
+3 | .  .  t  j
+Agent-1: path=[(2,3) -> (2,2) -> (3,2)] word='gct' cleared=3 points=+40
+    0  1  2  3
+   -----------
+0 | x  w  .  m
+1 | .  .  .  j
+2 | .  .  .  .
+3 | .  .  .  j
+Agent-2: path=[(0,3) -> (1,3)] word='mcj' cleared=1 points=+20
+    0  1  2  3
+   -----------
+0 | x  w  .  .
+1 | .  .  .  c
+2 | .  .  .  .
+3 | .  .  .  j
+Agent-1: path=[(0,1) -> (0,0)] word='twx' cleared=1 points=+20
+    0  1  2  3
+   -----------
+0 | .  t  .  .
+1 | .  .  .  c
+2 | .  .  .  .
+3 | .  .  .  j
+Final Position:
+BOARD:     0  1  2  3
+BOARD:    -----------
+BOARD: 0 | .  t  .  .
+BOARD: 1 | .  .  .  c
+BOARD: 2 | .  .  .  .
+BOARD: 3 | .  .  .  j
+Scores: Agent-1=120 Agent-2=60
+----------------------------------------
+Final Result: Agent-1 wins. (No valid paths remaining)
+----------------------------------------
+Points:
+Agent-1: 3
+Agent-2: 0
+----------------------------------------
+Scores:
+Agent-1: 60
+Agent-2: -60
+============================================================
+
+============================================================
+Game 10
+Agent-1: GPT-6.2-Sol-Extrahigh:2
+Agent-2: Sonnet-5.5-Max:1
+Starting Player: Agent-2
+------------------------------------------------------------
+    0  1  2  3
+   -----------
+0 | z  f  e  y
+1 | w  s  k  j
+2 | u  v  f  i
+3 | n  i  s  r
+Agent-2: path=[(2,2) -> (2,3) -> (3,3) -> (3,2)] word='firs' cleared=4 points=+50
+    0  1  2  3
+   -----------
+0 | z  f  e  y
+1 | w  s  k  j
+2 | u  v  .  .
+3 | n  i  .  .
+Agent-1: path=[(2,0) -> (1,0) -> (1,1)] word='uws' cleared=3 points=+40
+    0  1  2  3
+   -----------
+0 | z  f  e  y
+1 | .  .  k  j
+2 | .  v  .  .
+3 | n  i  .  .
+Agent-2: path=[(1,2) -> (0,2) -> (0,1)] word='kef' cleared=3 points=+40
+    0  1  2  3
+   -----------
+0 | z  .  .  y
+1 | .  .  .  j
+2 | .  v  .  .
+3 | n  i  .  .
+Agent-1: path=[(2,1) -> (3,1) -> (3,0)] word='vin' cleared=3 points=+40
+    0  1  2  3
+   -----------
+0 | z  .  .  y
+1 | .  .  .  j
+2 | .  .  .  .
+3 | .  .  .  .
+Agent-2: path=[(1,3) -> (0,3)] word='jay' cleared=1 points=+20
+    0  1  2  3
+   -----------
+0 | z  .  .  .
+1 | .  .  .  a
+2 | .  .  .  .
+3 | .  .  .  .
+Final Position:
+BOARD:     0  1  2  3
+BOARD:    -----------
+BOARD: 0 | z  .  .  .
+BOARD: 1 | .  .  .  a
+BOARD: 2 | .  .  .  .
+BOARD: 3 | .  .  .  .
+Scores: Agent-1=80 Agent-2=110
+----------------------------------------
+Final Result: Agent-2 wins. (No valid paths remaining)
+----------------------------------------
+Points:
+Agent-1: 0
+Agent-2: 3
+----------------------------------------
+Scores:
+Agent-1: -30
+Agent-2: 30
+============================================================
+============================================================
+Agent-1: GPT-6.2-Sol-Extrahigh:2
+Agent-2: Sonnet-5.5-Max:1
+RESULT:Agent-1=15.0,Agent-2=15.0
+SCORE:Agent-1=30.0,Agent-2=-30.0
+WINS:Agent-1=5,Agent-2=5
+DRAWS:0
+STATS:Agent-1={'wins': 5, 'losses': 5, 'draws': 0, 'points': 15, 'score': 30.0, 'make_move_crash': 0, 'other_crash': 0, 'crash': 0, 'timeout': 0, 'invalid': 0}
+STATS:Agent-2={'wins': 5, 'losses': 5, 'draws': 0, 'points': 15, 'score': -30.0, 'make_move_crash': 0, 'other_crash': 0, 'crash': 0, 'timeout': 0, 'invalid': 0}
+--- MATCH STATISTICS ---
+Agent-1 make_move_crash: 0
+Agent-2 make_move_crash: 0
+Agent-1 other_crash: 0
+Agent-2 other_crash: 0
+Agent-1 crash (total): 0
+Agent-2 crash (total): 0
+Agent-1 Timeouts: 0
+Agent-2 Timeouts: 0
+Agent-1 Invalid: 0
+Agent-2 Invalid: 0
+Time-limit Draws: 0
+------------------------------------------------------------
+
+
+------------------------------------------------------------

@@ -1,0 +1,702 @@
+Match Contenders:
+DeepSeekV4.1-Flash-1017-Max:2
+GPT-6.1-Terra-Extrahigh:1
+
+Result:
+DeepSeekV4.1-Flash-1017-Max:2 : Pts: 30 - Score: 700.0
+GPT-6.1-Terra-Extrahigh:1 : Pts: 0 - Score: -700.0
+
+
+============================================================
+Game 1
+Agent-1: DeepSeekV4.1-Flash-1017-Max:2
+Agent-2: GPT-6.1-Terra-Extrahigh:1
+Starting Player: Agent-1
+------------------------------------------------------------
+    0  1  2  3
+   -----------
+0 | s  m  t  l
+1 | c  g  j  l
+2 | n  n  i  b
+3 | s  s  n  w
+Agent-1: path=[(1,2) -> (2,2) -> (2,1) -> (2,0) -> (3,0)] word='jinns' cleared=5 points=+60
+    0  1  2  3
+   -----------
+0 | s  m  t  l
+1 | c  g  .  l
+2 | .  .  .  b
+3 | .  s  n  w
+Agent-2: path=[(2,3) -> (1,3) -> (0,3)] word='ball' cleared=2 points=+30
+    0  1  2  3
+   -----------
+0 | s  m  t  .
+1 | c  g  .  a
+2 | .  .  .  .
+3 | .  s  n  w
+Agent-1: path=[(0,2) -> (0,1) -> (0,0) -> (1,0)] word='tmsc' cleared=4 points=+50
+    0  1  2  3
+   -----------
+0 | .  .  .  .
+1 | .  g  .  a
+2 | .  .  .  .
+3 | .  s  n  w
+Agent-2: path=[(3,1) -> (3,2) -> (3,3)] word='snow' cleared=2 points=+30
+    0  1  2  3
+   -----------
+0 | .  .  .  .
+1 | .  g  .  a
+2 | .  .  .  .
+3 | .  o  .  .
+Final Position:
+BOARD:     0  1  2  3
+BOARD:    -----------
+BOARD: 0 | .  .  .  .
+BOARD: 1 | .  g  .  a
+BOARD: 2 | .  .  .  .
+BOARD: 3 | .  o  .  .
+Scores: Agent-1=110 Agent-2=60
+----------------------------------------
+Final Result: Agent-1 wins. (No valid paths remaining)
+----------------------------------------
+Points:
+Agent-1: 3
+Agent-2: 0
+----------------------------------------
+Scores:
+Agent-1: 50
+Agent-2: -50
+============================================================
+
+============================================================
+Game 2
+Agent-1: DeepSeekV4.1-Flash-1017-Max:2
+Agent-2: GPT-6.1-Terra-Extrahigh:1
+Starting Player: Agent-2
+------------------------------------------------------------
+    0  1  2  3
+   -----------
+0 | m  u  y  e
+1 | e  i  a  k
+2 | c  g  x  i
+3 | w  l  y  f
+Agent-2: path=[(1,3) -> (0,3) -> (0,2)] word='key' cleared=3 points=+40
+    0  1  2  3
+   -----------
+0 | m  u  .  .
+1 | e  i  a  .
+2 | c  g  x  i
+3 | w  l  y  f
+Agent-1: path=[(2,0) -> (1,0) -> (1,1) -> (0,1) -> (0,0)] word='cerium' cleared=4 points=+50
+    0  1  2  3
+   -----------
+0 | .  r  .  .
+1 | .  .  a  .
+2 | .  g  x  i
+3 | w  l  y  f
+Agent-2: INVALID WORD 'Word 'if' not in dictionary' (-10)
+Agent-1: path=[(2,3) -> (3,3) -> (3,2)] word='ify' cleared=3 points=+40
+    0  1  2  3
+   -----------
+0 | .  r  .  .
+1 | .  .  a  .
+2 | .  g  x  .
+3 | w  l  .  .
+Agent-2: path=[(3,1) -> (3,0)] word='law' cleared=1 points=+20
+    0  1  2  3
+   -----------
+0 | .  r  .  .
+1 | .  .  a  .
+2 | .  g  x  .
+3 | a  .  .  .
+Agent-1: path=[(1,2) -> (2,2) -> (2,1)] word='axing' cleared=1 points=+20
+    0  1  2  3
+   -----------
+0 | .  r  .  .
+1 | .  .  .  .
+2 | .  i  n  .
+3 | a  .  .  .
+Agent-2: INVALID WORD 'Word 'in' not in dictionary' (-10)
+Agent-1: PASS
+Agent-2: INVALID WORD 'Word 'in' not in dictionary' (-10)
+Agent-1: PASS
+Agent-2: INVALID WORD 'Word 'in' not in dictionary' (-10)
+Agent-1: PASS
+Final Position:
+BOARD:     0  1  2  3
+BOARD:    -----------
+BOARD: 0 | .  r  .  .
+BOARD: 1 | .  .  .  .
+BOARD: 2 | .  i  n  .
+BOARD: 3 | a  .  .  .
+Scores: Agent-1=110 Agent-2=20
+----------------------------------------
+Final Result: Agent-1 wins. (6 consecutive passes reached)
+----------------------------------------
+Points:
+Agent-1: 3
+Agent-2: 0
+----------------------------------------
+Scores:
+Agent-1: 90
+Agent-2: -90
+============================================================
+
+============================================================
+Game 3
+Agent-1: DeepSeekV4.1-Flash-1017-Max:2
+Agent-2: GPT-6.1-Terra-Extrahigh:1
+Starting Player: Agent-1
+------------------------------------------------------------
+    0  1  2  3
+   -----------
+0 | z  w  h  i
+1 | a  t  k  z
+2 | a  r  w  n
+3 | y  b  l  s
+Agent-1: path=[(0,1) -> (0,2) -> (0,3) -> (1,3)] word='whiz' cleared=4 points=+50
+    0  1  2  3
+   -----------
+0 | z  .  .  .
+1 | a  t  k  .
+2 | a  r  w  n
+3 | y  b  l  s
+Agent-2: path=[(2,0) -> (2,1) -> (1,1)] word='art' cleared=3 points=+40
+    0  1  2  3
+   -----------
+0 | z  .  .  .
+1 | a  .  k  .
+2 | .  .  w  n
+3 | y  b  l  s
+Agent-1: path=[(2,3) -> (2,2) -> (3,2) -> (3,1)] word='nwlb' cleared=4 points=+50
+    0  1  2  3
+   -----------
+0 | z  .  .  .
+1 | a  .  k  .
+2 | .  .  .  .
+3 | y  .  .  s
+Agent-2: PASS
+Agent-1: PASS
+Agent-2: PASS
+Agent-1: PASS
+Agent-2: PASS
+Agent-1: PASS
+Final Position:
+BOARD:     0  1  2  3
+BOARD:    -----------
+BOARD: 0 | z  .  .  .
+BOARD: 1 | a  .  k  .
+BOARD: 2 | .  .  .  .
+BOARD: 3 | y  .  .  s
+Scores: Agent-1=100 Agent-2=40
+----------------------------------------
+Final Result: Agent-1 wins. (6 consecutive passes reached)
+----------------------------------------
+Points:
+Agent-1: 3
+Agent-2: 0
+----------------------------------------
+Scores:
+Agent-1: 60
+Agent-2: -60
+============================================================
+
+============================================================
+Game 4
+Agent-1: DeepSeekV4.1-Flash-1017-Max:2
+Agent-2: GPT-6.1-Terra-Extrahigh:1
+Starting Player: Agent-2
+------------------------------------------------------------
+    0  1  2  3
+   -----------
+0 | d  t  n  m
+1 | t  d  o  w
+2 | h  s  i  e
+3 | j  c  i  e
+Agent-2: path=[(0,2) -> (1,2) -> (1,3)] word='now' cleared=3 points=+40
+    0  1  2  3
+   -----------
+0 | d  t  .  m
+1 | t  d  .  .
+2 | h  s  i  e
+3 | j  c  i  e
+Agent-1: path=[(2,2) -> (2,1) -> (1,1) -> (0,1)] word='isdt' cleared=4 points=+50
+    0  1  2  3
+   -----------
+0 | d  .  .  m
+1 | t  .  .  .
+2 | h  .  .  e
+3 | j  c  i  e
+Agent-2: path=[(3,1) -> (3,2) -> (3,3) -> (2,3)] word='science' cleared=1 points=+20
+    0  1  2  3
+   -----------
+0 | d  .  .  m
+1 | t  .  .  .
+2 | h  .  .  s
+3 | j  n  .  c
+Agent-1: path=[(0,0) -> (1,0) -> (2,0)] word='dth' cleared=3 points=+40
+    0  1  2  3
+   -----------
+0 | .  .  .  m
+1 | .  .  .  .
+2 | .  .  .  s
+3 | j  n  .  c
+Agent-2: PASS
+Agent-1: PASS
+Agent-2: PASS
+Agent-1: PASS
+Agent-2: PASS
+Agent-1: PASS
+Final Position:
+BOARD:     0  1  2  3
+BOARD:    -----------
+BOARD: 0 | .  .  .  m
+BOARD: 1 | .  .  .  .
+BOARD: 2 | .  .  .  s
+BOARD: 3 | j  n  .  c
+Scores: Agent-1=90 Agent-2=60
+----------------------------------------
+Final Result: Agent-1 wins. (6 consecutive passes reached)
+----------------------------------------
+Points:
+Agent-1: 3
+Agent-2: 0
+----------------------------------------
+Scores:
+Agent-1: 30
+Agent-2: -30
+============================================================
+
+============================================================
+Game 5
+Agent-1: DeepSeekV4.1-Flash-1017-Max:2
+Agent-2: GPT-6.1-Terra-Extrahigh:1
+Starting Player: Agent-1
+------------------------------------------------------------
+    0  1  2  3
+   -----------
+0 | q  l  y  u
+1 | t  k  z  q
+2 | t  k  m  t
+3 | t  i  q  y
+Agent-1: path=[(1,1) -> (2,1) -> (2,0)] word='kkt' cleared=3 points=+40
+    0  1  2  3
+   -----------
+0 | q  l  y  u
+1 | t  .  z  q
+2 | .  .  m  t
+3 | t  i  q  y
+Agent-2: INVALID WORD 'Word 'it' not in dictionary' (-10)
+Agent-1: path=[(1,3) -> (2,3) -> (3,3)] word='qty' cleared=3 points=+40
+    0  1  2  3
+   -----------
+0 | q  l  y  u
+1 | t  .  z  .
+2 | .  .  m  .
+3 | t  i  q  .
+Agent-2: INVALID WORD 'Word 'it' not in dictionary' (-10)
+Agent-1: path=[(3,0) -> (3,1) -> (3,2)] word='antiq' cleared=1 points=+20
+    0  1  2  3
+   -----------
+0 | q  l  y  u
+1 | t  .  z  .
+2 | .  .  m  .
+3 | .  n  a  .
+Agent-2: path=[(2,2) -> (3,2) -> (3,1)] word='man' cleared=3 points=+40
+    0  1  2  3
+   -----------
+0 | q  l  y  u
+1 | t  .  z  .
+2 | .  .  .  .
+3 | .  .  .  .
+Agent-1: path=[(0,3) -> (0,2) -> (0,1)] word='auryl' cleared=1 points=+20
+    0  1  2  3
+   -----------
+0 | q  a  .  r
+1 | t  .  z  .
+2 | .  .  .  .
+3 | .  .  .  .
+Agent-2: PASS
+Agent-1: path=[(1,0) -> (0,0) -> (0,1)] word='taqua' cleared=1 points=+20
+    0  1  2  3
+   -----------
+0 | u  .  .  r
+1 | a  .  z  .
+2 | .  .  .  .
+3 | .  .  .  .
+Agent-2: PASS
+Agent-1: PASS
+Agent-2: PASS
+Agent-1: PASS
+Agent-2: PASS
+Agent-1: PASS
+Final Position:
+BOARD:     0  1  2  3
+BOARD:    -----------
+BOARD: 0 | u  .  .  r
+BOARD: 1 | a  .  z  .
+BOARD: 2 | .  .  .  .
+BOARD: 3 | .  .  .  .
+Scores: Agent-1=140 Agent-2=20
+----------------------------------------
+Final Result: Agent-1 wins. (6 consecutive passes reached)
+----------------------------------------
+Points:
+Agent-1: 3
+Agent-2: 0
+----------------------------------------
+Scores:
+Agent-1: 120
+Agent-2: -120
+============================================================
+
+============================================================
+Game 6
+Agent-1: DeepSeekV4.1-Flash-1017-Max:2
+Agent-2: GPT-6.1-Terra-Extrahigh:1
+Starting Player: Agent-2
+------------------------------------------------------------
+    0  1  2  3
+   -----------
+0 | c  n  k  f
+1 | x  h  n  c
+2 | m  g  i  o
+3 | h  o  h  x
+Agent-2: path=[(3,2) -> (2,2) -> (2,1) -> (1,1)] word='high' cleared=4 points=+50
+    0  1  2  3
+   -----------
+0 | c  n  k  f
+1 | x  .  n  c
+2 | m  .  .  o
+3 | h  o  .  x
+Agent-1: path=[(0,3) -> (1,3) -> (2,3)] word='fco' cleared=3 points=+40
+    0  1  2  3
+   -----------
+0 | c  n  k  .
+1 | x  .  n  .
+2 | m  .  .  .
+3 | h  o  .  x
+Agent-2: path=[(0,0) -> (0,1)] word='can' cleared=1 points=+20
+    0  1  2  3
+   -----------
+0 | a  .  k  .
+1 | x  .  n  .
+2 | m  .  .  .
+3 | h  o  .  x
+Agent-1: path=[(2,0) -> (3,0) -> (3,1)] word='mho' cleared=3 points=+40
+    0  1  2  3
+   -----------
+0 | a  .  k  .
+1 | x  .  n  .
+2 | .  .  .  .
+3 | .  .  .  x
+Agent-2: PASS
+Agent-1: PASS
+Agent-2: PASS
+Agent-1: PASS
+Agent-2: PASS
+Agent-1: PASS
+Final Position:
+BOARD:     0  1  2  3
+BOARD:    -----------
+BOARD: 0 | a  .  k  .
+BOARD: 1 | x  .  n  .
+BOARD: 2 | .  .  .  .
+BOARD: 3 | .  .  .  x
+Scores: Agent-1=80 Agent-2=70
+----------------------------------------
+Final Result: Agent-1 wins. (6 consecutive passes reached)
+----------------------------------------
+Points:
+Agent-1: 3
+Agent-2: 0
+----------------------------------------
+Scores:
+Agent-1: 10
+Agent-2: -10
+============================================================
+
+============================================================
+Game 7
+Agent-1: DeepSeekV4.1-Flash-1017-Max:2
+Agent-2: GPT-6.1-Terra-Extrahigh:1
+Starting Player: Agent-1
+------------------------------------------------------------
+    0  1  2  3
+   -----------
+0 | s  g  l  n
+1 | y  k  q  i
+2 | z  y  k  t
+3 | s  g  w  x
+Agent-1: path=[(0,0) -> (1,0) -> (2,0) -> (2,1) -> (3,1)] word='syzygy' cleared=4 points=+50
+    0  1  2  3
+   -----------
+0 | y  g  l  n
+1 | .  k  q  i
+2 | .  .  k  t
+3 | s  .  w  x
+Agent-2: INVALID WORD 'Word 'in' not in dictionary' (-10)
+Agent-1: path=[(0,2) -> (0,1) -> (1,1)] word='lgk' cleared=3 points=+40
+    0  1  2  3
+   -----------
+0 | y  .  .  n
+1 | .  .  q  i
+2 | .  .  k  t
+3 | s  .  w  x
+Agent-2: INVALID WORD 'Word 'in' not in dictionary' (-10)
+Agent-1: path=[(0,3) -> (1,3) -> (2,3)] word='nit' cleared=3 points=+40
+    0  1  2  3
+   -----------
+0 | y  .  .  .
+1 | .  .  q  .
+2 | .  .  k  .
+3 | s  .  w  x
+Agent-2: PASS
+Agent-1: PASS
+Agent-2: PASS
+Agent-1: PASS
+Agent-2: PASS
+Agent-1: PASS
+Final Position:
+BOARD:     0  1  2  3
+BOARD:    -----------
+BOARD: 0 | y  .  .  .
+BOARD: 1 | .  .  q  .
+BOARD: 2 | .  .  k  .
+BOARD: 3 | s  .  w  x
+Scores: Agent-1=130 Agent-2=-20
+----------------------------------------
+Final Result: Agent-1 wins. (6 consecutive passes reached)
+----------------------------------------
+Points:
+Agent-1: 3
+Agent-2: 0
+----------------------------------------
+Scores:
+Agent-1: 150
+Agent-2: -150
+============================================================
+
+============================================================
+Game 8
+Agent-1: DeepSeekV4.1-Flash-1017-Max:2
+Agent-2: GPT-6.1-Terra-Extrahigh:1
+Starting Player: Agent-2
+------------------------------------------------------------
+    0  1  2  3
+   -----------
+0 | d  t  e  h
+1 | z  l  g  p
+2 | n  x  x  v
+3 | b  b  z  b
+Agent-2: path=[(1,2) -> (0,2) -> (0,1)] word='get' cleared=3 points=+40
+    0  1  2  3
+   -----------
+0 | d  .  .  h
+1 | z  l  .  p
+2 | n  x  x  v
+3 | b  b  z  b
+Agent-1: path=[(1,1) -> (2,1) -> (2,2)] word='lxx' cleared=3 points=+40
+    0  1  2  3
+   -----------
+0 | d  .  .  h
+1 | z  .  .  p
+2 | n  .  .  v
+3 | b  b  z  b
+Agent-2: PASS
+Agent-1: path=[(3,1) -> (3,0) -> (2,0)] word='bbn' cleared=3 points=+40
+    0  1  2  3
+   -----------
+0 | d  .  .  h
+1 | z  .  .  p
+2 | .  .  .  v
+3 | .  .  z  b
+Agent-2: PASS
+Agent-1: PASS
+Agent-2: PASS
+Agent-1: PASS
+Agent-2: PASS
+Agent-1: PASS
+Final Position:
+BOARD:     0  1  2  3
+BOARD:    -----------
+BOARD: 0 | d  .  .  h
+BOARD: 1 | z  .  .  p
+BOARD: 2 | .  .  .  v
+BOARD: 3 | .  .  z  b
+Scores: Agent-1=80 Agent-2=40
+----------------------------------------
+Final Result: Agent-1 wins. (6 consecutive passes reached)
+----------------------------------------
+Points:
+Agent-1: 3
+Agent-2: 0
+----------------------------------------
+Scores:
+Agent-1: 40
+Agent-2: -40
+============================================================
+
+============================================================
+Game 9
+Agent-1: DeepSeekV4.1-Flash-1017-Max:2
+Agent-2: GPT-6.1-Terra-Extrahigh:1
+Starting Player: Agent-1
+------------------------------------------------------------
+    0  1  2  3
+   -----------
+0 | u  z  b  x
+1 | s  w  k  y
+2 | p  o  f  r
+3 | m  j  z  a
+Agent-1: path=[(0,0) -> (1,0) -> (2,0) -> (2,1)] word='uspo' cleared=4 points=+50
+    0  1  2  3
+   -----------
+0 | .  z  b  x
+1 | .  w  k  y
+2 | .  .  f  r
+3 | m  j  z  a
+Agent-2: path=[(3,3) -> (2,3) -> (1,3)] word='carry' cleared=1 points=+20
+    0  1  2  3
+   -----------
+0 | .  z  b  x
+1 | .  w  k  r
+2 | .  .  f  .
+3 | m  j  z  c
+Agent-1: path=[(0,1) -> (0,2) -> (1,2) -> (1,1)] word='zobkiw' cleared=2 points=+30
+    0  1  2  3
+   -----------
+0 | .  .  i  x
+1 | .  o  .  r
+2 | .  .  f  .
+3 | m  j  z  c
+Agent-2: path=[(0,2) -> (0,3)] word='six' cleared=1 points=+20
+    0  1  2  3
+   -----------
+0 | .  .  s  .
+1 | .  o  .  r
+2 | .  .  f  .
+3 | m  j  z  c
+Agent-1: path=[(3,1) -> (3,2) -> (2,2)] word='jozef' cleared=1 points=+20
+    0  1  2  3
+   -----------
+0 | .  .  s  .
+1 | .  o  .  r
+2 | .  .  o  .
+3 | m  e  .  c
+Agent-2: INVALID WORD 'Word 'me' not in dictionary' (-10)
+Agent-1: PASS
+Agent-2: INVALID WORD 'Word 'me' not in dictionary' (-10)
+Agent-1: PASS
+Agent-2: INVALID WORD 'Word 'me' not in dictionary' (-10)
+Agent-1: PASS
+Final Position:
+BOARD:     0  1  2  3
+BOARD:    -----------
+BOARD: 0 | .  .  s  .
+BOARD: 1 | .  o  .  r
+BOARD: 2 | .  .  o  .
+BOARD: 3 | m  e  .  c
+Scores: Agent-1=100 Agent-2=10
+----------------------------------------
+Final Result: Agent-1 wins. (6 consecutive passes reached)
+----------------------------------------
+Points:
+Agent-1: 3
+Agent-2: 0
+----------------------------------------
+Scores:
+Agent-1: 90
+Agent-2: -90
+============================================================
+
+============================================================
+Game 10
+Agent-1: DeepSeekV4.1-Flash-1017-Max:2
+Agent-2: GPT-6.1-Terra-Extrahigh:1
+Starting Player: Agent-2
+------------------------------------------------------------
+    0  1  2  3
+   -----------
+0 | l  k  n  e
+1 | p  d  m  e
+2 | g  d  m  y
+3 | k  e  i  y
+Agent-2: INVALID WORD 'Word 'me' not in dictionary' (-10)
+Agent-1: path=[(1,3) -> (1,2) -> (2,2) -> (3,2) -> (3,1)] word='emmie' cleared=5 points=+60
+    0  1  2  3
+   -----------
+0 | l  k  n  e
+1 | p  d  .  .
+2 | g  d  .  y
+3 | k  .  .  y
+Agent-2: path=[(0,1) -> (0,2) -> (0,3)] word='knew' cleared=2 points=+30
+    0  1  2  3
+   -----------
+0 | l  w  .  .
+1 | p  d  .  .
+2 | g  d  .  y
+3 | k  .  .  y
+Agent-1: path=[(0,0) -> (1,0) -> (2,0)] word='lpg' cleared=3 points=+40
+    0  1  2  3
+   -----------
+0 | .  w  .  .
+1 | .  d  .  .
+2 | .  d  .  y
+3 | k  .  .  y
+Agent-2: path=[(1,1) -> (2,1)] word='add' cleared=1 points=+20
+    0  1  2  3
+   -----------
+0 | .  w  .  .
+1 | .  .  .  .
+2 | .  a  .  y
+3 | k  .  .  y
+Agent-1: PASS
+Agent-2: PASS
+Agent-1: PASS
+Agent-2: PASS
+Agent-1: PASS
+Agent-2: PASS
+Final Position:
+BOARD:     0  1  2  3
+BOARD:    -----------
+BOARD: 0 | .  w  .  .
+BOARD: 1 | .  .  .  .
+BOARD: 2 | .  a  .  y
+BOARD: 3 | k  .  .  y
+Scores: Agent-1=100 Agent-2=40
+----------------------------------------
+Final Result: Agent-1 wins. (6 consecutive passes reached)
+----------------------------------------
+Points:
+Agent-1: 3
+Agent-2: 0
+----------------------------------------
+Scores:
+Agent-1: 60
+Agent-2: -60
+============================================================
+============================================================
+Agent-1: DeepSeekV4.1-Flash-1017-Max:2
+Agent-2: GPT-6.1-Terra-Extrahigh:1
+RESULT:Agent-1=30.0,Agent-2=0.0
+SCORE:Agent-1=700.0,Agent-2=-700.0
+WINS:Agent-1=10,Agent-2=0
+DRAWS:0
+STATS:Agent-1={'wins': 10, 'losses': 0, 'draws': 0, 'points': 30, 'score': 700.0, 'make_move_crash': 0, 'other_crash': 0, 'crash': 0, 'timeout': 0, 'invalid': 0}
+STATS:Agent-2={'wins': 0, 'losses': 10, 'draws': 0, 'points': 0, 'score': -700.0, 'make_move_crash': 0, 'other_crash': 0, 'crash': 0, 'timeout': 0, 'invalid': 12}
+--- MATCH STATISTICS ---
+Agent-1 make_move_crash: 0
+Agent-2 make_move_crash: 0
+Agent-1 other_crash: 0
+Agent-2 other_crash: 0
+Agent-1 crash (total): 0
+Agent-2 crash (total): 0
+Agent-1 Timeouts: 0
+Agent-2 Timeouts: 0
+Agent-1 Invalid: 0
+Agent-2 Invalid: 12
+Time-limit Draws: 0
+------------------------------------------------------------
+
+
+------------------------------------------------------------

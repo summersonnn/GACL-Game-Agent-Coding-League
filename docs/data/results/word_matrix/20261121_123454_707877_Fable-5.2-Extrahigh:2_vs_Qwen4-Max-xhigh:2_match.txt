@@ -1,0 +1,745 @@
+Match Contenders:
+Fable-5.2-Extrahigh:2
+Qwen4-Max-xhigh:2
+
+Result:
+Fable-5.2-Extrahigh:2 : Pts: 19 - Score: 80.0
+Qwen4-Max-xhigh:2 : Pts: 10 - Score: -80.0
+
+
+============================================================
+Game 1
+Agent-1: Fable-5.2-Extrahigh:2
+Agent-2: Qwen4-Max-xhigh:2
+Starting Player: Agent-1
+------------------------------------------------------------
+    0  1  2  3
+   -----------
+0 | c  j  p  h
+1 | h  x  k  g
+2 | t  m  x  v
+3 | e  c  b  v
+Agent-1: path=[(3,2) -> (3,1) -> (3,0)] word='bce' cleared=3 points=+40
+    0  1  2  3
+   -----------
+0 | c  j  p  h
+1 | h  x  k  g
+2 | t  m  x  v
+3 | .  .  .  v
+Agent-2: path=[(2,0) -> (1,0) -> (0,0)] word='thc' cleared=3 points=+40
+    0  1  2  3
+   -----------
+0 | .  j  p  h
+1 | .  x  k  g
+2 | .  m  x  v
+3 | .  .  .  v
+Agent-1: path=[(0,3) -> (1,3) -> (2,3)] word='hgv' cleared=3 points=+40
+    0  1  2  3
+   -----------
+0 | .  j  p  .
+1 | .  x  k  .
+2 | .  m  x  .
+3 | .  .  .  v
+Agent-2: path=[(2,1) -> (2,2)] word='mmx' cleared=1 points=+20
+    0  1  2  3
+   -----------
+0 | .  j  p  .
+1 | .  x  k  .
+2 | .  .  m  .
+3 | .  .  .  v
+Agent-1: path=[(1,2) -> (0,2)] word='kpc' cleared=1 points=+20
+    0  1  2  3
+   -----------
+0 | .  j  c  .
+1 | .  x  .  .
+2 | .  .  m  .
+3 | .  .  .  v
+Agent-2: path=[(0,1) -> (0,2)] word='jct' cleared=1 points=+20
+    0  1  2  3
+   -----------
+0 | .  t  .  .
+1 | .  x  .  .
+2 | .  .  m  .
+3 | .  .  .  v
+Agent-1: path=[(0,1) -> (1,1)] word='twx' cleared=1 points=+20
+    0  1  2  3
+   -----------
+0 | .  w  .  .
+1 | .  .  .  .
+2 | .  .  m  .
+3 | .  .  .  v
+Final Position:
+BOARD:     0  1  2  3
+BOARD:    -----------
+BOARD: 0 | .  w  .  .
+BOARD: 1 | .  .  .  .
+BOARD: 2 | .  .  m  .
+BOARD: 3 | .  .  .  v
+Scores: Agent-1=120 Agent-2=80
+----------------------------------------
+Final Result: Agent-1 wins. (No valid paths remaining)
+----------------------------------------
+Points:
+Agent-1: 3
+Agent-2: 0
+----------------------------------------
+Scores:
+Agent-1: 40
+Agent-2: -40
+============================================================
+
+============================================================
+Game 2
+Agent-1: Fable-5.2-Extrahigh:2
+Agent-2: Qwen4-Max-xhigh:2
+Starting Player: Agent-2
+------------------------------------------------------------
+    0  1  2  3
+   -----------
+0 | x  i  q  s
+1 | l  j  t  t
+2 | p  a  y  p
+3 | m  o  x  f
+Agent-2: path=[(2,0) -> (2,1) -> (2,2) -> (1,2)] word='payt' cleared=4 points=+50
+    0  1  2  3
+   -----------
+0 | x  i  q  s
+1 | l  j  .  t
+2 | .  .  .  p
+3 | m  o  x  f
+Agent-1: path=[(2,3) -> (1,3) -> (0,3)] word='pts' cleared=3 points=+40
+    0  1  2  3
+   -----------
+0 | x  i  q  .
+1 | l  j  .  .
+2 | .  .  .  .
+3 | m  o  x  f
+Agent-2: path=[(1,1) -> (0,1) -> (0,0)] word='jinx' cleared=2 points=+30
+    0  1  2  3
+   -----------
+0 | .  .  q  .
+1 | l  n  .  .
+2 | .  .  .  .
+3 | m  o  x  f
+Agent-1: path=[(3,0) -> (3,1) -> (3,2)] word='moxo' cleared=2 points=+30
+    0  1  2  3
+   -----------
+0 | .  .  q  .
+1 | l  n  .  .
+2 | .  .  .  .
+3 | .  o  .  f
+Agent-2: path=[(1,1) -> (1,0)] word='nhl' cleared=1 points=+20
+    0  1  2  3
+   -----------
+0 | .  .  q  .
+1 | h  .  .  .
+2 | .  .  .  .
+3 | .  o  .  f
+Final Position:
+BOARD:     0  1  2  3
+BOARD:    -----------
+BOARD: 0 | .  .  q  .
+BOARD: 1 | h  .  .  .
+BOARD: 2 | .  .  .  .
+BOARD: 3 | .  o  .  f
+Scores: Agent-1=70 Agent-2=100
+----------------------------------------
+Final Result: Agent-2 wins. (No valid paths remaining)
+----------------------------------------
+Points:
+Agent-1: 0
+Agent-2: 3
+----------------------------------------
+Scores:
+Agent-1: -30
+Agent-2: 30
+============================================================
+
+============================================================
+Game 3
+Agent-1: Fable-5.2-Extrahigh:2
+Agent-2: Qwen4-Max-xhigh:2
+Starting Player: Agent-1
+------------------------------------------------------------
+    0  1  2  3
+   -----------
+0 | k  f  f  h
+1 | v  u  e  v
+2 | k  v  f  u
+3 | g  d  n  w
+Agent-1: path=[(2,2) -> (1,2) -> (0,2) -> (0,1)] word='feff' cleared=4 points=+50
+    0  1  2  3
+   -----------
+0 | k  .  .  h
+1 | v  u  .  v
+2 | k  v  .  u
+3 | g  d  n  w
+Agent-2: path=[(3,2) -> (3,1) -> (2,1)] word='ndv' cleared=3 points=+40
+    0  1  2  3
+   -----------
+0 | k  .  .  h
+1 | v  u  .  v
+2 | k  .  .  u
+3 | g  .  .  w
+Agent-1: path=[(2,0) -> (1,0) -> (1,1)] word='kivu' cleared=2 points=+30
+    0  1  2  3
+   -----------
+0 | k  .  .  h
+1 | .  .  .  v
+2 | i  .  .  u
+3 | g  .  .  w
+Agent-2: path=[(2,0) -> (3,0)] word='igy' cleared=1 points=+20
+    0  1  2  3
+   -----------
+0 | k  .  .  h
+1 | .  .  .  v
+2 | .  .  .  u
+3 | y  .  .  w
+Agent-1: path=[(2,3) -> (1,3)] word='xuv' cleared=1 points=+20
+    0  1  2  3
+   -----------
+0 | k  .  .  h
+1 | .  .  .  .
+2 | .  .  .  x
+3 | y  .  .  w
+Agent-2: path=[(3,3) -> (2,3)] word='wax' cleared=1 points=+20
+    0  1  2  3
+   -----------
+0 | k  .  .  h
+1 | .  .  .  .
+2 | .  .  .  a
+3 | y  .  .  .
+Final Position:
+BOARD:     0  1  2  3
+BOARD:    -----------
+BOARD: 0 | k  .  .  h
+BOARD: 1 | .  .  .  .
+BOARD: 2 | .  .  .  a
+BOARD: 3 | y  .  .  .
+Scores: Agent-1=100 Agent-2=80
+----------------------------------------
+Final Result: Agent-1 wins. (No valid paths remaining)
+----------------------------------------
+Points:
+Agent-1: 3
+Agent-2: 0
+----------------------------------------
+Scores:
+Agent-1: 20
+Agent-2: -20
+============================================================
+
+============================================================
+Game 4
+Agent-1: Fable-5.2-Extrahigh:2
+Agent-2: Qwen4-Max-xhigh:2
+Starting Player: Agent-2
+------------------------------------------------------------
+    0  1  2  3
+   -----------
+0 | w  z  s  b
+1 | g  b  e  k
+2 | q  g  v  t
+3 | k  k  s  j
+Agent-2: path=[(0,2) -> (1,2) -> (1,3) -> (2,3)] word='sekt' cleared=4 points=+50
+    0  1  2  3
+   -----------
+0 | w  z  .  b
+1 | g  b  .  .
+2 | q  g  v  .
+3 | k  k  s  j
+Agent-1: path=[(2,1) -> (1,1) -> (0,1)] word='gbz' cleared=3 points=+40
+    0  1  2  3
+   -----------
+0 | w  .  .  b
+1 | g  .  .  .
+2 | q  .  v  .
+3 | k  k  s  j
+Agent-2: path=[(3,3) -> (3,2)] word='jas' cleared=1 points=+20
+    0  1  2  3
+   -----------
+0 | w  .  .  b
+1 | g  .  .  .
+2 | q  .  v  .
+3 | k  k  a  .
+Agent-1: path=[(3,1) -> (3,2) -> (2,2)] word='kava' cleared=2 points=+30
+    0  1  2  3
+   -----------
+0 | w  .  .  b
+1 | g  .  .  .
+2 | q  .  .  .
+3 | k  a  .  .
+Agent-2: path=[(3,0) -> (3,1)] word='kan' cleared=1 points=+20
+    0  1  2  3
+   -----------
+0 | w  .  .  b
+1 | g  .  .  .
+2 | q  .  .  .
+3 | n  .  .  .
+Agent-1: path=[(2,0) -> (3,0)] word='qnp' cleared=1 points=+20
+    0  1  2  3
+   -----------
+0 | w  .  .  b
+1 | g  .  .  .
+2 | p  .  .  .
+3 | .  .  .  .
+Agent-2: path=[(1,0) -> (2,0)] word='gph' cleared=1 points=+20
+    0  1  2  3
+   -----------
+0 | w  .  .  b
+1 | h  .  .  .
+2 | .  .  .  .
+3 | .  .  .  .
+Agent-1: path=[(0,0) -> (1,0)] word='kwh' cleared=1 points=+20
+    0  1  2  3
+   -----------
+0 | k  .  .  b
+1 | .  .  .  .
+2 | .  .  .  .
+3 | .  .  .  .
+Final Position:
+BOARD:     0  1  2  3
+BOARD:    -----------
+BOARD: 0 | k  .  .  b
+BOARD: 1 | .  .  .  .
+BOARD: 2 | .  .  .  .
+BOARD: 3 | .  .  .  .
+Scores: Agent-1=110 Agent-2=110
+----------------------------------------
+Final Result: Draw. (No valid paths remaining)
+----------------------------------------
+Points:
+Agent-1: 1
+Agent-2: 1
+----------------------------------------
+Scores:
+Agent-1: 0
+Agent-2: 0
+============================================================
+
+============================================================
+Game 5
+Agent-1: Fable-5.2-Extrahigh:2
+Agent-2: Qwen4-Max-xhigh:2
+Starting Player: Agent-1
+------------------------------------------------------------
+    0  1  2  3
+   -----------
+0 | c  s  v  h
+1 | e  b  l  d
+2 | f  b  i  o
+3 | i  q  x  a
+Agent-1: path=[(2,1) -> (2,2) -> (1,2) -> (1,1) -> (1,0)] word='bilbe' cleared=5 points=+60
+    0  1  2  3
+   -----------
+0 | c  s  v  h
+1 | .  .  .  d
+2 | f  .  .  o
+3 | i  q  x  a
+Agent-2: path=[(0,2) -> (0,3) -> (1,3)] word='vhd' cleared=3 points=+40
+    0  1  2  3
+   -----------
+0 | c  s  .  .
+1 | .  .  .  .
+2 | f  .  .  o
+3 | i  q  x  a
+Agent-1: path=[(2,0) -> (3,0) -> (3,1)] word='fiqh' cleared=2 points=+30
+    0  1  2  3
+   -----------
+0 | c  s  .  .
+1 | .  .  .  .
+2 | .  .  .  o
+3 | h  .  x  a
+Agent-2: path=[(2,3) -> (3,3) -> (3,2)] word='odax' cleared=2 points=+30
+    0  1  2  3
+   -----------
+0 | c  s  .  .
+1 | .  .  .  .
+2 | .  .  .  .
+3 | h  .  .  d
+Agent-1: path=[(0,1) -> (0,0)] word='scx' cleared=1 points=+20
+    0  1  2  3
+   -----------
+0 | .  x  .  .
+1 | .  .  .  .
+2 | .  .  .  .
+3 | h  .  .  d
+Final Position:
+BOARD:     0  1  2  3
+BOARD:    -----------
+BOARD: 0 | .  x  .  .
+BOARD: 1 | .  .  .  .
+BOARD: 2 | .  .  .  .
+BOARD: 3 | h  .  .  d
+Scores: Agent-1=110 Agent-2=70
+----------------------------------------
+Final Result: Agent-1 wins. (No valid paths remaining)
+----------------------------------------
+Points:
+Agent-1: 3
+Agent-2: 0
+----------------------------------------
+Scores:
+Agent-1: 40
+Agent-2: -40
+============================================================
+
+============================================================
+Game 6
+Agent-1: Fable-5.2-Extrahigh:2
+Agent-2: Qwen4-Max-xhigh:2
+Starting Player: Agent-2
+------------------------------------------------------------
+    0  1  2  3
+   -----------
+0 | u  y  y  s
+1 | a  o  y  a
+2 | i  u  u  t
+3 | j  b  g  b
+Agent-2: path=[(3,1) -> (2,1) -> (1,1) -> (1,2) -> (1,3) -> (2,3)] word='buoyant' cleared=5 points=+60
+    0  1  2  3
+   -----------
+0 | u  y  y  s
+1 | a  .  n  .
+2 | i  .  u  .
+3 | j  .  g  b
+Agent-1: path=[(3,2) -> (2,2) -> (1,2)] word='gun' cleared=3 points=+40
+    0  1  2  3
+   -----------
+0 | u  y  y  s
+1 | a  .  .  .
+2 | i  .  .  .
+3 | j  .  .  b
+Agent-2: path=[(2,0) -> (1,0) -> (0,0)] word='iau' cleared=3 points=+40
+    0  1  2  3
+   -----------
+0 | .  y  y  s
+1 | .  .  .  .
+2 | .  .  .  .
+3 | j  .  .  b
+Agent-1: path=[(0,1) -> (0,2) -> (0,3)] word='yays' cleared=2 points=+30
+    0  1  2  3
+   -----------
+0 | .  .  a  .
+1 | .  .  .  .
+2 | .  .  .  .
+3 | j  .  .  b
+Final Position:
+BOARD:     0  1  2  3
+BOARD:    -----------
+BOARD: 0 | .  .  a  .
+BOARD: 1 | .  .  .  .
+BOARD: 2 | .  .  .  .
+BOARD: 3 | j  .  .  b
+Scores: Agent-1=70 Agent-2=100
+----------------------------------------
+Final Result: Agent-2 wins. (No valid paths remaining)
+----------------------------------------
+Points:
+Agent-1: 0
+Agent-2: 3
+----------------------------------------
+Scores:
+Agent-1: -30
+Agent-2: 30
+============================================================
+
+============================================================
+Game 7
+Agent-1: Fable-5.2-Extrahigh:2
+Agent-2: Qwen4-Max-xhigh:2
+Starting Player: Agent-1
+------------------------------------------------------------
+    0  1  2  3
+   -----------
+0 | b  q  s  v
+1 | e  n  q  n
+2 | f  w  d  y
+3 | l  r  n  x
+Agent-1: path=[(3,2) -> (3,1) -> (3,0)] word='nrl' cleared=3 points=+40
+    0  1  2  3
+   -----------
+0 | b  q  s  v
+1 | e  n  q  n
+2 | f  w  d  y
+3 | .  .  .  x
+Agent-2: path=[(0,0) -> (1,0) -> (2,0)] word='bef' cleared=3 points=+40
+    0  1  2  3
+   -----------
+0 | .  q  s  v
+1 | .  n  q  n
+2 | .  w  d  y
+3 | .  .  .  x
+Agent-1: path=[(1,3) -> (2,3) -> (3,3)] word='nyx' cleared=3 points=+40
+    0  1  2  3
+   -----------
+0 | .  q  s  v
+1 | .  n  q  .
+2 | .  w  d  .
+3 | .  .  .  .
+Agent-2: path=[(0,2) -> (1,2) -> (2,2)] word='sqd' cleared=3 points=+40
+    0  1  2  3
+   -----------
+0 | .  q  .  v
+1 | .  n  .  .
+2 | .  w  .  .
+3 | .  .  .  .
+Agent-1: path=[(2,1) -> (1,1)] word='wun' cleared=1 points=+20
+    0  1  2  3
+   -----------
+0 | .  q  .  v
+1 | .  .  .  .
+2 | .  u  .  .
+3 | .  .  .  .
+Final Position:
+BOARD:     0  1  2  3
+BOARD:    -----------
+BOARD: 0 | .  q  .  v
+BOARD: 1 | .  .  .  .
+BOARD: 2 | .  u  .  .
+BOARD: 3 | .  .  .  .
+Scores: Agent-1=100 Agent-2=80
+----------------------------------------
+Final Result: Agent-1 wins. (No valid paths remaining)
+----------------------------------------
+Points:
+Agent-1: 3
+Agent-2: 0
+----------------------------------------
+Scores:
+Agent-1: 20
+Agent-2: -20
+============================================================
+
+============================================================
+Game 8
+Agent-1: Fable-5.2-Extrahigh:2
+Agent-2: Qwen4-Max-xhigh:2
+Starting Player: Agent-2
+------------------------------------------------------------
+    0  1  2  3
+   -----------
+0 | o  o  j  i
+1 | y  b  b  b
+2 | r  z  n  y
+3 | s  k  l  z
+Agent-2: path=[(0,2) -> (0,3) -> (1,3) -> (1,2)] word='jibb' cleared=4 points=+50
+    0  1  2  3
+   -----------
+0 | o  o  .  .
+1 | y  b  .  .
+2 | r  z  n  y
+3 | s  k  l  z
+Agent-1: path=[(1,0) -> (2,0) -> (3,0)] word='yrs' cleared=3 points=+40
+    0  1  2  3
+   -----------
+0 | o  o  .  .
+1 | .  b  .  .
+2 | .  z  n  y
+3 | .  k  l  z
+Agent-2: path=[(3,1) -> (3,2) -> (2,2)] word='kln' cleared=3 points=+40
+    0  1  2  3
+   -----------
+0 | o  o  .  .
+1 | .  b  .  .
+2 | .  z  .  y
+3 | .  .  .  z
+Agent-1: path=[(1,1) -> (0,1) -> (0,0)] word='boo' cleared=3 points=+40
+    0  1  2  3
+   -----------
+0 | .  .  .  .
+1 | .  .  .  .
+2 | .  z  .  y
+3 | .  .  .  z
+Agent-2: path=[(3,3) -> (2,3)] word='izy' cleared=1 points=+20
+    0  1  2  3
+   -----------
+0 | .  .  .  .
+1 | .  .  .  .
+2 | .  z  .  i
+3 | .  .  .  .
+Final Position:
+BOARD:     0  1  2  3
+BOARD:    -----------
+BOARD: 0 | .  .  .  .
+BOARD: 1 | .  .  .  .
+BOARD: 2 | .  z  .  i
+BOARD: 3 | .  .  .  .
+Scores: Agent-1=80 Agent-2=110
+----------------------------------------
+Final Result: Agent-2 wins. (No valid paths remaining)
+----------------------------------------
+Points:
+Agent-1: 0
+Agent-2: 3
+----------------------------------------
+Scores:
+Agent-1: -30
+Agent-2: 30
+============================================================
+
+============================================================
+Game 9
+Agent-1: Fable-5.2-Extrahigh:2
+Agent-2: Qwen4-Max-xhigh:2
+Starting Player: Agent-1
+------------------------------------------------------------
+    0  1  2  3
+   -----------
+0 | a  c  m  j
+1 | m  x  v  z
+2 | v  i  v  z
+3 | e  k  c  m
+Agent-1: path=[(2,2) -> (2,1) -> (2,0) -> (3,0) -> (3,1)] word='vivek' cleared=5 points=+60
+    0  1  2  3
+   -----------
+0 | a  c  m  j
+1 | m  x  v  z
+2 | .  .  .  z
+3 | .  .  c  m
+Agent-2: path=[(0,1) -> (0,0) -> (1,0)] word='cam' cleared=3 points=+40
+    0  1  2  3
+   -----------
+0 | .  .  m  j
+1 | .  x  v  z
+2 | .  .  .  z
+3 | .  .  c  m
+Agent-1: path=[(3,2) -> (3,3)] word='cmw' cleared=1 points=+20
+    0  1  2  3
+   -----------
+0 | .  .  m  j
+1 | .  x  v  z
+2 | .  .  .  z
+3 | .  .  w  .
+Agent-2: path=[(0,3) -> (1,3) -> (2,3)] word='jazz' cleared=2 points=+30
+    0  1  2  3
+   -----------
+0 | .  .  m  a
+1 | .  x  v  .
+2 | .  .  .  .
+3 | .  .  w  .
+Agent-1: path=[(1,2) -> (0,2) -> (0,3)] word='dvma' cleared=2 points=+30
+    0  1  2  3
+   -----------
+0 | .  .  d  .
+1 | .  x  .  .
+2 | .  .  .  .
+3 | .  .  w  .
+Final Position:
+BOARD:     0  1  2  3
+BOARD:    -----------
+BOARD: 0 | .  .  d  .
+BOARD: 1 | .  x  .  .
+BOARD: 2 | .  .  .  .
+BOARD: 3 | .  .  w  .
+Scores: Agent-1=110 Agent-2=70
+----------------------------------------
+Final Result: Agent-1 wins. (No valid paths remaining)
+----------------------------------------
+Points:
+Agent-1: 3
+Agent-2: 0
+----------------------------------------
+Scores:
+Agent-1: 40
+Agent-2: -40
+============================================================
+
+============================================================
+Game 10
+Agent-1: Fable-5.2-Extrahigh:2
+Agent-2: Qwen4-Max-xhigh:2
+Starting Player: Agent-2
+------------------------------------------------------------
+    0  1  2  3
+   -----------
+0 | k  k  n  v
+1 | j  o  f  s
+2 | i  b  i  o
+3 | f  c  q  d
+Agent-2: path=[(1,0) -> (1,1) -> (2,1) -> (2,0)] word='jobi' cleared=4 points=+50
+    0  1  2  3
+   -----------
+0 | k  k  n  v
+1 | .  .  f  s
+2 | .  .  i  o
+3 | f  c  q  d
+Agent-1: path=[(2,3) -> (1,3) -> (1,2)] word='osf' cleared=3 points=+40
+    0  1  2  3
+   -----------
+0 | k  k  n  v
+1 | .  .  .  .
+2 | .  .  i  .
+3 | f  c  q  d
+Agent-2: path=[(2,2) -> (3,2)] word='iqr' cleared=1 points=+20
+    0  1  2  3
+   -----------
+0 | k  k  n  v
+1 | .  .  .  .
+2 | .  .  .  .
+3 | f  c  r  d
+Agent-1: path=[(3,2) -> (3,1) -> (3,0)] word='rcf' cleared=3 points=+40
+    0  1  2  3
+   -----------
+0 | k  k  n  v
+1 | .  .  .  .
+2 | .  .  .  .
+3 | .  .  .  d
+Agent-2: path=[(0,2) -> (0,3)] word='ndv' cleared=1 points=+20
+    0  1  2  3
+   -----------
+0 | k  k  d  .
+1 | .  .  .  .
+2 | .  .  .  .
+3 | .  .  .  d
+Agent-1: path=[(0,2) -> (0,1)] word='dks' cleared=1 points=+20
+    0  1  2  3
+   -----------
+0 | k  .  s  .
+1 | .  .  .  .
+2 | .  .  .  .
+3 | .  .  .  d
+Final Position:
+BOARD:     0  1  2  3
+BOARD:    -----------
+BOARD: 0 | k  .  s  .
+BOARD: 1 | .  .  .  .
+BOARD: 2 | .  .  .  .
+BOARD: 3 | .  .  .  d
+Scores: Agent-1=100 Agent-2=90
+----------------------------------------
+Final Result: Agent-1 wins. (No valid paths remaining)
+----------------------------------------
+Points:
+Agent-1: 3
+Agent-2: 0
+----------------------------------------
+Scores:
+Agent-1: 10
+Agent-2: -10
+============================================================
+============================================================
+Agent-1: Fable-5.2-Extrahigh:2
+Agent-2: Qwen4-Max-xhigh:2
+RESULT:Agent-1=19.0,Agent-2=10.0
+SCORE:Agent-1=80.0,Agent-2=-80.0
+WINS:Agent-1=6,Agent-2=3
+DRAWS:1
+STATS:Agent-1={'wins': 6, 'losses': 3, 'draws': 1, 'points': 19, 'score': 80.0, 'make_move_crash': 0, 'other_crash': 0, 'crash': 0, 'timeout': 0, 'invalid': 0}
+STATS:Agent-2={'wins': 3, 'losses': 6, 'draws': 1, 'points': 10, 'score': -80.0, 'make_move_crash': 0, 'other_crash': 0, 'crash': 0, 'timeout': 0, 'invalid': 0}
+--- MATCH STATISTICS ---
+Agent-1 make_move_crash: 0
+Agent-2 make_move_crash: 0
+Agent-1 other_crash: 0
+Agent-2 other_crash: 0
+Agent-1 crash (total): 0
+Agent-2 crash (total): 0
+Agent-1 Timeouts: 0
+Agent-2 Timeouts: 0
+Agent-1 Invalid: 0
+Agent-2 Invalid: 0
+Time-limit Draws: 0
+------------------------------------------------------------
+
+
+------------------------------------------------------------

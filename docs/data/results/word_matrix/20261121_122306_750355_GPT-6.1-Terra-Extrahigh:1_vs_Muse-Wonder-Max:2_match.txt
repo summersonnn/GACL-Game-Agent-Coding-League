@@ -1,0 +1,785 @@
+Match Contenders:
+GPT-6.1-Terra-Extrahigh:1
+Muse-Wonder-Max:2
+
+Result:
+GPT-6.1-Terra-Extrahigh:1 : Pts: 1 - Score: -1000.0
+Muse-Wonder-Max:2 : Pts: 28 - Score: 1000.0
+
+
+============================================================
+Game 1
+Agent-1: GPT-6.1-Terra-Extrahigh:1
+Agent-2: Muse-Wonder-Max:2
+Starting Player: Agent-1
+------------------------------------------------------------
+    0  1  2  3
+   -----------
+0 | t  u  t  j
+1 | r  o  r  j
+2 | u  p  l  r
+3 | j  b  v  y
+Agent-1: path=[(1,1) -> (0,1) -> (0,0)] word='out' cleared=3 points=+40
+    0  1  2  3
+   -----------
+0 | .  .  t  j
+1 | r  .  r  j
+2 | u  p  l  r
+3 | j  b  v  y
+Agent-2: path=[(2,1) -> (2,2) -> (1,2)] word='plr' cleared=3 points=+40
+    0  1  2  3
+   -----------
+0 | .  .  t  j
+1 | r  .  .  j
+2 | u  .  .  r
+3 | j  b  v  y
+Agent-1: path=[(2,3) -> (3,3)] word='cry' cleared=1 points=+20
+    0  1  2  3
+   -----------
+0 | .  .  t  j
+1 | r  .  .  j
+2 | u  .  .  c
+3 | j  b  v  .
+Agent-2: path=[(3,0) -> (2,0) -> (1,0)] word='jur' cleared=3 points=+40
+    0  1  2  3
+   -----------
+0 | .  .  t  j
+1 | .  .  .  j
+2 | .  .  .  c
+3 | .  b  v  .
+Agent-1: PASS
+Agent-2: path=[(0,3) -> (0,2)] word='jtm' cleared=1 points=+20
+    0  1  2  3
+   -----------
+0 | .  .  .  m
+1 | .  .  .  j
+2 | .  .  .  c
+3 | .  b  v  .
+Agent-1: PASS
+Agent-2: path=[(1,3) -> (0,3)] word='jmp' cleared=1 points=+20
+    0  1  2  3
+   -----------
+0 | .  .  .  .
+1 | .  .  .  p
+2 | .  .  .  c
+3 | .  b  v  .
+Agent-1: path=[(2,3) -> (1,3)] word='cup' cleared=1 points=+20
+    0  1  2  3
+   -----------
+0 | .  .  .  .
+1 | .  .  .  u
+2 | .  .  .  .
+3 | .  b  v  .
+Agent-2: path=[(3,1) -> (3,2)] word='bvy' cleared=1 points=+20
+    0  1  2  3
+   -----------
+0 | .  .  .  .
+1 | .  .  .  u
+2 | .  .  .  .
+3 | .  .  y  .
+Final Position:
+BOARD:     0  1  2  3
+BOARD:    -----------
+BOARD: 0 | .  .  .  .
+BOARD: 1 | .  .  .  u
+BOARD: 2 | .  .  .  .
+BOARD: 3 | .  .  y  .
+Scores: Agent-1=80 Agent-2=140
+----------------------------------------
+Final Result: Agent-2 wins. (No valid paths remaining)
+----------------------------------------
+Points:
+Agent-1: 0
+Agent-2: 3
+----------------------------------------
+Scores:
+Agent-1: -60
+Agent-2: 60
+============================================================
+
+============================================================
+Game 2
+Agent-1: GPT-6.1-Terra-Extrahigh:1
+Agent-2: Muse-Wonder-Max:2
+Starting Player: Agent-2
+------------------------------------------------------------
+    0  1  2  3
+   -----------
+0 | o  a  z  f
+1 | h  h  a  i
+2 | l  l  y  k
+3 | u  q  s  l
+Agent-2: path=[(1,2) -> (2,2) -> (2,1) -> (2,0) -> (3,0)] word='ayllu' cleared=5 points=+60
+    0  1  2  3
+   -----------
+0 | o  a  z  f
+1 | h  h  .  i
+2 | .  .  .  k
+3 | .  q  s  l
+Agent-1: INVALID WORD 'Word 'if' not in dictionary' (-10)
+Agent-2: path=[(1,1) -> (0,1) -> (0,0)] word='hao' cleared=3 points=+40
+    0  1  2  3
+   -----------
+0 | .  .  z  f
+1 | h  .  .  i
+2 | .  .  .  k
+3 | .  q  s  l
+Agent-1: INVALID WORD 'Word 'if' not in dictionary' (-10)
+Agent-2: path=[(2,3) -> (1,3) -> (0,3)] word='kif' cleared=3 points=+40
+    0  1  2  3
+   -----------
+0 | .  .  z  .
+1 | h  .  .  .
+2 | .  .  .  .
+3 | .  q  s  l
+Agent-1: PASS
+Agent-2: path=[(3,1) -> (3,2) -> (3,3)] word='qsl' cleared=3 points=+40
+    0  1  2  3
+   -----------
+0 | .  .  z  .
+1 | h  .  .  .
+2 | .  .  .  .
+3 | .  .  .  .
+Final Position:
+BOARD:     0  1  2  3
+BOARD:    -----------
+BOARD: 0 | .  .  z  .
+BOARD: 1 | h  .  .  .
+BOARD: 2 | .  .  .  .
+BOARD: 3 | .  .  .  .
+Scores: Agent-1=-20 Agent-2=180
+----------------------------------------
+Final Result: Agent-2 wins. (No valid paths remaining)
+----------------------------------------
+Points:
+Agent-1: 0
+Agent-2: 3
+----------------------------------------
+Scores:
+Agent-1: -200
+Agent-2: 200
+============================================================
+
+============================================================
+Game 3
+Agent-1: GPT-6.1-Terra-Extrahigh:1
+Agent-2: Muse-Wonder-Max:2
+Starting Player: Agent-1
+------------------------------------------------------------
+    0  1  2  3
+   -----------
+0 | t  z  u  d
+1 | l  n  j  s
+2 | l  j  g  q
+3 | j  y  v  p
+Agent-1: path=[(0,0) -> (1,0) -> (2,0)] word='tall' cleared=2 points=+30
+    0  1  2  3
+   -----------
+0 | .  z  u  d
+1 | .  n  j  s
+2 | a  j  g  q
+3 | j  y  v  p
+Agent-2: path=[(1,2) -> (0,2) -> (0,3)] word='jud' cleared=3 points=+40
+    0  1  2  3
+   -----------
+0 | .  z  .  .
+1 | .  n  .  s
+2 | a  j  g  q
+3 | j  y  v  p
+Agent-1: PASS
+Agent-2: path=[(1,1) -> (2,1) -> (2,0)] word='naja' cleared=2 points=+30
+    0  1  2  3
+   -----------
+0 | .  z  .  .
+1 | .  .  .  s
+2 | .  a  g  q
+3 | j  y  v  p
+Agent-1: path=[(2,1) -> (2,2)] word='age' cleared=1 points=+20
+    0  1  2  3
+   -----------
+0 | .  z  .  .
+1 | .  .  .  s
+2 | .  e  .  q
+3 | j  y  v  p
+Agent-2: path=[(3,2) -> (3,1) -> (2,1)] word='vyse' cleared=2 points=+30
+    0  1  2  3
+   -----------
+0 | .  z  .  .
+1 | .  .  .  s
+2 | .  .  .  q
+3 | j  .  s  p
+Agent-1: PASS
+Agent-2: path=[(3,2) -> (3,3) -> (2,3)] word='spqr' cleared=2 points=+30
+    0  1  2  3
+   -----------
+0 | .  z  .  .
+1 | .  .  .  s
+2 | .  .  .  .
+3 | j  .  .  r
+Final Position:
+BOARD:     0  1  2  3
+BOARD:    -----------
+BOARD: 0 | .  z  .  .
+BOARD: 1 | .  .  .  s
+BOARD: 2 | .  .  .  .
+BOARD: 3 | j  .  .  r
+Scores: Agent-1=50 Agent-2=130
+----------------------------------------
+Final Result: Agent-2 wins. (No valid paths remaining)
+----------------------------------------
+Points:
+Agent-1: 0
+Agent-2: 3
+----------------------------------------
+Scores:
+Agent-1: -80
+Agent-2: 80
+============================================================
+
+============================================================
+Game 4
+Agent-1: GPT-6.1-Terra-Extrahigh:1
+Agent-2: Muse-Wonder-Max:2
+Starting Player: Agent-2
+------------------------------------------------------------
+    0  1  2  3
+   -----------
+0 | d  a  d  l
+1 | j  o  w  g
+2 | b  d  r  a
+3 | x  q  h  i
+Agent-2: path=[(1,3) -> (2,3) -> (2,2) -> (1,2) -> (1,1) -> (2,1)] word='garwood' cleared=5 points=+60
+    0  1  2  3
+   -----------
+0 | d  a  d  l
+1 | j  .  .  .
+2 | b  .  o  .
+3 | x  q  h  i
+Agent-1: path=[(0,1) -> (0,0)] word='add' cleared=1 points=+20
+    0  1  2  3
+   -----------
+0 | d  .  d  l
+1 | j  .  .  .
+2 | b  .  o  .
+3 | x  q  h  i
+Agent-2: path=[(2,2) -> (3,2) -> (3,3)] word='ohio' cleared=2 points=+30
+    0  1  2  3
+   -----------
+0 | d  .  d  l
+1 | j  .  .  .
+2 | b  .  .  .
+3 | x  q  .  o
+Agent-1: path=[(2,0) -> (3,0)] word='box' cleared=1 points=+20
+    0  1  2  3
+   -----------
+0 | d  .  d  l
+1 | j  .  .  .
+2 | o  .  .  .
+3 | .  q  .  o
+Agent-2: path=[(0,0) -> (1,0) -> (2,0)] word='dojo' cleared=2 points=+30
+    0  1  2  3
+   -----------
+0 | .  .  d  l
+1 | .  .  .  .
+2 | o  .  .  .
+3 | .  q  .  o
+Agent-1: path=[(0,3) -> (0,2)] word='old' cleared=1 points=+20
+    0  1  2  3
+   -----------
+0 | .  .  .  o
+1 | .  .  .  .
+2 | o  .  .  .
+3 | .  q  .  o
+Final Position:
+BOARD:     0  1  2  3
+BOARD:    -----------
+BOARD: 0 | .  .  .  o
+BOARD: 1 | .  .  .  .
+BOARD: 2 | o  .  .  .
+BOARD: 3 | .  q  .  o
+Scores: Agent-1=60 Agent-2=120
+----------------------------------------
+Final Result: Agent-2 wins. (No valid paths remaining)
+----------------------------------------
+Points:
+Agent-1: 0
+Agent-2: 3
+----------------------------------------
+Scores:
+Agent-1: -60
+Agent-2: 60
+============================================================
+
+============================================================
+Game 5
+Agent-1: GPT-6.1-Terra-Extrahigh:1
+Agent-2: Muse-Wonder-Max:2
+Starting Player: Agent-1
+------------------------------------------------------------
+    0  1  2  3
+   -----------
+0 | u  h  z  m
+1 | v  b  h  d
+2 | j  j  g  q
+3 | u  v  z  l
+Agent-1: path=[(1,2) -> (1,3)] word='had' cleared=1 points=+20
+    0  1  2  3
+   -----------
+0 | u  h  z  m
+1 | v  b  a  .
+2 | j  j  g  q
+3 | u  v  z  l
+Agent-2: path=[(1,1) -> (1,2) -> (2,2)] word='bag' cleared=3 points=+40
+    0  1  2  3
+   -----------
+0 | u  h  z  m
+1 | v  .  .  .
+2 | j  j  .  q
+3 | u  v  z  l
+Agent-1: PASS
+Agent-2: path=[(2,0) -> (3,0) -> (3,1)] word='juv' cleared=3 points=+40
+    0  1  2  3
+   -----------
+0 | u  h  z  m
+1 | v  .  .  .
+2 | .  j  .  q
+3 | .  .  z  l
+Agent-1: PASS
+Agent-2: path=[(1,0) -> (0,0) -> (0,1)] word='vugh' cleared=2 points=+30
+    0  1  2  3
+   -----------
+0 | g  .  z  m
+1 | .  .  .  .
+2 | .  j  .  q
+3 | .  .  z  l
+Agent-1: PASS
+Agent-2: path=[(3,3) -> (3,2)] word='luz' cleared=1 points=+20
+    0  1  2  3
+   -----------
+0 | g  .  z  m
+1 | .  .  .  .
+2 | .  j  .  q
+3 | .  .  u  .
+Agent-1: PASS
+Agent-2: path=[(0,2) -> (0,3)] word='zim' cleared=1 points=+20
+    0  1  2  3
+   -----------
+0 | g  .  i  .
+1 | .  .  .  .
+2 | .  j  .  q
+3 | .  .  u  .
+Final Position:
+BOARD:     0  1  2  3
+BOARD:    -----------
+BOARD: 0 | g  .  i  .
+BOARD: 1 | .  .  .  .
+BOARD: 2 | .  j  .  q
+BOARD: 3 | .  .  u  .
+Scores: Agent-1=20 Agent-2=150
+----------------------------------------
+Final Result: Agent-2 wins. (No valid paths remaining)
+----------------------------------------
+Points:
+Agent-1: 0
+Agent-2: 3
+----------------------------------------
+Scores:
+Agent-1: -130
+Agent-2: 130
+============================================================
+
+============================================================
+Game 6
+Agent-1: GPT-6.1-Terra-Extrahigh:1
+Agent-2: Muse-Wonder-Max:2
+Starting Player: Agent-2
+------------------------------------------------------------
+    0  1  2  3
+   -----------
+0 | u  v  i  k
+1 | h  n  f  u
+2 | s  y  q  u
+3 | r  u  s  d
+Agent-2: path=[(0,3) -> (0,2) -> (0,1) -> (0,0)] word='kivu' cleared=4 points=+50
+    0  1  2  3
+   -----------
+0 | .  .  .  .
+1 | h  n  f  u
+2 | s  y  q  u
+3 | r  u  s  d
+Agent-1: INVALID WORD 'Word 'us' not in dictionary' (-10)
+Agent-2: path=[(3,2) -> (3,1) -> (3,0) -> (2,0) -> (1,0)] word='suresh' cleared=4 points=+50
+    0  1  2  3
+   -----------
+0 | .  .  .  .
+1 | .  n  f  u
+2 | .  y  q  u
+3 | e  .  .  d
+Agent-1: path=[(1,1) -> (2,1)] word='any' cleared=1 points=+20
+    0  1  2  3
+   -----------
+0 | .  .  .  .
+1 | .  .  f  u
+2 | .  a  q  u
+3 | e  .  .  d
+Agent-2: path=[(1,2) -> (1,3) -> (2,3) -> (3,3)] word='furud' cleared=3 points=+40
+    0  1  2  3
+   -----------
+0 | .  .  .  .
+1 | .  .  .  r
+2 | .  a  q  .
+3 | e  .  .  .
+Agent-1: PASS
+Agent-2: path=[(2,1) -> (2,2)] word='aql' cleared=1 points=+20
+    0  1  2  3
+   -----------
+0 | .  .  .  .
+1 | .  .  .  r
+2 | .  .  l  .
+3 | e  .  .  .
+Final Position:
+BOARD:     0  1  2  3
+BOARD:    -----------
+BOARD: 0 | .  .  .  .
+BOARD: 1 | .  .  .  r
+BOARD: 2 | .  .  l  .
+BOARD: 3 | e  .  .  .
+Scores: Agent-1=10 Agent-2=160
+----------------------------------------
+Final Result: Agent-2 wins. (No valid paths remaining)
+----------------------------------------
+Points:
+Agent-1: 0
+Agent-2: 3
+----------------------------------------
+Scores:
+Agent-1: -150
+Agent-2: 150
+============================================================
+
+============================================================
+Game 7
+Agent-1: GPT-6.1-Terra-Extrahigh:1
+Agent-2: Muse-Wonder-Max:2
+Starting Player: Agent-1
+------------------------------------------------------------
+    0  1  2  3
+   -----------
+0 | y  x  w  o
+1 | a  b  b  m
+2 | j  z  m  r
+3 | f  f  m  f
+Agent-1: path=[(3,3) -> (2,3) -> (1,3)] word='form' cleared=2 points=+30
+    0  1  2  3
+   -----------
+0 | y  x  w  o
+1 | a  b  b  .
+2 | j  z  m  .
+3 | f  f  m  o
+Agent-2: path=[(1,1) -> (1,0) -> (0,0)] word='bay' cleared=3 points=+40
+    0  1  2  3
+   -----------
+0 | .  x  w  o
+1 | .  .  b  .
+2 | j  z  m  .
+3 | f  f  m  o
+Agent-1: path=[(0,3) -> (0,2)] word='how' cleared=1 points=+20
+    0  1  2  3
+   -----------
+0 | .  x  .  h
+1 | .  .  b  .
+2 | j  z  m  .
+3 | f  f  m  o
+Agent-2: path=[(2,2) -> (3,2) -> (3,1)] word='mmf' cleared=3 points=+40
+    0  1  2  3
+   -----------
+0 | .  x  .  h
+1 | .  .  b  .
+2 | j  z  .  .
+3 | f  .  .  o
+Agent-1: PASS
+Agent-2: path=[(2,0) -> (3,0)] word='jfs' cleared=1 points=+20
+    0  1  2  3
+   -----------
+0 | .  x  .  h
+1 | .  .  b  .
+2 | .  z  .  .
+3 | s  .  .  o
+Final Position:
+BOARD:     0  1  2  3
+BOARD:    -----------
+BOARD: 0 | .  x  .  h
+BOARD: 1 | .  .  b  .
+BOARD: 2 | .  z  .  .
+BOARD: 3 | s  .  .  o
+Scores: Agent-1=50 Agent-2=100
+----------------------------------------
+Final Result: Agent-2 wins. (No valid paths remaining)
+----------------------------------------
+Points:
+Agent-1: 0
+Agent-2: 3
+----------------------------------------
+Scores:
+Agent-1: -50
+Agent-2: 50
+============================================================
+
+============================================================
+Game 8
+Agent-1: GPT-6.1-Terra-Extrahigh:1
+Agent-2: Muse-Wonder-Max:2
+Starting Player: Agent-2
+------------------------------------------------------------
+    0  1  2  3
+   -----------
+0 | j  t  n  i
+1 | y  t  w  q
+2 | b  t  k  w
+3 | m  p  a  f
+Agent-2: path=[(2,2) -> (3,2) -> (3,1) -> (2,1) -> (1,1)] word='kaputt' cleared=4 points=+50
+    0  1  2  3
+   -----------
+0 | j  t  n  i
+1 | y  .  w  q
+2 | b  .  .  w
+3 | m  u  .  f
+Agent-1: INVALID WORD 'Word 'in' not in dictionary' (-10)
+Agent-2: path=[(0,3) -> (0,2) -> (0,1)] word='int' cleared=3 points=+40
+    0  1  2  3
+   -----------
+0 | j  .  .  .
+1 | y  .  w  q
+2 | b  .  .  w
+3 | m  u  .  f
+Agent-1: INVALID WORD 'Word 'by' not in dictionary' (-10)
+Agent-2: path=[(3,1) -> (3,0) -> (2,0) -> (1,0)] word='gumby' cleared=3 points=+40
+    0  1  2  3
+   -----------
+0 | j  .  .  .
+1 | g  .  w  q
+2 | .  .  .  w
+3 | .  .  .  f
+Agent-1: path=[(3,3) -> (2,3)] word='few' cleared=1 points=+20
+    0  1  2  3
+   -----------
+0 | j  .  .  .
+1 | g  .  w  q
+2 | .  .  .  .
+3 | .  .  .  e
+Agent-2: path=[(0,0) -> (1,0)] word='jgr' cleared=1 points=+20
+    0  1  2  3
+   -----------
+0 | r  .  .  .
+1 | .  .  w  q
+2 | .  .  .  .
+3 | .  .  .  e
+Agent-1: PASS
+Agent-2: path=[(1,3) -> (1,2)] word='qwl' cleared=1 points=+20
+    0  1  2  3
+   -----------
+0 | r  .  .  .
+1 | .  .  .  l
+2 | .  .  .  .
+3 | .  .  .  e
+Final Position:
+BOARD:     0  1  2  3
+BOARD:    -----------
+BOARD: 0 | r  .  .  .
+BOARD: 1 | .  .  .  l
+BOARD: 2 | .  .  .  .
+BOARD: 3 | .  .  .  e
+Scores: Agent-1=0 Agent-2=170
+----------------------------------------
+Final Result: Agent-2 wins. (No valid paths remaining)
+----------------------------------------
+Points:
+Agent-1: 0
+Agent-2: 3
+----------------------------------------
+Scores:
+Agent-1: -170
+Agent-2: 170
+============================================================
+
+============================================================
+Game 9
+Agent-1: GPT-6.1-Terra-Extrahigh:1
+Agent-2: Muse-Wonder-Max:2
+Starting Player: Agent-1
+------------------------------------------------------------
+    0  1  2  3
+   -----------
+0 | u  a  u  v
+1 | w  v  q  j
+2 | r  j  e  n
+3 | g  q  p  c
+Agent-1: path=[(2,2) -> (1,2) -> (0,2) -> (0,1)] word='equal' cleared=3 points=+40
+    0  1  2  3
+   -----------
+0 | u  l  .  v
+1 | w  v  .  j
+2 | r  j  .  n
+3 | g  q  p  c
+Agent-2: path=[(2,3) -> (3,3) -> (3,2)] word='ncp' cleared=3 points=+40
+    0  1  2  3
+   -----------
+0 | u  l  .  v
+1 | w  v  .  j
+2 | r  j  .  .
+3 | g  q  .  .
+Agent-1: path=[(3,0) -> (2,0) -> (1,0)] word='grow' cleared=2 points=+30
+    0  1  2  3
+   -----------
+0 | u  l  .  v
+1 | .  v  .  j
+2 | o  j  .  .
+3 | .  q  .  .
+Agent-2: path=[(0,0) -> (0,1) -> (1,1)] word='ulva' cleared=2 points=+30
+    0  1  2  3
+   -----------
+0 | .  a  .  v
+1 | .  .  .  j
+2 | o  j  .  .
+3 | .  q  .  .
+Agent-1: path=[(2,1) -> (2,0)] word='job' cleared=1 points=+20
+    0  1  2  3
+   -----------
+0 | .  a  .  v
+1 | .  .  .  j
+2 | b  .  .  .
+3 | .  q  .  .
+Agent-2: path=[(1,3) -> (0,3)] word='jav' cleared=1 points=+20
+    0  1  2  3
+   -----------
+0 | .  a  .  a
+1 | .  .  .  .
+2 | b  .  .  .
+3 | .  q  .  .
+Final Position:
+BOARD:     0  1  2  3
+BOARD:    -----------
+BOARD: 0 | .  a  .  a
+BOARD: 1 | .  .  .  .
+BOARD: 2 | b  .  .  .
+BOARD: 3 | .  q  .  .
+Scores: Agent-1=90 Agent-2=90
+----------------------------------------
+Final Result: Draw. (No valid paths remaining)
+----------------------------------------
+Points:
+Agent-1: 1
+Agent-2: 1
+----------------------------------------
+Scores:
+Agent-1: 0
+Agent-2: 0
+============================================================
+
+============================================================
+Game 10
+Agent-1: GPT-6.1-Terra-Extrahigh:1
+Agent-2: Muse-Wonder-Max:2
+Starting Player: Agent-2
+------------------------------------------------------------
+    0  1  2  3
+   -----------
+0 | m  i  x  x
+1 | s  v  n  t
+2 | c  w  w  x
+3 | j  g  i  e
+Agent-2: path=[(1,1) -> (0,1) -> (0,0) -> (1,0)] word='vims' cleared=4 points=+50
+    0  1  2  3
+   -----------
+0 | .  .  x  x
+1 | .  .  n  t
+2 | c  w  w  x
+3 | j  g  i  e
+Agent-1: path=[(3,1) -> (3,2) -> (3,3)] word='give' cleared=2 points=+30
+    0  1  2  3
+   -----------
+0 | .  .  x  x
+1 | .  .  n  t
+2 | c  w  w  x
+3 | j  .  v  .
+Agent-2: path=[(1,2) -> (0,2) -> (0,3)] word='nxx' cleared=3 points=+40
+    0  1  2  3
+   -----------
+0 | .  .  .  .
+1 | .  .  .  t
+2 | c  w  w  x
+3 | j  .  v  .
+Agent-1: PASS
+Agent-2: path=[(2,2) -> (2,1)] word='wwi' cleared=1 points=+20
+    0  1  2  3
+   -----------
+0 | .  .  .  .
+1 | .  .  .  t
+2 | c  .  i  x
+3 | j  .  v  .
+Agent-1: path=[(2,2) -> (2,3)] word='six' cleared=1 points=+20
+    0  1  2  3
+   -----------
+0 | .  .  .  .
+1 | .  .  .  t
+2 | c  .  .  s
+3 | j  .  v  .
+Agent-2: path=[(1,3) -> (2,3)] word='tso' cleared=1 points=+20
+    0  1  2  3
+   -----------
+0 | .  .  .  .
+1 | .  .  .  o
+2 | c  .  .  .
+3 | j  .  v  .
+Agent-1: PASS
+Agent-2: path=[(2,0) -> (3,0)] word='cuj' cleared=1 points=+20
+    0  1  2  3
+   -----------
+0 | .  .  .  .
+1 | .  .  .  o
+2 | .  .  .  .
+3 | u  .  v  .
+Final Position:
+BOARD:     0  1  2  3
+BOARD:    -----------
+BOARD: 0 | .  .  .  .
+BOARD: 1 | .  .  .  o
+BOARD: 2 | .  .  .  .
+BOARD: 3 | u  .  v  .
+Scores: Agent-1=50 Agent-2=150
+----------------------------------------
+Final Result: Agent-2 wins. (No valid paths remaining)
+----------------------------------------
+Points:
+Agent-1: 0
+Agent-2: 3
+----------------------------------------
+Scores:
+Agent-1: -100
+Agent-2: 100
+============================================================
+============================================================
+Agent-1: GPT-6.1-Terra-Extrahigh:1
+Agent-2: Muse-Wonder-Max:2
+RESULT:Agent-1=1.0,Agent-2=28.0
+SCORE:Agent-1=-1000.0,Agent-2=1000.0
+WINS:Agent-1=0,Agent-2=9
+DRAWS:1
+STATS:Agent-1={'wins': 0, 'losses': 9, 'draws': 1, 'points': 1, 'score': -1000.0, 'make_move_crash': 0, 'other_crash': 0, 'crash': 0, 'timeout': 0, 'invalid': 5}
+STATS:Agent-2={'wins': 9, 'losses': 0, 'draws': 1, 'points': 28, 'score': 1000.0, 'make_move_crash': 0, 'other_crash': 0, 'crash': 0, 'timeout': 0, 'invalid': 0}
+--- MATCH STATISTICS ---
+Agent-1 make_move_crash: 0
+Agent-2 make_move_crash: 0
+Agent-1 other_crash: 0
+Agent-2 other_crash: 0
+Agent-1 crash (total): 0
+Agent-2 crash (total): 0
+Agent-1 Timeouts: 0
+Agent-2 Timeouts: 0
+Agent-1 Invalid: 5
+Agent-2 Invalid: 0
+Time-limit Draws: 0
+------------------------------------------------------------
+
+
+------------------------------------------------------------
