@@ -1,6 +1,7 @@
 import os
 import json
 import re
+import hashlib
 
 # Configuration
 BASE_DIR = os.path.dirname(os.path.dirname(os.path.abspath(__file__)))
@@ -10,13 +11,10 @@ CONFIG_FILE = os.path.join(BASE_DIR, 'docs', 'data', 'config.json')
 
 def clean_model_name(agent_name):
     """
-    Clean model name by removing fp8 variants and agent suffixes.
-    Replicates: modelName.replace(/-fp8-speedy/g, '').replace(/-fp8/g, '').replace(/:1$|:2$/, '')
+    Remove the numeric run suffix while preserving the configured model name.
     """
     name = agent_name
-    name = name.replace('-fp8-speedy', '')
-    name = name.replace('-fp8', '')
-    name = re.sub(r':1$|:2$', '', name)
+    name = re.sub(r':\d+$', '', name)
     return name
 
 def load_config() -> tuple[dict[str, str], dict[str, int]]:
@@ -105,15 +103,19 @@ def select_best_agents(entries):
     for entry in entries:
         model_name = clean_model_name(entry['agent'])
         
-        # If model not seen or this entry has higher score, update
-        current_score = entry['score']
+        # Compare the points rate used by the dashboard; score per game breaks ties.
+        games = entry.get('races', entry['games'])
+        current_score = (entry['points'] / games, entry['score'] / games) if games else (0, 0)
         
         if model_name not in model_best:
             best_entry = entry.copy()
             best_entry['model'] = model_name
             model_best[model_name] = best_entry
         else:
-            if current_score > model_best[model_name]['score']:
+            previous = model_best[model_name]
+            games = previous.get('races', previous['games'])
+            previous_score = (previous['points'] / games, previous['score'] / games) if games else (0, 0)
+            if current_score > previous_score:
                 best_entry = entry.copy()
                 best_entry['model'] = model_name
                 model_best[model_name] = best_entry
@@ -130,7 +132,7 @@ def normalize_points(entries, game_code):
     normalized_entries = []
     for entry in entries:
         new_entry = entry.copy()
-        total_games = entry.get('games', 0)
+        total_games = entry.get('races', entry.get('games', 0))
         
         if total_games == 0:
             new_entry['normalized'] = 0.0
@@ -217,6 +219,26 @@ def main():
             processed_data["games"][game_id] = []
             continue
             
+        if code == 'A4':
+            # Race counts are derived from logs and tied to this exact scoreboard.
+            try:
+                with open(os.path.join(BASE_DIR, 'docs', 'data', 'backgammon_races.json')) as f:
+                    race_data = json.load(f)
+                with open(path, 'rb') as f:
+                    digest = hashlib.sha256(f.read()).hexdigest()
+                races = race_data['races']
+                if digest != race_data['scoreboard_sha256'] or set(races) != {e['agent'] for e in raw_entries}:
+                    raise ValueError('race counts do not match the scoreboard')
+                for entry in raw_entries:
+                    count = races[entry['agent']]
+                    if not isinstance(count, int) or isinstance(count, bool) or count <= 0:
+                        raise ValueError('invalid race count')
+                    entry['races'] = count
+            except (OSError, KeyError, ValueError, TypeError) as error:
+                print(f"  Skipping Backgammon: {error}")
+                processed_data["games"][game_id] = []
+                continue
+
         # Select best agent per model
         best_agents = select_best_agents(raw_entries)
         

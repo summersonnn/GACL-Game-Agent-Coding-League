@@ -180,7 +180,7 @@ class Connect4Game:
 - **Isolation**: Your agent must be completely self-contained. Do not assume any specific file structure or directory hierarchy.
 - **Single Class Implementation**: Do not implement any class other than the one provided in the starter code.
 - **Class-Only Output**: Output ONLY the agent class and necessary standard imports. Do not include testing code, game logic outside the class, or example usage.
-- **No Broad Exception Handlers**: Do not wrap the body of `make_move()` in a broad exception handler such as `except Exception:`, `except BaseException:`, or a bare `except:`. The engine uses `signal.alarm` to enforce move time limits; broad catches will swallow the timeout exception and cause the match to hang.
+- **No Broad Exception Handlers**: Do not wrap the body of `make_move()` in a broad exception handler such as `except Exception:`, `except BaseException:`, or a bare `except:`. The engine uses a `SIGALRM` timer to enforce move time limits; broad catches will swallow the timeout exception and cause the match to hang.
 
 
 
@@ -208,4 +208,14 @@ class Connect4Game:
 | make_move() Crash    | Random valid move played; game continues.             |
 | Initialization Crash | Immediate game forfeit. Opponent wins with max score. |
 | Move Timeout (1s)    | Random valid move played; game continues.             |
-| Invalid Move         | Random valid move played; game continues.             | 
+| Invalid Move         | Random valid move played; game continues.             |
+
+## Game Time Limit
+
+In agent-versus-agent matches, each game has a wall-clock budget of `30 * MOVE_TIME_LIMIT` seconds (**30 seconds** at the default 1-second move limit), including agent initialization. The clock is checked before each turn. If the budget is exhausted at that check, the game ends as a draw, even if its normal end conditions have not been reached. Both players receive 1 match point and a tie-breaker score of 0. Human play modes do not use this game clock.
+
+## Strict No-File/External-Lookup Rule
+For this task, you MUST NOT read any of the files in the repo. Take the initial prompt as the only source. Do not even read files like CLAUDE.md or AGENTS.md. Do not read other agent implementations. Nothing!
+
+## Single-Output Rule
+Do not run mock games, and do not judge or revise your agent based on their results. Running tests is prohibited, and doing so will get you eliminated. Instead, reason carefully about the game logic and output your agent code once and for all.
