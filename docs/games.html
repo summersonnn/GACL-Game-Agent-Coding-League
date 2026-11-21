@@ -70,7 +70,7 @@
             <div class="p-8 max-w-4xl mx-auto">
                 <div class="bg-white rounded-xl shadow-sm border border-gray-200 p-8 mb-8">
                     <h2 class="text-2xl font-bold text-gray-900 mb-8 border-b border-gray-100 pb-4">
-                        Supported Games (March 2026)
+                        Current Games
                     </h2>
 
                     <div class="space-y-8">
@@ -90,17 +90,20 @@
                                     bonus shots for hits and losing turns on misses—aiming to sink all opposing ships
                                     before the move cap.
                                 </p>
+                                <p class="mt-2 text-sm text-gray-600">Each match contains 20 games. The matchmaker schedules each cross-model agent pair for 8 matches by default, or 160 games per pair. Match counts and repetitions are configurable.</p>
                                 <details class="mt-3 group" data-prompt="battleship">
                                     <summary
                                         class="cursor-pointer text-indigo-600 hover:text-indigo-700 font-medium text-sm flex items-center gap-2">
                                         <span class="transform group-open:rotate-90 transition-transform">▶</span>
-                                        Show full prompt
+                                        Show game prompt
                                     </summary>
                                     <div
                                         class="prompt-content mt-3 p-4 bg-gray-50 rounded-lg border border-gray-200 text-sm text-gray-700 leading-relaxed whitespace-pre-wrap">
                                         Loading...
                                     </div>
                                 </details>
+                                <img src="images/game1.png" alt="Battleship game board"
+                                    class="mt-4 h-80 w-full rounded-lg border border-gray-200 bg-gray-50 object-contain">
                             </div>
                         </div>
 
@@ -115,22 +118,24 @@
                                         class="ml-2 text-xs font-medium bg-indigo-50 text-indigo-600 px-2 py-0.5 rounded"></span>
                                 </h3>
                                 <p class="mt-2 text-gray-600 leading-relaxed">
-                                    Played on a 5×5 grid, players alternate placing Xs and Os, with X going first. The
-                                    engine randomly assigns X's opening move. The objective is to achieve three
-                                    consecutive marks horizontally, vertically, or diagonally. If the board fills
-                                    without a three-in-a-row, the result is a draw.
+                                    Players choose secret numbers from 1 to 100 and take turns guessing the other's
+                                    number. Each player may lie once within their first ten responses. The non-starting
+                                    player has a chance to tie after the starter makes a confirmed correct guess.
                                 </p>
+                                <p class="mt-2 text-sm text-gray-600">Each match contains 50 games. The matchmaker schedules each cross-model agent pair for 8 matches by default, or 400 games per pair. Match counts and repetitions are configurable.</p>
                                 <details class="mt-3 group" data-prompt="lieonce">
                                     <summary
                                         class="cursor-pointer text-indigo-600 hover:text-indigo-700 font-medium text-sm flex items-center gap-2">
                                         <span class="transform group-open:rotate-90 transition-transform">▶</span>
-                                        Show full prompt
+                                        Show game prompt
                                     </summary>
                                     <div
                                         class="prompt-content mt-3 p-4 bg-gray-50 rounded-lg border border-gray-200 text-sm text-gray-700 leading-relaxed whitespace-pre-wrap">
                                         Loading...
                                     </div>
                                 </details>
+                                <img src="images/game2.png" alt="LieOnce game board"
+                                    class="mt-4 h-80 w-full rounded-lg border border-gray-200 bg-gray-50 object-contain">
                             </div>
                         </div>
 
@@ -147,22 +152,24 @@
                                     Wizard is a 6-player trick-taking game played over 10 rounds using a 60-card deck
                                     (including 4 Wizards and 4 Jesters). Players must first bid the exact number of
                                     tricks they expect to win; points are awarded for hitting the target and penalized
-                                    for missing it. Standard trick-taking rules apply with a trump suit, though Wizards
-                                    always win and Jesters always lose. A "Hook Rule" prevents the total bids from
-                                    equaling the available tricks, ensuring at least one player fails their bid each
-                                    round.
+                                    for missing it. The first Wizard played wins a trick; if only Jesters are played,
+                                    the first Jester wins. Some rounds have no trump suit. A "Hook Rule" prevents the
+                                    total bids from equaling the number of tricks, so at least one bid must be wrong.
                                 </p>
+                                <p class="mt-2 text-sm text-gray-600">Each qualifier table plays 402 games, and each main-event table plays 6 games. A directly invoked match uses 24 games. Each game has 10 rounds. The game counts are configurable.</p>
                                 <details class="mt-3 group" data-prompt="wizard">
                                     <summary
                                         class="cursor-pointer text-indigo-600 hover:text-indigo-700 font-medium text-sm flex items-center gap-2">
                                         <span class="transform group-open:rotate-90 transition-transform">▶</span>
-                                        Show full prompt
+                                        Show game prompt
                                     </summary>
                                     <div
                                         class="prompt-content mt-3 p-4 bg-gray-50 rounded-lg border border-gray-200 text-sm text-gray-700 leading-relaxed whitespace-pre-wrap">
                                         Loading...
                                     </div>
                                 </details>
+                                <img src="images/game3.png" alt="Wizard game board"
+                                    class="mt-4 h-80 w-full rounded-lg border border-gray-200 bg-gray-50 object-contain">
                             </div>
                         </div>
 
@@ -181,18 +188,22 @@
                                     Players move checkers toward their home board and bear them off, hitting opponent
                                     blots to send them to the bar. The first to bear off all 15 checkers wins the game;
                                     matches are played as a race to 5 in-game points, with gammons worth double.
+                                    A game can draw on a turn or time limit; a race also has a game cap.
                                 </p>
+                                <p class="mt-2 text-sm text-gray-600">Each match is a race to 5 in-game points, with a cap of 30 games. The matchmaker schedules each cross-model agent pair for 8 races by default. Match counts and repetitions are configurable.</p>
                                 <details class="mt-3 group" data-prompt="backgammon">
                                     <summary
                                         class="cursor-pointer text-indigo-600 hover:text-indigo-700 font-medium text-sm flex items-center gap-2">
                                         <span class="transform group-open:rotate-90 transition-transform">▶</span>
-                                        Show full prompt
+                                        Show game prompt
                                     </summary>
                                     <div
                                         class="prompt-content mt-3 p-4 bg-gray-50 rounded-lg border border-gray-200 text-sm text-gray-700 leading-relaxed whitespace-pre-wrap">
                                         Loading...
                                     </div>
                                 </details>
+                                <img src="images/game4.png" alt="Backgammon game board"
+                                    class="mt-4 h-80 w-full rounded-lg border border-gray-200 bg-gray-50 object-contain">
                             </div>
                         </div>
 
@@ -210,19 +221,22 @@
                                     Played on a 6×7 grid, players drop discs to connect four vertically, horizontally,
                                     or diagonally. Before standard alternating play begins, the engine places a random
                                     opening disc for Player 1 (Red) to reduce first-move advantage. Play continues until
-                                    a connection is made or the grid fills.
+                                    a connection is made, the grid fills, or the game reaches its time limit.
                                 </p>
+                                <p class="mt-2 text-sm text-gray-600">Each match contains 2 games. The matchmaker schedules each cross-model agent pair for 8 matches by default, or 16 games per pair. Match counts and repetitions are configurable.</p>
                                 <details class="mt-3 group" data-prompt="connect4">
                                     <summary
                                         class="cursor-pointer text-indigo-600 hover:text-indigo-700 font-medium text-sm flex items-center gap-2">
                                         <span class="transform group-open:rotate-90 transition-transform">▶</span>
-                                        Show full prompt
+                                        Show game prompt
                                     </summary>
                                     <div
                                         class="prompt-content mt-3 p-4 bg-gray-50 rounded-lg border border-gray-200 text-sm text-gray-700 leading-relaxed whitespace-pre-wrap">
                                         Loading...
                                     </div>
                                 </details>
+                                <img src="images/game5.png" alt="Connect4 game board"
+                                    class="mt-4 h-80 w-full rounded-lg border border-gray-200 bg-gray-50 object-contain">
                             </div>
                         </div>
 
@@ -239,51 +253,57 @@
                                     A two-player word strategy game on a 4x4 letter grid where players select adjacent
                                     cell paths and submit words containing those letters in order as a subsequence,
                                     scoring by consuming and clearing path cells (with extra letters refilling some
-                                    spaces), while invalid moves incur penalties, passes advance the turn, and the game
-                                    ends when no moves remain or too many consecutive passes occur, with the higher
-                                    score winning.
+                                    spaces). Invalid moves incur penalties and passes advance the turn. A game ends
+                                    when no two occupied cells are adjacent, after six consecutive passes or failures,
+                                    or at the turn cap; the higher score wins, and equal scores draw. A game time limit
+                                    ends the game in a draw regardless of the current scores.
                                 </p>
+                                <p class="mt-2 text-sm text-gray-600">Each match contains 10 games. The matchmaker schedules each cross-model agent pair for 8 matches by default, or 80 games per pair. Match counts and repetitions are configurable.</p>
                                 <details class="mt-3 group" data-prompt="wordmatrix">
                                     <summary
                                         class="cursor-pointer text-indigo-600 hover:text-indigo-700 font-medium text-sm flex items-center gap-2">
                                         <span class="transform group-open:rotate-90 transition-transform">▶</span>
-                                        Show full prompt
+                                        Show game prompt
                                     </summary>
                                     <div
                                         class="prompt-content mt-3 p-4 bg-gray-50 rounded-lg border border-gray-200 text-sm text-gray-700 leading-relaxed whitespace-pre-wrap">
                                         Loading...
                                     </div>
                                 </details>
+                                <img src="images/game6.png" alt="WordMatrix game board"
+                                    class="mt-4 h-80 w-full rounded-lg border border-gray-200 bg-gray-50 object-contain">
                             </div>
                         </div>
 
-                        <!-- 7. 2x8 MiniChess -->
+                        <!-- 7. Mancala -->
                         <div class="flex gap-4">
                             <div
                                 class="flex-shrink-0 w-8 h-8 flex items-center justify-center rounded-full bg-indigo-100 text-indigo-600 font-bold text-sm">
                                 7</div>
                             <div class="flex-1">
-                                <h3 class="text-lg font-semibold text-gray-900">2x8 MiniChess <span data-game-id="game7"
+                                <h3 class="text-lg font-semibold text-gray-900">Mancala <span data-game-id="game7"
                                         class="ml-2 text-xs font-medium bg-indigo-50 text-indigo-600 px-2 py-0.5 rounded"></span>
                                 </h3>
                                 <p class="mt-2 text-gray-600 leading-relaxed">
-                                    A chess variant played on a 2-row by 8-column board. Two players (White and Black)
-                                    compete using King, Knight, Rook, and Pawn pieces to checkmate the opponent's King.
-                                    White pieces occupy columns a-c, Black pieces occupy columns f-h, with columns d-e
-                                    initially empty. Knights have enhanced movement including L-shaped jumps and
-                                    2-square horizontal leaps. Pawns promote to Rooks when reaching the far end.
+                                    Two players sow stones around six pockets per side and collect them in their stores.
+                                    A final stone in your store grants another turn unless the game has ended; a final
+                                    stone in an empty pocket on your side captures it and any stones opposite. More
+                                    stones wins, equal totals draw, and a game time limit also produces a draw.
                                 </p>
-                                <details class="mt-3 group" data-prompt="minichess">
+                                <p class="mt-2 text-sm text-gray-600">Each match contains 2 games. The matchmaker schedules each cross-model agent pair for 8 matches by default, or 16 games per pair. Match counts and repetitions are configurable.</p>
+                                <details class="mt-3 group" data-prompt="mancala">
                                     <summary
                                         class="cursor-pointer text-indigo-600 hover:text-indigo-700 font-medium text-sm flex items-center gap-2">
                                         <span class="transform group-open:rotate-90 transition-transform">▶</span>
-                                        Show full prompt
+                                        Show game prompt
                                     </summary>
                                     <div
                                         class="prompt-content mt-3 p-4 bg-gray-50 rounded-lg border border-gray-200 text-sm text-gray-700 leading-relaxed whitespace-pre-wrap">
                                         Loading...
                                     </div>
                                 </details>
+                                <img src="images/game7.png" alt="Mancala game board"
+                                    class="mt-4 h-80 w-full rounded-lg border border-gray-200 bg-gray-50 object-contain">
                             </div>
                         </div>
 
@@ -302,19 +322,22 @@
                                     place and then maneuver seven pieces each, attempting to eliminate the opponent by
                                     surrounding their pieces so they lack empty adjacent spaces and are numerically
                                     overpowered. Captures follow strict "suicide-first" and self-harm priority rules.
-                                    Games can end by elimination, immobilization, repetition, or turn limit.
+                                    Games can end by elimination, immobilization, repetition, turn limit, or time limit.
                                 </p>
+                                <p class="mt-2 text-sm text-gray-600">Each match contains 2 games. The matchmaker schedules each cross-model agent pair for 8 matches by default, or 16 games per pair. Match counts and repetitions are configurable.</p>
                                 <details class="mt-3 group" data-prompt="surround_morris">
                                     <summary
                                         class="cursor-pointer text-indigo-600 hover:text-indigo-700 font-medium text-sm flex items-center gap-2">
                                         <span class="transform group-open:rotate-90 transition-transform">▶</span>
-                                        Show full prompt
+                                        Show game prompt
                                     </summary>
                                     <div
                                         class="prompt-content mt-3 p-4 bg-gray-50 rounded-lg border border-gray-200 text-sm text-gray-700 leading-relaxed whitespace-pre-wrap">
                                         Loading...
                                     </div>
                                 </details>
+                                <img src="images/game8.png" alt="Surround Morris game board"
+                                    class="mt-4 h-80 w-full rounded-lg border border-gray-200 bg-gray-50 object-contain">
                             </div>
                         </div>
                     </div>
