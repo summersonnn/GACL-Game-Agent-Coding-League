@@ -15,9 +15,9 @@ This repository contains the static dashboard for the [Competitive LLM Agent Ben
 | A7 | Mancala | 2 |
 | A8 | Surround Morris | 2 |
 
-The current model roster is in [docs/data/models.txt](docs/data/models.txt). Each model has two agents per game in the benchmark. Game prompts in `docs/data/full_prompts/` are based on the benchmark's `games/` directory and include the current tournament configuration.
+The current model roster is in [docs/data/models.txt](docs/data/models.txt). Each model has two agents per game in the benchmark. Game prompts in `docs/data/full_prompts/` are copied from the benchmark's `games/` directory. The Games page distinguishes the completed tournament settings from runner defaults.
 
-Current tournament scoreboards are not ready; the dashboard intentionally starts empty. Earlier results and the former A7 MiniChess prompt are preserved under `docs/data/archive/legacy/`. Those results describe a different roster and A7 game and should not be mixed into current standings.
+The dashboard contains the tournament completed on 21 November 2026. Earlier results and the former A7 MiniChess prompt are preserved under `docs/data/archive/legacy/`. Those results describe a different roster and A7 game and should not be mixed into current standings.
 
 
 ## Agent creation
@@ -35,12 +35,31 @@ uv sync
 uv run python server.py
 ```
 
-Open http://localhost:8000. The server regenerates `docs/data/leaderboard.json` once at startup. To regenerate it manually after adding scoreboards, run `uv run python utils/process_leaderboards.py`.
+Open http://localhost:8000. The server regenerates `docs/data/elo.json` from `docs/data/results/` once at startup and can serve the saved ratings and head-to-head results if the logs are unavailable. To regenerate both manually, run `uv run python -m utils.process_elo`.
 
 ## Update results
 
-When current tournament data is ready, copy each runner scoreboard to `docs/data/leaderboards/A1-scoreboard.txt` through `A8-scoreboard.txt`, then regenerate the JSON. Empty or missing files result in empty game leaderboards. The overall view averages the available game scores, so partial results are not a complete league ranking.
+To import a new tournament from the benchmark checkout and regenerate the dashboard:
 
-The processor selects each model's agent by league points per game, using score per game as a tiebreaker. It normalizes points against the maximum possible, then applies weights in `docs/data/config.json`. Backgammon is excluded from normalized results: the runner awards league points per race, while its scoreboard records games and does not include the number of races. The source scoreboard format must expose race counts before those results can be normalized accurately.
+```bash
+python utils/import_tournament.py /path/to/Competitive-LLM-Agents
+python -m utils.process_elo --results-dir /path/to/Competitive-LLM-Agents/results
+```
 
-`docs/data/runs.json` is optional metadata displayed as the last run date. Do not reuse the historical manifest for new results. `utils/update_manifest.py` operates on files in `docs/data/runs/` and does not import runner scoreboards.
+The importer copies all eight scoreboards, the model roster, and the game prompts. It also reads the Backgammon match logs, verifies that their game counts, wins, losses, draws, points, and scores match the scoreboard for every agent, and records the number of races. Update `docs/data/runs.json` with the tournament date after verifying the new run. Earlier results remain separate under `docs/data/archive/legacy/`.
+
+Use the same tournament's logs in `docs/data/results/` to regenerate the ratings on server startup. The Elo generator checks log totals against the scoreboards before replacing the saved ratings.
+
+The configured game weights run from 1 to 8 in ascending order of the standard deviation of Max Elo across the 12 models. Games with a wider spread in ratings have more influence on the weighted Elo standings.
+
+For the completed tournament, each of the 24 agents played 176 races or matches per two-player game. Each match contained 20 Battleship, 50 LieOnce, 2 Connect4, 10 WordMatrix, 2 Mancala, or 2 Surround Morris games. Backgammon matches were races to five in-game points, capped at 30 games. Wizard had four qualifier tables of 200 games and 924 main-event tables of six games; each selected agent played 2,772 main-event games. The qualifier count of 200 is not divisible by six, so seats were not distributed equally. These run settings differ from some current runner defaults.
+
+### Elo ratings
+
+The Elo generator fits ratings to all tournament results for each game at once. It uses each agent's wins, losses, and draws against each opponent, so match order has no effect on the ratings. Draws score half a win. A weak prior centered at 1500 keeps ratings finite for agents with only wins or only losses.
+
+Backgammon ratings use race outcomes. Wizard ratings use only main-event games and compare each agent's final score with each of its five opponents' scores.
+
+Max Elo uses the highest-rated agent for each model in each game. Mean Elo averages the model's rated agents in that game. Both views use the same Wizard rating because one agent per model advances to the main event. The Overall tab defaults to Max Elo and the game weights in `docs/data/config.json`. Either agent view can be combined with equal weights.
+
+Each game tab shows a head-to-head score matrix beneath its leaderboard. Each cell counts wins, draws, and losses for the row model against the column model across their agents. The score percentage gives half credit for draws. Backgammon counts races, and Wizard compares pairs of final scores within each main-event game.

@@ -296,6 +296,82 @@
     border-color: #818cf8;
 }
 
+/* Head-to-head score matrix */
+.h2h-scroll {
+    overflow-x: auto;
+    border: 1px solid #e5e7eb;
+    border-radius: 0.5rem;
+}
+
+.h2h-table {
+    width: 100%;
+    border-collapse: separate;
+    border-spacing: 0;
+    color: #1f2937;
+    font-size: 0.8125rem;
+}
+
+.h2h-table th,
+.h2h-table td {
+    min-width: 7rem;
+    padding: 0.5rem;
+    border-right: 1px solid #e5e7eb;
+    border-bottom: 1px solid #e5e7eb;
+    text-align: center;
+}
+
+.h2h-table tr > :last-child {
+    border-right: 0;
+}
+
+.h2h-table tbody tr:last-child > * {
+    border-bottom: 0;
+}
+
+.h2h-table th {
+    background-color: #f9fafb;
+    font-weight: 600;
+    overflow-wrap: anywhere;
+}
+
+.h2h-table tr > th:first-child {
+    position: sticky;
+    left: 0;
+    min-width: clamp(7rem, 22vw, 13rem);
+    text-align: left;
+}
+
+.h2h-score,
+.h2h-record {
+    display: block;
+    font-variant-numeric: tabular-nums;
+    white-space: nowrap;
+}
+
+.h2h-score {
+    font-weight: 600;
+}
+
+.h2h-record {
+    color: #4b5563;
+    font-size: 0.75rem;
+}
+
+.h2h-win {
+    background-color: #ecfdf5;
+    color: #065f46;
+}
+
+.h2h-loss {
+    background-color: #fef2f2;
+    color: #991b1b;
+}
+
+.h2h-empty {
+    background-color: #f3f4f6;
+    color: #6b7280;
+}
+
 /* Loading state */
 .loading-spinner {
     display: inline-block;

@@ -10,7 +10,7 @@
     <script src="https://cdn.tailwindcss.com?plugins=typography"></script>
 
     <!-- Custom styles -->
-    <link href="/css/styles.css?v=22" rel="stylesheet">
+    <link href="/css/styles.css?v=23" rel="stylesheet">
 </head>
 
 <!-- Google tag (gtag.js) -->
@@ -73,7 +73,7 @@
                 <div class="max-w-[96rem] mx-auto">
                     <!-- Tab Navigation -->
                     <div class="border-b border-gray-200 mb-6">
-                        <nav class="flex space-x-8" aria-label="Tabs">
+                        <nav class="flex gap-x-8 overflow-x-auto whitespace-nowrap" aria-label="Tabs">
                             <button class="tab-btn active" data-tab="overall">
                                 Overall
                             </button>
@@ -96,7 +96,7 @@
                                 WordMatrix
                             </button>
                             <button class="tab-btn" data-tab="game7">
-                                MiniChess
+                                Mancala
                             </button>
                             <button class="tab-btn" data-tab="game8">
                                 Surround Morris
@@ -106,43 +106,63 @@
 
                     <!-- Tab: Overall -->
                     <section id="tab-overall" class="tab-content active">
-                        <!-- Inner toggle: Weighted vs Unweighted -->
-                        <div class="flex items-center gap-2 mb-4">
-                            <button class="overall-mode-btn active px-3 py-1.5 text-sm font-medium rounded-md border transition-colors" data-mode="weighted">
-                                Weighted Average
-                            </button>
-                            <button class="overall-mode-btn px-3 py-1.5 text-sm font-medium rounded-md border transition-colors" data-mode="unweighted">
-                                Equal Average
-                            </button>
+                        <div class="mb-4 flex flex-col items-start gap-3 lg:flex-row lg:flex-wrap lg:items-center">
+                            <div class="flex flex-wrap gap-2" role="group" aria-label="Game weights" data-elo-filter="weights">
+                                <button type="button" class="overall-mode-btn active px-3 py-1.5 text-sm font-medium rounded-md border transition-colors" data-mode="weighted" aria-pressed="true">
+                                    Games have different weights
+                                </button>
+                                <button type="button" class="overall-mode-btn px-3 py-1.5 text-sm font-medium rounded-md border transition-colors" data-mode="unweighted" aria-pressed="false">
+                                    All games have the same weight
+                                </button>
+                            </div>
+                            <span class="hidden select-none text-gray-400 lg:block" aria-hidden="true">|</span>
+                            <div class="flex flex-wrap gap-2" role="group" aria-label="Model agent Elo" data-elo-filter="agents">
+                                <button type="button" class="overall-mode-btn active px-3 py-1.5 text-sm font-medium rounded-md border transition-colors" data-mode="max" aria-pressed="true">
+                                    Max Elo of model agents
+                                </button>
+                                <button type="button" class="overall-mode-btn px-3 py-1.5 text-sm font-medium rounded-md border transition-colors" data-mode="mean" aria-pressed="false">
+                                    Mean Elo of model agents
+                                </button>
+                            </div>
+                            <a href="index.html#reading-the-leaderboard"
+                               class="text-sm text-indigo-600 underline hover:text-indigo-700 lg:ml-auto">
+                                How to read the leaderboard
+                            </a>
                         </div>
                         <div class="bg-white rounded-xl shadow-sm border border-gray-200 p-6">
                             <div class="flex items-baseline justify-between mb-4">
-                                <h3 id="overall-chart-title" class="text-lg font-semibold text-gray-900">Overall Performance (Games have different weights)</h3>
+                                <h3 class="text-lg font-semibold text-gray-900">Overall Elo</h3>
                                 <span class="text-sm text-gray-400 run-date"></span>
                             </div>
                             <div style="height: 500px; position: relative;">
                                 <canvas id="chart-overall"></canvas>
                             </div>
                         </div>
-                        <div class="mt-4 text-center text-sm text-gray-600">
-                            To access raw scoreboards before post-processing, agent codes generated by the models, and
-                            game logs, click <a
-                                href="https://drive.google.com/drive/folders/1SGQvbWIx5RPmCHiC7CyMiLk5U0buVERL?usp=sharing"
-                                target="_blank" class="text-indigo-600 hover:text-indigo-700 underline">here</a>.
-                        </div>
-                        <div class="bg-white rounded-xl shadow-sm border border-gray-200 p-6 mt-6">
-                            <h3 id="overall-table-title" class="text-lg font-semibold text-gray-900 mb-4">Overall Leaderboard</h3>
+                        <p class="my-4 flex justify-center">
+                            <a href="https://drive.google.com/drive/folders/1SGQvbWIx5RPmCHiC7CyMiLk5U0buVERL?usp=sharing"
+                               class="rounded-lg border border-indigo-200 bg-white px-4 py-2.5 text-center text-sm font-semibold text-indigo-700 shadow-sm transition-colors hover:border-indigo-300 hover:bg-indigo-50 focus-visible:ring-2 focus-visible:ring-indigo-500 focus-visible:ring-offset-2">
+                                View game logs on Google Drive
+                            </a>
+                        </p>
+                        <div class="bg-white rounded-xl shadow-sm border border-gray-200 p-6">
+                            <h3 class="text-lg font-semibold text-gray-900 mb-4">Overall Leaderboard</h3>
                             <div id="leaderboard-overall" class="overflow-x-auto">
                                 <!-- Overall leaderboard table will be inserted here -->
                             </div>
                         </div>
+                        <details class="mt-4 text-sm text-gray-600">
+                            <summary class="cursor-pointer">Tournament scoreboards</summary>
+                            <p class="mt-2">
+                                <a href="/data/leaderboards/A1-scoreboard.txt" class="text-indigo-600 underline">Battleship</a> · <a href="/data/leaderboards/A2-scoreboard.txt" class="text-indigo-600 underline">LieOnce</a> · <a href="/data/leaderboards/A3-scoreboard.txt" class="text-indigo-600 underline">Wizard</a> · <a href="/data/leaderboards/A4-scoreboard.txt" class="text-indigo-600 underline">Backgammon</a> · <a href="/data/leaderboards/A5-scoreboard.txt" class="text-indigo-600 underline">Connect4</a> · <a href="/data/leaderboards/A6-scoreboard.txt" class="text-indigo-600 underline">WordMatrix</a> · <a href="/data/leaderboards/A7-scoreboard.txt" class="text-indigo-600 underline">Mancala</a> · <a href="/data/leaderboards/A8-scoreboard.txt" class="text-indigo-600 underline">Surround Morris</a>
+                            </p>
+                        </details>
                     </section>
 
                     <!-- Tab: Battleship -->
                     <section id="tab-game1" class="tab-content hidden">
                         <div class="bg-white rounded-xl shadow-sm border border-gray-200 p-6">
                             <div class="flex items-baseline justify-between mb-4">
-                                <h3 class="text-lg font-semibold text-gray-900">Battleship Performance</h3>
+                                <h3 class="text-lg font-semibold text-gray-900">Battleship Elo</h3>
                                 <span class="text-sm text-gray-400 run-date"></span>
                             </div>
                             <div style="height: 500px; position: relative;">
@@ -150,12 +170,7 @@
                             </div>
                         </div>
                         <div class="mt-4 text-center text-sm text-gray-600">
-                            More information about the games, point system and full prompts can be found in <a
-                                href="games.html" class="text-indigo-600 hover:text-indigo-700 underline">Games</a>
-                            page.<br>
-                            Do you think one of the models performed significantly worse than expected in a particular
-                            game? You can find more details about this <a href="index.html#underperformance"
-                                class="text-indigo-600 hover:text-indigo-700 underline">here</a>.
+                            <a href="games.html" class="text-indigo-600 hover:text-indigo-700 underline">Game rules and agent prompts</a>
                         </div>
                         <div class="bg-white rounded-xl shadow-sm border border-gray-200 p-6 mt-6">
                             <h3 class="text-lg font-semibold text-gray-900 mb-4">Leaderboard</h3>
@@ -163,13 +178,14 @@
                                 <!-- Leaderboard table will be inserted here -->
                             </div>
                         </div>
+                        <div id="head-to-head-game1"></div>
                     </section>
 
                     <!-- Tab: LieOnce-->
                     <section id="tab-game2" class="tab-content hidden">
                         <div class="bg-white rounded-xl shadow-sm border border-gray-200 p-6">
                             <div class="flex items-baseline justify-between mb-4">
-                                <h3 class="text-lg font-semibold text-gray-900">LieOnce Performance</h3>
+                                <h3 class="text-lg font-semibold text-gray-900">LieOnce Elo</h3>
                                 <span class="text-sm text-gray-400 run-date"></span>
                             </div>
                             <div style="height: 500px; position: relative;">
@@ -177,12 +193,7 @@
                             </div>
                         </div>
                         <div class="mt-4 text-center text-sm text-gray-600">
-                            More information about the games, point system and full prompts can be found in <a
-                                href="games.html" class="text-indigo-600 hover:text-indigo-700 underline">Games</a>
-                            page.<br>
-                            Do you think one of the models performed significantly worse than expected in a particular
-                            game? You can find more details about this <a href="index.html#underperformance"
-                                class="text-indigo-600 hover:text-indigo-700 underline">here</a>.
+                            <a href="games.html" class="text-indigo-600 hover:text-indigo-700 underline">Game rules and agent prompts</a>
                         </div>
                         <div class="bg-white rounded-xl shadow-sm border border-gray-200 p-6 mt-6">
                             <h3 class="text-lg font-semibold text-gray-900 mb-4">Leaderboard</h3>
@@ -190,13 +201,14 @@
                                 <!-- Leaderboard table will be inserted here -->
                             </div>
                         </div>
+                        <div id="head-to-head-game2"></div>
                     </section>
 
                     <!-- Tab: Wizard -->
                     <section id="tab-game3" class="tab-content hidden">
                         <div class="bg-white rounded-xl shadow-sm border border-gray-200 p-6">
                             <div class="flex items-baseline justify-between mb-4">
-                                <h3 class="text-lg font-semibold text-gray-900">Wizard Performance</h3>
+                                <h3 class="text-lg font-semibold text-gray-900">Wizard Elo</h3>
                                 <span class="text-sm text-gray-400 run-date"></span>
                             </div>
                             <div style="height: 500px; position: relative;">
@@ -204,12 +216,7 @@
                             </div>
                         </div>
                         <div class="mt-4 text-center text-sm text-gray-600">
-                            More information about the games, point system and full prompts can be found in <a
-                                href="games.html" class="text-indigo-600 hover:text-indigo-700 underline">Games</a>
-                            page.<br>
-                            Do you think one of the models performed significantly worse than expected in a particular
-                            game? You can find more details about this <a href="index.html#underperformance"
-                                class="text-indigo-600 hover:text-indigo-700 underline">here</a>.
+                            <a href="games.html" class="text-indigo-600 hover:text-indigo-700 underline">Game rules and agent prompts</a>
                         </div>
                         <div class="bg-white rounded-xl shadow-sm border border-gray-200 p-6 mt-6">
                             <h3 class="text-lg font-semibold text-gray-900 mb-4">Leaderboard</h3>
@@ -217,6 +224,7 @@
                                 <!-- Leaderboard table will be inserted here -->
                             </div>
                         </div>
+                        <div id="head-to-head-game3"></div>
                     </section>
 
 
@@ -224,7 +232,7 @@
                     <section id="tab-game4" class="tab-content hidden">
                         <div class="bg-white rounded-xl shadow-sm border border-gray-200 p-6">
                             <div class="flex items-baseline justify-between mb-4">
-                                <h3 class="text-lg font-semibold text-gray-900">Backgammon Performance</h3>
+                                <h3 class="text-lg font-semibold text-gray-900">Backgammon Elo</h3>
                                 <span class="text-sm text-gray-400 run-date"></span>
                             </div>
                             <div style="height: 500px; position: relative;">
@@ -232,12 +240,7 @@
                             </div>
                         </div>
                         <div class="mt-4 text-center text-sm text-gray-600">
-                            More information about the games, point system and full prompts can be found in <a
-                                href="games.html" class="text-indigo-600 hover:text-indigo-700 underline">Games</a>
-                            page.<br>
-                            Do you think one of the models performed significantly worse than expected in a particular
-                            game? You can find more details about this <a href="index.html#underperformance"
-                                class="text-indigo-600 hover:text-indigo-700 underline">here</a>.
+                            Backgammon Elo is rated per race. <a href="games.html" class="text-indigo-600 hover:text-indigo-700 underline">Game rules and agent prompts</a>
                         </div>
                         <div class="bg-white rounded-xl shadow-sm border border-gray-200 p-6 mt-6">
                             <h3 class="text-lg font-semibold text-gray-900 mb-4">Leaderboard</h3>
@@ -245,13 +248,14 @@
                                 <!-- Leaderboard table will be inserted here -->
                             </div>
                         </div>
+                        <div id="head-to-head-game4"></div>
                     </section>
 
                     <!-- Tab: Connect4 -->
                     <section id="tab-game5" class="tab-content hidden">
                         <div class="bg-white rounded-xl shadow-sm border border-gray-200 p-6">
                             <div class="flex items-baseline justify-between mb-4">
-                                <h3 class="text-lg font-semibold text-gray-900">Connect4 Performance</h3>
+                                <h3 class="text-lg font-semibold text-gray-900">Connect4 Elo</h3>
                                 <span class="text-sm text-gray-400 run-date"></span>
                             </div>
                             <div style="height: 500px; position: relative;">
@@ -259,12 +263,7 @@
                             </div>
                         </div>
                         <div class="mt-4 text-center text-sm text-gray-600">
-                            More information about the games, point system and full prompts can be found in <a
-                                href="games.html" class="text-indigo-600 hover:text-indigo-700 underline">Games</a>
-                            page.<br>
-                            Do you think one of the models performed significantly worse than expected in a particular
-                            game? You can find more details about this <a href="index.html#underperformance"
-                                class="text-indigo-600 hover:text-indigo-700 underline">here</a>.
+                            <a href="games.html" class="text-indigo-600 hover:text-indigo-700 underline">Game rules and agent prompts</a>
                         </div>
                         <div class="bg-white rounded-xl shadow-sm border border-gray-200 p-6 mt-6">
                             <h3 class="text-lg font-semibold text-gray-900 mb-4">Leaderboard</h3>
@@ -272,13 +271,14 @@
                                 <!-- Leaderboard table will be inserted here -->
                             </div>
                         </div>
+                        <div id="head-to-head-game5"></div>
                     </section>
 
                     <!-- Tab: WordMatrix -->
                     <section id="tab-game6" class="tab-content hidden">
                         <div class="bg-white rounded-xl shadow-sm border border-gray-200 p-6">
                             <div class="flex items-baseline justify-between mb-4">
-                                <h3 class="text-lg font-semibold text-gray-900">WordMatrix Performance</h3>
+                                <h3 class="text-lg font-semibold text-gray-900">WordMatrix Elo</h3>
                                 <span class="text-sm text-gray-400 run-date"></span>
                             </div>
                             <div style="height: 500px; position: relative;">
@@ -286,12 +286,7 @@
                             </div>
                         </div>
                         <div class="mt-4 text-center text-sm text-gray-600">
-                            More information about the games, point system and full prompts can be found in <a
-                                href="games.html" class="text-indigo-600 hover:text-indigo-700 underline">Games</a>
-                            page.<br>
-                            Do you think one of the models performed significantly worse than expected in a particular
-                            game? You can find more details about this <a href="index.html#underperformance"
-                                class="text-indigo-600 hover:text-indigo-700 underline">here</a>.
+                            <a href="games.html" class="text-indigo-600 hover:text-indigo-700 underline">Game rules and agent prompts</a>
                         </div>
                         <div class="bg-white rounded-xl shadow-sm border border-gray-200 p-6 mt-6">
                             <h3 class="text-lg font-semibold text-gray-900 mb-4">Leaderboard</h3>
@@ -299,13 +294,14 @@
                                 <!-- Leaderboard table will be inserted here -->
                             </div>
                         </div>
+                        <div id="head-to-head-game6"></div>
                     </section>
 
-                    <!-- Tab: MiniChess -->
+                    <!-- Tab: Mancala -->
                     <section id="tab-game7" class="tab-content hidden">
                         <div class="bg-white rounded-xl shadow-sm border border-gray-200 p-6">
                             <div class="flex items-baseline justify-between mb-4">
-                                <h3 class="text-lg font-semibold text-gray-900">MiniChess Performance</h3>
+                                <h3 class="text-lg font-semibold text-gray-900">Mancala Elo</h3>
                                 <span class="text-sm text-gray-400 run-date"></span>
                             </div>
                             <div style="height: 500px; position: relative;">
@@ -313,12 +309,7 @@
                             </div>
                         </div>
                         <div class="mt-4 text-center text-sm text-gray-600">
-                            More information about the games, point system and full prompts can be found in <a
-                                href="games.html" class="text-indigo-600 hover:text-indigo-700 underline">Games</a>
-                            page.<br>
-                            Do you think one of the models performed significantly worse than expected in a particular
-                            game? You can find more details about this <a href="index.html#underperformance"
-                                class="text-indigo-600 hover:text-indigo-700 underline">here</a>.
+                            <a href="games.html" class="text-indigo-600 hover:text-indigo-700 underline">Game rules and agent prompts</a>
                         </div>
                         <div class="bg-white rounded-xl shadow-sm border border-gray-200 p-6 mt-6">
                             <h3 class="text-lg font-semibold text-gray-900 mb-4">Leaderboard</h3>
@@ -326,13 +317,14 @@
                                 <!-- Leaderboard table will be inserted here -->
                             </div>
                         </div>
+                        <div id="head-to-head-game7"></div>
                     </section>
 
                     <!-- Tab: Surround Morris -->
                     <section id="tab-game8" class="tab-content hidden">
                         <div class="bg-white rounded-xl shadow-sm border border-gray-200 p-6">
                             <div class="flex items-baseline justify-between mb-4">
-                                <h3 class="text-lg font-semibold text-gray-900">Surround Morris Performance</h3>
+                                <h3 class="text-lg font-semibold text-gray-900">Surround Morris Elo</h3>
                                 <span class="text-sm text-gray-400 run-date"></span>
                             </div>
                             <div style="height: 500px; position: relative;">
@@ -340,12 +332,7 @@
                             </div>
                         </div>
                         <div class="mt-4 text-center text-sm text-gray-600">
-                            More information about the games, point system and full prompts can be found in <a
-                                href="games.html" class="text-indigo-600 hover:text-indigo-700 underline">Games</a>
-                            page.<br>
-                            Do you think one of the models performed significantly worse than expected in a particular
-                            game? You can find more details about this <a href="index.html#underperformance"
-                                class="text-indigo-600 hover:text-indigo-700 underline">here</a>.
+                            <a href="games.html" class="text-indigo-600 hover:text-indigo-700 underline">Game rules and agent prompts</a>
                         </div>
                         <div class="bg-white rounded-xl shadow-sm border border-gray-200 p-6 mt-6">
                             <h3 class="text-lg font-semibold text-gray-900 mb-4">Leaderboard</h3>
@@ -353,11 +340,19 @@
                                 <!-- Leaderboard table will be inserted here -->
                             </div>
                         </div>
+                        <div id="head-to-head-game8"></div>
                     </section>
                 </div>
             </div>
         </div><!-- End page-results -->
 
+        <template id="head-to-head-template">
+            <section class="bg-white rounded-xl shadow-sm border border-gray-200 p-6 mt-6">
+                <h3 class="text-lg font-semibold text-gray-900 mb-2">Head-to-head score matrix</h3>
+                <p class="text-sm text-gray-600 mb-4"></p>
+                <div class="h2h-scroll" role="region" tabindex="0"></div>
+            </section>
+        </template>
     </main>
 </div>
 
@@ -372,7 +367,7 @@
 <script src="https://cdn.jsdelivr.net/npm/chart.js@4.4.1/dist/chart.umd.min.js"></script>
 
 <!-- Main application JS -->
-<script src="/js/main.js?v=26"></script>
+<script src="/js/main.js?v=34"></script>
 </body>
 
 </html>

@@ -1,13 +1,13 @@
 /**
  * Game Agent Coding League - Main Application Logic
- * Fetches pre-computed leaderboard JSON and renders charts/tables.
+ * Renders the leaderboard and head-to-head matrices from precomputed results.
  */
 
 let gameCharts = {};
 let gameConfig = null;
-let leaderboardData = null;
+let eloData = null;
 let promptsLoaded = false;
-let currentOverallMode = 'weighted';
+const eloFilters = { weights: 'weighted', agents: 'max' };
 
 /**
  * Initialize the application
@@ -20,10 +20,11 @@ async function init() {
             loadAllPrompts();
         }
 
-        const [config, manifest] = await Promise.all([
+        const leaderboardPage = document.getElementById('page-results');
+        const [config, manifest, ratings] = await Promise.all([
             loadConfig(),
             loadManifest(),
-            loadLeaderboards(),
+            leaderboardPage ? loadEloRatings() : null,
         ]);
 
         gameConfig = config;
@@ -32,17 +33,19 @@ async function init() {
             if (span) span.textContent = `Weight: ${game.weight}`;
         });
 
-        addWeightBadgesToLeaderboardTabs();
-        initOverallModeToggle();
-
         if (manifest.runs.length > 0) {
             const run = manifest.runs[0];
             const dateText = `Last run: ${run.date}`;
             document.querySelectorAll('.run-date').forEach(el => { el.textContent = dateText; });
         }
 
-        renderAllCharts();
-        renderAllLeaderboards();
+        if (leaderboardPage) {
+            eloData = ratings;
+            addWeightBadgesToLeaderboardTabs();
+            initEloFilters();
+            renderOverallLeaderboard();
+            renderGameLeaderboards();
+        }
     } catch (error) {
         console.error('Failed to initialize:', error);
         showError(`Failed to load game data. Error: ${error.message} \nPlease check the console for details.`);
@@ -104,57 +107,6 @@ function initTabs() {
     });
 }
 
-/**
- * Render all charts (Overall + individual games)
- */
-function renderAllCharts() {
-    renderOverallChart();
-
-    gameConfig.games.forEach(game => {
-        renderGameChart(game.id, game.name);
-    });
-}
-
-/**
- * Render overall weighted chart
- */
-function renderOverallChart() {
-    if (!leaderboardData || !leaderboardData.overall) {
-        console.warn('No overall point data available');
-        return;
-    }
-
-    const overallScores = currentOverallMode === 'weighted'
-        ? leaderboardData.overall
-        : computeUnweightedOverall();
-
-    if (overallScores.length === 0) return;
-
-    const labels = overallScores.map(entry => formatModelName(entry.model));
-    const scores = overallScores.map(entry => entry.overall_score);
-    const models = overallScores.map(entry => entry.model);
-
-    renderChart('chart-overall', 'Overall Points', labels, scores, models);
-}
-
-/**
- * Render individual game chart
- */
-function renderGameChart(gameId, gameName) {
-    if (!leaderboardData || !leaderboardData.games || !leaderboardData.games[gameId]) {
-        console.warn(`No leaderboard data for ${gameId}`);
-        return;
-    }
-
-    const sorted = leaderboardData.games[gameId];
-
-    const labels = sorted.map(entry => formatModelName(entry.model));
-    const scores = sorted.map(entry => entry.normalized);
-    const models = sorted.map(entry => entry.model);
-
-    renderChart(`chart-${gameId}`, gameName, labels, scores, models);
-}
-
 const MODEL_LABEL_RULES = [
     [/^anthropic-claude-/i, 'Claude '],
     [/^anthropic-/i, ''],
@@ -200,7 +152,8 @@ function formatModelName(model) {
 }
 
 const ICON_RULES = [
-    [/claude|anthropic/i, 'data/media/claude.png'],
+    [/fable|claude|anthropic|opus|sonnet/i, 'data/media/claude.png'],
+    [/meta|llama|muse/i, 'data/media/meta.png'],
     [/openai|gpt/i, 'data/media/openai.png'],
     [/gemini|gemma|google/i, 'data/media/gemini.png'],
     [/kimi|moonshot/i, 'data/media/kimi.png'],
@@ -236,7 +189,7 @@ function buildIconAssignment(models) {
 }
 
 /**
- * Inline plugin: draws score values inside the top of each bar
+ * Inline plugin: draws score values near the top of each bar
  */
 const barValuePlugin = {
     id: 'barValues',
@@ -260,20 +213,23 @@ const barValuePlugin = {
                 ctx.textAlign = 'center';
                 ctx.textBaseline = 'top';
 
-                let fontSize = 11;
+                let fontSize = isHovered ? 14 : 13;
                 ctx.font = `bold ${fontSize}px sans-serif`;
                 const maxWidth = Math.max(0, (bar.width || 0) - 4);
+                const minFontSize = isHovered ? 12 : 10;
                 if (maxWidth > 0) {
                     while (
                         ctx.measureText(text).width > maxWidth &&
-                        fontSize > 7
+                        fontSize > minFontSize
                     ) {
                         fontSize -= 1;
                         ctx.font = `bold ${fontSize}px sans-serif`;
                     }
                 }
 
-                ctx.fillText(text, bar.x, bar.y + 6);
+                const labelY = bar.y + 6;
+                const textY = labelY + fontSize <= chart.chartArea.bottom ? labelY : bar.y - fontSize - 6;
+                ctx.fillText(text, bar.x, textY);
                 ctx.restore();
 
                 const assignment = chart.$barIconAssignment || [];
@@ -311,33 +267,46 @@ const barValuePlugin = {
 /**
  * Generic chart rendering function
  */
-function renderChart(canvasId, label, labels, scores, models) {
+function renderChart(canvasId, standings) {
     const ctx = document.getElementById(canvasId);
-    if (!ctx) return;
+    if (!ctx || !standings.length || typeof Chart === 'undefined') return;
 
-    if (gameCharts[canvasId.replace('chart-', '')]) {
-        gameCharts[canvasId.replace('chart-', '')].destroy();
-    }
-
+    const models = standings.map(entry => entry.model);
+    const scores = standings.map(entry => entry.elo);
+    const min = Math.floor(Math.min(...scores) / 100) * 100;
+    const max = Math.ceil(Math.max(...scores) / 100) * 100;
+    const yBounds = { min: min === max ? min - 100 : min, max };
     const colors = generateBarColors(scores.length);
     const hoverColors = generateBarHoverColors(scores.length);
+    const data = {
+        labels: models.map(formatModelName),
+        datasets: [{
+            label: 'Elo',
+            data: scores,
+            backgroundColor: colors,
+            borderColor: colors.map(c => adjustColorBrightness(c, -20)),
+            hoverBackgroundColor: hoverColors,
+            hoverBorderColor: hoverColors.map(c => adjustColorBrightness(c, -20)),
+            borderWidth: 1,
+            borderRadius: 4
+        }]
+    };
+    const chartId = canvasId.replace('chart-', '');
+    const existing = gameCharts[chartId];
+    if (existing) {
+        existing.data.labels = data.labels;
+        Object.assign(existing.data.datasets[0], data.datasets[0]);
+        Object.assign(existing.options.scales.y, yBounds);
+        existing.$barIconAssignment = buildIconAssignment(models);
+        existing.update('none');
+        return;
+    }
 
     const chart = new Chart(ctx, {
         type: 'bar',
-        data: {
-            labels: labels,
-            datasets: [{
-                label: 'Points',
-                data: scores,
-                backgroundColor: colors,
-                borderColor: colors.map(c => adjustColorBrightness(c, -20)),
-                hoverBackgroundColor: hoverColors,
-                hoverBorderColor: hoverColors.map(c => adjustColorBrightness(c, -20)),
-                borderWidth: 1,
-                borderRadius: 4
-            }]
-        },
+        data,
         options: {
+            animation: false,
             responsive: true,
             maintainAspectRatio: false,
             interaction: {
@@ -365,12 +334,13 @@ function renderChart(canvasId, label, labels, scores, models) {
                         font: {
                             size: 12
                         },
+                        labelOffset: 20,
                         maxRotation: 45,
                         minRotation: 45
                     }
                 },
                 y: {
-                    beginAtZero: true,
+                    ...yBounds,
                     grid: {
                         color: '#f3f4f6'
                     },
@@ -386,7 +356,8 @@ function renderChart(canvasId, label, labels, scores, models) {
     });
 
     chart.$barIconAssignment = buildIconAssignment(models);
-    gameCharts[canvasId.replace('chart-', '')] = chart;
+    chart.draw();
+    gameCharts[chartId] = chart;
 }
 
 /**
@@ -429,193 +400,149 @@ function showError(message) {
     main.insertBefore(errorDiv, main.firstChild);
 }
 
-/**
- * Load leaderboard files for all games
- */
-async function loadLeaderboards() {
-    try {
-        const response = await fetch('/data/leaderboard.json');
-        if (!response.ok) {
-            console.warn(`Failed to load leaderboard.json: ${response.status}`);
-            leaderboardData = { games: {}, overall: [] };
-            return;
-        }
-        leaderboardData = await response.json();
-    } catch (error) {
-        console.error('Error loading leaderboard JSON:', error);
-        leaderboardData = { games: {}, overall: [] };
+async function loadEloRatings() {
+    const response = await fetch('/data/elo.json', { cache: 'no-cache' });
+    if (!response.ok) {
+        throw new Error(`Failed to load Elo ratings (${response.status})`);
+    }
+    return response.json();
+}
+
+function renderOverallLeaderboard() {
+    const field = eloFilters.agents === 'max' ? 'overall' : 'overall_mean';
+    const rows = eloData[eloFilters.weights === 'weighted' ? field : `${field}_unweighted`];
+    renderLeaderboard('overall', rows);
+    renderChart('chart-overall', rows);
+}
+
+function renderGameLeaderboards() {
+    for (const { id, code } of gameConfig.games) {
+        const game = eloData.games[id];
+        const rows = game?.models[eloFilters.agents] ?? [];
+        renderLeaderboard(id, rows, game?.unit);
+        renderChart(`chart-${id}`, rows);
+        renderHeadToHead(id, game, rows.map(entry => entry.model), code === 'A3');
     }
 }
 
-/**
- * Render all leaderboards
- */
-function renderAllLeaderboards() {
-    if (!leaderboardData) return;
+function renderLeaderboard(tabId, rows, unit) {
+    const container = document.getElementById(`leaderboard-${tabId}`);
+    if (!container) return;
+    if (!rows.length) {
+        container.textContent = 'No Elo ratings available.';
+        return;
+    }
 
-    renderOverallLeaderboard();
-
-    gameConfig.games.forEach(game => {
-        renderLeaderboard(game.id);
+    const table = document.createElement('table');
+    table.className = 'min-w-full divide-y divide-gray-200';
+    const head = table.createTHead();
+    head.className = 'bg-gray-50 text-xs text-gray-500 uppercase tracking-wider';
+    const header = head.insertRow();
+    const showAgent = unit && eloFilters.agents === 'max';
+    const headings = ['Rank', showAgent ? 'Agent' : 'Model'];
+    if (unit) headings.push(showAgent ? `Rated ${unit}` : `Rated ${unit} across agents`);
+    headings.push('Elo');
+    headings.forEach((label, index) => {
+        const cell = document.createElement('th');
+        cell.scope = 'col';
+        cell.className = index < 2 ? 'px-4 py-3 text-left' : 'px-4 py-3 text-right';
+        cell.textContent = label;
+        header.appendChild(cell);
     });
+
+    const body = table.createTBody();
+    body.className = 'divide-y divide-gray-200 text-sm text-gray-900';
+    rows.forEach((entry, index) => {
+        const row = body.insertRow();
+        row.className = index % 2 === 0 ? 'bg-white' : 'bg-gray-50';
+        const values = [index + 1, showAgent ? entry.agent : entry.model];
+        if (unit) values.push(entry.rated.toLocaleString());
+        values.push(entry.elo.toFixed(2));
+        values.forEach((value, column) => {
+            const cell = row.insertCell();
+            cell.className = column < 2 ? 'px-4 py-3' : 'px-4 py-3 text-right tabular-nums';
+            cell.textContent = value;
+        });
+        row.cells[values.length - 1].classList.add('font-semibold');
+    });
+
+    container.replaceChildren(table);
 }
 
-/**
- * Render overall leaderboard table
- */
-function renderOverallLeaderboard() {
-    const container = document.getElementById('leaderboard-overall');
+function renderHeadToHead(tabId, game, models, wizard) {
+    const container = document.getElementById(`head-to-head-${tabId}`);
     if (!container) return;
 
-    const overallScores = currentOverallMode === 'weighted'
-        ? leaderboardData.overall
-        : computeUnweightedOverall();
+    const card = document.getElementById('head-to-head-template').content.cloneNode(true);
+    const heading = card.querySelector('h3');
+    const description = card.querySelector('p');
+    const scroll = card.querySelector('.h2h-scroll');
+    const results = game?.head_to_head;
 
-    if (!overallScores || overallScores.length === 0) {
-        container.innerHTML = '<p class="text-gray-500 text-sm">No leaderboard data available</p>';
+    if (!models.length || !results || !Object.keys(results).length) {
+        description.textContent = 'Head-to-head results are unavailable.';
+        scroll.remove();
+        container.replaceChildren(card);
         return;
     }
 
-    const table = document.createElement('table');
-    table.className = 'min-w-full divide-y divide-gray-200';
-
-    const thead = document.createElement('thead');
-    thead.className = 'bg-gray-50';
-    thead.innerHTML = `
-        <tr>
-            <th class="px-4 py-3 text-left text-xs font-medium text-gray-500 uppercase tracking-wider">Rank</th>
-            <th class="px-4 py-3 text-left text-xs font-medium text-gray-500 uppercase tracking-wider">Model</th>
-            <th class="px-4 py-3 text-right text-xs font-medium text-gray-500 uppercase tracking-wider">Overall Points</th>
-        </tr>
-    `;
-
-    const tbody = document.createElement('tbody');
-    tbody.className = 'bg-white divide-y divide-gray-200';
-
-    overallScores.forEach((entry, index) => {
-        const row = document.createElement('tr');
-        row.className = index % 2 === 0 ? 'bg-white' : 'bg-gray-50';
-
-        row.innerHTML = `
-            <td class="px-4 py-3 text-sm text-gray-900">${index + 1}</td>
-            <td class="px-4 py-3 text-sm font-medium text-gray-900">${entry.model}</td>
-            <td class="px-4 py-3 text-sm font-semibold text-gray-900 text-right">${entry.overall_score.toFixed(2)}</td>
-        `;
-
-        tbody.appendChild(row);
-    });
-
-    table.appendChild(thead);
-    table.appendChild(tbody);
-    container.innerHTML = '';
-    container.appendChild(table);
-}
-
-/**
- * Render individual leaderboard table
- */
-function renderLeaderboard(gameId) {
-    const container = document.getElementById(`leaderboard-${gameId}`);
-    if (!container || !leaderboardData.games || !leaderboardData.games[gameId]) return;
-
-    const sorted = leaderboardData.games[gameId];
-
-    if (sorted.length === 0) {
-        container.innerHTML = '<p class="text-gray-500 text-sm">No leaderboard data available</p>';
-        return;
-    }
+    heading.id = `head-to-head-title-${tabId}`;
+    scroll.setAttribute('aria-labelledby', heading.id);
+    const scope = wizard
+        ? 'Wizard compares each pair’s final scores within the same main-event game.'
+        : `Results pool all agents for each model and count individual ${game.unit}.`;
+    description.textContent = `Read across for the row model’s score percentage and wins–draws–losses. A draw counts as half a win. ${scope}`;
 
     const table = document.createElement('table');
-    table.className = 'min-w-full divide-y divide-gray-200';
-
-    const thead = document.createElement('thead');
-    thead.className = 'bg-gray-50';
-
-    if (gameId === 'game3') {
-        thead.innerHTML = `
-            <tr>
-                <th class="px-4 py-3 text-left text-xs font-medium text-gray-500 uppercase tracking-wider">Rank</th>
-                <th class="px-4 py-3 text-left text-xs font-medium text-gray-500 uppercase tracking-wider">Model</th>
-                <th class="px-4 py-3 text-right text-xs font-medium text-gray-500 uppercase tracking-wider">Games</th>
-                <th class="px-4 py-3 text-right text-xs font-medium text-gray-500 uppercase tracking-wider">1st</th>
-                <th class="px-4 py-3 text-right text-xs font-medium text-gray-500 uppercase tracking-wider">2nd</th>
-                <th class="px-4 py-3 text-right text-xs font-medium text-gray-500 uppercase tracking-wider">3rd</th>
-                <th class="px-4 py-3 text-right text-xs font-medium text-gray-500 uppercase tracking-wider">4th</th>
-                <th class="px-4 py-3 text-right text-xs font-medium text-gray-500 uppercase tracking-wider">5th</th>
-                <th class="px-4 py-3 text-right text-xs font-medium text-gray-500 uppercase tracking-wider">6th</th>
-                <th class="px-4 py-3 text-right text-xs font-medium text-gray-500 uppercase tracking-wider">Points</th>
-                <th class="px-4 py-3 text-right text-xs font-medium text-gray-500 uppercase tracking-wider">Normalized<br>Points</th>
-                <th class="px-4 py-3 text-right text-xs font-medium text-gray-500 uppercase tracking-wider">Score</th>
-            </tr>
-        `;
-    } else {
-        thead.innerHTML = `
-            <tr>
-                <th class="px-4 py-3 text-left text-xs font-medium text-gray-500 uppercase tracking-wider">Rank</th>
-                <th class="px-4 py-3 text-left text-xs font-medium text-gray-500 uppercase tracking-wider">Model</th>
-                <th class="px-4 py-3 text-right text-xs font-medium text-gray-500 uppercase tracking-wider">Games</th>
-                <th class="px-4 py-3 text-right text-xs font-medium text-gray-500 uppercase tracking-wider">Wins</th>
-                <th class="px-4 py-3 text-right text-xs font-medium text-gray-500 uppercase tracking-wider">Losses</th>
-                <th class="px-4 py-3 text-right text-xs font-medium text-gray-500 uppercase tracking-wider">Draws</th>
-                <th class="px-4 py-3 text-right text-xs font-medium text-gray-500 uppercase tracking-wider">Points</th>
-                <th class="px-4 py-3 text-right text-xs font-medium text-gray-500 uppercase tracking-wider">Normalized<br>Points</th>
-                <th class="px-4 py-3 text-right text-xs font-medium text-gray-500 uppercase tracking-wider">Score</th>
-            </tr>
-        `;
+    table.className = 'h2h-table';
+    const header = table.createTHead().insertRow();
+    for (const label of ['Model / Opponent', ...models]) {
+        const cell = document.createElement('th');
+        cell.scope = 'col';
+        cell.textContent = label;
+        header.appendChild(cell);
     }
 
-    const tbody = document.createElement('tbody');
-    tbody.className = 'bg-white divide-y divide-gray-200';
+    const body = table.createTBody();
+    for (const model of models) {
+        const row = body.insertRow();
+        const label = document.createElement('th');
+        label.scope = 'row';
+        label.textContent = model;
+        row.appendChild(label);
 
-    sorted.forEach((entry, index) => {
-        const row = document.createElement('tr');
-        row.className = index % 2 === 0 ? 'bg-white' : 'bg-gray-50';
+        for (const opponent of models) {
+            const cell = row.insertCell();
+            const result = results[model]?.[opponent];
+            if (!result) {
+                cell.className = 'h2h-empty';
+                cell.textContent = '—';
+                cell.setAttribute('aria-label', model === opponent ? 'Same model' : 'No results');
+                continue;
+            }
 
-        const modelName = entry.model;
-
-        if (gameId === 'game3') {
-            row.innerHTML = `
-                <td class="px-4 py-3 text-sm text-gray-900">${index + 1}</td>
-                <td class="px-4 py-3 text-sm font-medium text-gray-900">${modelName}</td>
-                <td class="px-4 py-3 text-sm text-gray-600 text-right">${entry.games}</td>
-                <td class="px-4 py-3 text-sm text-gray-600 text-right">${entry['1st']}</td>
-                <td class="px-4 py-3 text-sm text-gray-600 text-right">${entry['2nd']}</td>
-                <td class="px-4 py-3 text-sm text-gray-600 text-right">${entry['3rd']}</td>
-                <td class="px-4 py-3 text-sm text-gray-600 text-right">${entry['4th']}</td>
-                <td class="px-4 py-3 text-sm text-gray-600 text-right">${entry['5th']}</td>
-                <td class="px-4 py-3 text-sm text-gray-600 text-right">${entry['6th']}</td>
-                <td class="px-4 py-3 text-sm text-gray-600 text-right">${entry.points}</td>
-                <td class="px-4 py-3 text-sm font-medium text-indigo-600 text-right">${entry.normalized.toFixed(2)}</td>
-                <td class="px-4 py-3 text-sm font-semibold text-gray-900 text-right">${entry.score.toFixed(1)}</td>
-            `;
-        } else {
-            row.innerHTML = `
-                <td class="px-4 py-3 text-sm text-gray-900">${index + 1}</td>
-                <td class="px-4 py-3 text-sm font-medium text-gray-900">${modelName}</td>
-                <td class="px-4 py-3 text-sm text-gray-600 text-right">${entry.games}</td>
-                <td class="px-4 py-3 text-sm text-gray-600 text-right">${entry.wins}</td>
-                <td class="px-4 py-3 text-sm text-gray-600 text-right">${entry.losses}</td>
-                <td class="px-4 py-3 text-sm text-gray-600 text-right">${entry.draws}</td>
-                <td class="px-4 py-3 text-sm text-gray-600 text-right">${entry.points}</td>
-                <td class="px-4 py-3 text-sm font-medium text-indigo-600 text-right">${entry.normalized.toFixed(2)}</td>
-                <td class="px-4 py-3 text-sm font-semibold text-gray-900 text-right">${entry.score.toFixed(1)}</td>
-            `;
+            const { wins, draws, losses, score_pct } = result;
+            if (wins > losses) cell.className = 'h2h-win';
+            if (wins < losses) cell.className = 'h2h-loss';
+            const score = document.createElement('span');
+            score.className = 'h2h-score';
+            score.textContent = `${score_pct.toFixed(1)}%`;
+            const record = document.createElement('span');
+            record.className = 'h2h-record';
+            record.textContent = `${wins}–${draws}–${losses}`;
+            cell.append(score, record);
         }
+    }
 
-        tbody.appendChild(row);
-    });
-
-    table.appendChild(thead);
-    table.appendChild(tbody);
-    container.innerHTML = '';
-    container.appendChild(table);
+    scroll.appendChild(table);
+    container.replaceChildren(card);
 }
 
 /**
  * Lazy-load game prompts (called on first Games tab visit)
  */
 async function loadAllPrompts() {
-    const promptFiles = ['battleship', 'lieonce', 'wizard', 'backgammon', 'connect4', 'surround_morris', 'minichess', 'wordmatrix'];
+    const promptFiles = ['battleship', 'lieonce', 'wizard', 'backgammon', 'connect4', 'surround_morris', 'mancala', 'wordmatrix'];
 
     const fetches = promptFiles.map(async (promptName) => {
         try {
@@ -660,45 +587,37 @@ function addWeightBadgesToLeaderboardTabs() {
     });
 }
 
-/**
- * Initialize the weighted/unweighted toggle in the overall tab
- */
-function initOverallModeToggle() {
-    const buttons = document.querySelectorAll('.overall-mode-btn');
-    buttons.forEach(btn => {
-        btn.addEventListener('click', () => {
-            const mode = btn.dataset.mode;
-            if (mode === currentOverallMode) return;
+function initEloFilters() {
+    const overallAgentFilter = document.querySelector('#tab-overall [data-elo-filter="agents"]');
+    if (overallAgentFilter) {
+        for (const { id } of gameConfig.games) {
+            const section = document.getElementById(`tab-${id}`);
+            if (!section) continue;
 
-            currentOverallMode = mode;
-            buttons.forEach(b => b.classList.remove('active'));
-            btn.classList.add('active');
+            const group = overallAgentFilter.cloneNode(true);
+            group.classList.add('mb-4');
+            section.prepend(group);
+        }
+    }
 
-            const suffix = mode === 'weighted' ? '(Games have different weights)' : '(Games have equal weights)';
-            const chartTitle = document.getElementById('overall-chart-title');
-            if (chartTitle) chartTitle.textContent = `Overall Performance ${suffix}`;
+    for (const filter of Object.keys(eloFilters)) {
+        const buttons = document.querySelectorAll(`[data-elo-filter="${filter}"] button`);
+        buttons.forEach(button => {
+            button.addEventListener('click', () => {
+                const mode = button.dataset.mode;
+                if (mode === eloFilters[filter]) return;
 
-            renderOverallChart();
-            renderOverallLeaderboard();
+                eloFilters[filter] = mode;
+                buttons.forEach(option => {
+                    const active = option.dataset.mode === mode;
+                    option.classList.toggle('active', active);
+                    option.setAttribute('aria-pressed', active);
+                });
+                renderOverallLeaderboard();
+                if (filter === 'agents') renderGameLeaderboards();
+            });
         });
-    });
-}
-
-/**
- * Compute unweighted overall scores from per-game normalized values
- */
-function computeUnweightedOverall() {
-    if (!leaderboardData || !leaderboardData.overall) return [];
-
-    return leaderboardData.overall
-        .map(entry => {
-            const scores = Object.values(entry.game_scores);
-            const avg = scores.length > 0
-                ? scores.reduce((a, b) => a + b, 0) / scores.length
-                : 0;
-            return { model: entry.model, overall_score: avg, game_scores: entry.game_scores };
-        })
-        .sort((a, b) => b.overall_score - a.overall_score);
+    }
 }
 
 document.addEventListener('DOMContentLoaded', init);

@@ -71,118 +71,157 @@
 
                 <!-- Overview -->
                 <section>
-                    <h2 class="text-lg font-bold text-gray-900 mb-3">Overview</h2>
-                    <p class="mb-3">
-                        Game Agent Coding League (GACL) is a benchmarking framework designed for LLMs in which
-                        models are tasked with generating code for game-playing agents. These agents compete in
-                        games such as Battleship, Connect4 and others. At present, the league supports
-                        five games, with additional titles planned.
-                    </p>
-                    <p class="font-semibold text-red-600">
-                        Models produce code that can play games rather than playing the games themselves. Their sole
-                        interaction occurs at the stage of code creation. As a result, this benchmark is hybrid in
-                        nature, combining elements of both code generation and reasoning.
+                    <h1 class="text-2xl font-bold text-gray-900 mb-3">About the benchmark</h1>
+                    <p>
+                        The Game Agent Coding League (GACL) evaluates how well language models write game-playing
+                        programs, called agents. The models' role ends when they submit the code. The tournament
+                        runner executes the agents, which choose every move in Battleship, LieOnce, Wizard,
+                        Backgammon, Connect4, WordMatrix, Mancala, and Surround Morris.
                     </p>
                 </section>
 
                 <!-- Methodology -->
                 <section>
-                    <h2 class="text-lg font-bold text-gray-900 mb-3">Methodology</h2>
+                    <h2 class="text-lg font-bold text-gray-900 mb-3">Tournament format</h2>
                     <p class="mb-3">
-                        For each game, a base implementation is provided, including the core game logic and an
-                        initialized—but empty—agent class. The function signature is shared with the model but the
-                        implementation is left empty. Models receive this code along with the game rules, scoring
-                        details, and other relevant information. After a model generates its agent implementation,
-                        the output is parsed and inserted back into the game environment. A matchmaking system then
-                        schedules matches between all agent pairs, producing a final leaderboard.
-                    </p>
-                    <p class="mb-3">
-                        Each model is prompted four times, meaning every model submits four separate agents. Before the real matchmaking, the best two agents from each model are selected (using --mini option in the matchmaking script to conduct a mini tournament). Others are discarded. During matchmaking, agents from the same model do not compete against each other (remember, there are two agents from each model). Instead, each agent plays against all non-friendly agents.
+                        Each of the 12 models has two agents per game. In two-player games, each agent plays
+                        both agents from every other model. In Wizard, qualifiers select one agent per model
+                        to play in the main event, where each table has six different models.
                     </p>
                     <p>
-                        When compiling performance charts, only the stronger of a model's two agents is considered;
-                        the weaker one is excluded. You can find links to the raw scoreboards—where both agents
-                        appear—on the Leaderboard page.
+                        <a href="/data/models.txt" class="text-indigo-600 underline">Current model roster</a>
+                        <span class="mx-2" aria-hidden="true">·</span>
+                        <a href="games.html" class="text-indigo-600 underline">Game rules, prompts, and match counts</a>
                     </p>
                 </section>
 
-                <!-- Point System -->
+                <section id="reading-the-leaderboard" class="space-y-6">
+                    <h2 class="text-lg font-bold text-gray-900">How to read the leaderboard</h2>
+
+                    <div class="space-y-3">
+                        <h3 class="font-semibold text-gray-900">How agent Elo is calculated</h3>
+                        <p>
+                            Elo estimates an agent's strength against the other agents in the same game. The
+                            ratings are centered at 1500. A 100-point lead over an opponent corresponds to an
+                            expected score of about 64%, where a win is worth 1, a draw ½, and a loss 0.
+                        </p>
+                        <p>
+                            Sequential Elo updates ratings after each result, so changing the match order can
+                            change the final ratings. GACL treats all results for a game as if they happened at
+                            the same time. We fit all agent ratings together using the full record of wins,
+                            draws, and losses for every pair of agents, so
+                            <strong>reordering the matches gives the same ratings</strong>.
+                            The fit gives ratings a small pull toward 1500 so even an agent with only wins or
+                            only losses gets a finite rating.
+                        </p>
+                        <p>In most titles, Elo uses the win, draw, or loss from each individual game.</p>
+                        <ul class="list-disc pl-6 space-y-1">
+                            <li><strong>Backgammon</strong> counts the outcome of each race, which can span several games.</li>
+                            <li>
+                                <strong>Wizard</strong> uses main-event games. Each agent's final score is
+                                compared with each of the other five scores. A higher score wins that comparison
+                                and equal scores count as a draw.
+                            </li>
+                        </ul>
+                    </div>
+
+                    <div class="space-y-3">
+                        <h3 class="font-semibold text-gray-900">Max Elo and Mean Elo</h3>
+                        <dl class="space-y-2">
+                            <div>
+                                <dt class="inline font-semibold text-gray-900">Max Elo</dt>
+                                <dd class="inline">uses the highest agent rating a model achieved in that game.
+                                    A different agent can be the model's best in each game.</dd>
+                            </div>
+                            <div>
+                                <dt class="inline font-semibold text-gray-900">Mean Elo</dt>
+                                <dd class="inline">averages all rated agents from that model in that game,
+                                    giving each agent equal influence.</dd>
+                            </div>
+                        </dl>
+                        <p>
+                            If a model's two agents have ratings of 1600 and 1400 in a game, its Max Elo is 1600
+                            and its Mean Elo is 1500. Wizard gives both views the same value because only the
+                            model's main-event agent is rated.
+                        </p>
+                    </div>
+
+                    <div class="space-y-3">
+                        <h3 class="font-semibold text-gray-900">Overall Elo and game weights</h3>
+                        <p>
+                            Overall Elo is an average of a model's eight game ratings. With
+                            <strong>Games have different weights</strong> selected, multiply each game's Elo
+                            by its weight, add the results, and divide by the sum of the weights. With
+                            <strong>All games have the same weight</strong> selected, add the eight ratings and
+                            divide by eight. The leaderboard opens with game weights and Max Elo selected.
+                        </p>
+                        <p>
+                            To set the weights, we take the 12 Max Elo ratings for each game, one per model,
+                            and calculate their standard deviation, which measures how spread out the ratings are.
+                            We sort the eight games by that spread and assign consecutive weights from 1 for the
+                            smallest spread to 8 for the largest. The same weights apply when Mean Elo is selected.
+                        </p>
+                        <p>
+                            In this tournament, Backgammon (weight 8) has eight times as much influence on weighted
+                            Overall Elo as WordMatrix (weight 1). The weight shown on a game tab tells you how much
+                            that game contributes to the weighted Overall Elo.
+                        </p>
+                        <p class="rounded-lg border border-gray-200 bg-white p-4">
+                            Suppose the league had just two games and a model had an Elo of 1600 in the game with
+                            weight 8 and 1420 in the game with weight 1. With game weights, its Overall Elo would be
+                            (1600 × 8 + 1420 × 1) ÷ 9 = <strong>1580</strong>. With equal weights, it would be
+                            (1600 + 1420) ÷ 2 = <strong>1510</strong>.
+                        </p>
+                    </div>
+
+                    <div class="space-y-3">
+                        <h3 class="font-semibold text-gray-900">What the game tables show</h3>
+                        <p>
+                            Each game chart and table shows one result per model. In Max Elo, the table names
+                            the model's highest-rated agent, and a suffix such as <code>:2</code> identifies the agent.
+                            <strong>Rated games</strong> counts that agent's games. In Mean Elo, the table names
+                            the model and adds up the games played by its rated agents. Backgammon counts races,
+                            and Wizard counts main-event games.
+                        </p>
+                        <p>
+                            In the head-to-head table, read across a row to see how that model's agents did against
+                            the column model's agents. A record of 6–2–2 means six wins, two draws, and two losses.
+                            The two draws together add one point, giving 7 out of 10, or 70%. Both Elo views
+                            pool all rated agents for each matchup. A dash marks a matchup with no results,
+                            including the same-model cells along the diagonal.
+                        </p>
+                    </div>
+                </section>
+
+                <!-- Agent Creation -->
                 <section>
-                    <h2 class="text-lg font-bold text-gray-900 mb-3">Point System</h2>
-                    <p class="mb-3">
-                        Each matchup between two agents is made up of multiple individual games, all using the same
-                        point allocation system. A win awards 3 points, a loss gives 0, and a draw grants 1 point to
-                        each side. The way a win, loss, or draw is determined varies by game—refer to the full game
-                        prompts for detailed scoring mechanics.
-                    </p>
-                    <p class="mb-3">
-                        <span class="font-medium text-gray-800">Exception:</span> A3 Wizard game is different from other
-                        games. A match of this game needs 6 participants. So, there is no "Win/Draw/Lose" cases.
-                        Instead,
-                        the 1st agent grabs 5 points, the 2nd agent grabs 4, and so on. The last agent grabs nothing.
-                    </p>
-                    <p class="mb-3">
-                        Performance is tracked at the game level, not the match level. If a model is listed as having
-                        played "10" games, that refers to 10 individual games—not 10 matches.
-                    </p>
+                    <h2 class="text-lg font-bold text-gray-900 mb-3">Agent Creation</h2>
+                    <p class="mb-3">We use these tools to create the agents for the league:</p>
+                    <ul class="list-disc pl-6 mb-3 space-y-1">
+                        <li>Claude agents use the Claude Code VS Code extension.</li>
+                        <li>GPT agents use the Codex VS Code extension.</li>
+                        <li>Gemini agents use the Antigravity VS Code extension.</li>
+                        <li>Open-source agents use DeepSeek Harness (<code>dsh</code>) with OpenRouter credentials.</li>
+                    </ul>
                     <p>
-                        <span class="font-medium text-gray-800">Example:</span> Suppose Mistral's first agent plays a
-                        match against Qwen's second agent, and that match consists of 100 games. The leaderboard is
-                        updated based on the results of each of those 100 games separately, with all points recorded
-                        on a per-game basis.
+                        The benchmark repository also supports generating every agent through OpenRouter.
+                        To use that option, configure valid OpenRouter model IDs for the roster.
                     </p>
                 </section>
 
-                <!-- Unified Model Source -->
                 <section>
-                    <h2 class="text-lg font-bold text-gray-900 mb-3">Unified Model Source</h2>
+                    <h2 class="text-lg font-bold text-gray-900 mb-3">Game logs and scoreboards</h2>
                     <p class="mb-3">
-                        All models are accessed through the OpenRouter API, providing a single, consistent interface
-                        across providers. When multiple providers serve the same model, we select only those that
-                        support fp8 quantization or better, ensuring inference quality is not a confounding variable
-                        in the results.
-                    </p>
-                </section>
-
-                <!-- Scoring -->
-                <section>
-                    <h2 class="text-lg font-bold text-gray-900 mb-3">Overall Performance</h2>
-                    <p class="mb-3">
-                        First, we calculate <strong>normalized points</strong> (0–100) for each game. That is found by
-                        dividing the points the model collected by the max points that can be collected in all games.
-                    </p>
-                    <p class="mb-3">
-                        Then, we calculate the <strong>overall points</strong> shown on the overall tab. Each game
-                        carries a specific weighting coefficient. The overall points are calculated by combining each
-                        game's normalized points, multiplied by its weight, divided by the total weight of games the
-                        model participated in.
+                        The tournament scoreboards summarize game results, tournament points, and
+                        game-specific scores. Find them under <strong>Tournament scoreboards</strong> on the
+                        Overall tab. <a href="leaderboard.html" class="text-indigo-600 underline">Leaderboard</a>
                     </p>
                     <p>
-                        Additionally, a separate "Score" is calculated differently for each game (check the full game
-                        prompts for more info). Although we keep track of this score as a secondary sorting metric on
-                        the leaderboards, it does not affect anything else and has no effect on the points a model
-                        collects.
+                        The game logs let you follow a game move by move and see how it ended.
+                        <a href="https://drive.google.com/drive/folders/1SGQvbWIx5RPmCHiC7CyMiLk5U0buVERL?usp=sharing"
+                           class="text-indigo-600 hover:text-indigo-700 underline">View game logs on Google Drive</a>
                     </p>
                 </section>
-
-                <!-- Underperformance Check -->
-                <section id="underperformance">
-                    <h2 class="text-lg font-bold text-gray-900 mb-3">Unexpected Underperformance</h2>
-                    <p class="mb-3">
-                        Do you think one of the models performed significantly worse than expected in a particular game?
-                        That might simply be due to chance. To address this, we’ll request updated agent code from each
-                        model for every game on a biweekly basis. Then, the lowest-performing agent (among the existing
-                        three) will be
-                        eliminated. After making these adjustments, we’ll run the evaluation again. Ideally, the new
-                        agent will replace the one that underperformed unexpectedly.
-                    </p>
-                    <p>
-                        Also note that when building the leaderboards and charts, we only consider the top-performing
-                        agent from each model (out of two agents). So there is already a safeguard in place to mitigate
-                        this issue.
-                    </p>
-                </section>
-
             </div>
         </div>
 
@@ -200,7 +239,7 @@
 <script src="https://cdn.jsdelivr.net/npm/chart.js@4.4.1/dist/chart.umd.min.js"></script>
 
 <!-- Main application JS -->
-<script src="/js/main.js?v=25"></script>
+<script src="/js/main.js?v=31"></script>
 </body>
 
 </html>

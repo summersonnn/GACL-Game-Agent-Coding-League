@@ -7,12 +7,12 @@ import sys
 sys.path.append(os.path.dirname(os.path.abspath(__file__)))
 
 # Import the processing script
-from utils import process_leaderboards
+from utils import process_elo
 
 PORT = 8000
 
 class StaticHandler(http.server.SimpleHTTPRequestHandler):
-    """Serves pre-computed static files. Leaderboard data is generated once at startup."""
+    """Serves static files after refreshing the tournament results at startup."""
     
     def do_GET(self):
         if self.path == '/':
@@ -33,12 +33,11 @@ def main():
     docs_dir = os.path.join(project_root, 'docs')
     os.chdir(docs_dir)
 
-    # Run initial processing once on startup
-    print("Running initial leaderboard processing...")
+    print("Regenerating Elo ratings and head-to-head results...")
     try:
-        process_leaderboards.main()
-    except Exception as e:
-        print(f"Initial processing failed: {e}")
+        process_elo.generate_leaderboard()
+    except (OSError, ValueError) as error:
+        print(f"Could not regenerate tournament results ({error}). Serving the saved export if available.")
 
     # Set up the server
     handler = StaticHandler
