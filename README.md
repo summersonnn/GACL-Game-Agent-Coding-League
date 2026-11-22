@@ -50,7 +50,7 @@ The importer copies all eight scoreboards, the model roster, and the game prompt
 
 Use the same tournament's logs in `docs/data/results/` to regenerate the ratings on server startup. The Elo generator checks log totals against the scoreboards before replacing the saved ratings.
 
-The configured game weights run from 1 to 8 in ascending order of the standard deviation of Max Elo across the 12 models. Games with a wider spread in ratings have more influence on the weighted Elo standings.
+The configured Overall Elo weights range from 1 to 8. The league assigned them by ranking each game's Max Elo spread across the 12 models before introducing score weighting.
 
 For the completed tournament, each of the 24 agents played 176 races or matches per two-player game. Each match contained 20 Battleship, 50 LieOnce, 2 Connect4, 10 WordMatrix, 2 Mancala, or 2 Surround Morris games. Backgammon matches were races to five in-game points, capped at 30 games. Wizard had four qualifier tables of 200 games and 924 main-event tables of six games; each selected agent played 2,772 main-event games. The qualifier count of 200 is not divisible by six, so seats were not distributed equally. These run settings differ from some current runner defaults.
 
@@ -58,7 +58,11 @@ For the completed tournament, each of the 24 agents played 176 races or matches 
 
 The Elo generator fits ratings to all tournament results for each game at once. It uses each agent's wins, losses, and draws against each opponent, so match order has no effect on the ratings. Draws score half a win. A weak prior centered at 1500 keeps ratings finite for agents with only wins or only losses.
 
-Backgammon ratings use race outcomes. Wizard ratings use only main-event games and compare each agent's final score with each of its five opponents' scores.
+Battleship, LieOnce, Connect4, WordMatrix, Mancala, and Surround Morris weight each win and corresponding loss by the winner's score divided by the mean winning score across all decisive games of that title in the tournament. In Battleship, the score counts the winner's remaining ship segments. In LieOnce, the logged score rewards wins with fewer guesses. In Connect4, the logged score rewards faster wins by counting the empty cells at the end of the game, with a minimum score of 3 for a win. In WordMatrix, the winning score is the difference between the winner's and loser's points. In Mancala, the winning score is the difference in stones between the two stores after the final sweep. A forfeit awards a score of 48 to the winner. In Surround Morris, an elimination win scores the winner's remaining pieces, and a mate scores 7. Draws have weight 1 and are excluded from the mean.
+
+Backgammon rates one outcome per race. Each decisive race is weighted by the difference between the final race scores divided by the mean winning margin across all decisive races in the tournament. A 5–2 race therefore carries 1.5 times the weight of a 5–3 race. Drawn races have weight 1 and are excluded from the mean.
+
+Wizard rates 15 head-to-head results per six-player main-event game using the players' final in-game scores. Each win and corresponding loss is weighted by the gap between the two scores divided by the mean gap across all decisive head-to-head results in the main event. Equal scores count as draws with weight 1 and are excluded from the mean. Placement points are used for the points leaderboard only.
 
 Max Elo uses the highest-rated agent for each model in each game. Mean Elo averages the model's rated agents in that game. Both views use the same Wizard rating because one agent per model advances to the main event. The Overall tab defaults to Max Elo and the game weights in `docs/data/config.json`. Either agent view can be combined with equal weights.
 

@@ -23,6 +23,14 @@ LOG_DIRECTORIES = {
     'A7': 'mancala',
     'A8': 'surround_morris',
 }
+SCORE_WEIGHTED_GAMES = {
+    'A1': 'Battleship',
+    'A2': 'LieOnce',
+    'A5': 'Connect4',
+    'A6': 'WordMatrix',
+    'A7': 'Mancala',
+    'A8': 'Surround Morris',
+}
 ELO_CENTER = 1500
 ELO_SCALE = 400 / log(10)
 RATING_PRIOR_PRECISION = 0.01
@@ -34,6 +42,9 @@ WINNER = re.compile(r'(.+?)(?: \([^)]*\))? wins\b')
 TWO_PLAYER_ROW = re.compile(r'(.+) : Pts: (\d+(?:\.\d+)?) - Score: (-?\d+(?:\.\d+)?)')
 WIN_COUNTS = re.compile(r'^WINS:Agent-1=(\d+),Agent-2=(\d+)$', re.MULTILINE)
 DRAW_COUNT = re.compile(r'^DRAWS:(\d+)$', re.MULTILINE)
+TWO_PLAYER_SCORES = re.compile(
+    r'^Scores:\nAgent-([12]): (-?\d+)\nAgent-([12]): (-?\d+)$', re.MULTILINE
+)
 WIZARD_RANKINGS = re.compile(r'^Rankings:\n((?: +\d+\. Agent-\d+: score=-?\d+\n)+)', re.MULTILINE)
 WIZARD_RANK = re.compile(r' +(\d+)\. Agent-(\d+): score=(-?\d+)')
 
@@ -79,6 +90,29 @@ def read_two_player_games(agents, body):
     return outcomes, counts, totals
 
 
+def read_score_margins(games, outcomes, match_scores, game_name):
+    margins = Counter()
+    for number, (game, outcome) in enumerate(zip(games, outcomes, strict=True), start=1):
+        score_pairs = TWO_PLAYER_SCORES.findall(game)
+        if len(score_pairs) != 1 or len(FINAL_RESULTS.findall(game)) != 1:
+            raise ValueError(f'Game {number} must contain one {game_name} result and one score pair')
+        first_label, first_score, second_label, second_score = score_pairs[0]
+        if first_label == second_label:
+            raise ValueError(f'Game {number} {game_name} scores must identify both agents')
+        scores = {first_label: int(first_score), second_label: int(second_score)}
+        first, second = scores['1'], scores['2']
+        winner_score = first if outcome == 1 else second
+        valid_margin = winner_score == 0 if outcome == 0.5 else winner_score > 0
+        if first != -second or not valid_margin:
+            raise ValueError(f'Game {number} {game_name} scores disagree with the outcome')
+        margins[outcome] += winner_score
+
+    net_score = margins[1] - margins[0]
+    if (net_score, -net_score) != match_scores:
+        raise ValueError(f'individual {game_name} scores disagree with the match summary')
+    return margins
+
+
 def read_wizard_games(body):
     for rankings in WIZARD_RANKINGS.findall(body):
         rows = [WIZARD_RANK.fullmatch(line) for line in rankings.splitlines()]
@@ -94,10 +128,35 @@ def record_pair_result(results, a, b, outcome, count=1):
     results[b][a][1 - outcome] += count
 
 
-def record_wizard_game(pair_results, agents, scores):
+def weight_results_by_score(pair_results, margin_totals):
+    # Each decisive result is a win in one direction and a loss in the other.
+    decisive_results = sum(counts[1] for opponents in pair_results.values() for counts in opponents.values())
+    if not decisive_results:
+        return pair_results, None
+    mean_winning_score = sum(
+        margins[1] for opponents in margin_totals.values() for margins in opponents.values()
+    ) / decisive_results
+
+    rating_results = {}
+    for agent, opponents in pair_results.items():
+        rating_results[agent] = {}
+        for opponent, counts in opponents.items():
+            margins = margin_totals[agent][opponent]
+            rating_results[agent][opponent] = Counter({
+                0: margins[0] / mean_winning_score,
+                0.5: counts[0.5],
+                1: margins[1] / mean_winning_score,
+            })
+    return rating_results, mean_winning_score
+
+
+def record_wizard_game(pair_results, margin_totals, agents, scores):
     for (a, score_a), (b, score_b) in combinations(zip(agents, scores), 2):
-        actual = 0.5 if score_a == score_b else float(score_a > score_b)
+        margin = abs(score_a - score_b)
+        actual = float(score_a > score_b) if margin else 0.5
         record_pair_result(pair_results, a, b, actual)
+        if margin:
+            record_pair_result(margin_totals, a, b, actual, margin)
 
 
 def solve_positive_definite(matrix, rhs):
@@ -204,6 +263,7 @@ def rate_game(directory, scoreboard, code):
     if not roster or len(roster) != len(entries):
         raise ValueError(f'Missing or duplicate agents in {scoreboard}')
 
+    score_weighted_game = SCORE_WEIGHTED_GAMES.get(code)
     wizard = code == 'A3'
     backgammon = code == 'A4'
     fields = ('games', *WIZARD_PLACEMENTS, 'points', 'score') if wizard else (
@@ -212,6 +272,7 @@ def rate_game(directory, scoreboard, code):
     totals = defaultdict(Counter)
     rated = Counter()
     pair_results = defaultdict(lambda: defaultdict(Counter))
+    margin_totals = defaultdict(lambda: defaultdict(Counter))
     match_count = event_count = qualifier_count = 0
 
     for path in directory.glob('*.txt'):
@@ -233,21 +294,37 @@ def rate_game(directory, scoreboard, code):
                     totals[agent].update(games=len(outcomes), wins=counts[1 - index],
                                          losses=counts[index], draws=counts[0.5], points=points, score=score)
 
-            game_numbers = [int(number) for number in GAME_NUMBERS.findall(body)]
+            game_sections = GAME_NUMBERS.split(body)
+            game_numbers = [int(number) for number in game_sections[1::2]]
             if not outcomes or game_numbers != list(range(1, len(outcomes) + 1)):
                 raise ValueError('missing, repeated, or out-of-order games')
+
+            if score_weighted_game:
+                a, b = agents
+                match_scores = (summary[a][1], summary[b][1])
+                margins = read_score_margins(game_sections[2::2], outcomes, match_scores, score_weighted_game)
+                for outcome in (0, 1):
+                    record_pair_result(margin_totals, a, b, outcome, margins[outcome])
 
             if backgammon:
                 a, b = agents
                 race_points = (summary[a][0], summary[b][0])
                 if race_points not in RACE_RESULTS:
                     raise ValueError(f'invalid Backgammon race points: {race_points}')
-                outcomes = [RACE_RESULTS[race_points]]
+                race_outcome = RACE_RESULTS[race_points]
+                # The match summary reports the signed difference in final race points.
+                score_a, score_b = summary[a][1], summary[b][1]
+                winning_margin = score_a if race_outcome == 1 else score_b
+                valid_margin = winning_margin == 0 if race_outcome == 0.5 else winning_margin > 0
+                if score_a != -score_b or not valid_margin:
+                    raise ValueError('Backgammon race scores disagree with the race outcome')
+                record_pair_result(margin_totals, a, b, race_outcome, winning_margin)
+                outcomes = [race_outcome]
                 counts = Counter(outcomes)
 
             if wizard:
                 for scores in outcomes:
-                    record_wizard_game(pair_results, agents, scores)
+                    record_wizard_game(pair_results, margin_totals, agents, scores)
             else:
                 a, b = agents
                 for outcome, count in counts.items():
@@ -272,13 +349,17 @@ def rate_game(directory, scoreboard, code):
     print(f'{code} {directory.name}: {match_count} matches, {event_count} rated '
           f'{"races" if backgammon else "games"}'
           + (f', {qualifier_count} qualifier tables excluded' if wizard else ''))
-    return fit_ratings(roster, pair_results), rated, {
+    info = {
         'matches': match_count,
         'rated_events': event_count,
         'qualifiers_excluded': qualifier_count,
         'unit': 'races' if backgammon else 'games',
         'head_to_head': summarize_head_to_head(pair_results),
     }
+    rating_results = pair_results
+    if score_weighted_game or backgammon or wizard:
+        rating_results, info['mean_winning_score'] = weight_results_by_score(pair_results, margin_totals)
+    return fit_ratings(roster, rating_results), rated, info
 
 
 def summarize_agents(ratings, rated):
