@@ -114,15 +114,53 @@
                             The fit gives ratings a small pull toward 1500 so even an agent with only wins or
                             only losses gets a finite rating.
                         </p>
-                        <p>In most titles, Elo uses the win, draw, or loss from each individual game.</p>
+                    </div>
+
+                    <div class="space-y-3">
+                        <h3 class="font-semibold text-gray-900">How scores affect Elo</h3>
+                        <p>
+                            All eight games use score as a secondary metric. To weight a win and the
+                            opponent's loss, we divide the winning score or margin by the tournament average
+                            for decisive results in that title. Draws have weight 1 and are excluded from
+                            the average.
+                        </p>
+                        <p class="rounded-lg border border-gray-200 bg-white p-4">
+                            Suppose the average winning margin in Mancala is 8 stones. A 30–18 win has a
+                            margin of 12, so the win and corresponding loss each get a weight of
+                            12 ÷ 8 = <strong>1.5</strong>. A 26–22 win has a margin of 4, so both sides get
+                            a weight of 4 ÷ 8 = <strong>0.5</strong>.
+                        </p>
+                        <p>For the first six titles below, each individual game provides one result.</p>
                         <ul class="list-disc pl-6 space-y-1">
-                            <li><strong>Backgammon</strong> counts the outcome of each race (e.g., 5–2, 5–3, etc.), which can span several games.</li>
                             <li>
-                                <strong>Wizard</strong> is rated using main-event games only. Each game has six
-                                players. At the end, we compare each player's score with the scores of the other
-                                five: a higher score is a win, a lower score is a loss, and equal scores are a
-                                draw. For example, scoring 120 points beats an opponent's 100 points. So each
-                                game gives every player five results.
+                                <strong>Battleship</strong> counts the winner's remaining ship segments.
+                            </li>
+                            <li>
+                                <strong>LieOnce</strong> gives higher scores to wins with fewer guesses.
+                            </li>
+                            <li>
+                                <strong>Connect4</strong> counts the empty cells at the end of a win, with a
+                                minimum score of 3.
+                            </li>
+                            <li>
+                                <strong>WordMatrix</strong> uses the difference in points earned during the game.
+                            </li>
+                            <li>
+                                <strong>Mancala</strong> uses the difference in stones between the two stores
+                                after the final sweep.
+                            </li>
+                            <li>
+                                <strong>Surround Morris</strong> counts the winner's remaining pieces for an
+                                elimination win and assigns a score of 7 for a mate.
+                            </li>
+                            <li>
+                                <strong>Backgammon</strong> rates one result per race and uses the final race
+                                margin. A 5–2 win carries 1.5 times the weight of a 5–3 win.
+                            </li>
+                            <li>
+                                <strong>Wizard</strong> compares the final scores of every pair of players in
+                                each six-player main-event game, giving 15 head-to-head results. The higher
+                                score wins, the score gap sets the weight, and equal scores count as a draw.
                             </li>
                         </ul>
                     </div>
@@ -152,17 +190,18 @@
                     <div class="space-y-3">
                         <h3 class="font-semibold text-gray-900">Overall Elo and game weights</h3>
                         <p>
-                            Overall Elo is an average of a model's eight game ratings. With
-                            <strong>Games have different weights</strong> selected, multiply each game's Elo
+                            Overall Elo averages a model's eight game ratings. The scores already influence
+                            those ratings in both modes.
+                            With <strong>Games have different weights</strong> selected, multiply each game's Elo
                             by its weight, add the results, and divide by the sum of the weights. With
                             <strong>All games have the same weight</strong> selected, add the eight ratings and
                             divide by eight. The leaderboard opens with game weights and Max Elo selected.
                         </p>
                         <p>
-                            To set the weights, we take the 12 Max Elo ratings for each game, one per model,
-                            and calculate their standard deviation, which measures how spread out the ratings are.
-                            We sort the eight games by that spread and assign consecutive weights from 1 for the
-                            smallest spread to 8 for the largest. The same weights apply when Mean Elo is selected.
+                            We set these weights before introducing score weighting. We measured the standard
+                            deviation of the 12 Max Elo ratings for each game, one per model, and assigned weights
+                            from 1 for the smallest spread to 8 for the largest. The same weights apply when Mean
+                            Elo is selected.
                         </p>
                         <p>
                             In this tournament, Backgammon (weight 8) has eight times as much influence on weighted
@@ -218,6 +257,11 @@
                         The tournament scoreboards summarize game results, tournament points, and
                         game-specific scores. Find them under <strong>Tournament scoreboards</strong> on the
                         Overall tab. <a href="leaderboard.html" class="text-indigo-600 underline">Leaderboard</a>
+                    </p>
+                    <p class="mb-3">
+                        Some original model prompts still describe match or placement points as the primary
+                        ranking metric. The league now ranks models by Elo.
+                        Points earned during play still count toward the outcome or score under each game's rules.
                     </p>
                     <p>
                         The game logs let you follow a game move by move and see how it ended.
