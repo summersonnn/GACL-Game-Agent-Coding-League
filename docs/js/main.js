@@ -8,6 +8,11 @@ let gameConfig = null;
 let eloData = null;
 let promptsLoaded = false;
 const eloFilters = { weights: 'weighted', agents: 'max' };
+// Phone head-to-head view: one chosen model shared by every game tab.
+let h2hModel = null;
+const h2hPickers = {};
+// Matches Tailwind's `max-md:` variant; phone-only behavior keys off this.
+const phoneQuery = window.matchMedia('(max-width: 767.98px)');
 
 /**
  * Initialize the application
@@ -103,8 +108,28 @@ function initTabs() {
             if (gameCharts[targetTab]) {
                 gameCharts[targetTab].resize();
             }
+            revealTabOnPhone(btn);
         });
     });
+}
+
+/**
+ * On phones the tab strip scrolls sideways and sticks to the top of the page:
+ * center the chosen tab and show the new tab's content from its start.
+ */
+function revealTabOnPhone(btn) {
+    if (!phoneQuery.matches) return;
+
+    const strip = btn.parentElement;
+    const stripBox = strip.getBoundingClientRect();
+    const btnBox = btn.getBoundingClientRect();
+    const delta = btnBox.left + btnBox.width / 2 - (stripBox.left + stripBox.width / 2);
+    strip.scrollBy({ left: delta, behavior: 'smooth' });
+
+    const content = document.getElementById(`tab-${btn.dataset.tab}`);
+    const bar = strip.parentElement;
+    const offset = content.getBoundingClientRect().top - bar.getBoundingClientRect().bottom - 16;
+    if (offset < 0) window.scrollBy(0, offset);
 }
 
 const MODEL_LABEL_RULES = [
@@ -165,23 +190,25 @@ const ICON_RULES = [
     [/deepseek/i, 'data/media/deepseek.png']
 ];
 
+function getIconSrcForModel(model) {
+    if (!model) return null;
+    const rule = ICON_RULES.find(([re]) => re.test(model));
+    return rule ? rule[1] : null;
+}
+
 const iconImageCache = {};
 function getIconForModel(model) {
-    if (!model) return null;
-    for (const [re, src] of ICON_RULES) {
-        if (re.test(model)) {
-            if (!iconImageCache[src]) {
-                const img = new Image();
-                img.onload = () => {
-                    Object.values(gameCharts).forEach(c => c && c.draw && c.draw());
-                };
-                img.src = src;
-                iconImageCache[src] = img;
-            }
-            return iconImageCache[src];
-        }
+    const src = getIconSrcForModel(model);
+    if (!src) return null;
+    if (!iconImageCache[src]) {
+        const img = new Image();
+        img.onload = () => {
+            Object.values(gameCharts).forEach(c => c && c.draw && c.draw());
+        };
+        img.src = src;
+        iconImageCache[src] = img;
     }
-    return null;
+    return iconImageCache[src];
 }
 
 function buildIconAssignment(models) {
@@ -269,7 +296,7 @@ const barValuePlugin = {
  */
 function renderChart(canvasId, standings) {
     const ctx = document.getElementById(canvasId);
-    if (!ctx || !standings.length || typeof Chart === 'undefined') return;
+    if (!ctx || !standings.length) return;
 
     const models = standings.map(entry => entry.model);
     const scores = standings.map(entry => entry.elo);
@@ -277,6 +304,8 @@ function renderChart(canvasId, standings) {
     const max = Math.ceil(Math.max(...scores) / 100) * 100;
     const yBounds = { min: min === max ? min - 100 : min, max };
     const colors = generateBarColors(scores.length);
+    renderEloBars(ctx, models, scores, yBounds, colors);
+    if (typeof Chart === 'undefined') return;
     const hoverColors = generateBarHoverColors(scores.length);
     const data = {
         labels: models.map(formatModelName),
@@ -361,6 +390,75 @@ function renderChart(canvasId, standings) {
 }
 
 /**
+ * Phone replacement for a bar chart: one ranked row per model, each a bar on
+ * the chart's Elo axis with the model name and rating laid over it. Rows are
+ * updated in place so bar lengths animate when a filter changes.
+ */
+function renderEloBars(canvas, models, scores, yBounds, colors) {
+    const chartBox = canvas.parentElement;
+    let wrapper = chartBox.nextElementSibling;
+    if (!wrapper || !wrapper.classList.contains('elo-bars')) {
+        wrapper = document.createElement('div');
+        wrapper.className = 'elo-bars md:hidden';
+        const list = document.createElement('ol');
+        list.className = 'space-y-1.5';
+        const title = chartBox.parentElement.querySelector('h3')?.firstChild?.textContent.trim();
+        if (title) list.setAttribute('aria-label', `${title} ranking`);
+        const axis = document.createElement('div');
+        // Inset to line up with the bar tracks (rank and value columns plus gaps).
+        axis.className = 'mt-2 flex justify-between pl-6 pr-11 text-[11px] tabular-nums text-gray-400';
+        axis.setAttribute('aria-hidden', 'true');
+        axis.append(document.createElement('span'), document.createElement('span'));
+        wrapper.append(list, axis);
+        chartBox.after(wrapper);
+    }
+
+    const [list, axis] = wrapper.children;
+    while (list.children.length > models.length) list.lastElementChild.remove();
+    while (list.children.length < models.length) list.appendChild(createEloBarRow());
+
+    const span = yBounds.max - yBounds.min;
+    models.forEach((model, index) => {
+        const row = list.children[index];
+        const name = formatModelName(model);
+        const pct = Math.max(0, Math.min(100, ((scores[index] - yBounds.min) / span) * 100));
+        const iconSrc = getIconSrcForModel(model);
+
+        row.querySelector('.elo-bar-rank').textContent = index + 1;
+        row.querySelector('.elo-bar-fill').style.width = `${pct}%`;
+        row.querySelector('.elo-bar-fill').style.backgroundColor = colors[index];
+        row.querySelector('.elo-bar-name').textContent = name;
+        row.querySelector('.elo-bar-name').title = name;
+        row.querySelector('.elo-bar-value').textContent = Math.round(scores[index]);
+        const icon = row.querySelector('.elo-bar-icon');
+        const img = icon.querySelector('img');
+        icon.style.display = iconSrc ? '' : 'none';
+        if (iconSrc && img.getAttribute('src') !== iconSrc) img.src = iconSrc;
+    });
+
+    axis.firstChild.textContent = yBounds.min.toLocaleString();
+    axis.lastChild.textContent = yBounds.max.toLocaleString();
+}
+
+function createEloBarRow() {
+    const row = document.createElement('li');
+    row.className = 'flex items-center gap-2';
+    row.innerHTML = `
+        <span class="elo-bar-rank w-4 shrink-0 text-right text-xs font-semibold tabular-nums text-gray-400"></span>
+        <div class="relative min-w-0 flex-1 overflow-hidden rounded-md bg-gray-100">
+            <div class="elo-bar-fill absolute inset-y-0 left-0 rounded-md"></div>
+            <div class="relative flex min-h-9 items-center gap-2 px-1.5 py-1">
+                <span class="elo-bar-icon flex h-6 w-6 shrink-0 items-center justify-center rounded-full bg-white shadow-sm">
+                    <img class="h-4 w-4 object-contain" alt="">
+                </span>
+                <span class="elo-bar-name min-w-0 flex-1 text-[13px] font-medium leading-tight text-gray-900 line-clamp-2"></span>
+            </div>
+        </div>
+        <span class="elo-bar-value w-9 shrink-0 text-right text-sm font-bold tabular-nums text-gray-900"></span>`;
+    return row;
+}
+
+/**
  * Generate bar colors: top 5 get special colors, rest are grey
  */
 function generateBarColors(count) {
@@ -442,10 +540,12 @@ function renderLeaderboard(tabId, rows, unit) {
     const headings = ['Rank', showAgent ? 'Agent' : 'Model'];
     if (unit) headings.push(showAgent ? `Rated ${unit}` : `Rated ${unit} across agents`);
     headings.push('Elo');
+    // On phones the rated-count column folds into the name cell.
+    const phoneHidden = column => (unit && column === 2 ? ' max-md:hidden' : '');
     headings.forEach((label, index) => {
         const cell = document.createElement('th');
         cell.scope = 'col';
-        cell.className = index < 2 ? 'px-4 py-3 text-left' : 'px-4 py-3 text-right';
+        cell.className = (index < 2 ? 'px-4 py-3 text-left' : 'px-4 py-3 text-right') + ' max-md:px-3' + phoneHidden(index);
         cell.textContent = label;
         header.appendChild(cell);
     });
@@ -460,8 +560,14 @@ function renderLeaderboard(tabId, rows, unit) {
         values.push(entry.elo.toFixed(2));
         values.forEach((value, column) => {
             const cell = row.insertCell();
-            cell.className = column < 2 ? 'px-4 py-3' : 'px-4 py-3 text-right tabular-nums';
+            cell.className = (column < 2 ? 'px-4 py-3' : 'px-4 py-3 text-right tabular-nums') + ' max-md:px-3' + phoneHidden(column);
             cell.textContent = value;
+            if (unit && column === 1) {
+                const rated = document.createElement('span');
+                rated.className = 'block text-xs text-gray-500 md:hidden';
+                rated.textContent = `${entry.rated.toLocaleString()} rated ${unit}`;
+                cell.appendChild(rated);
+            }
         });
         row.cells[values.length - 1].classList.add('font-semibold');
     });
@@ -482,16 +588,25 @@ function renderHeadToHead(tabId, game, models, wizard) {
     if (!models.length || !results || !Object.keys(results).length) {
         description.textContent = 'Head-to-head results are unavailable.';
         scroll.remove();
+        delete h2hPickers[tabId];
         container.replaceChildren(card);
         return;
     }
 
     heading.id = `head-to-head-title-${tabId}`;
     scroll.setAttribute('aria-labelledby', heading.id);
+    scroll.classList.add('max-md:hidden');
     const scope = wizard
         ? 'Wizard compares each pair’s final scores within the same main-event game.'
         : `Results pool all agents for each model and count individual ${game.unit}.`;
-    description.textContent = `Read across for the row model’s score percentage and wins–draws–losses. A draw counts as half a win. ${scope}`;
+    const matrixText = document.createElement('span');
+    matrixText.className = 'max-md:hidden';
+    matrixText.textContent = `Read across for the row model’s score percentage and wins–draws–losses. A draw counts as half a win. ${scope}`;
+    const phoneText = document.createElement('span');
+    phoneText.className = 'md:hidden';
+    phoneText.textContent = `Pick a model to see its score percentage and wins–draws–losses against each opponent. Bars grow from the 50% line. A draw counts as half a win. ${scope}`;
+    description.replaceChildren(matrixText, phoneText);
+    scroll.after(buildHeadToHeadPicker(tabId, models, results));
 
     const table = document.createElement('table');
     table.className = 'h2h-table';
@@ -536,6 +651,94 @@ function renderHeadToHead(tabId, game, models, wizard) {
 
     scroll.appendChild(table);
     container.replaceChildren(card);
+}
+
+/**
+ * Phone replacement for the head-to-head matrix: pick one model, then list its
+ * result against each opponent with a bar that diverges from the 50% line.
+ */
+function buildHeadToHeadPicker(tabId, models, results) {
+    const wrapper = document.createElement('div');
+    wrapper.className = 'md:hidden';
+
+    const select = document.createElement('select');
+    select.className = 'block w-full rounded-lg border border-gray-300 bg-white px-3 py-2 text-sm font-medium text-gray-900 shadow-sm focus:border-indigo-500 focus:outline-none focus:ring-1 focus:ring-indigo-500';
+    select.setAttribute('aria-label', 'Model');
+    models.forEach((model, index) => select.add(new Option(`${index + 1}. ${model}`, model)));
+
+    const list = document.createElement('ul');
+    list.className = 'mt-2 divide-y divide-gray-100';
+
+    const sync = () => {
+        const model = models.includes(h2hModel) ? h2hModel : models[0];
+        select.value = model;
+        list.replaceChildren(...models
+            .filter(opponent => opponent !== model)
+            .map(opponent => buildHeadToHeadRow(opponent, results[model]?.[opponent])));
+    };
+    select.addEventListener('change', () => {
+        h2hModel = select.value;
+        Object.values(h2hPickers).forEach(update => update());
+    });
+    h2hPickers[tabId] = sync;
+    sync();
+
+    wrapper.append(select, list);
+    return wrapper;
+}
+
+const H2H_TONES = {
+    win: { text: '#065f46', bar: '#34d399' },
+    loss: { text: '#991b1b', bar: '#f87171' },
+    even: { text: '#374151', bar: '#9ca3af' },
+};
+
+function buildHeadToHeadRow(opponent, result) {
+    const row = document.createElement('li');
+    row.className = 'py-2.5';
+
+    const top = document.createElement('div');
+    top.className = 'flex items-baseline justify-between gap-3';
+    const name = document.createElement('span');
+    name.className = 'min-w-0 truncate text-sm text-gray-900';
+    const versus = document.createElement('span');
+    versus.className = 'text-gray-400';
+    versus.textContent = 'vs ';
+    name.append(versus, opponent);
+    const score = document.createElement('span');
+    score.className = 'shrink-0 text-sm font-semibold tabular-nums';
+    top.append(name, score);
+
+    const bottom = document.createElement('div');
+    bottom.className = 'mt-1.5 flex items-center gap-3';
+    const bar = document.createElement('div');
+    bar.className = 'h2h-bar flex-1';
+    const record = document.createElement('span');
+    record.className = 'w-16 shrink-0 text-right text-xs tabular-nums text-gray-500';
+    bottom.append(bar, record);
+    row.append(top, bottom);
+
+    if (!result) {
+        score.textContent = '—';
+        score.classList.add('text-gray-400');
+        record.textContent = 'No results';
+        return row;
+    }
+
+    const { wins, draws, losses, score_pct } = result;
+    const tone = H2H_TONES[wins > losses ? 'win' : wins < losses ? 'loss' : 'even'];
+    score.textContent = `${score_pct.toFixed(1)}%`;
+    score.style.color = tone.text;
+    record.textContent = `${wins}–${draws}–${losses}`;
+    record.setAttribute('aria-label', `${wins} wins, ${draws} draws, ${losses} losses`);
+
+    const fill = document.createElement('div');
+    fill.className = 'h2h-bar-fill';
+    fill.style.left = `${Math.min(score_pct, 50)}%`;
+    fill.style.width = `${Math.abs(score_pct - 50)}%`;
+    fill.style.backgroundColor = tone.bar;
+    bar.appendChild(fill);
+    return row;
 }
 
 /**

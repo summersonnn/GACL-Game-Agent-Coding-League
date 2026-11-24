@@ -296,6 +296,81 @@
     border-color: #818cf8;
 }
 
+/* Wraps each filter's buttons; layout-neutral above the phone breakpoint. */
+.elo-seg {
+    display: contents;
+}
+
+/* Phone layout (below Tailwind's md breakpoint) */
+@media (max-width: 767.98px) {
+    .tab-btn {
+        padding: 12px 2px;
+    }
+
+    .tab-btn:hover {
+        border-bottom-color: transparent;
+    }
+
+    .tab-btn.active:hover {
+        border-bottom-color: #2563eb;
+    }
+
+    /* Filters become compact segmented controls. */
+    .elo-seg {
+        display: inline-flex;
+        flex-shrink: 0;
+        gap: 2px;
+        padding: 3px;
+        border-radius: 0.625rem;
+        background-color: #e5e7eb;
+    }
+
+    .elo-seg .overall-mode-btn {
+        min-width: 4.75rem;
+        padding: 0.375rem 0.75rem;
+        border-color: transparent;
+        border-radius: 0.5rem;
+        background-color: transparent;
+        color: #4b5563;
+        font-size: 0.8125rem;
+    }
+
+    .elo-seg .overall-mode-btn.active {
+        background-color: #ffffff;
+        color: #4338ca;
+        box-shadow: 0 1px 2px rgba(15, 23, 42, 0.12), 0 1px 1px rgba(15, 23, 42, 0.06);
+    }
+
+    /* Ranked Elo bars that replace the canvas chart. */
+    .elo-bar-fill {
+        transition: width 0.35s ease;
+    }
+
+    .h2h-bar {
+        position: relative;
+        height: 6px;
+        border-radius: 9999px;
+        background-color: #f3f4f6;
+    }
+
+    .h2h-bar::after {
+        content: "";
+        position: absolute;
+        top: -3px;
+        bottom: -3px;
+        left: 50%;
+        width: 1px;
+        background-color: #9ca3af;
+    }
+
+    .h2h-bar-fill {
+        position: absolute;
+        top: 0;
+        bottom: 0;
+        border-radius: 9999px;
+    }
+}
+
 /* Head-to-head score matrix */
 .h2h-scroll {
     overflow-x: auto;

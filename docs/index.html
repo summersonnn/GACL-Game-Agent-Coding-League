@@ -10,7 +10,7 @@
     <script src="https://cdn.tailwindcss.com?plugins=typography"></script>
 
     <!-- Custom styles -->
-    <link href="/css/styles.css?v=21" rel="stylesheet">
+    <link href="/css/styles.css?v=24" rel="stylesheet">
 </head>
 
 <!-- Google tag (gtag.js) -->
@@ -26,30 +26,30 @@
     gtag('config', 'G-5Q9WND7R6K');
 </script>
 
-<div class="flex flex-col h-screen overflow-hidden">
+<div class="flex flex-col h-screen overflow-hidden max-md:h-auto max-md:overflow-visible">
     <!-- Top Navigation -->
-    <nav class="bg-white border-b border-gray-200 flex items-stretch z-10 flex-shrink-0 h-24">
-        <span class="font-bold text-gray-900 px-6 flex flex-col justify-center leading-tight">
+    <nav class="bg-white border-b border-gray-200 flex items-stretch z-10 flex-shrink-0 h-24 max-md:h-auto max-md:flex-wrap">
+        <span class="font-bold text-gray-900 px-6 flex flex-col justify-center leading-tight max-md:px-4 max-md:py-3">
             <span class="text-xl">GACL</span>
             <span class="text-xs font-medium text-gray-500">Game Agent Coding League</span>
         </span>
-        <div class="flex items-stretch">
+        <div class="flex items-stretch max-md:order-last max-md:w-full max-md:border-t max-md:border-gray-100">
             <a href="index.html" id="nav-home"
-                class="text-sm font-medium text-gray-600 hover:text-gray-900 px-5 hover:bg-gray-50 transition-colors border-b-2 border-blue-600 text-blue-600 flex items-center">
+                class="text-sm font-medium text-gray-600 hover:text-gray-900 px-5 max-md:flex-1 max-md:justify-center max-md:px-2 max-md:py-3 hover:bg-gray-50 transition-colors border-b-2 border-blue-600 text-blue-600 flex items-center">
                 About
             </a>
             <a href="games.html" id="nav-games"
-                class="text-sm font-medium text-gray-600 hover:text-gray-900 px-5 hover:bg-gray-50 transition-colors border-b-2 border-transparent flex items-center">
+                class="text-sm font-medium text-gray-600 hover:text-gray-900 px-5 max-md:flex-1 max-md:justify-center max-md:px-2 max-md:py-3 hover:bg-gray-50 transition-colors border-b-2 border-transparent flex items-center">
                 Games
             </a>
             <a href="leaderboard.html" id="nav-leaderboard"
-                class="text-sm font-medium text-gray-600 hover:text-gray-900 px-5 hover:bg-gray-50 transition-colors border-b-2 border-transparent flex items-center">
+                class="text-sm font-medium text-gray-600 hover:text-gray-900 px-5 max-md:flex-1 max-md:justify-center max-md:px-2 max-md:py-3 hover:bg-gray-50 transition-colors border-b-2 border-transparent flex items-center">
                 Leaderboard
             </a>
         </div>
         <a href="https://github.com/summersonnn/Game-Agent-Coding-Benchmark" target="_blank" rel="noopener noreferrer"
-            class="ml-auto flex items-center px-6 text-gray-500 hover:text-gray-900 transition-colors">
-            <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" fill="currentColor" class="w-7 h-7">
+            class="ml-auto flex items-center px-6 max-md:px-4 text-gray-500 hover:text-gray-900 transition-colors">
+            <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" fill="currentColor" class="w-7 h-7 max-md:w-6 max-md:h-6">
                 <path d="M12 0C5.37 0 0 5.37 0 12c0 5.31 3.435 9.795 8.205 11.385.6.105.825-.255.825-.57
                     0-.285-.015-1.23-.015-2.235-3.015.555-3.795-.735-4.035-1.41-.135-.345-.72-1.41-1.23-1.695
                     -.42-.225-1.02-.78-.015-.795.945-.015 1.62.87 1.845 1.23 1.08 1.815 2.805 1.305 3.495.99
@@ -63,11 +63,11 @@
     </nav>
 
     <!-- Main Content Wrapper -->
-    <main class="flex-1 flex flex-col min-w-0 bg-gray-50 overflow-hidden">
+    <main class="flex-1 flex flex-col min-w-0 bg-gray-50 overflow-hidden max-md:overflow-visible">
 
         <!-- Page: About -->
-        <div id="page-home" class="flex-1 flex flex-col min-h-0 overflow-auto">
-            <div class="p-8 max-w-3xl mx-auto text-gray-600 leading-relaxed space-y-10">
+        <div id="page-home" class="flex-1 flex flex-col min-h-0 overflow-auto max-md:overflow-visible">
+            <div class="p-8 max-md:px-5 max-md:py-6 max-w-3xl mx-auto text-gray-600 leading-relaxed space-y-10">
 
                 <!-- Overview -->
                 <section>
@@ -286,7 +286,7 @@
 <script src="https://cdn.jsdelivr.net/npm/chart.js@4.4.1/dist/chart.umd.min.js"></script>
 
 <!-- Main application JS -->
-<script src="/js/main.js?v=31"></script>
+<script src="/js/main.js?v=35"></script>
 </body>
 
 </html>

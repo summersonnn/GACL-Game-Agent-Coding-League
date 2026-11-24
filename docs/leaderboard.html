@@ -10,7 +10,7 @@
     <script src="https://cdn.tailwindcss.com?plugins=typography"></script>
 
     <!-- Custom styles -->
-    <link href="/css/styles.css?v=23" rel="stylesheet">
+    <link href="/css/styles.css?v=24" rel="stylesheet">
 </head>
 
 <!-- Google tag (gtag.js) -->
@@ -26,30 +26,30 @@
     gtag('config', 'G-5Q9WND7R6K');
 </script>
 
-<div class="flex flex-col h-screen overflow-hidden">
+<div class="flex flex-col h-screen overflow-hidden max-md:h-auto max-md:overflow-visible">
     <!-- Top Navigation -->
-    <nav class="bg-white border-b border-gray-200 flex items-stretch z-10 flex-shrink-0 h-24">
-        <span class="font-bold text-gray-900 px-6 flex flex-col justify-center leading-tight">
+    <nav class="bg-white border-b border-gray-200 flex items-stretch z-10 flex-shrink-0 h-24 max-md:h-auto max-md:flex-wrap">
+        <span class="font-bold text-gray-900 px-6 flex flex-col justify-center leading-tight max-md:px-4 max-md:py-3">
             <span class="text-xl">GACL</span>
             <span class="text-xs font-medium text-gray-500">Game Agent Coding League</span>
         </span>
-        <div class="flex items-stretch">
+        <div class="flex items-stretch max-md:order-last max-md:w-full max-md:border-t max-md:border-gray-100">
             <a href="index.html" id="nav-home"
-                class="text-sm font-medium text-gray-600 hover:text-gray-900 px-5 hover:bg-gray-50 transition-colors border-b-2 border-transparent flex items-center">
+                class="text-sm font-medium text-gray-600 hover:text-gray-900 px-5 max-md:flex-1 max-md:justify-center max-md:px-2 max-md:py-3 hover:bg-gray-50 transition-colors border-b-2 border-transparent flex items-center">
                 About
             </a>
             <a href="games.html" id="nav-games"
-                class="text-sm font-medium text-gray-600 hover:text-gray-900 px-5 hover:bg-gray-50 transition-colors border-b-2 border-transparent flex items-center">
+                class="text-sm font-medium text-gray-600 hover:text-gray-900 px-5 max-md:flex-1 max-md:justify-center max-md:px-2 max-md:py-3 hover:bg-gray-50 transition-colors border-b-2 border-transparent flex items-center">
                 Games
             </a>
             <a href="leaderboard.html" id="nav-leaderboard"
-                class="text-sm font-medium text-gray-600 hover:text-gray-900 px-5 hover:bg-gray-50 transition-colors border-b-2 border-blue-600 text-blue-600 flex items-center">
+                class="text-sm font-medium text-gray-600 hover:text-gray-900 px-5 max-md:flex-1 max-md:justify-center max-md:px-2 max-md:py-3 hover:bg-gray-50 transition-colors border-b-2 border-blue-600 text-blue-600 flex items-center">
                 Leaderboard
             </a>
         </div>
         <a href="https://github.com/summersonnn/Game-Agent-Coding-Benchmark" target="_blank" rel="noopener noreferrer"
-            class="ml-auto flex items-center px-6 text-gray-500 hover:text-gray-900 transition-colors">
-            <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" fill="currentColor" class="w-7 h-7">
+            class="ml-auto flex items-center px-6 max-md:px-4 text-gray-500 hover:text-gray-900 transition-colors">
+            <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" fill="currentColor" class="w-7 h-7 max-md:w-6 max-md:h-6">
                 <path d="M12 0C5.37 0 0 5.37 0 12c0 5.31 3.435 9.795 8.205 11.385.6.105.825-.255.825-.57
                     0-.285-.015-1.23-.015-2.235-3.015.555-3.795-.735-4.035-1.41-.135-.345-.72-1.41-1.23-1.695
                     -.42-.225-1.02-.78-.015-.795.945-.015 1.62.87 1.845 1.23 1.08 1.815 2.805 1.305 3.495.99
@@ -63,17 +63,17 @@
     </nav>
 
     <!-- Main Content Wrapper -->
-    <main class="flex-1 flex flex-col min-w-0 bg-gray-50 overflow-hidden">
+    <main class="flex-1 flex flex-col min-w-0 bg-gray-50 overflow-hidden max-md:overflow-visible">
 
         <!-- Page: Results -->
         <div id="page-results" class="flex-1 flex flex-col min-h-0">
 
             <!-- Scrollable Content Area -->
-            <div class="flex-1 overflow-auto p-8">
+            <div class="flex-1 overflow-auto p-8 max-md:overflow-visible max-md:px-4 max-md:pt-0 max-md:pb-6">
                 <div class="max-w-[96rem] mx-auto">
                     <!-- Tab Navigation -->
-                    <div class="border-b border-gray-200 mb-6">
-                        <nav class="flex gap-x-8 overflow-x-auto whitespace-nowrap" aria-label="Tabs">
+                    <div class="border-b border-gray-200 mb-6 max-md:sticky max-md:top-0 max-md:z-20 max-md:-mx-4 max-md:mb-4 max-md:bg-gray-50/95 max-md:backdrop-blur">
+                        <nav class="flex gap-x-8 overflow-x-auto whitespace-nowrap max-md:gap-x-6 max-md:px-4" aria-label="Tabs">
                             <button class="tab-btn active" data-tab="overall">
                                 Overall
                             </button>
@@ -106,45 +106,51 @@
 
                     <!-- Tab: Overall -->
                     <section id="tab-overall" class="tab-content active">
-                        <div class="mb-4 flex flex-col items-start gap-3 lg:flex-row lg:flex-wrap lg:items-center">
-                            <div class="flex flex-wrap gap-2" role="group" aria-label="Game weights" data-elo-filter="weights">
-                                <button type="button" class="overall-mode-btn active px-3 py-1.5 text-sm font-medium rounded-md border transition-colors" data-mode="weighted" aria-pressed="true">
-                                    Games have different weights
-                                </button>
-                                <button type="button" class="overall-mode-btn px-3 py-1.5 text-sm font-medium rounded-md border transition-colors" data-mode="unweighted" aria-pressed="false">
-                                    All games have the same weight
-                                </button>
+                        <div class="mb-4 flex flex-col items-start gap-3 lg:flex-row lg:flex-wrap lg:items-center max-md:items-stretch max-md:gap-2">
+                            <div class="flex flex-wrap gap-2 max-md:flex-nowrap max-md:items-center max-md:justify-between" role="group" aria-label="Game weights" data-elo-filter="weights">
+                                <span class="hidden max-md:block text-xs font-semibold uppercase tracking-wide text-gray-500" aria-hidden="true">Game weights</span>
+                                <div class="elo-seg">
+                                    <button type="button" class="overall-mode-btn active px-3 py-1.5 text-sm font-medium rounded-md border transition-colors" data-mode="weighted" aria-pressed="true">
+                                        <span class="max-md:hidden">Games have different weights</span><span class="md:hidden">Different</span>
+                                    </button>
+                                    <button type="button" class="overall-mode-btn px-3 py-1.5 text-sm font-medium rounded-md border transition-colors" data-mode="unweighted" aria-pressed="false">
+                                        <span class="max-md:hidden">All games have the same weight</span><span class="md:hidden">Same</span>
+                                    </button>
+                                </div>
                             </div>
                             <span class="hidden select-none text-gray-400 lg:block" aria-hidden="true">|</span>
-                            <div class="flex flex-wrap gap-2" role="group" aria-label="Model agent Elo" data-elo-filter="agents">
-                                <button type="button" class="overall-mode-btn active px-3 py-1.5 text-sm font-medium rounded-md border transition-colors" data-mode="max" aria-pressed="true">
-                                    Max Elo of model agents
-                                </button>
-                                <button type="button" class="overall-mode-btn px-3 py-1.5 text-sm font-medium rounded-md border transition-colors" data-mode="mean" aria-pressed="false">
-                                    Mean Elo of model agents
-                                </button>
+                            <div class="flex flex-wrap gap-2 max-md:flex-nowrap max-md:items-center max-md:justify-between" role="group" aria-label="Model agent Elo" data-elo-filter="agents">
+                                <span class="hidden max-md:block text-xs font-semibold uppercase tracking-wide text-gray-500" aria-hidden="true">Model agents</span>
+                                <div class="elo-seg">
+                                    <button type="button" class="overall-mode-btn active px-3 py-1.5 text-sm font-medium rounded-md border transition-colors" data-mode="max" aria-pressed="true">
+                                        <span class="max-md:hidden">Max Elo of model agents</span><span class="md:hidden">Max Elo</span>
+                                    </button>
+                                    <button type="button" class="overall-mode-btn px-3 py-1.5 text-sm font-medium rounded-md border transition-colors" data-mode="mean" aria-pressed="false">
+                                        <span class="max-md:hidden">Mean Elo of model agents</span><span class="md:hidden">Mean Elo</span>
+                                    </button>
+                                </div>
                             </div>
                             <a href="index.html#reading-the-leaderboard"
-                               class="text-sm text-indigo-600 underline hover:text-indigo-700 lg:ml-auto">
+                               class="text-sm text-indigo-600 underline hover:text-indigo-700 lg:ml-auto max-md:mt-1 max-md:self-start">
                                 How to read the leaderboard
                             </a>
                         </div>
-                        <div class="bg-white rounded-xl shadow-sm border border-gray-200 p-6">
-                            <div class="flex items-baseline justify-between mb-4">
+                        <div class="bg-white rounded-xl shadow-sm border border-gray-200 p-6 max-md:p-4">
+                            <div class="flex items-baseline justify-between mb-4 max-md:flex-wrap max-md:gap-x-3 max-md:gap-y-1">
                                 <h3 class="text-lg font-semibold text-gray-900">Overall Elo</h3>
                                 <span class="text-sm text-gray-400 run-date"></span>
                             </div>
-                            <div style="height: 500px; position: relative;">
+                            <div class="max-md:hidden" style="height: 500px; position: relative;">
                                 <canvas id="chart-overall"></canvas>
                             </div>
                         </div>
-                        <p class="my-4 flex justify-center">
+                        <p class="my-4 flex justify-center max-md:my-3">
                             <a href="https://drive.google.com/drive/folders/1SGQvbWIx5RPmCHiC7CyMiLk5U0buVERL?usp=sharing"
                                class="rounded-lg border border-indigo-200 bg-white px-4 py-2.5 text-center text-sm font-semibold text-indigo-700 shadow-sm transition-colors hover:border-indigo-300 hover:bg-indigo-50 focus-visible:ring-2 focus-visible:ring-indigo-500 focus-visible:ring-offset-2">
                                 View game logs on Google Drive
                             </a>
                         </p>
-                        <div class="bg-white rounded-xl shadow-sm border border-gray-200 p-6">
+                        <div class="bg-white rounded-xl shadow-sm border border-gray-200 p-6 max-md:p-4">
                             <h3 class="text-lg font-semibold text-gray-900 mb-4">Overall Leaderboard</h3>
                             <div id="leaderboard-overall" class="overflow-x-auto">
                                 <!-- Overall leaderboard table will be inserted here -->
@@ -160,19 +166,19 @@
 
                     <!-- Tab: Battleship -->
                     <section id="tab-game1" class="tab-content hidden">
-                        <div class="bg-white rounded-xl shadow-sm border border-gray-200 p-6">
-                            <div class="flex items-baseline justify-between mb-4">
+                        <div class="bg-white rounded-xl shadow-sm border border-gray-200 p-6 max-md:p-4">
+                            <div class="flex items-baseline justify-between mb-4 max-md:flex-wrap max-md:gap-x-3 max-md:gap-y-1">
                                 <h3 class="text-lg font-semibold text-gray-900">Battleship Elo</h3>
                                 <span class="text-sm text-gray-400 run-date"></span>
                             </div>
-                            <div style="height: 500px; position: relative;">
+                            <div class="max-md:hidden" style="height: 500px; position: relative;">
                                 <canvas id="chart-game1"></canvas>
                             </div>
                         </div>
                         <div class="mt-4 text-center text-sm text-gray-600">
                             <a href="games.html" class="text-indigo-600 hover:text-indigo-700 underline">Game rules and agent prompts</a>
                         </div>
-                        <div class="bg-white rounded-xl shadow-sm border border-gray-200 p-6 mt-6">
+                        <div class="bg-white rounded-xl shadow-sm border border-gray-200 p-6 max-md:p-4 mt-6">
                             <h3 class="text-lg font-semibold text-gray-900 mb-4">Leaderboard</h3>
                             <div id="leaderboard-game1" class="overflow-x-auto">
                                 <!-- Leaderboard table will be inserted here -->
@@ -183,19 +189,19 @@
 
                     <!-- Tab: LieOnce-->
                     <section id="tab-game2" class="tab-content hidden">
-                        <div class="bg-white rounded-xl shadow-sm border border-gray-200 p-6">
-                            <div class="flex items-baseline justify-between mb-4">
+                        <div class="bg-white rounded-xl shadow-sm border border-gray-200 p-6 max-md:p-4">
+                            <div class="flex items-baseline justify-between mb-4 max-md:flex-wrap max-md:gap-x-3 max-md:gap-y-1">
                                 <h3 class="text-lg font-semibold text-gray-900">LieOnce Elo</h3>
                                 <span class="text-sm text-gray-400 run-date"></span>
                             </div>
-                            <div style="height: 500px; position: relative;">
+                            <div class="max-md:hidden" style="height: 500px; position: relative;">
                                 <canvas id="chart-game2"></canvas>
                             </div>
                         </div>
                         <div class="mt-4 text-center text-sm text-gray-600">
                             <a href="games.html" class="text-indigo-600 hover:text-indigo-700 underline">Game rules and agent prompts</a>
                         </div>
-                        <div class="bg-white rounded-xl shadow-sm border border-gray-200 p-6 mt-6">
+                        <div class="bg-white rounded-xl shadow-sm border border-gray-200 p-6 max-md:p-4 mt-6">
                             <h3 class="text-lg font-semibold text-gray-900 mb-4">Leaderboard</h3>
                             <div id="leaderboard-game2" class="overflow-x-auto">
                                 <!-- Leaderboard table will be inserted here -->
@@ -211,19 +217,19 @@
                             during qualifiers. Because each model has just one rated agent here, Max Elo and Mean
                             Elo are identical, so the bars do not change when you switch between them.
                         </p>
-                        <div class="bg-white rounded-xl shadow-sm border border-gray-200 p-6">
-                            <div class="flex items-baseline justify-between mb-4">
+                        <div class="bg-white rounded-xl shadow-sm border border-gray-200 p-6 max-md:p-4">
+                            <div class="flex items-baseline justify-between mb-4 max-md:flex-wrap max-md:gap-x-3 max-md:gap-y-1">
                                 <h3 class="text-lg font-semibold text-gray-900">Wizard Elo</h3>
                                 <span class="text-sm text-gray-400 run-date"></span>
                             </div>
-                            <div style="height: 500px; position: relative;">
+                            <div class="max-md:hidden" style="height: 500px; position: relative;">
                                 <canvas id="chart-game3"></canvas>
                             </div>
                         </div>
                         <div class="mt-4 text-center text-sm text-gray-600">
                             <a href="games.html" class="text-indigo-600 hover:text-indigo-700 underline">Game rules and agent prompts</a>
                         </div>
-                        <div class="bg-white rounded-xl shadow-sm border border-gray-200 p-6 mt-6">
+                        <div class="bg-white rounded-xl shadow-sm border border-gray-200 p-6 max-md:p-4 mt-6">
                             <h3 class="text-lg font-semibold text-gray-900 mb-4">Leaderboard</h3>
                             <div id="leaderboard-game3" class="overflow-x-auto">
                                 <!-- Leaderboard table will be inserted here -->
@@ -235,19 +241,19 @@
 
                     <!-- Tab: Backgammon -->
                     <section id="tab-game4" class="tab-content hidden">
-                        <div class="bg-white rounded-xl shadow-sm border border-gray-200 p-6">
-                            <div class="flex items-baseline justify-between mb-4">
+                        <div class="bg-white rounded-xl shadow-sm border border-gray-200 p-6 max-md:p-4">
+                            <div class="flex items-baseline justify-between mb-4 max-md:flex-wrap max-md:gap-x-3 max-md:gap-y-1">
                                 <h3 class="text-lg font-semibold text-gray-900">Backgammon Elo</h3>
                                 <span class="text-sm text-gray-400 run-date"></span>
                             </div>
-                            <div style="height: 500px; position: relative;">
+                            <div class="max-md:hidden" style="height: 500px; position: relative;">
                                 <canvas id="chart-game4"></canvas>
                             </div>
                         </div>
                         <div class="mt-4 text-center text-sm text-gray-600">
                             Backgammon Elo is rated per race. <a href="games.html" class="text-indigo-600 hover:text-indigo-700 underline">Game rules and agent prompts</a>
                         </div>
-                        <div class="bg-white rounded-xl shadow-sm border border-gray-200 p-6 mt-6">
+                        <div class="bg-white rounded-xl shadow-sm border border-gray-200 p-6 max-md:p-4 mt-6">
                             <h3 class="text-lg font-semibold text-gray-900 mb-4">Leaderboard</h3>
                             <div id="leaderboard-game4" class="overflow-x-auto">
                                 <!-- Leaderboard table will be inserted here -->
@@ -258,19 +264,19 @@
 
                     <!-- Tab: Connect4 -->
                     <section id="tab-game5" class="tab-content hidden">
-                        <div class="bg-white rounded-xl shadow-sm border border-gray-200 p-6">
-                            <div class="flex items-baseline justify-between mb-4">
+                        <div class="bg-white rounded-xl shadow-sm border border-gray-200 p-6 max-md:p-4">
+                            <div class="flex items-baseline justify-between mb-4 max-md:flex-wrap max-md:gap-x-3 max-md:gap-y-1">
                                 <h3 class="text-lg font-semibold text-gray-900">Connect4 Elo</h3>
                                 <span class="text-sm text-gray-400 run-date"></span>
                             </div>
-                            <div style="height: 500px; position: relative;">
+                            <div class="max-md:hidden" style="height: 500px; position: relative;">
                                 <canvas id="chart-game5"></canvas>
                             </div>
                         </div>
                         <div class="mt-4 text-center text-sm text-gray-600">
                             <a href="games.html" class="text-indigo-600 hover:text-indigo-700 underline">Game rules and agent prompts</a>
                         </div>
-                        <div class="bg-white rounded-xl shadow-sm border border-gray-200 p-6 mt-6">
+                        <div class="bg-white rounded-xl shadow-sm border border-gray-200 p-6 max-md:p-4 mt-6">
                             <h3 class="text-lg font-semibold text-gray-900 mb-4">Leaderboard</h3>
                             <div id="leaderboard-game5" class="overflow-x-auto">
                                 <!-- Leaderboard table will be inserted here -->
@@ -281,19 +287,19 @@
 
                     <!-- Tab: WordMatrix -->
                     <section id="tab-game6" class="tab-content hidden">
-                        <div class="bg-white rounded-xl shadow-sm border border-gray-200 p-6">
-                            <div class="flex items-baseline justify-between mb-4">
+                        <div class="bg-white rounded-xl shadow-sm border border-gray-200 p-6 max-md:p-4">
+                            <div class="flex items-baseline justify-between mb-4 max-md:flex-wrap max-md:gap-x-3 max-md:gap-y-1">
                                 <h3 class="text-lg font-semibold text-gray-900">WordMatrix Elo</h3>
                                 <span class="text-sm text-gray-400 run-date"></span>
                             </div>
-                            <div style="height: 500px; position: relative;">
+                            <div class="max-md:hidden" style="height: 500px; position: relative;">
                                 <canvas id="chart-game6"></canvas>
                             </div>
                         </div>
                         <div class="mt-4 text-center text-sm text-gray-600">
                             <a href="games.html" class="text-indigo-600 hover:text-indigo-700 underline">Game rules and agent prompts</a>
                         </div>
-                        <div class="bg-white rounded-xl shadow-sm border border-gray-200 p-6 mt-6">
+                        <div class="bg-white rounded-xl shadow-sm border border-gray-200 p-6 max-md:p-4 mt-6">
                             <h3 class="text-lg font-semibold text-gray-900 mb-4">Leaderboard</h3>
                             <div id="leaderboard-game6" class="overflow-x-auto">
                                 <!-- Leaderboard table will be inserted here -->
@@ -304,19 +310,19 @@
 
                     <!-- Tab: Mancala -->
                     <section id="tab-game7" class="tab-content hidden">
-                        <div class="bg-white rounded-xl shadow-sm border border-gray-200 p-6">
-                            <div class="flex items-baseline justify-between mb-4">
+                        <div class="bg-white rounded-xl shadow-sm border border-gray-200 p-6 max-md:p-4">
+                            <div class="flex items-baseline justify-between mb-4 max-md:flex-wrap max-md:gap-x-3 max-md:gap-y-1">
                                 <h3 class="text-lg font-semibold text-gray-900">Mancala Elo</h3>
                                 <span class="text-sm text-gray-400 run-date"></span>
                             </div>
-                            <div style="height: 500px; position: relative;">
+                            <div class="max-md:hidden" style="height: 500px; position: relative;">
                                 <canvas id="chart-game7"></canvas>
                             </div>
                         </div>
                         <div class="mt-4 text-center text-sm text-gray-600">
                             <a href="games.html" class="text-indigo-600 hover:text-indigo-700 underline">Game rules and agent prompts</a>
                         </div>
-                        <div class="bg-white rounded-xl shadow-sm border border-gray-200 p-6 mt-6">
+                        <div class="bg-white rounded-xl shadow-sm border border-gray-200 p-6 max-md:p-4 mt-6">
                             <h3 class="text-lg font-semibold text-gray-900 mb-4">Leaderboard</h3>
                             <div id="leaderboard-game7" class="overflow-x-auto">
                                 <!-- Leaderboard table will be inserted here -->
@@ -327,19 +333,19 @@
 
                     <!-- Tab: Surround Morris -->
                     <section id="tab-game8" class="tab-content hidden">
-                        <div class="bg-white rounded-xl shadow-sm border border-gray-200 p-6">
-                            <div class="flex items-baseline justify-between mb-4">
+                        <div class="bg-white rounded-xl shadow-sm border border-gray-200 p-6 max-md:p-4">
+                            <div class="flex items-baseline justify-between mb-4 max-md:flex-wrap max-md:gap-x-3 max-md:gap-y-1">
                                 <h3 class="text-lg font-semibold text-gray-900">Surround Morris Elo</h3>
                                 <span class="text-sm text-gray-400 run-date"></span>
                             </div>
-                            <div style="height: 500px; position: relative;">
+                            <div class="max-md:hidden" style="height: 500px; position: relative;">
                                 <canvas id="chart-game8"></canvas>
                             </div>
                         </div>
                         <div class="mt-4 text-center text-sm text-gray-600">
                             <a href="games.html" class="text-indigo-600 hover:text-indigo-700 underline">Game rules and agent prompts</a>
                         </div>
-                        <div class="bg-white rounded-xl shadow-sm border border-gray-200 p-6 mt-6">
+                        <div class="bg-white rounded-xl shadow-sm border border-gray-200 p-6 max-md:p-4 mt-6">
                             <h3 class="text-lg font-semibold text-gray-900 mb-4">Leaderboard</h3>
                             <div id="leaderboard-game8" class="overflow-x-auto">
                                 <!-- Leaderboard table will be inserted here -->
@@ -352,7 +358,7 @@
         </div><!-- End page-results -->
 
         <template id="head-to-head-template">
-            <section class="bg-white rounded-xl shadow-sm border border-gray-200 p-6 mt-6">
+            <section class="bg-white rounded-xl shadow-sm border border-gray-200 p-6 max-md:p-4 mt-6">
                 <h3 class="text-lg font-semibold text-gray-900 mb-2">Head-to-head score matrix</h3>
                 <p class="text-sm text-gray-600 mb-4"></p>
                 <div class="h2h-scroll" role="region" tabindex="0"></div>
@@ -372,7 +378,7 @@
 <script src="https://cdn.jsdelivr.net/npm/chart.js@4.4.1/dist/chart.umd.min.js"></script>
 
 <!-- Main application JS -->
-<script src="/js/main.js?v=34"></script>
+<script src="/js/main.js?v=35"></script>
 </body>
 
 </html>
